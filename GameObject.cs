@@ -18,20 +18,16 @@ namespace MortensKomeback2
         protected float speed;
         protected float rotation;
         protected int health;
-        private int currentIndex;
-        private float timeElapsed;
         protected int spriteEffectIndex;
-        protected SoundEffect deathSoundEffect;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
-        public static bool leftMouseButtonClick;
-
+        
+        public Texture2D Sprite { get => sprite; set => sprite = value; }
+        public Vector2 Position { get => position; set => position = value; }
         public virtual Rectangle CollisionBox
         {
             get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
         }
 
-        public Texture2D Sprite { get => sprite; set => sprite = value; }
-        public Vector2 Position { get => position; set => position = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 
