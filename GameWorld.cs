@@ -8,6 +8,13 @@ namespace MortensKomeback2
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private static Camera2D camera;
+        public static Vector2 mousePosition;
+        public static float mouseX;
+        public static float mouseY;
+        public static bool leftMouseButtonClick;
+
+        public static Camera2D Camera { get => camera; set => camera = value; }
 
         public GameWorld()
         {
@@ -19,6 +26,11 @@ namespace MortensKomeback2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            //_graphics.IsFullScreen = true;
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.ApplyChanges();
+            Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
             base.Initialize();
         }
@@ -36,6 +48,11 @@ namespace MortensKomeback2
                 Exit();
 
             // TODO: Add your update logic here
+            var mouseState = Mouse.GetState();
+
+            mousePosition = new Vector2(mouseState.X, mouseState.Y);
+
+            leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
 
             base.Update(gameTime);
         }
