@@ -10,15 +10,20 @@ namespace MortensKomeback2
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
-        public static Vector2 mousePosition;
-        public static Vector2 actualMousePosition;
-        public static bool leftMouseButtonClick;
+        private static Vector2 mousePosition;
+        private static Vector2 actualMousePosition;
+        private static bool leftMouseButtonClick;
+        private static bool rightMouseButtonClick;
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
         //public static float mouseX;
         //public static float mouseY;
 
         public static Camera2D Camera { get => camera; set => camera = value; }
+        public static Vector2 MousePosition { get => mousePosition; set => mousePosition = value; }
+        public static Vector2 ActualMousePosition { get => actualMousePosition; set => actualMousePosition = value; }
+        public static bool LeftMouseButtonClick { get => leftMouseButtonClick; set => leftMouseButtonClick = value; }
+        public static bool RightMouseButtonClick { get => rightMouseButtonClick; set => rightMouseButtonClick = value; }
 
         public GameWorld()
         {
@@ -56,8 +61,8 @@ namespace MortensKomeback2
             var mouseState = Mouse.GetState();
 
             mousePosition = new Vector2(mouseState.X, mouseState.Y);
-
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
+            rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 
             base.Update(gameTime);
         }

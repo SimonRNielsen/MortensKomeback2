@@ -14,10 +14,10 @@ namespace MortensKomeback2
         protected Vector2 velocity;
         protected float fps;
         protected float scale = 1f;
-        protected float layer;
+        protected float layer = 0.000001f;
         protected float speed;
         protected float rotation;
-        protected int health;
+        protected int health = 1;
         protected int spriteEffectIndex;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         
