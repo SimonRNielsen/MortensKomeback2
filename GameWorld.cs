@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace MortensKomeback2
 {
@@ -10,9 +11,12 @@ namespace MortensKomeback2
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
         public static Vector2 mousePosition;
-        public static float mouseX;
-        public static float mouseY;
+        public static Vector2 actualMousePosition;
         public static bool leftMouseButtonClick;
+        private List<GameObject> gameObjects = new List<GameObject>();
+        public static List<GameObject> newGameObjects = new List<GameObject>();
+        //public static float mouseX;
+        //public static float mouseY;
 
         public static Camera2D Camera { get => camera; set => camera = value; }
 
@@ -26,6 +30,7 @@ namespace MortensKomeback2
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+
             //_graphics.IsFullScreen = true;
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
@@ -62,6 +67,16 @@ namespace MortensKomeback2
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            _spriteBatch.Begin(transformMatrix: Camera.GetTransformation(), samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+
+                gameObject.Draw(_spriteBatch);
+
+            }
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
