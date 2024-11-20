@@ -7,6 +7,8 @@ namespace MortensKomeback2
 {
     public class GameWorld : Game
     {
+        #region Fields
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
@@ -19,11 +21,19 @@ namespace MortensKomeback2
         //public static float mouseX;
         //public static float mouseY;
 
+        #endregion
+
+        #region Properties
+
         public static Camera2D Camera { get => camera; set => camera = value; }
-        public static Vector2 MousePosition { get => mousePosition; set => mousePosition = value; }
+        public static Vector2 MousePosition { get => mousePosition; }
         public static Vector2 ActualMousePosition { get => actualMousePosition; set => actualMousePosition = value; }
-        public static bool LeftMouseButtonClick { get => leftMouseButtonClick; set => leftMouseButtonClick = value; }
-        public static bool RightMouseButtonClick { get => rightMouseButtonClick; set => rightMouseButtonClick = value; }
+        public static bool LeftMouseButtonClick { get => leftMouseButtonClick; }
+        public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
+
+        #endregion
+
+        #region Constructor
 
         public GameWorld()
         {
@@ -31,6 +41,10 @@ namespace MortensKomeback2
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
+
+        #endregion
+
+        #region Methods
 
         protected override void Initialize()
         {
@@ -85,5 +99,7 @@ namespace MortensKomeback2
 
             base.Draw(gameTime);
         }
+
+        #endregion
     }
 }
