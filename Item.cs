@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class Item
+    public abstract class Item : GameObject
     {
     }
 }

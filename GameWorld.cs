@@ -18,6 +18,9 @@ namespace MortensKomeback2
         private static bool rightMouseButtonClick;
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
+        public static List<Item> playerInventory = new List<Item>();
+        public static List<Item> equippedPlayerInventory = new List<Item>();
+        public static Dictionary<string, Texture2D> commonSprites = new Dictionary<string, Texture2D>();
         //public static float mouseX;
         //public static float mouseY;
 
