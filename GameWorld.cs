@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 
 namespace MortensKomeback2
@@ -13,7 +15,6 @@ namespace MortensKomeback2
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
         private static Vector2 mousePosition;
-        private static Vector2 actualMousePosition;
         private static bool leftMouseButtonClick;
         private static bool rightMouseButtonClick;
         private List<GameObject> gameObjects = new List<GameObject>();
@@ -21,8 +22,8 @@ namespace MortensKomeback2
         public static List<Item> playerInventory = new List<Item>();
         public static List<Item> equippedPlayerInventory = new List<Item>();
         public static Dictionary<string, Texture2D> commonSprites = new Dictionary<string, Texture2D>();
-        //public static float mouseX;
-        //public static float mouseY;
+        public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string,SoundEffect>();
+        public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
 
         #endregion
 
