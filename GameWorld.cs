@@ -30,7 +30,6 @@ namespace MortensKomeback2
 
         public static Camera2D Camera { get => camera; set => camera = value; }
         public static Vector2 MousePosition { get => mousePosition; }
-        public static Vector2 ActualMousePosition { get => actualMousePosition; set => actualMousePosition = value; }
         public static bool LeftMouseButtonClick { get => leftMouseButtonClick; }
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
 
@@ -77,7 +76,7 @@ namespace MortensKomeback2
             // TODO: Add your update logic here
             var mouseState = Mouse.GetState();
 
-            mousePosition = new Vector2(mouseState.X, mouseState.Y);
+            mousePosition = new Vector2((int)(mouseState.X / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / Camera.Zoom) + (int)Camera.Position.X, (int)(mouseState.Y / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / Camera.Zoom) + 20 + (int)Camera.Position.Y);
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 

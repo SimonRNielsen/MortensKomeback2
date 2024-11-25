@@ -19,7 +19,7 @@ namespace MortensKomeback2
         /// </summary>
         public override Rectangle CollisionBox
         {
-            get { return new Rectangle(((int)(GameWorld.MousePosition.X / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / GameWorld.Camera.Zoom) + (int)GameWorld.Camera.Position.X), ((int)(GameWorld.MousePosition.Y / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / GameWorld.Camera.Zoom) + 20 + (int)GameWorld.Camera.Position.Y), 1, 1); }
+            get { return new Rectangle((int)GameWorld.MousePosition.X, (int)GameWorld.MousePosition.Y , 1, 1); }
 
         }
 
@@ -59,7 +59,7 @@ namespace MortensKomeback2
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            GameWorld.ActualMousePosition = new Vector2((int)(GameWorld.MousePosition.X / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / GameWorld.Camera.Zoom) + (int)GameWorld.Camera.Position.X, (int)(GameWorld.MousePosition.Y / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / GameWorld.Camera.Zoom) + 20 + (int)GameWorld.Camera.Position.Y);
+            //GameWorld.ActualMousePosition = new Vector2((int)(GameWorld.MousePosition.X / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / GameWorld.Camera.Zoom) + (int)GameWorld.Camera.Position.X, (int)(GameWorld.MousePosition.Y / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / GameWorld.Camera.Zoom) + 20 + (int)GameWorld.Camera.Position.Y);
             //GameWorld.mouseX = (int)(GameWorld.mousePosition.X / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / GameWorld.Camera.Zoom) + (int)GameWorld.Camera.Position.X;
             //GameWorld.mouseY = (int)(GameWorld.mousePosition.Y / GameWorld.Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / GameWorld.Camera.Zoom) + 20 + (int)GameWorld.Camera.Position.Y;
         }
