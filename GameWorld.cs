@@ -81,6 +81,20 @@ namespace MortensKomeback2
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 
+            //Updates gameObjects
+            foreach (GameObject gameObject in gameObjects)
+            {
+                gameObject.Update(gameTime);
+            }
+
+            //"Spawns" new items
+            foreach (GameObject newGameObject in newGameObjects)
+            {
+                newGameObject.LoadContent(Content);
+                gameObjects.Add(newGameObject);
+            }
+            newGameObjects.Clear();
+
             base.Update(gameTime);
         }
 
