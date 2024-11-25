@@ -1,28 +1,29 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace MortensKomeback2
 {
-    internal class QuestItem : Item
+    internal class OffHandItem : Item
     {
         #region Fields
 
-        private bool isUsed = false;
+
 
         #endregion
 
         #region Properties
 
-        public bool IsUsed { get => isUsed; set => isUsed = value; }
+
 
         #endregion
 
         #region Constructor
 
 
-        public QuestItem()
+        public OffHandItem()
         {
-            sprite = GameWorld.commonSprites["questItem"];
+            sprite = GameWorld.commonSprites["offHandItem"];
         }
 
         #endregion
@@ -32,18 +33,17 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (isUsed)
-                health = 0;
+            throw new NotImplementedException();
         }
 
         #endregion

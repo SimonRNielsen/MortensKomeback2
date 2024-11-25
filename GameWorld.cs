@@ -59,6 +59,8 @@ namespace MortensKomeback2
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
+            LoadCommonSprites();
+
             base.Initialize();
         }
 
@@ -112,9 +114,31 @@ namespace MortensKomeback2
 
             }
 
+            foreach (Item item in playerInventory)
+            {
+                item.Draw(_spriteBatch);
+            }
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Loads sprites into the "commonSprites" dictionary
+        /// </summary>
+        private void LoadCommonSprites()
+        {
+            Texture2D quest = Content.Load<Texture2D>("Sprites\\Item\\questItemPlaceholder");
+            Texture2D mainHand = Content.Load<Texture2D>("Sprites\\Item\\mainHandPlaceholder");
+            Texture2D offHand = Content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
+            Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
+            Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
+            commonSprites.Add("questItem", quest);
+            commonSprites.Add("mainHandItem", mainHand);
+            commonSprites.Add("offHandItem", offHand);
+            commonSprites.Add("torsoItem", torso);
+            commonSprites.Add("feetItem", feet);
         }
 
         #endregion
