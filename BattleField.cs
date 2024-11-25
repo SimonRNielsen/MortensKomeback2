@@ -12,11 +12,8 @@ namespace MortensKomeback2
     internal class BattleField : GameObject
     {
         #region Fields
-        private int playerDamage;
-        private int enemyDamage;
-        private int itemDamage;
-
-
+        public static Player[] battlefieldPlayers = new Player[1];
+        public static List<Enemy> battlefieldEnemies = new List<Enemy>();
 
         #endregion
 
@@ -27,10 +24,8 @@ namespace MortensKomeback2
         #region Constructor
         public BattleField(Player player, Enemy enemy)
         {
-            playerDamage = 1; //player.Damage;
-            enemyDamage = 1; //enemy.Damage;
-            itemDamage = 1; //player.ItemDamage;
-
+            battlefieldPlayers[0] = player;
+            battlefieldEnemies.Add(enemy);
         }
 
         #endregion
@@ -48,13 +43,20 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            int chosenAction = HandleInput();
+            TakeAction(battlefieldPlayers[0].PlayerClass, chosenAction);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
         }
+
+        private int HandleInput()
+        {
+            return 1;
+        }
+
         /// <summary>
         /// This method makes the action happen that the player and enemy has decided
         /// </summary>
@@ -94,7 +96,6 @@ namespace MortensKomeback2
 
         private void MeleeAttack()
         {
-            int damage = playerDamage + itemDamage;
 
         }
 
