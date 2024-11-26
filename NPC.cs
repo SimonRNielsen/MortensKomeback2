@@ -25,7 +25,6 @@ namespace MortensKomeback2
         {
 
 
-
         }
         #endregion
 
@@ -50,10 +49,11 @@ namespace MortensKomeback2
             //Is standing still
         }
 
-        public void Interact(GameObject gameObject)
+        public void Animation(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
+
 
         #endregion
     }

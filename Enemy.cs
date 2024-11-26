@@ -53,7 +53,6 @@ namespace MortensKomeback2
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             velocity = new Vector2(0, 1);
-            enemyDirection = new Vector2(0, 1);
 
             //The player is moving by the result of HandleInput and deltaTime
             position += (velocity * speed * deltaTime);
@@ -64,7 +63,7 @@ namespace MortensKomeback2
             }
         }
 
-        public void Interact(GameObject gameObject)
+        public void Animation(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

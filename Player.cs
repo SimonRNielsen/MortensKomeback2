@@ -10,7 +10,9 @@ namespace MortensKomeback2
     internal class Player : GameObject, ICharacter
     {
         #region field
-
+        private int playerClass;
+        private float timeElapsed;
+        private int curretIndex;
         #endregion
 
         #region properti
@@ -22,6 +24,8 @@ namespace MortensKomeback2
         {
             this.speed = 600;
             this.health = 100;
+           playerClass = (int)PlayerClass.Bishop;
+            this.fps = 7f;
         }
 
         #endregion
@@ -29,9 +33,29 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            //sprites = new Texture2D[];
+            sprites = new Texture2D[4];
 
-            this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\morten_sprite2"); //Only a test sprite of Morten
+            //this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\morten_sprite2"); //Only a test sprite of Morten
+
+            if (playerClass == (int)PlayerClass.Crusader)
+            {
+            }
+            
+            if (playerClass == (int)PlayerClass.Munk)
+            {
+
+            }
+            
+            if (playerClass == (int)PlayerClass.Bishop)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
+                }
+
+                this.Sprite = sprites[0];
+
+            }
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -43,6 +67,7 @@ namespace MortensKomeback2
         {
             HandleInput();
             Movement(gameTime);
+            Animation(gameTime);
         }
 
 
@@ -108,9 +133,21 @@ namespace MortensKomeback2
             position += (velocity * speed * deltaTime);
         }
 
-        public void Interact(GameObject gameObject)
+        public void Animation(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            //Adding the time which has passed since the last update
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            curretIndex = (int)(timeElapsed * fps);
+
+            sprite = sprites[curretIndex];
+
+            //Restart the animation
+            if (curretIndex >= sprites.Length -1)
+            {
+                timeElapsed = 0;
+                curretIndex = 0;
+            }
         }
 
         #endregion

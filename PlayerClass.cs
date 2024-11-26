@@ -8,7 +8,7 @@ namespace MortensKomeback2
 {
     enum PlayerClass
     {
-        Undercover = 1,
+        Crusader = 1,
         Munk = 2,
         Bishop = 3
     }

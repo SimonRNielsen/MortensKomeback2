@@ -12,6 +12,8 @@ namespace MortensKomeback2
     {
         void Movement(GameTime gameTime);
 
-        void Interact(GameObject gameObject);
+        //void Interact(GameObject gameObject);
+
+        void Animation(GameTime gameTime);
     }
 }
