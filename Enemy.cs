@@ -14,6 +14,7 @@ namespace MortensKomeback2
     {
         #region field
         private GraphicsDeviceManager _graphics;
+        private Vector2 enemyDirection;
 
         #endregion
 
@@ -52,13 +53,14 @@ namespace MortensKomeback2
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             velocity = new Vector2(0, 1);
+            enemyDirection = new Vector2(0, 1);
 
             //The player is moving by the result of HandleInput and deltaTime
             position += (velocity * speed * deltaTime);
 
-            if (position == new Vector2(0, _graphics.PreferredBackBufferHeight))
+            if (position.Y >= 1080/2 + this.sprite.Height *2)
             {
-                speed = 0;
+                
             }
         }
 

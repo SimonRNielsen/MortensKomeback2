@@ -10,12 +10,10 @@ namespace MortensKomeback2
     internal class Player : GameObject, ICharacter
     {
         #region field
-        private int playerClass;
 
         #endregion
 
         #region properti
-        public int PlayerClass { get => playerClass; set => playerClass = value; }
 
         #endregion
 
