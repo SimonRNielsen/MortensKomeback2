@@ -14,7 +14,13 @@ namespace MortensKomeback2
         #region Fields
         public static Player[] battlefieldPlayers = new Player[1];
         public static List<Enemy> battlefieldEnemies = new List<Enemy>();
+        private Rectangle textBox;
+        GraphicsDevice graphicsDevice;
+        // A single-pixel texture
+        Texture2D pixel;
+        Color textBoxColor;
 
+        
         #endregion
 
         #region Properties
@@ -22,10 +28,11 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public BattleField(Player player, Enemy enemy)
+        public BattleField(Player player, Enemy enemy, GraphicsDevice graphicsDevice)
         {
             battlefieldPlayers[0] = player;
             battlefieldEnemies.Add(enemy);
+            this.graphicsDevice = graphicsDevice;
         }
 
         #endregion
@@ -33,7 +40,14 @@ namespace MortensKomeback2
         #region Methods
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            /// Create the single-pixel texture
+            pixel = new Texture2D(graphicsDevice, 1, 1);
+            pixel.SetData<Color>(new Color[] { Color.White });
+
+
+            textBox = new Rectangle(0, 0, 500, 50);
+            /// Set a default color for the smallRectangle
+            textBoxColor = Color.White;
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -49,7 +63,7 @@ namespace MortensKomeback2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            base.Draw(spriteBatch);
+            spriteBatch.Draw(pixel, textBox, textBoxColor);
         }
 
         private int HandleInput()
@@ -96,27 +110,46 @@ namespace MortensKomeback2
 
         private void MeleeAttack()
         {
+            //Move
+            //Animate
+            //Sound
+            //Calculate hit
+            //Calculate damage
 
         }
 
         private void RangedAttack()
         {
-
+            //Animate
+            //Sound
+            //Calculate hit
+            //Calculate damage
+            //Do damage
         }
 
         private void Block()
         {
-
+            //Move
+            //Animate
+            //Sound
+            //Calculate defense
         }
 
         private void Evade()
         {
+            //Move
+            //Animate
+            //Sound
+            //Calculate defense
 
         }
 
         private void Heal()
         {
-
+            //Animate
+            //Sound
+            //Calculate heal
+            //Heal
         }
 
 

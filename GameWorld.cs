@@ -61,6 +61,9 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new Player());
             newGameObjects.Add(new Enemy());
+            Player testPlayer = new();
+            Enemy testEnemy = new();
+            newGameObjects.Add(new BattleField(testPlayer, testEnemy, GraphicsDevice));
 
             base.Initialize();
         }
