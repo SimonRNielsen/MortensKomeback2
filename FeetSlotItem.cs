@@ -21,9 +21,11 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public FeetSlotItem()
+        public FeetSlotItem(int playerclass)
         {
             sprite = GameWorld.commonSprites["feetItem"];
+            itemName = "Boots of speed";
+            speedBonus = 5f;
         }
 
         #endregion
@@ -33,17 +35,17 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         #endregion

@@ -21,9 +21,22 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public OffHandItem()
+        public OffHandItem(int playerclass)
         {
             sprite = GameWorld.commonSprites["offHandItem"];
+            damageReductionBonus = 5;
+            switch (playerclass)
+            {
+                case 1:
+                    itemName = "Shield";
+                    break;
+                case 2:
+                    health = 0;
+                    break;
+                case 3:
+                    health = 0;
+                    break;
+            }
         }
 
         #endregion
@@ -33,17 +46,17 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         #endregion

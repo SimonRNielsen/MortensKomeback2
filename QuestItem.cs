@@ -23,6 +23,7 @@ namespace MortensKomeback2
         public QuestItem()
         {
             sprite = GameWorld.commonSprites["questItem"];
+            itemName = "Key";
         }
 
         #endregion

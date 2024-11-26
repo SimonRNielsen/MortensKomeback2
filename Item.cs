@@ -7,6 +7,7 @@
     {
         #region Fields
 
+        protected string itemName;
         protected int healthBonus;
         protected int damageBonus;
         protected int damageReductionBonus;

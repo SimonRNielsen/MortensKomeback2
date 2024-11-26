@@ -4,27 +4,49 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class MainHandItem : Item
+    internal class MainHandItem : Item, ITwoHandedItem
     {
         #region Fields
 
-
+        private bool isTwoHanded = false;
+        private readonly ImplementTwohanded implementTwohanded = new ImplementTwohanded();
+        private readonly ITwoHandedItem implement;
 
         #endregion
 
         #region Properties
 
 
+        public bool IsTwoHanded { get => isTwoHanded; }
 
         #endregion
 
         #region Constructor
 
 
-        public MainHandItem()
+        public MainHandItem(int playerClass)
         {
-            sprite = GameWorld.commonSprites["mainHandItem"];
+            damageBonus = 5;
+            switch (playerClass)
+            {
+                case 1:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
+                    itemName = "Sword";
+                    break;
+                case 2:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
+                    itemName = "Sling";
+                    implement = implementTwohanded;
+                    break;
+                case 3:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
+                    itemName = "Staff";
+                    implement = implementTwohanded;
+                    break;
+                
+            }
         }
+
 
         #endregion
 
@@ -33,17 +55,21 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            if (implement is ITwoHandedItem && !isTwoHanded)
+            {
+                isTwoHanded = true;
+                damageBonus = implement.StatBoost(damageBonus);
+            }
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            //
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //
         }
 
         #endregion

@@ -21,9 +21,26 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public TorsoSlotItem()
+        public TorsoSlotItem(int playerclass)
         {
             sprite = GameWorld.commonSprites["torsoItem"];
+            switch (playerclass)
+            {
+                case 1:
+                    damageReductionBonus = 10;
+                    itemName = "Sturdy robe";
+                    break;
+
+                case 2:
+                    damageReductionBonus = 5;
+                    itemName = "Flexible robe";
+                    healthBonus = 10;
+                    break;
+                case 3:
+                    healthBonus = 20;
+                    itemName = "Comfortable robe";
+                    break;
+            }
         }
 
         #endregion
@@ -33,17 +50,17 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         #endregion
