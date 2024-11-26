@@ -69,6 +69,9 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new MainHandItem(2));
 
+            newGameObjects.Add(new Player());
+            newGameObjects.Add(new Enemy());
+
             base.Initialize();
         }
 
