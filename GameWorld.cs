@@ -9,7 +9,7 @@ using System;
 
 namespace MortensKomeback2
 {
-    public class GameWorld : Game, IPreload
+    public class GameWorld : Game
     {
         #region Fields
 
