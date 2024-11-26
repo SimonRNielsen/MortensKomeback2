@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    public interface ICharacter
+    public abstract class Character : GameObject
     {
-        void Movement(GameTime gameTime);
+        public abstract void Movement(GameTime gameTime);
 
         //void Interact(GameObject gameObject);
 
-        void Animation(GameTime gameTime);
+        public abstract void Animation(GameTime gameTime);
     }
 }

@@ -7,10 +7,10 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class Player : GameObject, ICharacter
+    internal class Player : Character
     {
         #region field
-        private int playerClass;
+        private PlayerClass playerClass;
         private float timeElapsed;
         private int curretIndex;
         #endregion
@@ -20,12 +20,12 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player()
+        public Player(PlayerClass playerClass)
         {
             this.speed = 600;
             this.health = 100;
-           playerClass = (int)PlayerClass.Bishop;
-            this.fps = 7f;
+            this.fps = 2f;
+            this.playerClass = playerClass;
         }
 
         #endregion
@@ -35,32 +35,36 @@ namespace MortensKomeback2
         {
             sprites = new Texture2D[4];
 
-            //this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\morten_sprite2"); //Only a test sprite of Morten
-
-            if (playerClass == (int)PlayerClass.Crusader)
+            switch (playerClass)
             {
+                case PlayerClass.Crusader:
+                    break;
+                case PlayerClass.Munk:
+                    break;
+                case PlayerClass.Bishop:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
+                    }
+                    break;
             }
             
-            if (playerClass == (int)PlayerClass.Munk)
-            {
-
-            }
-            
-            if (playerClass == (int)PlayerClass.Bishop)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
-                }
-
-                this.Sprite = sprites[0];
-
-            }
+            this.Sprite = sprites[0];
         }
 
         public override void OnCollision(GameObject gameObject)
         {
+            if (gameObject is NPC)
+            { }
 
+            if (gameObject is Enemy)
+            { }
+
+            if (gameObject is Item)
+            { }
+
+            //if (gameObject is AvSurface)
+            //{ }
         }
 
         public override void Update(GameTime gameTime)

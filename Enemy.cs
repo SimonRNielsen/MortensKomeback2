@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class Enemy : GameObject, ICharacter
+    internal class Enemy : Character
     {
         #region field
-        private GraphicsDeviceManager _graphics;
-        private Vector2 enemyDirection;
+        private GraphicsDeviceManager graphics;
 
         #endregion
 
@@ -23,9 +22,10 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Enemy()
+        public Enemy(GraphicsDeviceManager _graphics)
         {
             this.speed = 300;
+            graphics = _graphics;
         }
 
         #endregion
@@ -39,7 +39,7 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -52,12 +52,12 @@ namespace MortensKomeback2
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            velocity = new Vector2(0, 1);
+            velocity = new Vector2(1, 0);
 
             //The player is moving by the result of HandleInput and deltaTime
             position += (velocity * speed * deltaTime);
 
-            if (position.Y >= 1080/2 + this.sprite.Height *2)
+            if (position.X >= graphics.PreferredBackBufferWidth/2)
             {
                 
             }

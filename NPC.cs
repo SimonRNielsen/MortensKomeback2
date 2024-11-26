@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class NPC : GameObject, ICharacter
+    internal class NPC : Character
     {
         #region field
         private string[] npcClass = new string[2] {"Munk", "Nun"};
