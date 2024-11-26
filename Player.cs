@@ -128,7 +128,7 @@ namespace MortensKomeback2
         /// The players movement calculated a the product of velocity, speed and deltaTime
         /// </summary>
         /// <param name="gameTime">A GameTime</param>
-        public void Movement(GameTime gameTime)
+        public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -137,7 +137,7 @@ namespace MortensKomeback2
             position += (velocity * speed * deltaTime);
         }
 
-        public void Animation(GameTime gameTime)
+        public override void Animation(GameTime gameTime)
         {
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;

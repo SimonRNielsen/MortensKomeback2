@@ -44,12 +44,12 @@ namespace MortensKomeback2
             throw new NotImplementedException();
         }
 
-        public void Movement(GameTime gameTime)
+        public override void Movement(GameTime gameTime)
         {
             //Is standing still
         }
 
-        public void Animation(GameTime gameTime)
+        public override  void Animation(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

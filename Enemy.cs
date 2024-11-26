@@ -14,6 +14,7 @@ namespace MortensKomeback2
     {
         #region field
         private GraphicsDeviceManager graphics;
+        private bool direction = false;
 
         #endregion
 
@@ -46,8 +47,7 @@ namespace MortensKomeback2
         {
             Movement(gameTime);
         }
-
-        public void Movement(GameTime gameTime)
+        public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -55,15 +55,40 @@ namespace MortensKomeback2
             velocity = new Vector2(1, 0);
 
             //The player is moving by the result of HandleInput and deltaTime
+            if (direction)
+            {
+                position -= (velocity * speed * deltaTime);
+            }
+            else
+            {
             position += (velocity * speed * deltaTime);
 
-            if (position.X >= graphics.PreferredBackBufferWidth/2)
-            {
-                
             }
+
+            if (position.X >= graphics.PreferredBackBufferWidth - (Sprite.Width*2))
+            {
+                direction = true;
+            }
+            if (position.X <= -(graphics.PreferredBackBufferWidth - (Sprite.Width * 2)))
+            {
+                direction = false;
+            }
+
+            //if (position.X > graphics.PreferredBackBufferWidth / 2 && sw)
+            //{
+            //    position -= (velocity * speed * deltaTime);
+            //    if (position.X <= (graphics.PreferredBackBufferWidth / 2))
+            //    { sw = false; }
+            //}
+            //else if (position.X > -(graphics.PreferredBackBufferWidth / 2) && !sw)
+            //{
+            //    position += (velocity * speed * deltaTime);
+            //    if (position.X <= -(graphics.PreferredBackBufferWidth / 2))
+            //    { sw = true; }
+            //}
         }
 
-        public void Animation(GameTime gameTime)
+        public override void Animation(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
