@@ -44,7 +44,7 @@ namespace MortensKomeback2
         public override void Update(GameTime gameTime)
         {
             int chosenAction = HandleInput();
-            TakeAction(battlefieldPlayers[0].PlayerClass, chosenAction);
+            TakeAction(chosenAction, battlefieldPlayers[0].Archetype);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -60,12 +60,12 @@ namespace MortensKomeback2
         /// <summary>
         /// This method makes the action happen that the player and enemy has decided
         /// </summary>
-        private void TakeAction(int chosenAction, int playerClass)
+        private void TakeAction(int chosenAction, PlayerClass playerClass)
         {
             switch (chosenAction)
             {
                 case 1:
-                    if(playerClass ==1)
+                    if(playerClass == (PlayerClass)1)
                     {
                         MeleeAttack();
                     }
@@ -75,7 +75,7 @@ namespace MortensKomeback2
                     }
                     break;
                 case 2:
-                    if(playerClass ==1)
+                    if(playerClass == (PlayerClass)1)
                     {
                         Block();
                     }

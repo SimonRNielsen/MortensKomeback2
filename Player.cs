@@ -10,6 +10,9 @@ namespace MortensKomeback2
     internal class Player : GameObject, ICharacter
     {
         #region field
+        PlayerClass archetype;
+
+        internal PlayerClass Archetype { get => archetype; set => archetype = value; }
 
         #endregion
 
@@ -22,6 +25,7 @@ namespace MortensKomeback2
         {
             this.speed = 600;
             this.health = 100;
+            this.Archetype = PlayerClass.Munk;
         }
 
         #endregion
