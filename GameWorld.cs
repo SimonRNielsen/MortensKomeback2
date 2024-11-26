@@ -59,6 +59,9 @@ namespace MortensKomeback2
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
+            newGameObjects.Add(new Player());
+            newGameObjects.Add(new Enemy());
+
             base.Initialize();
         }
 
