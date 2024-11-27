@@ -37,13 +37,13 @@ namespace MortensKomeback2
 
         public Button(Vector2 spawnPosition, int buttonType)
         {
-            sprite = GameWorld.commonSprites["button"];
             position = spawnPosition;
             layer = 0.998f;
             buttonID = buttonType;
             switch (buttonID)
             {
                 case 0:
+                    sprite = GameWorld.commonSprites["button"];
                     buttonText = "Close";
                     textXDisplacement = -7;
                     break;
