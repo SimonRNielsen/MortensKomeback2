@@ -172,18 +172,18 @@ namespace MortensKomeback2
         /// <summary>
         /// Loads sprites into the "commonSprites" Dictionary
         /// </summary>
-        private void LoadCommonSprites(Dictionary<string, Texture2D> commonSprites, ContentManager content)
+        private void LoadCommonSprites()
         {
 
 #if DEBUG
-            Texture2D collisionTexture = content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
+            Texture2D collisionTexture = Content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
 #endif
 
-            Texture2D quest = content.Load<Texture2D>("Sprites\\Item\\questItemPlaceholder");
-            Texture2D mainHand = content.Load<Texture2D>("Sprites\\Item\\mainHandPlaceholder");
-            Texture2D offHand = content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
-            Texture2D torso = content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
-            Texture2D feet = content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
+            Texture2D quest = Content.Load<Texture2D>("Sprites\\Item\\questItemPlaceholder");
+            Texture2D mainHand = Content.Load<Texture2D>("Sprites\\Item\\mainHandPlaceholder");
+            Texture2D offHand = Content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
+            Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
+            Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -204,7 +204,7 @@ namespace MortensKomeback2
         {
 
 
-
+            
         }
 
         /// <summary>
