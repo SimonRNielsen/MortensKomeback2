@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System;
 
 namespace MortensKomeback2
 {
@@ -22,7 +24,8 @@ namespace MortensKomeback2
         public static List<Item> playerInventory = new List<Item>();
         public static List<Item> equippedPlayerInventory = new List<Item>();
         public static Dictionary<string, Texture2D> commonSprites = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string,SoundEffect>();
+        public static Dictionary<string, Texture2D[]> animationSprites = new Dictionary<string, Texture2D[]>();
+        public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
 
         #endregion
@@ -59,6 +62,15 @@ namespace MortensKomeback2
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
+            LoadCommonSprites(commonSprites, Content);
+            LoadAnimationArrays();
+            LoadCommonSounds();
+            LoadBackgroundSongs();
+
+            newGameObjects.Add(new MainHandItem(2));
+
+            newGameObjects.Add(new Player());
+            newGameObjects.Add(new Enemy());
             newGameObjects.Add(new Player(PlayerClass.Bishop));
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -94,7 +106,10 @@ namespace MortensKomeback2
             foreach (GameObject newGameObject in newGameObjects)
             {
                 newGameObject.LoadContent(Content);
-                gameObjects.Add(newGameObject);
+                if (newGameObject is Item)
+                    playerInventory.Add(newGameObject as Item);
+                else
+                    gameObjects.Add(newGameObject);
             }
             newGameObjects.Clear();
 
@@ -112,14 +127,107 @@ namespace MortensKomeback2
             {
 
                 gameObject.Draw(_spriteBatch);
+#if DEBUG
+                DrawCollisionBox(gameObject);
+#endif
 
             }
+
+            foreach (Item item in playerInventory)
+            {
+
+                item.Draw(_spriteBatch);
+
+#if DEBUG
+                DrawCollisionBox(item);
+#endif
+
+            }
+
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
+
+#if DEBUG
+        private void DrawCollisionBox(GameObject gameObject)
+        {
+            Color color = Color.Red;
+            Rectangle collisionBox = gameObject.CollisionBox;
+            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+            if (gameObject is Item)
+                color = Color.Purple;
+
+            _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+        }
+#endif
+
+        /// <summary>
+        /// Loads sprites into the "commonSprites" Dictionary
+        /// </summary>
+        private void LoadCommonSprites()
+        {
+
+#if DEBUG
+            Texture2D collisionTexture = Content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
+#endif
+
+            Texture2D quest = Content.Load<Texture2D>("Sprites\\Item\\questItemPlaceholder");
+            Texture2D mainHand = Content.Load<Texture2D>("Sprites\\Item\\mainHandPlaceholder");
+            Texture2D offHand = Content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
+            Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
+            Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
+
+            commonSprites.Add("questItem", quest);
+            commonSprites.Add("mainHandItem", mainHand);
+            commonSprites.Add("offHandItem", offHand);
+            commonSprites.Add("torsoItem", torso);
+            commonSprites.Add("feetItem", feet);
+
+#if DEBUG
+            commonSprites.Add("collisionTexture", collisionTexture);
+#endif
+
+        }
+
+        /// <summary>
+        /// Loads animation arrays into the "animationSprites" Dictionary
+        /// </summary>
+        private void LoadAnimationArrays()
+        {
+
+
+            
+        }
+
+        /// <summary>
+        /// Loads "SoundEffects" into the "commonSounds" Dictionary
+        /// </summary>
+        private void LoadCommonSounds()
+        {
+
+
+
+        }
+
+        /// <summary>
+        /// Loads "songs" into the "backgroundMusic" Dictionary
+        /// </summary>
+        private void LoadBackgroundSongs()
+        {
+
+
+
+        }
         #endregion
     }
 }
