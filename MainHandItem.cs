@@ -24,7 +24,7 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public MainHandItem(int playerClass)
+        public MainHandItem(int playerClass, bool equipped)
         {
             damageBonus = 5;
             switch (playerClass)
@@ -43,7 +43,33 @@ namespace MortensKomeback2
                     itemName = "Staff";
                     implement = implementTwohanded;
                     break;
-                
+            }
+            if (equipped)
+                GameWorld.equippedPlayerInventory.Add(this);
+            else
+                GameWorld.playerInventory.Add(this);
+        }
+
+        public MainHandItem(int playerClass, Vector2 position)
+        {
+            damageBonus = 5;
+            Position = position;
+            switch (playerClass)
+            {
+                case 1:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
+                    itemName = "Sword";
+                    break;
+                case 2:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
+                    itemName = "Sling";
+                    implement = implementTwohanded;
+                    break;
+                case 3:
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
+                    itemName = "Staff";
+                    implement = implementTwohanded;
+                    break;
             }
         }
 

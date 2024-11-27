@@ -8,6 +8,10 @@ namespace MortensKomeback2
     {
         #region Fields
 
+        private bool inventoryOpen = false;
+        private bool detectItem = false;
+        private bool rightClickActive = false;
+
         #endregion
 
         #region Properties
@@ -36,6 +40,46 @@ namespace MortensKomeback2
         #endregion
 
         #region Methods
+
+        public void RightClickEvent()
+        {
+            inventoryOpen = GameWorld.DetectInventory();
+            rightClickActive = GameWorld.DetectRightClickMenu();
+
+            if (!inventoryOpen && !rightClickActive)
+            {
+                GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, 10));
+            }
+
+            else
+            {
+
+                if (!rightClickActive && !GameWorld.MenuActive)
+                {
+                    foreach (Item item in GameWorld.playerInventory)
+                        CheckCollision(item);
+                    foreach (Item item in GameWorld.equippedPlayerInventory)
+                        CheckCollision(item);
+                }
+
+                if (GameWorld.RightMouseButtonClick && !GameWorld.MenuActive && !detectItem)
+                {
+                    GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, 0));
+                }
+
+                detectItem = false;
+            }
+        }
+
+
+        public void CheckCollision(Item item)
+        {
+            if (CollisionBox.Intersects(item.CollisionBox))
+            {
+                detectItem = true;
+                GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
+            }
+        }
 
         #endregion
     }
