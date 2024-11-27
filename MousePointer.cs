@@ -74,11 +74,12 @@ namespace MortensKomeback2
 
         public void CheckCollision(Item item)
         {
-            if (CollisionBox.Intersects(item.CollisionBox))
-            {
-                detectItem = true;
-                GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
-            }
+            if (!(item is QuestItem))
+                if (CollisionBox.Intersects(item.CollisionBox))
+                {
+                    detectItem = true;
+                    GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
+                }
         }
 
         #endregion
