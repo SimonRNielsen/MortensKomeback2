@@ -8,5 +8,6 @@ namespace MortensKomeback2
 {
     internal class Area
     {
+
     }
 }
