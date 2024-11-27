@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Sprites/Charactor/goose0.png
+#begin Sprites/Charactor/gooseWalk0.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,91 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Charactor/goose0.png
+/build:Sprites/Charactor/gooseWalk0.png
+
+#begin Sprites/Charactor/gooseWalk1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk1.png
+
+#begin Sprites/Charactor/gooseWalk2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk2.png
+
+#begin Sprites/Charactor/gooseWalk3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk3.png
+
+#begin Sprites/Charactor/gooseWalk4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk4.png
+
+#begin Sprites/Charactor/gooseWalk5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk5.png
+
+#begin Sprites/Charactor/gooseWalk6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk6.png
+
+#begin Sprites/Charactor/gooseWalk7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/gooseWalk7.png
 
 #begin Sprites/Charactor/helligMortenHvid0.png
 /importer:TextureImporter

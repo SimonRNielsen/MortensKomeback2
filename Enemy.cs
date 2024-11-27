@@ -15,6 +15,8 @@ namespace MortensKomeback2
         #region field
         private GraphicsDeviceManager graphics;
         private bool direction = false;
+        private float timeElapsed;
+        private int curretIndex;
 
         #endregion
 
@@ -27,6 +29,8 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             graphics = _graphics;
+            this.health = 100;
+            this.fps = 7f;
         }
 
         #endregion
@@ -35,7 +39,14 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\goose0"); //Only a test sprite of Morten
+            sprites = new Texture2D[8];
+
+            for (int i = 0; i < 8; i++)
+            {
+                sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\gooseWalk" + i);
+            }
+
+            this.Sprite = sprites[0];
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -46,6 +57,7 @@ namespace MortensKomeback2
         public override void Update(GameTime gameTime)
         {
             Movement(gameTime);
+            Animation(gameTime);
         }
         public override void Movement(GameTime gameTime)
         {
@@ -62,35 +74,34 @@ namespace MortensKomeback2
             else
             {
             position += (velocity * speed * deltaTime);
-
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth - (Sprite.Width*2))
+            if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width*3.5f)
             {
                 direction = true;
             }
-            if (position.X <= -(graphics.PreferredBackBufferWidth - (Sprite.Width * 2)))
+            if (position.X <= -(graphics.PreferredBackBufferWidth - Sprite.Width*3.5f))
             {
                 direction = false;
             }
 
-            //if (position.X > graphics.PreferredBackBufferWidth / 2 && sw)
-            //{
-            //    position -= (velocity * speed * deltaTime);
-            //    if (position.X <= (graphics.PreferredBackBufferWidth / 2))
-            //    { sw = false; }
-            //}
-            //else if (position.X > -(graphics.PreferredBackBufferWidth / 2) && !sw)
-            //{
-            //    position += (velocity * speed * deltaTime);
-            //    if (position.X <= -(graphics.PreferredBackBufferWidth / 2))
-            //    { sw = true; }
-            //}
         }
 
         public override void Animation(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //Adding the time which has passed since the last update
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            curretIndex = (int)(timeElapsed * fps);
+
+            sprite = sprites[curretIndex];
+
+            //Restart the animation
+            if (curretIndex >= sprites.Length - 1)
+            {
+                timeElapsed = 0;
+                curretIndex = 0;
+            }
         }
 
         #endregion
