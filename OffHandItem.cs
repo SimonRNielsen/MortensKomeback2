@@ -1,29 +1,42 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using System;
 
 namespace MortensKomeback2
 {
-    internal class QuestItem : Item
+    internal class OffHandItem : Item
     {
         #region Fields
 
-        private bool isUsed = false;
+
 
         #endregion
 
         #region Properties
 
-        public bool IsUsed { get => isUsed; set => isUsed = value; }
+
 
         #endregion
 
         #region Constructor
 
 
-        public QuestItem()
+        public OffHandItem(int playerclass)
         {
-            sprite = GameWorld.commonSprites["questItem"];
-            itemName = "Key";
+            sprite = GameWorld.commonSprites["offHandItem"];
+            damageReductionBonus = 5;
+            switch (playerclass)
+            {
+                case 1:
+                    itemName = "Shield";
+                    break;
+                case 2:
+                    health = 0;
+                    break;
+                case 3:
+                    health = 0;
+                    break;
+            }
         }
 
         #endregion
@@ -43,8 +56,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            if (isUsed)
-                health = 0;
+            //throw new NotImplementedException();
         }
 
         #endregion
