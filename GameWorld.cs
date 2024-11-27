@@ -19,6 +19,10 @@ namespace MortensKomeback2
         private static Vector2 mousePosition;
         private static bool leftMouseButtonClick;
         private static bool rightMouseButtonClick;
+        private static bool closeMenu = false;
+        private bool menuActive;
+        private static MousePointer mousePointer;
+        private List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
         public static List<Item> playerInventory = new List<Item>();
@@ -27,6 +31,7 @@ namespace MortensKomeback2
         public static Dictionary<string, Texture2D[]> animationSprites = new Dictionary<string, Texture2D[]>();
         public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
+        public static SpriteFont mortensKomebackFont;
 
         #endregion
 
@@ -36,6 +41,8 @@ namespace MortensKomeback2
         public static Vector2 MousePosition { get => mousePosition; }
         public static bool LeftMouseButtonClick { get => leftMouseButtonClick; }
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
+        public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
+        public bool MenuActive { get => menuActive; }
 
         #endregion
 
@@ -61,13 +68,17 @@ namespace MortensKomeback2
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
+            mousePointer = new MousePointer();
 
-            LoadCommonSprites(commonSprites, Content);
+            //Preloading of all assets
+            mortensKomebackFont = Content.Load<SpriteFont>("mortalKombatFont");
+            LoadCommonSprites();
             LoadAnimationArrays();
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem(2));
+            //newGameObjects.Add(new MainHandItem(2));
+            newGameObjects.Add(new Button(Vector2.Zero, 0));
 
             newGameObjects.Add(new Player());
             newGameObjects.Add(new Enemy());
@@ -97,7 +108,32 @@ namespace MortensKomeback2
             //Updates gameObjects
             foreach (GameObject gameObject in gameObjects)
             {
-                gameObject.Update(gameTime);
+                //Pause-logic
+                if (!menuActive)
+                    gameObject.Update(gameTime);
+                //Måske skrotte nedenstående?
+                else if (menuActive && gameObject is Player)
+                    gameObject.Update(gameTime);
+
+            }
+
+            //Menu logic
+            foreach (Menu menuItem in menu)
+            {
+                menuActive = true;
+                menuItem.Update(gameTime);
+                if (menuItem is Button)
+                {
+                    (menuItem as Button).CheckCollision(mousePointer);
+                }
+            }
+            //if (menu.Count == 0 && menuActive)
+                //menuActive = false;
+            if (closeMenu)
+            {
+                menu.Clear();
+                menuActive = false;
+                closeMenu = false;
             }
 
             //"Spawns" new items
@@ -106,10 +142,13 @@ namespace MortensKomeback2
                 newGameObject.LoadContent(Content);
                 if (newGameObject is Item)
                     playerInventory.Add(newGameObject as Item);
+                else if (newGameObject is Menu || newGameObject is Button)
+                    menu.Add(newGameObject as Menu);
                 else
                     gameObjects.Add(newGameObject);
             }
             newGameObjects.Clear();
+
 
             base.Update(gameTime);
         }
@@ -131,17 +170,22 @@ namespace MortensKomeback2
 
             }
 
+            /*
             foreach (Item item in playerInventory)
             {
-
                 item.Draw(_spriteBatch);
-
-#if DEBUG
                 DrawCollisionBox(item);
-#endif
+            }
+            */
 
+            foreach (Menu menuItem in menu)
+            {
+                menuItem.Draw(_spriteBatch);
             }
 
+#if DEBUG
+            DrawMouseCollisionBox(mousePointer);
+#endif
 
             _spriteBatch.End();
 
@@ -167,6 +211,21 @@ namespace MortensKomeback2
             _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
             _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
         }
+
+        private void DrawMouseCollisionBox(MousePointer pointer)
+        {
+            Color color = Color.Red;
+            Rectangle collisionBox = pointer.CollisionBox;
+            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+            _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+        }
 #endif
 
         /// <summary>
@@ -177,6 +236,7 @@ namespace MortensKomeback2
 
 #if DEBUG
             Texture2D collisionTexture = Content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
+            commonSprites.Add("collisionTexture", collisionTexture);
 #endif
 
             Texture2D quest = Content.Load<Texture2D>("Sprites\\Item\\questItemPlaceholder");
@@ -191,9 +251,15 @@ namespace MortensKomeback2
             commonSprites.Add("torsoItem", torso);
             commonSprites.Add("feetItem", feet);
 
-#if DEBUG
-            commonSprites.Add("collisionTexture", collisionTexture);
-#endif
+            Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
+            Texture2D introScreen = Content.Load<Texture2D>("Sprites\\Menu\\introScreen");
+            Texture2D winScreen = Content.Load<Texture2D>("Sprites\\Menu\\winScreen");
+            Texture2D loseScreen = Content.Load<Texture2D>("Sprites\\Menu\\loseScreen");
+
+            commonSprites.Add("button", button);
+            commonSprites.Add("introScreen", introScreen);
+            commonSprites.Add("winScreen", winScreen);
+            commonSprites.Add("loseScreen", loseScreen);
 
         }
 
@@ -204,7 +270,7 @@ namespace MortensKomeback2
         {
 
 
-            
+
         }
 
         /// <summary>
