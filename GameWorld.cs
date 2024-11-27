@@ -60,7 +60,11 @@ namespace MortensKomeback2
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
             base.Initialize();
+
+            gameObjects.Add(new GUI());
         }
+
+        
 
         protected override void LoadContent()
         {
