@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +95,24 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
             //throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Modified to recieve individual sprite, position, rotation, scale, spriteeffects and layerdepth from each individual gameobject
+        /// </summary>
+        /// <param name="spriteBatch">Drawing tool</param>
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
+            switch (menuType)
+            {
+                case 0:
+
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion
