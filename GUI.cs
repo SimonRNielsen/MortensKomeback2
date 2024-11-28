@@ -17,15 +17,17 @@ namespace MortensKomeback2
         #region Fields
         private Texture2D healthSprite;
         private Texture2D weaponSprite;
-        private Texture2D[] questItemSprite;
+        private Texture2D questKey1Sprite;
+        private Texture2D questKey2Sprite;
+        private Texture2D questRosarySprite;
+        private Texture2D questBibleSprite;
+        //private Texture2D[] questItemSprite;
         private static int healthCount;
-        private Vector2 healthPosition;
-        private Vector2 weaponPosition;
-        private Vector2 questItemPosition;
+        private Vector2 heartPosition;
+        private Vector2 weaponPosition; 
+        //private Vector2 questItemPosition;
         private SpriteFont mortalKombatFont;
-
-       
-
+        private bool mortenAlive;
         #endregion
 
         #region Properties
@@ -47,17 +49,24 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public GUI()
+        public GUI(Vector2 placement/*int xPosition, int yPosition*/)
         {
-            healthPosition.Y = -500;
-            healthPosition.X = -900;
-            weaponPosition.Y = -400;
-            weaponPosition.X = -900;
-            questItemPosition.Y = -300;
-            questItemPosition.X = -900;
+            this.position = placement;
+            heartPosition = new Vector2(200, 200);
+            sprite = GameWorld.commonSprites["heartSprite"];
+            //sprite = weaponSprite;
+            //this.position.X = xPosition;
+            //this.position.Y = yPosition;
+            //heartPosition.Y = -500;
+            //heartPosition.X = -900;
+            //weaponPosition.Y = -400;
+            //weaponPosition.X = -900;
+            //questItemPosition.Y = -300;
+            //questItemPosition.X = -900;
+
         }
         #endregion
-
+        
         #region Methods
 
 
@@ -77,9 +86,34 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            //if (mortenAlive)
+
+
+            //if (healthCount < 100)
+            //{
+
+            //}
+            //else if (health <= 0)
+            //{
+            //    mortenAlive = false;
+            //}
+
+            //healthCount = GameWorld.PlayerInstance.Health;
+
             
-              
         }
+        public void GuiTest()
+        {
+            sprite = GameWorld.commonSprites["heartSprite"];
+
+
+        }
+
+
+
+
+
+
         #endregion
     }
 }
