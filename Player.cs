@@ -79,7 +79,7 @@ namespace MortensKomeback2
 
             }
 
-            //int kage = GameWorld.PlayerInstance.health;
+            int kage = GameWorld.PlayerInstance.health;
         }
 
         public override void Update(GameTime gameTime)

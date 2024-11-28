@@ -78,8 +78,8 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Area(0,0, 0));
-            newGameObjects.Add(new Area(1,2000, 2000));
+            newGameObjects.Add(new Area(0, 0, 0));
+            newGameObjects.Add(new Area(1, 2000, 2000));
 
             #region obstacle
             newGameObjects.Add(new AvSurface(200, 200));
@@ -90,7 +90,7 @@ namespace MortensKomeback2
             //gameObjects.Add(new GUI());
         }
 
-        
+
 
         protected override void LoadContent()
         {
@@ -111,10 +111,19 @@ namespace MortensKomeback2
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 
-            //Updates gameObjects
+            //Updates gameObjects and collision
             foreach (GameObject gameObject in gameObjects)
             {
                 gameObject.Update(gameTime);
+
+                foreach (GameObject other in gameObjects)
+                {
+                    if (gameObject is Player && other is AvSurface)
+                    {
+                        gameObject.CheckCollision(other);
+                        other.CheckCollision(gameObject);
+                    }
+                }
             }
 
             //"Spawns" new items
@@ -127,17 +136,7 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
-            //Check collision
-            foreach (GameObject go in newGameObjects)
-            {
-                go.Update(gameTime);
 
-                foreach (GameObject other in newGameObjects)
-                {
-                    go.CheckCollision(other);
-                }
-            }
-            
             newGameObjects.Clear();
 
 
@@ -215,13 +214,13 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
-            
+
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet); 
+            commonSprites.Add("feetItem", feet);
 
 #if DEBUG
             commonSprites.Add("collisionTexture", collisionTexture);
@@ -234,23 +233,6 @@ namespace MortensKomeback2
         /// </summary>
         private void LoadAnimationArrays()
         {
-            #region goose
-            Texture2D[] gooseSprites = new Texture2D[8];
-            for (int i = 0; i < 8; i++)
-            {
-                gooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\gooseWalk" + i);
-            }
-            animationSprites.Add("WalkingGoose", gooseSprites);
-
-            #region aggro goose
-            Texture2D[] aggroGooseSprites = new Texture2D[8];
-            for (int i = 0; i < 8; i++)
-            {
-                aggroGooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\aggro" + i);
-            }
-            animationSprites.Add("AggroGoose", aggroGooseSprites);
-            #endregion
-            #endregion
 
             areaArray = new Texture2D[5]
             {
@@ -275,8 +257,23 @@ namespace MortensKomeback2
             #endregion
 
             #endregion
+            #region goose
+            Texture2D[] gooseSprites = new Texture2D[8];
+            for (int i = 0; i < 8; i++)
+            {
+                gooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\gooseWalk" + i);
+            }
+            animationSprites.Add("WalkingGoose", gooseSprites);
 
-            
+            #region aggro goose
+            Texture2D[] aggroGooseSprites = new Texture2D[8];
+            for (int i = 0; i < 8; i++)
+            {
+                aggroGooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\aggro" + i);
+            }
+            animationSprites.Add("AggroGoose", aggroGooseSprites);
+            #endregion
+            #endregion
             #region obstalce
             Texture2D[] firepit = new Texture2D[2];
             firepit[0] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit");

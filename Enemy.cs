@@ -36,6 +36,8 @@ namespace MortensKomeback2
             this.health = 100;
             this.fps = 7f;
             this.scale = 0.5f;
+            sprites = GameWorld.animationSprites["WalkingGoose"];
+            this.Sprite = sprites[0];
         }
 
         #endregion
@@ -60,7 +62,6 @@ namespace MortensKomeback2
             {
                 sprites = GameWorld.animationSprites["WalkingGoose"];
             }
-            this.Sprite = sprites[0];
 
             Movement(gameTime);
             Animation(gameTime);
