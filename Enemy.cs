@@ -110,6 +110,7 @@ namespace MortensKomeback2
                 direction = true;
             }
 
+
         }
 
         /// <summary>

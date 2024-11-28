@@ -29,6 +29,7 @@ namespace MortensKomeback2
             get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
         }
 
+        public int Health { get => health; } ///TIL IRENE
 
         public abstract void OnCollision(GameObject gameObject);
 
