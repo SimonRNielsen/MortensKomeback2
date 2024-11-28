@@ -7,9 +7,17 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class Player : GameObject, ICharacter
+    internal class Player : Character
     {
         #region field
+        private PlayerClass playerClass;
+        private float timeElapsed;
+        private int currentIndex;
+
+        /// <summary>
+        /// Bool to change the spriteEffectIndex so the player face the direction is walking 
+        /// </summary>
+        private bool direction = true;
 
         #endregion
 
@@ -18,10 +26,12 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player()
+        public Player(PlayerClass playerClass)
         {
             this.speed = 600;
             this.health = 100;
+            this.fps = 2f;
+            this.playerClass = playerClass;
         }
 
         #endregion
@@ -29,20 +39,45 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            //sprites = new Texture2D[];
+            sprites = new Texture2D[4];
 
-            this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\morten_sprite2"); //Only a test sprite of Morten
+            switch (playerClass)
+            {
+                case PlayerClass.Crusader:
+                    break;
+                case PlayerClass.Munk:
+                    break;
+                case PlayerClass.Bishop:
+                    sprites = GameWorld.animationSprites["BishopMorten"];
+                    break;
+            }
+            
+            this.Sprite = sprites[0];
         }
 
         public override void OnCollision(GameObject gameObject)
         {
+            //if (gameObject is Door)
+            //{
+            // Open door to net area
+            //}
 
+            if (gameObject is Item)
+            { 
+                //Collect item
+            }
+
+            if (gameObject is AvSurface)
+            {
+                //Take damage
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
             HandleInput();
             Movement(gameTime);
+            Animation(gameTime);
         }
 
 
@@ -74,12 +109,16 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.A))
             {
                 velocity += new Vector2(-1, 0);
+                this.spriteEffectIndex = 1;
+                direction = true;
             }
 
             //Player moves right when pressed D
             if (keyState.IsKeyDown(Keys.D))
             {
                 velocity += new Vector2(1, 0);
+                this.spriteEffectIndex = 0;
+                direction = false;
             }
 
             //Normalizing the velocity so if the player press more than one key the velocity will grow greater and greater 
@@ -99,7 +138,7 @@ namespace MortensKomeback2
         /// The players movement calculated a the product of velocity, speed and deltaTime
         /// </summary>
         /// <param name="gameTime">A GameTime</param>
-        public void Movement(GameTime gameTime)
+        public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -108,10 +147,34 @@ namespace MortensKomeback2
             position += (velocity * speed * deltaTime);
         }
 
-        public void Interact(GameObject gameObject)
+        /// <summary>
+        /// Making an animation of the sprites
+        /// </summary>
+        /// <param name="gameTime">A GameTime</param>
+        public override void Animation(GameTime gameTime)
         {
-            throw new System.NotImplementedException();
+            //If the velocity is equal to Vect2.Zero there will not be any animation
+            if (velocity == Vector2.Zero)
+            {
+                return;
+            }
+            
+            //Adding the time which has passed since the last update
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            currentIndex = (int)(timeElapsed * fps);
+
+            sprite = sprites[currentIndex];
+
+            //Restart the animation
+            if (currentIndex >= sprites.Length - 1)
+            {
+                timeElapsed = 0;
+                currentIndex = 0;
+            }
         }
+
+
 
         #endregion
     }
