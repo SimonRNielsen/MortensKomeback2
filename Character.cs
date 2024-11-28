@@ -8,10 +8,34 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    public interface ICharacter
+    public abstract class Character : GameObject
     {
-        void Movement(GameTime gameTime);
+        #region field
+        protected bool surfaceContact = false; //I don't know if I need it
 
-        void Interact(GameObject gameObject);
+        #endregion
+
+        public override void LoadContent(ContentManager content)
+        {
+           
+        }
+
+        public override void OnCollision(GameObject gameObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public abstract void Movement(GameTime gameTime);
+
+        //void Interact(GameObject gameObject);
+
+        public abstract void Animation(GameTime gameTime);
     }
 }

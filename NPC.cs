@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class NPC : GameObject, ICharacter
+    internal class NPC : Character
     {
         #region field
         private string[] npcClass = new string[2] {"Munk", "Nun"};
@@ -25,7 +25,6 @@ namespace MortensKomeback2
         {
 
 
-
         }
         #endregion
 
@@ -37,7 +36,10 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            if (gameObject is Player)
+            {
+                //Load quest 
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -45,15 +47,18 @@ namespace MortensKomeback2
             throw new NotImplementedException();
         }
 
-        public void Movement(GameTime gameTime)
+        public override void Movement(GameTime gameTime)
         {
             //Is standing still
         }
 
-        public void Interact(GameObject gameObject)
+        public override void Animation(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //No animation needed
         }
+
+
+
 
         #endregion
     }

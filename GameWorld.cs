@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MortensKomeback2
 {
@@ -36,6 +35,9 @@ namespace MortensKomeback2
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
         public static SpriteFont mortensKomebackFont;
 
+
+        private static Player playerInstance;
+
         #endregion
 
         #region Properties
@@ -46,6 +48,7 @@ namespace MortensKomeback2
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
+        internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
 
         #endregion
 
@@ -83,11 +86,20 @@ namespace MortensKomeback2
             newGameObjects.Add(new MainHandItem(2, Vector2.Zero, true));
             //newGameObjects.Add(new Button(Vector2.Zero, 0));
 
-            newGameObjects.Add(new Player());
-            newGameObjects.Add(new Enemy());
+            PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
+            newGameObjects.Add(PlayerInstance);
+            newGameObjects.Add(new Enemy(_graphics));
+            //newGameObjects.Add(new Player());
+            //newGameObjects.Add(new Enemy());
+            newGameObjects.Add(new Area(0,0, 0));
+            newGameObjects.Add(new Area(1,2000, 2000));
 
             base.Initialize();
+
+            //gameObjects.Add(new GUI());
         }
+
+        
 
         protected override void LoadContent()
         {
@@ -160,6 +172,10 @@ namespace MortensKomeback2
                 else
                     gameObjects.Add(newGameObject);
             }
+            
+            //Player position
+            //PlayerPosition = newGameObjects[1].Position;
+            
             newGameObjects.Clear();
 
 
@@ -263,11 +279,13 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
+            
+
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet);
+            commonSprites.Add("feetItem", feet); 
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -290,9 +308,49 @@ namespace MortensKomeback2
         /// </summary>
         private void LoadAnimationArrays()
         {
+            #region goose
+            Texture2D[] gooseSprites = new Texture2D[8];
+            for (int i = 0; i < 8; i++)
+            {
+                gooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\gooseWalk" + i);
+            }
+            animationSprites.Add("WalkingGoose", gooseSprites);
 
+            #region aggro goose
+            Texture2D[] aggroGooseSprites = new Texture2D[8];
+            for (int i = 0; i < 8; i++)
+            {
+                aggroGooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\aggro" + i);
+            }
+            animationSprites.Add("AggroGoose", aggroGooseSprites);
+            #endregion
+            #endregion
 
+            areaArray = new Texture2D[5]
+            {
+            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
+            };
+            animationSprites.Add("areaStart", areaArray);
 
+            #region Morten
+
+            #region Bishop
+            Texture2D[] bishop = new Texture2D[4];
+            for (int i = 0; i < 4; i++)
+            {
+                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
+            }
+            animationSprites.Add("BishopMorten", bishop);
+
+            #endregion
+
+            #endregion
+
+            
         }
 
         /// <summary>
