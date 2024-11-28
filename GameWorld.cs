@@ -326,7 +326,7 @@ namespace MortensKomeback2
             #endregion
             #endregion
 
-            areaArray = new Texture2D[5]
+            Texture2D[] areaArray = new Texture2D[5]
             {
             Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
