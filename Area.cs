@@ -31,7 +31,6 @@ namespace MortensKomeback2
             this.health = 1;
             this.sprites = GameWorld.animationSprites["areaStart"];
             this.sprite = sprites[areaArray];
-            //this.spriteID = spriteID;
         }
 
         #endregion

@@ -78,10 +78,26 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Area(1,0, 0));
-            newGameObjects.Add(new Area(2,0, 1080));
-            newGameObjects.Add(new Area(3,0, 2160));
-            newGameObjects.Add(new Area(4,0, 2160+1080));
+            newGameObjects.Add(new Area(1,0, 0));       //main room
+            newGameObjects.Add(new Area(2,0, 1080));    //main room
+            newGameObjects.Add(new Area(3,0, 2160));    //main room
+            newGameObjects.Add(new Area(4,0, 1080*3));  //main room
+            newGameObjects.Add(new Area(0,0, 1080*5));  // våbenhus - enemies
+            newGameObjects.Add(new Area(0,0, 1080*7));  // puzzle
+            newGameObjects.Add(new Area(0,0, 1080*9));  // boss fight
+
+            newGameObjects.Add(new Area(0, -3000, 0));          //ventre side, rum 1, nonne
+            newGameObjects.Add(new Area(0, -6000, 0));     //ventre side, rum 2
+            newGameObjects.Add(new Area(0, -6000, 1080*2));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(0, -6000, 1080 * 4));   //ventre side, rum 4, 
+            newGameObjects.Add(new Area(0, -6000, 1080 * 6));   //ventre side, rum 5, enemies
+            newGameObjects.Add(new Area(0, -9000, 1080 * 4));   //ventre side, rum 6, item
+
+            newGameObjects.Add(new Area(0, 3000, 0));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(0, 3000, -2160 ));      //højre side, rum 2, secret + item
+
+            newGameObjects.Add(new GUI( ));       //GUI
+
 
             base.Initialize();
 
@@ -136,7 +152,7 @@ namespace MortensKomeback2
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin(transformMatrix: Camera.GetTransformation(), samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
@@ -205,13 +221,22 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
-            
+            //GUI
+            Texture2D heartSprite = Content.Load<Texture2D>("Sprites\\GUI\\heartSprite");
+            Texture2D weaponSprite = Content.Load<Texture2D>("Sprites\\GUI\\weaponSprite");
+            Texture2D questRosarySprite = Content.Load<Texture2D>("Sprites\\GUI\\questRosarySprite");
+            Texture2D questKey1Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey1Sprite");
+            Texture2D questKey2Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey2Sprite");
+            Texture2D questBibleSprite = Content.Load<Texture2D>("Sprites\\GUI\\questBibleSprite");
+            //Texture2D mortalKombatFont = Content.Load<Texture2D>("mortalKombatFont");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
             commonSprites.Add("feetItem", feet); 
+
+
 
 #if DEBUG
             commonSprites.Add("collisionTexture", collisionTexture);

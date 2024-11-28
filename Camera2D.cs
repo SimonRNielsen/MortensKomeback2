@@ -46,7 +46,7 @@ namespace MortensKomeback2
         {
             _graphicsDevice = graphicsDevice;
             Position = position;
-            Zoom = 0.1f; // 0.6f /Skal ændres tilbage - Rikke har sat den forkert
+            Zoom = 0.05f; // 0.6f /Skal ændres tilbage - Rikke har sat den forkert
             Rotation = 0.0f;
         }
 
