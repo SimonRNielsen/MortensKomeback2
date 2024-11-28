@@ -28,8 +28,8 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass)
         {
-            this.speed = 600;
-            this.health = 100;
+            this.speed = 600; //Not sure what health should be
+            this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
         }
@@ -69,7 +69,12 @@ namespace MortensKomeback2
 
             if (gameObject is AvSurface)
             {
-                //Take damage
+                health = health - 10; //Not sure if it should be 10
+            }
+
+            if (gameObject is Obstacle)
+            {
+
             }
         }
 

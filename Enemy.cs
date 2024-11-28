@@ -68,6 +68,7 @@ namespace MortensKomeback2
             Movement(gameTime);
             Animation(gameTime);
         }
+
         public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
