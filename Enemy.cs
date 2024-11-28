@@ -14,9 +14,13 @@ namespace MortensKomeback2
     {
         #region field
         private GraphicsDeviceManager graphics;
-        private bool direction = false;
         private float timeElapsed;
-        private int curretIndex;
+        private int currentIndex;
+
+        /// <summary>
+        /// Bool to change the spriteEffectIndex so the player face the direction is walking 
+        /// </summary>
+        private bool direction = true;
 
         #endregion
 
@@ -39,23 +43,28 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            sprites = new Texture2D[8];
-
-            for (int i = 0; i < 8; i++)
-            {
-                sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\gooseWalk" + i);
-            }
-
-            this.Sprite = sprites[0];
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            
+            if (gameObject is Player)
+            {
+                //Load fight 
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 800f)
+            {
+                sprites = GameWorld.animationSprites["AggroGoose"];
+            }
+            else
+            {
+                sprites = GameWorld.animationSprites["WalkingGoose"];
+            }
+            this.Sprite = sprites[0];
+
             Movement(gameTime);
             Animation(gameTime);
         }
@@ -69,20 +78,22 @@ namespace MortensKomeback2
             //The player is moving by the result of HandleInput and deltaTime
             if (direction)
             {
-                position -= (velocity * speed * deltaTime);
+                position += (velocity * speed * deltaTime);
+                this.spriteEffectIndex = 1;
             }
             else
             {
-            position += (velocity * speed * deltaTime);
+                position -= (velocity * speed * deltaTime);
+                this.spriteEffectIndex = 0;
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width*3.5f)
-            {
-                direction = true;
-            }
-            if (position.X <= -(graphics.PreferredBackBufferWidth - Sprite.Width*3.5f))
+            if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f)
             {
                 direction = false;
+            }
+            if (position.X <= -(graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f))
+            {
+                direction = true;
             }
 
         }
@@ -92,16 +103,21 @@ namespace MortensKomeback2
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            curretIndex = (int)(timeElapsed * fps);
+            currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[curretIndex];
+            sprite = sprites[currentIndex];
 
             //Restart the animation
-            if (curretIndex >= sprites.Length - 1)
+            if (currentIndex >= sprites.Length - 1)
             {
                 timeElapsed = 0;
-                curretIndex = 0;
+                currentIndex = 0;
             }
+        }
+
+        public float DistanceToPlayer(Vector2 playerPosition)
+        {
+            return Vector2.Distance(this.position, playerPosition);
         }
 
         #endregion

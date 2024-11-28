@@ -36,7 +36,10 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            if (gameObject is Player)
+            {
+                //Load quest 
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -49,10 +52,12 @@ namespace MortensKomeback2
             //Is standing still
         }
 
-        public override  void Animation(GameTime gameTime)
+        public override void Animation(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //No animation needed
         }
+
+
 
 
         #endregion

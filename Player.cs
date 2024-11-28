@@ -12,7 +12,13 @@ namespace MortensKomeback2
         #region field
         private PlayerClass playerClass;
         private float timeElapsed;
-        private int curretIndex;
+        private int currentIndex;
+
+        /// <summary>
+        /// Bool to change the spriteEffectIndex so the player face the direction is walking 
+        /// </summary>
+        private bool direction = true;
+
         #endregion
 
         #region properti
@@ -42,10 +48,7 @@ namespace MortensKomeback2
                 case PlayerClass.Munk:
                     break;
                 case PlayerClass.Bishop:
-                    for (int i = 0; i < 4; i++)
-                    {
-                        sprites[i] = content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
-                    }
+                    sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
             }
             
@@ -54,17 +57,20 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            if (gameObject is NPC)
-            { }
-
-            if (gameObject is Enemy)
-            { }
+            //if (gameObject is Door)
+            //{
+            // Open door to net area
+            //}
 
             if (gameObject is Item)
-            { }
+            { 
+                //Collect item
+            }
 
-            //if (gameObject is AvSurface)
-            //{ }
+            if (gameObject is AvSurface)
+            {
+                //Take damage
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -103,12 +109,16 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.A))
             {
                 velocity += new Vector2(-1, 0);
+                this.spriteEffectIndex = 1;
+                direction = true;
             }
 
             //Player moves right when pressed D
             if (keyState.IsKeyDown(Keys.D))
             {
                 velocity += new Vector2(1, 0);
+                this.spriteEffectIndex = 0;
+                direction = false;
             }
 
             //Normalizing the velocity so if the player press more than one key the velocity will grow greater and greater 
@@ -137,22 +147,34 @@ namespace MortensKomeback2
             position += (velocity * speed * deltaTime);
         }
 
+        /// <summary>
+        /// Making an animation of the sprites
+        /// </summary>
+        /// <param name="gameTime">A GameTime</param>
         public override void Animation(GameTime gameTime)
         {
+            //If the velocity is equal to Vect2.Zero there will not be any animation
+            if (velocity == Vector2.Zero)
+            {
+                return;
+            }
+            
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            curretIndex = (int)(timeElapsed * fps);
+            currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[curretIndex];
+            sprite = sprites[currentIndex];
 
             //Restart the animation
-            if (curretIndex >= sprites.Length -1)
+            if (currentIndex >= sprites.Length - 1)
             {
                 timeElapsed = 0;
-                curretIndex = 0;
+                currentIndex = 0;
             }
         }
+
+
 
         #endregion
     }
