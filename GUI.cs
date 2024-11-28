@@ -26,7 +26,7 @@ namespace MortensKomeback2
         private Vector2 heartPosition;
         private Vector2 weaponPosition; 
         //private Vector2 questItemPosition;
-        private SpriteFont mortalKombatFont;
+        //private SpriteFont mortalKombatFont;
         private bool mortenAlive;
         #endregion
 
