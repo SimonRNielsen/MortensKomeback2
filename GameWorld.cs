@@ -78,8 +78,6 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Player());
-            newGameObjects.Add(new Enemy());
             newGameObjects.Add(new Area(1,0, 0));
             newGameObjects.Add(new Area(2,0, 1080));
             newGameObjects.Add(new Area(3,0, 2160));
@@ -267,16 +265,6 @@ namespace MortensKomeback2
             #endregion
 
             #endregion
-
-            areaArray = new Texture2D[5]
-            {
-            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
-            };
-            animationSprites.Add("areaStart", areaArray);
 
         }
 
