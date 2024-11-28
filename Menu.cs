@@ -17,8 +17,10 @@ namespace MortensKomeback2
         private static int keyCount;
         private static int healItem;
         private bool isInventory = false;
+        private bool drawTwoHanded = false;
         protected bool isMenu = false;
         protected bool buttonObsolete = false;
+        private Texture2D twoHandedSprite;
 
         #endregion
 
@@ -45,7 +47,7 @@ namespace MortensKomeback2
                 case 0:
                     isInventory = true;
                     sprite = GameWorld.commonSprites["inventory"];
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X, Position.Y + 300), 1));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X, Position.Y + 400), 1));
                     break;
                 case 1:
                     sprite = GameWorld.commonSprites["winScreen"];
@@ -96,7 +98,11 @@ namespace MortensKomeback2
             switch (menuType)
             {
                 case 0:
-
+                    if (drawTwoHanded)
+                        spriteBatch.Draw(twoHandedSprite, new Vector2(position.X + 700 - (twoHandedSprite.Width / 2), position.Y - 200 - (twoHandedSprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.PlayerInstance.Sprite, new Vector2(position.X - 400, position.Y - 400), null, drawColor, rotation, Vector2.Zero, scale * 3, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.commonSprites["healItem"], new Vector2(position.X + 300 - (GameWorld.commonSprites["healItem"].Width / 2), position.Y + 275 - (GameWorld.commonSprites["healItem"].Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.commonSprites["questItem"], new Vector2(position.X + 300 - (GameWorld.commonSprites["questItem"].Width / 2), position.Y + 425 - (GameWorld.commonSprites["questItem"].Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
                     break;
                 default:
                     break;
@@ -108,6 +114,7 @@ namespace MortensKomeback2
             int spacer = 0;
             int nextLine = 0;
             int addLineCounter = 0;
+            drawTwoHanded = false;
             foreach (Item item in GameWorld.playerInventory)
             {
                 if (!(item is QuestItem))
@@ -126,7 +133,14 @@ namespace MortensKomeback2
             foreach (Item item in GameWorld.equippedPlayerInventory)
             {
                 if (item is MainHandItem)
+                {
+                    if ((item as MainHandItem).IsTwoHanded)
+                    {
+                        drawTwoHanded = true;
+                        twoHandedSprite = item.Sprite;
+                    }
                     item.Position = new Vector2(position.X + 300, position.Y - 200);
+                }
                 if (item is TorsoSlotItem)
                     item.Position = new Vector2(position.X + 500, position.Y - 200);
                 if (item is OffHandItem)

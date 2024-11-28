@@ -21,13 +21,14 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public OffHandItem(int playerclass, bool enhanced)
+        public OffHandItem(int playerClass, bool enhanced)
         {
             sprite = GameWorld.commonSprites["offHandItem"];
+            layer = 0.95f;
             damageReductionBonus = 5;
             if (enhanced)
                 damageReductionBonus = (int)(damageReductionBonus * 1.6f);
-            switch (playerclass)
+            switch (playerClass)
             {
                 case 1:
                     itemName = "Shield";

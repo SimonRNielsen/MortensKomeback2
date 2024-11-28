@@ -98,6 +98,7 @@ namespace MortensKomeback2
             if (playerItem.IsEquipped)
             {
                 buttonText = "Unequip";
+                textXDisplacement = -18;
             }
             else
             {

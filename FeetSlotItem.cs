@@ -21,10 +21,11 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public FeetSlotItem(int playerclass)
+        public FeetSlotItem(int playerClass)
         {
             sprite = GameWorld.commonSprites["feetItem"];
             itemName = "Boots of speed";
+            layer = 0.95f;
             speedBonus = 5f;
         }
 

@@ -15,6 +15,7 @@
         protected bool isEquipped = false;
         protected bool isUsed = false;
         protected bool isUseable = false;
+        protected bool isFound = false;
 
         #endregion
 
@@ -28,6 +29,7 @@
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
         public bool IsUsed { get => isUsed; set => isUsed = value; }
         public bool IsUseable { get => isUseable; }
+        public bool IsFound { get => isFound; set => isFound = value; }
 
         #endregion
 

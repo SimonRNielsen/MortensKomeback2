@@ -83,23 +83,22 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem(2, Vector2.Zero, true));
-            //newGameObjects.Add(new Button(Vector2.Zero, 0));
-
+            newGameObjects.Add(new MainHandItem(2, Vector2.Zero, false));
+            
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
             //newGameObjects.Add(new Player());
             //newGameObjects.Add(new Enemy());
-            newGameObjects.Add(new Area(0,0, 0));
-            newGameObjects.Add(new Area(1,2000, 2000));
+            newGameObjects.Add(new Area(0, 0, 0));
+            newGameObjects.Add(new Area(1, 2000, 2000));
 
             base.Initialize();
 
             //gameObjects.Add(new GUI());
         }
 
-        
+
 
         protected override void LoadContent()
         {
@@ -172,10 +171,10 @@ namespace MortensKomeback2
                 else
                     gameObjects.Add(newGameObject);
             }
-            
+
             //Player position
             //PlayerPosition = newGameObjects[1].Position;
-            
+
             newGameObjects.Clear();
 
 
@@ -199,16 +198,19 @@ namespace MortensKomeback2
 
             }
 
-            foreach (Item item in playerInventory)
+            if (DetectInventory())
             {
-                item.Draw(_spriteBatch);
-                DrawCollisionBox(item);
-            }
+                foreach (Item item in playerInventory)
+                {
+                    item.Draw(_spriteBatch);
+                    DrawCollisionBox(item);
+                }
 
-            foreach (Item item in equippedPlayerInventory)
-            {
-                item.Draw(_spriteBatch);
-                DrawCollisionBox(item);
+                foreach (Item item in equippedPlayerInventory)
+                {
+                    item.Draw(_spriteBatch);
+                    DrawCollisionBox(item);
+                }
             }
 
 
@@ -278,14 +280,14 @@ namespace MortensKomeback2
             Texture2D offHand = Content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
-
-            
+            Texture2D healItem = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet); 
+            commonSprites.Add("feetItem", feet);
+            commonSprites.Add("healItem", healItem);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -350,7 +352,7 @@ namespace MortensKomeback2
 
             #endregion
 
-            
+
         }
 
         /// <summary>

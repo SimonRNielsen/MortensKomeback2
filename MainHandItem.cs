@@ -9,7 +9,7 @@ namespace MortensKomeback2
         #region Fields
 
         private bool isTwoHanded = false;
-        private readonly ImplementTwohanded implementTwohanded = new ImplementTwohanded();
+        private readonly ImplementTwoHanded implementTwohanded = new ImplementTwoHanded();
         private readonly ITwoHandedItem implement;
 
         #endregion
@@ -23,32 +23,6 @@ namespace MortensKomeback2
 
         #region Constructor
 
-
-        public MainHandItem(int playerClass, bool equipped)
-        {
-            damageBonus = 5;
-            switch (playerClass)
-            {
-                case 1:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
-                    itemName = "Sword";
-                    break;
-                case 2:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
-                    itemName = "Sling";
-                    implement = implementTwohanded;
-                    break;
-                case 3:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
-                    itemName = "Staff";
-                    implement = implementTwohanded;
-                    break;
-            }
-            if (equipped)
-                GameWorld.equippedPlayerInventory.Add(this);
-            else
-                GameWorld.playerInventory.Add(this);
-        }
 
         public MainHandItem(int playerClass, Vector2 position, bool enhanced)
         {

@@ -21,10 +21,11 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public TorsoSlotItem(int playerclass)
+        public TorsoSlotItem(int playerClass)
         {
             sprite = GameWorld.commonSprites["torsoItem"];
-            switch (playerclass)
+            layer = 0.95f;
+            switch (playerClass)
             {
                 case 1:
                     damageReductionBonus = 10;

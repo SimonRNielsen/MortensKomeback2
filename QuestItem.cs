@@ -58,8 +58,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            if (isUsed)
-                health = 0;
+            
         }
 
         #endregion
