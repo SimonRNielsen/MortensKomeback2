@@ -7,23 +7,38 @@ namespace MortensKomeback2
     {
         #region Fields
 
-        private bool isUsed = false;
+        private bool isKey = false;
+        private bool healItem = false;
 
         #endregion
 
         #region Properties
 
-        public bool IsUsed { get => isUsed; set => isUsed = value; }
+        public bool IsKey { get => isKey; }
+        public bool HealItem { get => healItem; }
 
         #endregion
 
         #region Constructor
 
 
-        public QuestItem()
+        public QuestItem(int itemType)
         {
-            sprite = GameWorld.commonSprites["questItem"];
-            itemName = "Key";
+            switch (itemType)
+            {
+                case 0:
+                    sprite = GameWorld.commonSprites["questItem"];
+                    itemName = "Key";
+                    isUseable = true;
+                    isKey = true;
+                    break;
+                case 1:
+                    sprite = GameWorld.commonSprites["questItem"];
+                    itemName = "Gooseblood";
+                    isUseable = true;
+                    healItem = true;
+                    break;
+            }
         }
 
         #endregion

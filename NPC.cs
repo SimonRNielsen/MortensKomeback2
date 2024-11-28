@@ -31,7 +31,7 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\goose0");
+            //this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\goose0");
         }
 
         public override void OnCollision(GameObject gameObject)
