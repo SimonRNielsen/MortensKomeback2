@@ -21,20 +21,22 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public OffHandItem(int playerclass)
+        public OffHandItem(int playerclass, bool enhanced)
         {
             sprite = GameWorld.commonSprites["offHandItem"];
             damageReductionBonus = 5;
+            if (enhanced)
+                damageReductionBonus = (int)(damageReductionBonus * 1.6f);
             switch (playerclass)
             {
                 case 1:
                     itemName = "Shield";
                     break;
                 case 2:
-                    health = 0;
+                    isUsed = true;
                     break;
                 case 3:
-                    health = 0;
+                    isUsed = true;
                     break;
             }
         }

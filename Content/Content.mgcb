@@ -140,6 +140,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/introScreen.png
 
+#begin Sprites/Menu/inventory.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/inventory.png
+
 #begin Sprites/Menu/loseScreen.png
 /importer:TextureImporter
 /processor:TextureProcessor

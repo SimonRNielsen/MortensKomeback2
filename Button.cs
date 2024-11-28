@@ -19,7 +19,6 @@ namespace MortensKomeback2
         private int backgroundColorIndex;
         private int buttonID;
         private bool collision = false;
-        private bool buttonObsolete = false;
         private bool itemButton = false;
         private string buttonText;
         private float textXDisplacement;
@@ -34,7 +33,6 @@ namespace MortensKomeback2
             get { return new Rectangle((int)Position.X - (sprite.Width / 2), (int)Position.Y - (sprite.Height / 2), sprite.Width, sprite.Height); }
         }
         public bool ItemButton { get => itemButton; }
-        public bool ButtonObsolete { get => buttonObsolete; set => buttonObsolete = value; }
 
         #endregion
 
@@ -45,11 +43,14 @@ namespace MortensKomeback2
             position = spawnPosition;
             layer = 0.998f;
             buttonID = buttonType;
-            buttonText = string.Empty;
             switch (buttonID)
             {
                 case 0:
-                case 1: //Same as "case 0:" except used for "inventory"
+                    sprite = GameWorld.commonSprites["button"];
+                    buttonText = "Unpause";
+                    textXDisplacement = -18;
+                    break;
+                case 1:
                     sprite = GameWorld.commonSprites["button"];
                     buttonText = "Close";
                     textXDisplacement = -7;
@@ -92,6 +93,7 @@ namespace MortensKomeback2
             playerItem = item;
             itemButton = true;
             buttonID = 100;
+            layer = 0.998f;
             sprite = GameWorld.commonSprites["menuButton"];
             if (playerItem.IsEquipped)
             {
@@ -116,14 +118,11 @@ namespace MortensKomeback2
                 switch (buttonID)
                 {
                     case 0:
-                        GameWorld.CloseMenu = true;
-                        break;
-
                     case 1:
                         foreach (Item item in GameWorld.playerInventory)
-                            item.Position = new Vector2(-10000, -10000);
+                            item.Position = new Vector2(item.Position.X - 10000, item.Position.Y - 10000);
                         foreach (Item item in GameWorld.equippedPlayerInventory)
-                            item.Position = new Vector2(-10000, -10000);
+                            item.Position = new Vector2(item.Position.X - 10000, item.Position.Y - 10000);
                         GameWorld.CloseMenu = true;
                         break;
 

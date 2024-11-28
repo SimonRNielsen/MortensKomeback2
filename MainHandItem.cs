@@ -50,10 +50,13 @@ namespace MortensKomeback2
                 GameWorld.playerInventory.Add(this);
         }
 
-        public MainHandItem(int playerClass, Vector2 position)
+        public MainHandItem(int playerClass, Vector2 position, bool enhanced)
         {
             damageBonus = 5;
+            if (enhanced)
+                damageBonus = (int)(damageBonus * 1.6f);
             Position = position;
+            layer = 0.95f;
             switch (playerClass)
             {
                 case 1:

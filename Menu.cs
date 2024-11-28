@@ -14,9 +14,11 @@ namespace MortensKomeback2
         #region Fields
 
         private int menuType;
-        private bool addButtons = false;
+        private static int keyCount;
+        private static int healItem;
         private bool isInventory = false;
         protected bool isMenu = false;
+        protected bool buttonObsolete = false;
 
         #endregion
 
@@ -24,6 +26,7 @@ namespace MortensKomeback2
 
         public bool IsInventory { get => isInventory; }
         public bool IsMenu { get => isMenu; }
+        public bool ButtonObsolete { get => buttonObsolete; set => buttonObsolete = value; }
 
         #endregion
 
@@ -65,23 +68,8 @@ namespace MortensKomeback2
         {
             if (isInventory)
             {
-                int spacer = 0;
-                foreach (Item item in GameWorld.playerInventory)
-                {
-                    item.Position = new Vector2(position.X - 800f, position.Y - 500f + (float)spacer);
-                    spacer += item.Sprite.Height;
-                }
-                foreach (Item item in GameWorld.equippedPlayerInventory)
-                {
-                    if (item is MainHandItem)
-                        item.Position = new Vector2(position.X + 150, position.Y - 200);
-                    if (item is TorsoSlotItem)
-                        item.Position = new Vector2(position.X + 300, position.Y - 200);
-                    if (item is OffHandItem)
-                        item.Position = new Vector2(position.X + 450, position.Y - 200);
-                    if (item is FeetSlotItem)
-                        item.Position = new Vector2(position.X + 300, position.Y);
-                }
+                ShowInventory();
+                CountUseables();
             }
         }
 
@@ -115,6 +103,54 @@ namespace MortensKomeback2
             }
         }
 
+        private void ShowInventory()
+        {
+            int spacer = 0;
+            int nextLine = 0;
+            int addLineCounter = 0;
+            foreach (Item item in GameWorld.playerInventory)
+            {
+                if (!(item is QuestItem))
+                {
+                    item.Position = new Vector2(position.X - 750 + (96 * nextLine), position.Y - 350 + spacer);
+                    spacer += 96;
+                    addLineCounter++;
+                    if (addLineCounter == 9)
+                    {
+                        nextLine++;
+                        addLineCounter = 0;
+                        spacer = 0;
+                    }
+                }
+            }
+            foreach (Item item in GameWorld.equippedPlayerInventory)
+            {
+                if (item is MainHandItem)
+                    item.Position = new Vector2(position.X + 300, position.Y - 200);
+                if (item is TorsoSlotItem)
+                    item.Position = new Vector2(position.X + 500, position.Y - 200);
+                if (item is OffHandItem)
+                    item.Position = new Vector2(position.X + 700, position.Y - 200);
+                if (item is FeetSlotItem)
+                    item.Position = new Vector2(position.X + 500, position.Y);
+            }
+        }
+
+        private void CountUseables()
+        {
+            keyCount = 0;
+            healItem = 0;
+            foreach (Item item in GameWorld.playerInventory)
+            {
+                if (item is QuestItem)
+                {
+                    if ((item as QuestItem).IsKey)
+                        keyCount++;
+                    if ((item as QuestItem).HealItem)
+                        healItem++;
+                }
+            }
+        }
         #endregion
     }
 }

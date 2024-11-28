@@ -80,7 +80,7 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem(2, Vector2.Zero));
+            newGameObjects.Add(new MainHandItem(2, Vector2.Zero, true));
             //newGameObjects.Add(new Button(Vector2.Zero, 0));
 
             newGameObjects.Add(new Player());
@@ -146,7 +146,8 @@ namespace MortensKomeback2
                 menuActive = false;
                 closeMenu = false;
             }
-            menu.RemoveAll(menuItem => (menuItem as Button).ButtonObsolete == true);
+            menu.RemoveAll(menuItem => menuItem.ButtonObsolete == true);
+            playerInventory.RemoveAll(useable => useable.IsUsed == true);
 
             //"Spawns" new items
             foreach (GameObject newGameObject in newGameObjects)
@@ -181,7 +182,6 @@ namespace MortensKomeback2
 #endif
 
             }
-
 
             foreach (Item item in playerInventory)
             {
@@ -274,14 +274,14 @@ namespace MortensKomeback2
             Texture2D introScreen = Content.Load<Texture2D>("Sprites\\Menu\\introScreen");
             Texture2D winScreen = Content.Load<Texture2D>("Sprites\\Menu\\winScreen");
             Texture2D loseScreen = Content.Load<Texture2D>("Sprites\\Menu\\loseScreen");
-            //Texture2D inventoryScreen = Content.Load<Texture2D>("Sprites\\Menu\\inventoryScreen");
+            Texture2D inventoryScreen = Content.Load<Texture2D>("Sprites\\Menu\\inventory");
 
             commonSprites.Add("menuButton", menuButton);
             commonSprites.Add("button", button);
             commonSprites.Add("introScreen", introScreen);
             commonSprites.Add("winScreen", winScreen);
             commonSprites.Add("loseScreen", loseScreen);
-            //commonSprites.Add("inventory", inventoryScreen);
+            commonSprites.Add("inventory", inventoryScreen);
 
         }
 
