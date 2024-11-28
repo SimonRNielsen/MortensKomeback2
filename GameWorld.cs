@@ -27,6 +27,7 @@ namespace MortensKomeback2
         public static Dictionary<string, Texture2D[]> animationSprites = new Dictionary<string, Texture2D[]>();
         public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
+        public static Texture2D[] areaArray;
 
         #endregion
 
@@ -36,6 +37,7 @@ namespace MortensKomeback2
         public static Vector2 MousePosition { get => mousePosition; }
         public static bool LeftMouseButtonClick { get => leftMouseButtonClick; }
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
+ 
 
         #endregion
 
@@ -62,7 +64,7 @@ namespace MortensKomeback2
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
-            LoadCommonSprites(commonSprites, Content);
+            LoadCommonSprites();
             LoadAnimationArrays();
             LoadCommonSounds();
             LoadBackgroundSongs();
@@ -71,10 +73,12 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new Player());
             newGameObjects.Add(new Enemy());
+            newGameObjects.Add(new Area(0,0, 0));
+            newGameObjects.Add(new Area(1,2000, 2000));
 
             base.Initialize();
 
-            gameObjects.Add(new GUI());
+            //gameObjects.Add(new GUI());
         }
 
         
@@ -189,11 +193,13 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
+            
+
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet);
+            commonSprites.Add("feetItem", feet); 
 
 #if DEBUG
             commonSprites.Add("collisionTexture", collisionTexture);
@@ -207,8 +213,16 @@ namespace MortensKomeback2
         private void LoadAnimationArrays()
         {
 
+            areaArray = new Texture2D[5]
+            {
+            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
+            };
+            animationSprites.Add("areaStart", areaArray);
 
-            
         }
 
         /// <summary>
