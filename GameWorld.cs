@@ -78,10 +78,12 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Player());
-            newGameObjects.Add(new Enemy());
             newGameObjects.Add(new Area(0,0, 0));
             newGameObjects.Add(new Area(1,2000, 2000));
+
+            #region obstacle
+            newGameObjects.Add(new AvSurface(200, 200));
+            #endregion
 
             base.Initialize();
 
@@ -124,9 +126,17 @@ namespace MortensKomeback2
                 else
                     gameObjects.Add(newGameObject);
             }
-            
-            //Player position
-            //PlayerPosition = newGameObjects[1].Position;
+
+            //Check collision
+            foreach (GameObject go in newGameObjects)
+            {
+                go.Update(gameTime);
+
+                foreach (GameObject other in newGameObjects)
+                {
+                    go.CheckCollision(other);
+                }
+            }
             
             newGameObjects.Clear();
 
@@ -266,18 +276,12 @@ namespace MortensKomeback2
 
             #endregion
 
-            areaArray = new Texture2D[5]
-            {
-            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
-            };
-            animationSprites.Add("areaStart", areaArray);
-
-            #region obstalcke
-
+            
+            #region obstalce
+            Texture2D[] firepit = new Texture2D[2];
+            firepit[0] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit");
+            firepit[1] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit0");
+            animationSprites.Add("firepit", firepit);
             #endregion
 
         }

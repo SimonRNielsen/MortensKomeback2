@@ -20,15 +20,18 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public AvSurface()
+        public AvSurface(int xPosition, int yPosition)
         {
-            this.fps = 7f;
+            this.fps = 1f;
+            this.position = new Vector2(xPosition, yPosition);
         }
         #endregion
 
         #region method
         public override void LoadContent(ContentManager content)
         {
+            sprites = GameWorld.animationSprites["firepit"];
+            
             this.Sprite = sprites[0];
         }
 

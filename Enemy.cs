@@ -35,6 +35,7 @@ namespace MortensKomeback2
             graphics = _graphics;
             this.health = 100;
             this.fps = 7f;
+            this.scale = 0.5f;
         }
 
         #endregion
@@ -47,15 +48,11 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            if (gameObject is Player)
-            {
-                //Load fight 
-            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 800f)
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f)
             {
                 sprites = GameWorld.animationSprites["AggroGoose"];
             }

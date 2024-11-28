@@ -53,50 +53,50 @@ namespace MortensKomeback2
         }
         #endregion
     }
-    internal class Area
-    {
-    }
-    internal class Area : GameObject
-    {
-        #region fields
-        //private int spriteID; //Which sprite is going to be used
+    //internal class Area
+    //{
+    //}
+    //internal class Area : GameObject
+    //{
+    //    #region fields
+    //    //private int spriteID; //Which sprite is going to be used
 
-        #endregion
+    //    #endregion
 
-        #region Properties
+    //    #region Properties
 
-        #endregion
+    //    #endregion
 
-        #region Constructor
-        public Area(int areaArray, int xPosition, int yPosition)
-        {
-            this.layer = 0f;
-            this.scale = 1f;
-            this.position.X = xPosition;
-            this.position.Y = yPosition;
-            this.health = 1;
-            this.sprites = GameWorld.animationSprites["areaStart"];
-            this.sprite = sprites[areaArray];
-            //this.spriteID = spriteID;
-        }
+    //    #region Constructor
+    //    public Area(int areaArray, int xPosition, int yPosition)
+    //    {
+    //        this.layer = 0f;
+    //        this.scale = 1f;
+    //        this.position.X = xPosition;
+    //        this.position.Y = yPosition;
+    //        this.health = 1;
+    //        this.sprites = GameWorld.animationSprites["areaStart"];
+    //        this.sprite = sprites[areaArray];
+    //        //this.spriteID = spriteID;
+    //    }
 
-        #endregion
+    //    #endregion
 
-        #region Method
-        public override void LoadContent(ContentManager content)
-        {
+    //    #region Method
+    //    public override void LoadContent(ContentManager content)
+    //    {
             
-        }
+    //    }
 
-        public override void OnCollision(GameObject gameObject)
-        {
-            throw new NotImplementedException();
-        }
+    //    public override void OnCollision(GameObject gameObject)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public override void Update(GameTime gameTime)
-        {
+    //    public override void Update(GameTime gameTime)
+    //    {
             
-        }
-        #endregion
-    }
+    //    }
+    //    #endregion
+    //}
 }

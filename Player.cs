@@ -32,6 +32,7 @@ namespace MortensKomeback2
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
+            this.scale = 0.75f;
         }
 
         #endregion
@@ -57,6 +58,7 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
+            
             //if (gameObject is Door)
             //{
             // Open door to net area
@@ -76,6 +78,8 @@ namespace MortensKomeback2
             {
 
             }
+
+            //int kage = GameWorld.PlayerInstance.health;
         }
 
         public override void Update(GameTime gameTime)
@@ -179,7 +183,7 @@ namespace MortensKomeback2
             }
         }
 
-
+        
 
         #endregion
     }
