@@ -421,6 +421,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/morten_sprite2.png
 
+#begin Sprites/Area/roomUdkast.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Area/roomUdkast.png
+
 #begin Sprites/DEBUG/pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor

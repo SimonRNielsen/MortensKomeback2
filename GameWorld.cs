@@ -79,7 +79,11 @@ namespace MortensKomeback2
             newGameObjects.Add(new Enemy(_graphics));
 
             base.Initialize();
+
+            gameObjects.Add(new GUI());
         }
+
+        
 
         protected override void LoadContent()
         {
