@@ -22,12 +22,13 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public Area(int areaArray, int xPosition, int yPosition)
+        public Area(Vector2 placement, int areaArray /*int xPosition, int yPosition*/)
         {
+            this.position = placement;
             this.layer = 0f;
             this.scale = 1f;
-            this.position.X = xPosition;
-            this.position.Y = yPosition;
+            /*this.position.X = xPosition;
+            this.position.Y = yPosition;*/
             this.health = 1;
             this.sprites = GameWorld.animationSprites["areaStart"];
             this.sprite = sprites[areaArray];

@@ -78,25 +78,25 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Area(1,0, 0));       //main room
-            newGameObjects.Add(new Area(2,0, 1080));    //main room
-            newGameObjects.Add(new Area(3,0, 2160));    //main room
-            newGameObjects.Add(new Area(4,0, 1080*3));  //main room
-            newGameObjects.Add(new Area(0,0, 1080*5));  // våbenhus - enemies
-            newGameObjects.Add(new Area(0,0, 1080*7));  // puzzle
-            newGameObjects.Add(new Area(0,0, 1080*9));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080), 2));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 2160), 3));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4));  //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0));  // våbenhus - enemies
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0));  // puzzle
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0));  // boss fight
 
-            newGameObjects.Add(new Area(0, -3000, 0));          //ventre side, rum 1, nonne
-            newGameObjects.Add(new Area(0, -6000, 0));     //ventre side, rum 2
-            newGameObjects.Add(new Area(0, -6000, 1080*2));     //ventre side, rum 3 enemies
-            newGameObjects.Add(new Area(0, -6000, 1080 * 4));   //ventre side, rum 4, 
-            newGameObjects.Add(new Area(0, -6000, 1080 * 6));   //ventre side, rum 5, enemies
-            newGameObjects.Add(new Area(0, -9000, 1080 * 4));   //ventre side, rum 6, item
+            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0));          //ventre side, rum 1, nonne
+            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0));     //ventre side, rum 2
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 4), 0));   //ventre side, rum 4, 
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 6), 0));   //ventre side, rum 5, enemies
+            newGameObjects.Add(new Area(new Vector2(-9000, 1080 * 4), 0));   //ventre side, rum 6, item
 
-            newGameObjects.Add(new Area(0, 3000, 0));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(0, 3000, -2160 ));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(3000, 0), 0));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0));      //højre side, rum 2, secret + item
 
-            newGameObjects.Add(new GUI( ));       //GUI
+            newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
 
 
             base.Initialize();
@@ -234,7 +234,14 @@ namespace MortensKomeback2
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet); 
+            commonSprites.Add("feetItem", feet);
+
+            commonSprites.Add("heartSprite", heartSprite);
+            commonSprites.Add("weaponSprite", weaponSprite);
+            commonSprites.Add("questRosarySprite", questRosarySprite);
+            commonSprites.Add("questKey1Sprite", questKey1Sprite);
+            commonSprites.Add("questKey2Sprite", questKey2Sprite);
+            commonSprites.Add("questBibleSprite", questBibleSprite);
 
 
 
