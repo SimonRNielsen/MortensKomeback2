@@ -266,6 +266,16 @@ namespace MortensKomeback2
 
             #endregion
 
+            areaArray = new Texture2D[5]
+            {
+            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
+            };
+            animationSprites.Add("areaStart", areaArray);
+
         }
 
         /// <summary>
