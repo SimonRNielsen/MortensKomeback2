@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class AvSurface
+    internal class AvSurface : Obstacle
     {
     }
 }
