@@ -52,17 +52,9 @@ namespace MortensKomeback2
         public GUI(Vector2 placement/*int xPosition, int yPosition*/)
         {
             this.position = placement;
-            heartPosition = new Vector2(200, 200);
+            //heartPosition = new Vector2(200, 200);
             sprite = GameWorld.commonSprites["heartSprite"];
-            //sprite = weaponSprite;
-            //this.position.X = xPosition;
-            //this.position.Y = yPosition;
-            //heartPosition.Y = -500;
-            //heartPosition.X = -900;
-            //weaponPosition.Y = -400;
-            //weaponPosition.X = -900;
-            //questItemPosition.Y = -300;
-            //questItemPosition.X = -900;
+            
 
         }
         #endregion

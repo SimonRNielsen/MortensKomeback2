@@ -109,6 +109,7 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
 
+            newGameObjects.Add(new Dialogue(new Vector2(100, 400))); //dialogue
 
             base.Initialize();
 
@@ -295,6 +296,12 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
+            commonSprites.Add("questItem", quest);
+            commonSprites.Add("mainHandItem", mainHand);
+            commonSprites.Add("offHandItem", offHand);
+            commonSprites.Add("torsoItem", torso);
+            commonSprites.Add("feetItem", feet);
+
             //GUI
             Texture2D heartSprite = Content.Load<Texture2D>("Sprites\\GUI\\heartSprite");
             Texture2D weaponSprite = Content.Load<Texture2D>("Sprites\\GUI\\weaponSprite");
@@ -302,13 +309,6 @@ namespace MortensKomeback2
             Texture2D questKey1Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey1Sprite");
             Texture2D questKey2Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey2Sprite");
             Texture2D questBibleSprite = Content.Load<Texture2D>("Sprites\\GUI\\questBibleSprite");
-            //Texture2D mortalKombatFont = Content.Load<Texture2D>("mortalKombatFont");
-
-            commonSprites.Add("questItem", quest);
-            commonSprites.Add("mainHandItem", mainHand);
-            commonSprites.Add("offHandItem", offHand);
-            commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet);
 
             commonSprites.Add("heartSprite", heartSprite);
             commonSprites.Add("weaponSprite", weaponSprite);
@@ -316,8 +316,6 @@ namespace MortensKomeback2
             commonSprites.Add("questKey1Sprite", questKey1Sprite);
             commonSprites.Add("questKey2Sprite", questKey2Sprite);
             commonSprites.Add("questBibleSprite", questBibleSprite);
-
-
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -332,6 +330,11 @@ namespace MortensKomeback2
             commonSprites.Add("winScreen", winScreen);
             commonSprites.Add("loseScreen", loseScreen);
             commonSprites.Add("inventory", inventoryScreen);
+
+            Texture2D dialogueBox = Content.Load<Texture2D>("Sprites\\GUI\\dialogueBox");
+            commonSprites.Add("dialogueBox", dialogueBox);
+
+
 
         }
 
