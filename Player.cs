@@ -76,10 +76,9 @@ namespace MortensKomeback2
 
             if (gameObject is Obstacle)
             {
-
+                
             }
-
-            int kage = GameWorld.PlayerInstance.health;
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -138,6 +137,12 @@ namespace MortensKomeback2
 
             //The player is Pray
             if (keyState.IsKeyDown(Keys.P))
+            {
+
+            }
+
+            //Interact with item, door or NPC
+            if (keyState.IsKeyDown(Keys.E))
             {
 
             }

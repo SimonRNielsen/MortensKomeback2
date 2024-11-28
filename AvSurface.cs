@@ -20,9 +20,14 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public AvSurface(int xPosition, int yPosition)
+        /// <summary>
+        /// The construction of AvSurface where it's placed by enteret input
+        /// </summary>
+        /// <param name="xPosition">X position</param>
+        /// <param name="yPosition">Y position</param>
+        public AvSurface(int xPosition, int yPosition) : base(xPosition, yPosition)
         {
-            this.fps = 4;
+            this.fps = 15;
             this.position = new Vector2(xPosition, yPosition);
             
             sprites = GameWorld.animationSprites["firepit"];
@@ -40,6 +45,10 @@ namespace MortensKomeback2
             Animation(gameTime);
         }
 
+        /// <summary>
+        /// Making an animation of the sprites
+        /// </summary>
+        /// <param name="gameTime">A GameTime</param>
         public void Animation(GameTime gameTime)
         {
             //Adding the time which has passed since the last update

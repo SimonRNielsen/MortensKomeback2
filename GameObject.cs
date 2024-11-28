@@ -45,6 +45,10 @@ namespace MortensKomeback2
             spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
         }
 
+        /// <summary>
+        /// Checking if two objects is colliding 
+        /// </summary>
+        /// <param name="gameObject">A GameObject</param>
         public void CheckCollision(GameObject gameObject)
         {
             if (CollisionBox.Intersects(gameObject.CollisionBox))

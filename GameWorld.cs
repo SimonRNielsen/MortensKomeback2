@@ -82,7 +82,8 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(1, 2000, 2000));
 
             #region obstacle
-            newGameObjects.Add(new AvSurface(200, 200));
+            newGameObjects.Add(new AvSurface(200, 0));
+            newGameObjects.Add(new Obstacle(-200, 0));
             #endregion
 
             base.Initialize();
@@ -118,10 +119,23 @@ namespace MortensKomeback2
 
                 foreach (GameObject other in gameObjects)
                 {
-                    if (gameObject is Player && other is AvSurface)
+                    if (gameObject is Player)
                     {
-                        gameObject.CheckCollision(other);
-                        other.CheckCollision(gameObject);
+                        if (other is AvSurface || other is Obstacle)
+                        {
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
+                        }
+                    }
+
+                    if (gameObject is Enemy)
+                    {
+                        if (other is AvSurface || other is Obstacle)
+                        {
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
+                        }
+                        
                     }
                 }
             }
@@ -213,7 +227,7 @@ namespace MortensKomeback2
             Texture2D offHand = Content.Load<Texture2D>("Sprites\\Item\\offHandPlaceholder");
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
-
+            Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
 
 
             commonSprites.Add("questItem", quest);
@@ -221,6 +235,7 @@ namespace MortensKomeback2
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
             commonSprites.Add("feetItem", feet);
+            commonSprites.Add("stone", stone);
 
 #if DEBUG
             commonSprites.Add("collisionTexture", collisionTexture);
@@ -275,9 +290,11 @@ namespace MortensKomeback2
             #endregion
             #endregion
             #region obstalce
-            Texture2D[] firepit = new Texture2D[2];
+            Texture2D[] firepit = new Texture2D[4];
             firepit[0] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit");
             firepit[1] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit0");
+            firepit[2] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit0");
+            firepit[3] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit");
             animationSprites.Add("firepit", firepit);
             #endregion
 
