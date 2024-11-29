@@ -35,6 +35,7 @@ namespace MortensKomeback2
             graphics = _graphics;
             this.health = 100;
             this.fps = 7f;
+            this.Position = new Vector2(0, -300);
         }
 
         #endregion
@@ -79,12 +80,12 @@ namespace MortensKomeback2
             if (direction)
             {
                 position += (velocity * speed * deltaTime);
-                this.spriteEffectIndex = 1;
+                this.SpriteEffectIndex = 1;
             }
             else
             {
                 position -= (velocity * speed * deltaTime);
-                this.spriteEffectIndex = 0;
+                this.SpriteEffectIndex = 0;
             }
 
             if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f)

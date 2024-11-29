@@ -73,6 +73,15 @@ namespace MortensKomeback2
             {
                 //Take damage
             }
+            if ( gameObject is Enemy)
+            {
+                    if (GameWorld.BattleOn == false)
+                    {
+                        GameWorld.BattleOn = true;
+                        GameWorld.newGameObjects.Add(new BattleField(this, gameObject as Enemy));
+
+                    }
+                }
         }
 
         public override void Update(GameTime gameTime)
@@ -111,7 +120,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.A))
             {
                 velocity += new Vector2(-1, 0);
-                this.spriteEffectIndex = 1;
+                this.SpriteEffectIndex = 1;
                 direction = true;
             }
 
@@ -119,7 +128,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.D))
             {
                 velocity += new Vector2(1, 0);
-                this.spriteEffectIndex = 0;
+                this.SpriteEffectIndex = 0;
                 direction = false;
             }
 

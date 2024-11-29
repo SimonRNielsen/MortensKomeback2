@@ -18,7 +18,7 @@ namespace MortensKomeback2
         protected float speed;
         protected float rotation;
         protected int health = 1;
-        protected int spriteEffectIndex;
+        private int spriteEffectIndex;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
 
@@ -29,6 +29,7 @@ namespace MortensKomeback2
             get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
         }
 
+        public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 
@@ -42,7 +43,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Drawing tool</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
+            spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[SpriteEffectIndex], layer);
         }
 
 

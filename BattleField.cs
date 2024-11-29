@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,9 @@ namespace MortensKomeback2
         // A single-pixel texture
         Texture2D pixel;
         Color textBoxColor;
+        Vector2 playerOriginPosition;
 
-        
+
         #endregion
 
         #region Properties
@@ -28,11 +30,17 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public BattleField(Player player, Enemy enemy, GraphicsDevice graphicsDevice)
+        public BattleField(Player player, Enemy enemy)
         {
             battlefieldPlayers[0] = player;
             battlefieldEnemies.Add(enemy);
-            this.graphicsDevice = graphicsDevice;
+            GameWorld.Camera.Position = new Vector2(2000, 0);
+            this.Position = new Vector2(1500, 0);
+            //this.graphicsDevice = graphicsDevice;
+            playerOriginPosition = player.Position;
+            player.Position = new Vector2(1200, 0); ;
+            enemy.Position = new Vector2(2700, -200);
+            enemy.SpriteEffectIndex = 0;
         }
 
         #endregion
@@ -41,8 +49,7 @@ namespace MortensKomeback2
         public override void LoadContent(ContentManager content)
         {
             /// Create the single-pixel texture
-            pixel = new Texture2D(graphicsDevice, 1, 1);
-            pixel.SetData<Color>(new Color[] { Color.White });
+            pixel = content.Load<Texture2D>("Sprites\\Menu\\button");
 
 
             textBox = new Rectangle(0, 0, 500, 50);
@@ -57,17 +64,33 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            foreach (Enemy e in battlefieldEnemies)
+            {
+                e.Animation(gameTime);
+            }
+            HandleInput();
             int chosenAction = HandleInput();
             TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(pixel, textBox, textBoxColor);
+            spriteBatch.Draw(pixel, Position, textBox, textBoxColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 1);
         }
 
         private int HandleInput()
         {
+            //Reseting the velocity so Morten will stand still when there is no key pressed down
+            velocity = Vector2.Zero;
+
+            //Get the keyboard state
+            KeyboardState keyState = Keyboard.GetState();
+
+            if (keyState.IsKeyDown(Keys.Q))
+            {
+                battlefieldPlayers[0].Position = playerOriginPosition;
+                GameWorld.Camera.Position = Vector2.Zero;
+            }
             return 1;
         }
 
@@ -79,7 +102,7 @@ namespace MortensKomeback2
             switch (chosenAction)
             {
                 case 1:
-                    if(playerClass == (PlayerClass)1)
+                    if (playerClass == (PlayerClass)1)
                     {
                         MeleeAttack();
                     }
@@ -89,7 +112,7 @@ namespace MortensKomeback2
                     }
                     break;
                 case 2:
-                    if(playerClass == (PlayerClass)1)
+                    if (playerClass == (PlayerClass)1)
                     {
                         Block();
                     }

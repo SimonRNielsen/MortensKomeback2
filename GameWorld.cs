@@ -23,6 +23,7 @@ namespace MortensKomeback2
         private static bool menuActive;
         private static bool exitGame = false;
         private static bool restart = false;
+        private static bool battleActive = false;
         private static MousePointer mousePointer;
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
@@ -49,6 +50,7 @@ namespace MortensKomeback2
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
+        public static bool BattleOn { get => battleActive; set => battleActive = value; }
 
         #endregion
 
@@ -91,15 +93,16 @@ namespace MortensKomeback2
             newGameObjects.Add(new Enemy(_graphics));
             //newGameObjects.Add(new Player());
             //newGameObjects.Add(new Enemy());
-            newGameObjects.Add(new Area(0,0, 0));
-            newGameObjects.Add(new Area(1,2000, 2000));
+            newGameObjects.Add(new Area(0, 0, 0));
+            newGameObjects.Add(new Area(1, 2000, 2000));
+
 
             base.Initialize();
 
             //gameObjects.Add(new GUI());
         }
 
-        
+
 
         protected override void LoadContent()
         {
@@ -128,10 +131,12 @@ namespace MortensKomeback2
             foreach (GameObject gameObject in gameObjects)
             {
                 //Pause-logic
-                if (!menuActive)
+                if (!menuActive && !battleActive)
                     gameObject.Update(gameTime);
                 //Måske skrotte nedenstående?
                 else if (menuActive && gameObject is Player)
+                    gameObject.Update(gameTime);
+                else if (battleActive && gameObject is BattleField)
                     gameObject.Update(gameTime);
 
             }
@@ -161,6 +166,22 @@ namespace MortensKomeback2
             menu.RemoveAll(menuItem => menuItem.ButtonObsolete == true);
             playerInventory.RemoveAll(useable => useable.IsUsed == true);
 
+            //Test collision for batllefield
+            foreach (GameObject p in gameObjects)
+            {
+                if (!(p is Player))
+                { continue; }
+                else
+                    foreach (GameObject e in gameObjects)
+                    {
+                        if (!(e is Enemy))
+                        { continue; }
+                        else
+                            p.CheckCollision(e);
+                    }
+            }
+
+
             //"Spawns" new items
             foreach (GameObject newGameObject in newGameObjects)
             {
@@ -172,10 +193,10 @@ namespace MortensKomeback2
                 else
                     gameObjects.Add(newGameObject);
             }
-            
+
             //Player position
             //PlayerPosition = newGameObjects[1].Position;
-            
+
             newGameObjects.Clear();
 
 
@@ -194,7 +215,8 @@ namespace MortensKomeback2
 
                 gameObject.Draw(_spriteBatch);
 #if DEBUG
-                DrawCollisionBox(gameObject);
+                if (!(gameObject is BattleField))
+                { DrawCollisionBox(gameObject); }
 #endif
 
             }
@@ -279,13 +301,13 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
 
-            
+
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
             commonSprites.Add("offHandItem", offHand);
             commonSprites.Add("torsoItem", torso);
-            commonSprites.Add("feetItem", feet); 
+            commonSprites.Add("feetItem", feet);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -350,7 +372,7 @@ namespace MortensKomeback2
 
             #endregion
 
-            
+
         }
 
         /// <summary>
