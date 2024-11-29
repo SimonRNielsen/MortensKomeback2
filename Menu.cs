@@ -118,7 +118,7 @@ namespace MortensKomeback2
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Mainhand", new Vector2(position.X + 270, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Torso", new Vector2(position.X + 495, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Offhand", new Vector2(position.X + 680, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
-                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Feet", new Vector2(position.X + 495, position.Y + 75), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Feet", new Vector2(position.X + 500, position.Y + 75), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     break;
                 default:
                     break;

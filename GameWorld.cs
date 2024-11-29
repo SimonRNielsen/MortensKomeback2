@@ -23,7 +23,7 @@ namespace MortensKomeback2
         private static bool menuActive;
         private static bool exitGame = false;
         private static bool restart = false;
-        private static MousePointer mousePointer;
+        private static MousePointer mousePointer = new MousePointer();
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
@@ -75,7 +75,6 @@ namespace MortensKomeback2
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
-            mousePointer = new MousePointer();
 
             //Preloading of all assets
             mortensKomebackFont = Content.Load<SpriteFont>("mortalKombatFont");
