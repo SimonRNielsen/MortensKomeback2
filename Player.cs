@@ -13,6 +13,8 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
+        private bool praying;
+        private bool searching;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -139,10 +141,23 @@ namespace MortensKomeback2
             }
 
             //The player is Pray
-            if (keyState.IsKeyDown(Keys.P))
+            if (keyState.IsKeyDown(Keys.P) && !praying)
             {
-
+                Pray();
+                praying = true;
             }
+
+            if (keyState.IsKeyUp(Keys.P))
+                praying = false;
+
+            if (keyState.IsKeyDown(Keys.Z) && !searching)
+            {
+                Search();
+                searching = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.Z))
+                searching = false;
         }
 
         /// <summary>
@@ -185,7 +200,30 @@ namespace MortensKomeback2
             }
         }
 
+        private void Pray()
+        {
+            foreach (Item item in GameWorld.hiddenItems)
+            {
+                float distance = Vector2.Distance(position, item.Position);
+                if (distance < 300 && distance > -300)
+                    item.IsFound = true;
+            }
+        }
 
+        private void Search()
+        {
+            foreach (Item item in GameWorld.hiddenItems)
+            {
+                float distance = Vector2.Distance(position, item.Position);
+                if (distance < 100 && distance > -100)
+                {
+                    item.IsPickedUp = true;
+                    item.IsFound = false;
+                    item.Sprite = item.StandardSprite;
+                    GameWorld.playerInventory.Add(item);
+                }
+            }
+        }
 
         #endregion
     }

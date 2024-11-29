@@ -13,16 +13,12 @@ namespace MortensKomeback2
     {
         #region Fields
 
-        private Color[] buttonColor = new Color[3] { Color.DarkRed, Color.Yellow, Color.White };
+        private Item playerItem;
         private Color[] backgroundColor = new Color[2] { Color.White, Color.Gray };
-        private int buttonColorIndex;
         private int backgroundColorIndex;
         private int buttonID;
         private bool collision = false;
         private bool itemButton = false;
-        private string buttonText;
-        private float textXDisplacement;
-        private Item playerItem;
 
         #endregion
 
@@ -45,34 +41,34 @@ namespace MortensKomeback2
             buttonID = buttonType;
             switch (buttonID)
             {
-                case 0:
+                case 0: //Not currently in use
                     sprite = GameWorld.commonSprites["button"];
-                    buttonText = "Unpause";
+                    text = "Unpause";
                     textXDisplacement = -18;
                     break;
                 case 1:
                     sprite = GameWorld.commonSprites["button"];
-                    buttonText = "Close";
+                    text = "Close";
                     textXDisplacement = -7;
                     break;
                 case 2:
                     sprite = GameWorld.commonSprites["button"];
-                    buttonText = "Exit";
-                    textXDisplacement = -3;
+                    text = "Exit";
+                    textXDisplacement = +2;
                     break;
                 case 3:
                     sprite = GameWorld.commonSprites["button"];
-                    buttonText = "Start";
+                    text = "Start";
                     textXDisplacement = -7;
                     break;
                 case 4:
                     sprite = GameWorld.commonSprites["button"];
-                    buttonText = "Restart";
-                    textXDisplacement = -18;
+                    text = "Restart";
+                    textXDisplacement = -25;
                     break;
                 case 10:
                     sprite = GameWorld.commonSprites["menuButton"];
-                    buttonText = "Inventory";
+                    text = "Inventory";
                     textXDisplacement = -38;
                     itemButton = true;
                     GameWorld.newGameObjects.Add(new Button(new Vector2(position.X, position.Y + sprite.Height), 11));
@@ -80,7 +76,7 @@ namespace MortensKomeback2
                 case 11:
                 case 101:
                     sprite = GameWorld.commonSprites["menuButton"];
-                    buttonText = "Cancel";
+                    text = "Cancel";
                     textXDisplacement = -13;
                     itemButton = true;
                     break;
@@ -97,11 +93,12 @@ namespace MortensKomeback2
             sprite = GameWorld.commonSprites["menuButton"];
             if (playerItem.IsEquipped)
             {
-                buttonText = "Unequip";
+                text = "Unequip";
+                textXDisplacement = -18;
             }
             else
             {
-                buttonText = "Equip";
+                text = "Equip";
             }
             GameWorld.newGameObjects.Add(new Button(new Vector2(position.X, position.Y + sprite.Height), 101));
         }
@@ -180,10 +177,12 @@ namespace MortensKomeback2
                 case 0:
                 case 1:
                 case 2:
+                case 3:
+                case 4:
                     if (collision)
-                        buttonColorIndex = 1;
+                        textColorIndex = 1;
                     else
-                        buttonColorIndex = 0;
+                        textColorIndex = 0;
                     break;
 
                 case 10:
@@ -216,7 +215,7 @@ namespace MortensKomeback2
         {
 
             spriteBatch.Draw(sprite, Position, null, backgroundColor[backgroundColorIndex], rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
-            spriteBatch.DrawString(GameWorld.mortensKomebackFont, buttonText, new Vector2(Position.X + textXDisplacement, Position.Y), buttonColor[buttonColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999f);
+            spriteBatch.DrawString(GameWorld.mortensKomebackFont, text, new Vector2(Position.X + textXDisplacement, Position.Y), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999f);
 
         }
 
