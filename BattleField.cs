@@ -58,7 +58,7 @@ namespace MortensKomeback2
         public override void Update(GameTime gameTime)
         {
             int chosenAction = HandleInput();
-            TakeAction(chosenAction, battlefieldPlayers[0].Archetype);
+            TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

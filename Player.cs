@@ -19,6 +19,8 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
+        internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
+
         #endregion
 
         #region properti
@@ -31,7 +33,7 @@ namespace MortensKomeback2
             this.speed = 600;
             this.health = 100;
             this.fps = 2f;
-            this.playerClass = playerClass;
+            this.PlayerClass = playerClass;
         }
 
         #endregion
@@ -41,7 +43,7 @@ namespace MortensKomeback2
         {
             sprites = new Texture2D[4];
 
-            switch (playerClass)
+            switch (PlayerClass)
             {
                 case PlayerClass.Crusader:
                     break;
