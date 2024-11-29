@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class AvSurface : Obstacle
+    internal class ImplementTwohanded : ITwoHandedItem
     {
+
     }
 }

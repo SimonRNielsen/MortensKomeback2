@@ -10,11 +10,17 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class Enemy : GameObject, ICharacter
+    internal class Enemy : Character
     {
         #region field
-        private GraphicsDeviceManager _graphics;
-        private Vector2 enemyDirection;
+        private GraphicsDeviceManager graphics;
+        private float timeElapsed;
+        private int currentIndex;
+
+        /// <summary>
+        /// Bool to change the spriteEffectIndex so the player face the direction is walking 
+        /// </summary>
+        private bool direction = true;
 
         #endregion
 
@@ -23,9 +29,12 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Enemy()
+        public Enemy(GraphicsDeviceManager _graphics)
         {
             this.speed = 300;
+            graphics = _graphics;
+            this.health = 100;
+            this.fps = 7f;
         }
 
         #endregion
@@ -34,39 +43,81 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            this.Sprite = content.Load<Texture2D>("Sprites\\Charactor\\goose0"); //Only a test sprite of Morten
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            if (gameObject is Player)
+            {
+                //Load fight 
+            }
         }
 
         public override void Update(GameTime gameTime)
         {
-            Movement(gameTime);
-        }
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 800f)
+            {
+                sprites = GameWorld.animationSprites["AggroGoose"];
+            }
+            else
+            {
+                sprites = GameWorld.animationSprites["WalkingGoose"];
+            }
+            this.Sprite = sprites[0];
 
-        public void Movement(GameTime gameTime)
+            Movement(gameTime);
+            Animation(gameTime);
+        }
+        public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            velocity = new Vector2(0, 1);
-            enemyDirection = new Vector2(0, 1);
+            velocity = new Vector2(1, 0);
 
             //The player is moving by the result of HandleInput and deltaTime
-            position += (velocity * speed * deltaTime);
-
-            if (position.Y >= 1080/2 + this.sprite.Height *2)
+            if (direction)
             {
-                
+                position += (velocity * speed * deltaTime);
+                this.spriteEffectIndex = 1;
+            }
+            else
+            {
+                position -= (velocity * speed * deltaTime);
+                this.spriteEffectIndex = 0;
+            }
+
+            if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f)
+            {
+                direction = false;
+            }
+            if (position.X <= -(graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f))
+            {
+                direction = true;
+            }
+
+        }
+
+        public override void Animation(GameTime gameTime)
+        {
+            //Adding the time which has passed since the last update
+            timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            currentIndex = (int)(timeElapsed * fps);
+
+            sprite = sprites[currentIndex];
+
+            //Restart the animation
+            if (currentIndex >= sprites.Length - 1)
+            {
+                timeElapsed = 0;
+                currentIndex = 0;
             }
         }
 
-        public void Interact(GameObject gameObject)
+        public float DistanceToPlayer(Vector2 playerPosition)
         {
-            throw new NotImplementedException();
+            return Vector2.Distance(this.position, playerPosition);
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class FeetSlotItem : Item
+    internal class OffHandItem : Item
     {
         #region Fields
 
@@ -21,11 +21,24 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public FeetSlotItem(int playerclass)
+        public OffHandItem(int playerclass, bool enhanced)
         {
-            sprite = GameWorld.commonSprites["feetItem"];
-            itemName = "Boots of speed";
-            speedBonus = 5f;
+            sprite = GameWorld.commonSprites["offHandItem"];
+            damageReductionBonus = 5;
+            if (enhanced)
+                damageReductionBonus = (int)(damageReductionBonus * 1.6f);
+            switch (playerclass)
+            {
+                case 1:
+                    itemName = "Shield";
+                    break;
+                case 2:
+                    isUsed = true;
+                    break;
+                case 3:
+                    isUsed = true;
+                    break;
+            }
         }
 
         #endregion
