@@ -51,7 +51,7 @@ namespace MortensKomeback2
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
-        public static bool BattleOn { get => battleActive; set => battleActive = value; }
+        public static bool BattleActive { get => battleActive; set => battleActive = value; }
 
         #endregion
 

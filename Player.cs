@@ -77,9 +77,9 @@ namespace MortensKomeback2
             }
             if ( gameObject is Enemy)
             {
-                    if (GameWorld.BattleOn == false)
+                    if (GameWorld.BattleActive == false)
                     {
-                        GameWorld.BattleOn = true;
+                        GameWorld.BattleActive = true;
                         GameWorld.newGameObjects.Add(new BattleField(this, gameObject as Enemy));
 
                     }
