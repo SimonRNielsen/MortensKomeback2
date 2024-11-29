@@ -35,6 +35,7 @@ namespace MortensKomeback2
             graphics = _graphics;
             this.health = 100;
             this.fps = 7f;
+            sprite = GameWorld.animationSprites["WalkingGoose"][0];
         }
 
         #endregion

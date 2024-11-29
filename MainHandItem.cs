@@ -24,30 +24,37 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public MainHandItem(int playerClass, Vector2 position, bool enhanced)
+        public MainHandItem(int playerClass, Vector2 position, bool enhanced, bool found)
         {
             damageBonus = 5;
             if (enhanced)
+            {
                 damageBonus = (int)(damageBonus * 1.6f);
+                itemName = "Enhanced ";
+            }
             Position = position;
             layer = 0.95f;
             switch (playerClass)
             {
                 case 1:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
-                    itemName = "Sword";
+                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
+                    itemName += "Sword";
                     break;
                 case 2:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
-                    itemName = "Sling";
+                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
+                    itemName += "Sling";
                     implement = implementTwohanded;
                     break;
                 case 3:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
-                    itemName = "Staff";
+                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Mage
+                    itemName += "Staff";
                     implement = implementTwohanded;
                     break;
             }
+            if (found)
+                sprite = standardSprite;
+            else
+                sprite = GameWorld.commonSprites["blink"];
         }
 
 
@@ -65,12 +72,8 @@ namespace MortensKomeback2
             }
         }
 
-        public override void OnCollision(GameObject gameObject)
-        {
-            //
-        }
 
-        public override void Update(GameTime gameTime)
+        public override void OnCollision(GameObject gameObject)
         {
             //
         }

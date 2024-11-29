@@ -82,6 +82,26 @@ namespace MortensKomeback2
                 }
         }
 
+        public void MouseOver()
+        {
+            foreach (Item item in GameWorld.playerInventory)
+            {
+                if (!(item is QuestItem))
+                    if (item.CollisionBox.Intersects(CollisionBox))
+                    {
+                        item.OnCollision();
+                    }
+            }
+            foreach (Item item in GameWorld.equippedPlayerInventory)
+            {
+                if (!(item is QuestItem))
+                    if (item.CollisionBox.Intersects(CollisionBox))
+                    {
+                        item.OnCollision();
+                    }
+            }
+        }
+
         #endregion
     }
 }

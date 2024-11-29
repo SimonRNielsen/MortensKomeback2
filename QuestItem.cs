@@ -22,23 +22,27 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public QuestItem(int itemType)
+        public QuestItem(int itemType, bool found)
         {
             switch (itemType)
             {
                 case 0:
-                    sprite = GameWorld.commonSprites["questItem"];
+                    standardSprite = GameWorld.commonSprites["questItem"];
                     itemName = "Key";
                     isUseable = true;
                     isKey = true;
                     break;
                 case 1:
-                    sprite = GameWorld.commonSprites["questItem"];
+                    standardSprite = GameWorld.commonSprites["questItem"];
                     itemName = "Gooseblood";
                     isUseable = true;
                     healItem = true;
                     break;
             }
+            if (found)
+                sprite = standardSprite;
+            else
+                sprite = GameWorld.commonSprites["blink"];
         }
 
         #endregion
@@ -54,11 +58,6 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
             //throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            
         }
 
         #endregion

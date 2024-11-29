@@ -29,6 +29,7 @@ namespace MortensKomeback2
         public static List<GameObject> newGameObjects = new List<GameObject>();
         public static List<Item> playerInventory = new List<Item>();
         public static List<Item> equippedPlayerInventory = new List<Item>();
+        public static List<Item> hiddenItems = new List<Item>();
         public static Dictionary<string, Texture2D> commonSprites = new Dictionary<string, Texture2D>();
         public static Dictionary<string, Texture2D[]> animationSprites = new Dictionary<string, Texture2D[]>();
         public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string, SoundEffect>();
@@ -83,7 +84,8 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem(2, Vector2.Zero, false));
+            newGameObjects.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            menu.Add(new Menu(Camera.Position, 3));
             
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
@@ -97,7 +99,6 @@ namespace MortensKomeback2
 
             //gameObjects.Add(new GUI());
         }
-
 
 
         protected override void LoadContent()
@@ -135,6 +136,11 @@ namespace MortensKomeback2
 
             }
 
+            //Search & Pray logic
+            foreach (Item item in hiddenItems)
+                item.Update(gameTime);
+            hiddenItems.RemoveAll(found => found.IsPickedUp == true);
+
             //Menu logic
             foreach (Menu menuItem in menu)
             {
@@ -157,6 +163,8 @@ namespace MortensKomeback2
                 menuActive = false;
                 closeMenu = false;
             }
+            if (DetectInventory())
+                mousePointer.MouseOver();
             menu.RemoveAll(menuItem => menuItem.ButtonObsolete == true);
             playerInventory.RemoveAll(useable => useable.IsUsed == true);
 
@@ -165,16 +173,12 @@ namespace MortensKomeback2
             {
                 newGameObject.LoadContent(Content);
                 if (newGameObject is Item)
-                    playerInventory.Add(newGameObject as Item);
+                    hiddenItems.Add(newGameObject as Item);
                 else if (newGameObject is Menu || newGameObject is Button)
                     menu.Add(newGameObject as Menu);
                 else
                     gameObjects.Add(newGameObject);
             }
-
-            //Player position
-            //PlayerPosition = newGameObjects[1].Position;
-
             newGameObjects.Clear();
 
 
@@ -204,15 +208,22 @@ namespace MortensKomeback2
                 {
                     item.Draw(_spriteBatch);
                     DrawCollisionBox(item);
+                    item.Update(gameTime);
                 }
 
                 foreach (Item item in equippedPlayerInventory)
                 {
                     item.Draw(_spriteBatch);
                     DrawCollisionBox(item);
+                    item.Update(gameTime);
                 }
             }
 
+            foreach (Item item in hiddenItems)
+            {
+                if (item.IsFound)
+                    item.Draw(_spriteBatch);
+            }
 
             foreach (Menu menuItem in menu)
             {
@@ -281,6 +292,7 @@ namespace MortensKomeback2
             Texture2D torso = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
             Texture2D healItem = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
+            Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -288,6 +300,7 @@ namespace MortensKomeback2
             commonSprites.Add("torsoItem", torso);
             commonSprites.Add("feetItem", feet);
             commonSprites.Add("healItem", healItem);
+            commonSprites.Add("blink", blink);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -295,6 +308,7 @@ namespace MortensKomeback2
             Texture2D winScreen = Content.Load<Texture2D>("Sprites\\Menu\\winScreen");
             Texture2D loseScreen = Content.Load<Texture2D>("Sprites\\Menu\\loseScreen");
             Texture2D inventoryScreen = Content.Load<Texture2D>("Sprites\\Menu\\inventory");
+            Texture2D statPanel = Content.Load<Texture2D>("Sprites\\Menu\\statPanel");
 
             commonSprites.Add("menuButton", menuButton);
             commonSprites.Add("button", button);
@@ -302,6 +316,7 @@ namespace MortensKomeback2
             commonSprites.Add("winScreen", winScreen);
             commonSprites.Add("loseScreen", loseScreen);
             commonSprites.Add("inventory", inventoryScreen);
+            commonSprites.Add("statPanel", statPanel);
 
         }
 

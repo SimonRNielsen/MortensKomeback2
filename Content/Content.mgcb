@@ -368,6 +368,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/DEBUG/pixel.png
 
+#begin Sprites/Item/blinkPlaceholder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/blinkPlaceholder.png
+
 #begin Sprites/Item/feetPlaceholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -487,6 +499,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/menuButton.png
+
+#begin Sprites/Menu/statPanel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/statPanel.png
 
 #begin Sprites/Menu/winScreen.png
 /importer:TextureImporter
