@@ -441,6 +441,7 @@ namespace MortensKomeback2
             animationSprites.Clear();
             commonSounds.Clear();
             backgroundMusic.Clear();
+            hiddenItems.Clear();
             Initialize();
             restart = false;
         }
