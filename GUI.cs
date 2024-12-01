@@ -74,8 +74,13 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            //if (mortenAlive)
+           
 
+            if (mortenAlive)
+            { 
+
+            healthCount = GameWorld.PlayerInstance.Health;
+            }
 
             //if (healthCount < 100)
             //{
@@ -86,9 +91,8 @@ namespace MortensKomeback2
             //    mortenAlive = false;
             //}
 
-            //healthCount = GameWorld.PlayerInstance.Health;
 
-            
+
         }
         public void GuiTest()
         {

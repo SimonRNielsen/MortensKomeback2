@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
+using SharpDX.DirectWrite;
 
 namespace MortensKomeback2
 {
@@ -36,6 +37,7 @@ namespace MortensKomeback2
         public static SpriteFont mortensKomebackFont;
 
 
+
         private static Player playerInstance;
 
         #endregion
@@ -49,6 +51,11 @@ namespace MortensKomeback2
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
+
+        SpriteFont font1;
+
+        // The position to draw the text
+        Vector2 fontPos;
 
         #endregion
 
@@ -107,13 +114,14 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(3000, 0), 0));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(3000, -2160), 0));      //højre side, rum 2, secret + item
 
+            newGameObjects.Add(new Area(new Vector2(0, -443), 5));       //door
+
             newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
 
-            newGameObjects.Add(new Dialogue(new Vector2(100, 400))); //dialogue
+            //newGameObjects.Add(new Dialogue(new Vector2(100, 400))); //dialogue
 
             base.Initialize();
 
-            //gameObjects.Add(new GUI());
         }
 
         
@@ -203,6 +211,8 @@ namespace MortensKomeback2
         {
             GraphicsDevice.Clear(Color.Black);
 
+
+
             // TODO: Add your drawing code here
             _spriteBatch.Begin(transformMatrix: Camera.GetTransformation(), samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
@@ -233,6 +243,7 @@ namespace MortensKomeback2
             {
                 menuItem.Draw(_spriteBatch);
             }
+
 
 #if DEBUG
             DrawMouseCollisionBox();
@@ -334,6 +345,10 @@ namespace MortensKomeback2
             Texture2D dialogueBox = Content.Load<Texture2D>("Sprites\\GUI\\dialogueBox");
             commonSprites.Add("dialogueBox", dialogueBox);
 
+            //Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
+            //commonSprites.Add("doorClosed_shadow", doorClosed);
+
+
 
 
         }
@@ -361,13 +376,14 @@ namespace MortensKomeback2
             #endregion
             #endregion
 
-            Texture2D[] areaArray = new Texture2D[5]
+            Texture2D[] areaArray = new Texture2D[6] //rooms
             {
-            Content.Load<Texture2D>("Sprites\\area\\roomUdkast"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
+            Content.Load<Texture2D>("Sprites\\area\\room_single"),
+            Content.Load<Texture2D>("Sprites\\area\\room_single"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
+            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"),
             };
             animationSprites.Add("areaStart", areaArray);
 

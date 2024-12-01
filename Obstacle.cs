@@ -10,6 +10,8 @@ namespace MortensKomeback2
 {
     internal class Obstacle : GameObject
     {
+       
+
         public override void LoadContent(ContentManager content)
         {
             throw new NotImplementedException();

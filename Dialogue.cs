@@ -20,6 +20,7 @@ namespace MortensKomeback2
         private SpriteFont dialogueFont;             // Font for displaying text
         private Vector2 textPosition;      // Where the text is drawn
         private Vector2 boxPosition = new Vector2(100, 1000);         // Where the dialogue box is drawn
+        private bool dialogue;
 
         #endregion
 

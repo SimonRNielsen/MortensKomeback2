@@ -21,6 +21,7 @@ namespace MortensKomeback2
         protected int spriteEffectIndex;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
+        public int Health { get => health; } ///til GUI
 
         public Texture2D Sprite { get => sprite; set => sprite = value; }
         public Vector2 Position { get => position; set => position = value; }
