@@ -77,13 +77,15 @@ namespace MortensKomeback2
 
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
-            newGameObjects.Add(new Enemy(_graphics));
+            //newGameObjects.Add(new Enemy(_graphics));
             newGameObjects.Add(new Area(0, 0, 0));
             newGameObjects.Add(new Area(1, 2000, 2000));
 
             #region obstacle
-            newGameObjects.Add(new AvSurface(200, 0));
+            //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(-200, 0));
+            newGameObjects.Add(new Obstacle(-200, 96));
+
             #endregion
 
             base.Initialize();

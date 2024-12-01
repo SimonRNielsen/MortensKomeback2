@@ -32,7 +32,7 @@ namespace MortensKomeback2
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
-            this.scale = 0.75f;
+            //this.scale = 0.75f;
         }
 
         #endregion
@@ -76,6 +76,35 @@ namespace MortensKomeback2
 
             if (gameObject is Obstacle)
             {
+                int moveAway = 30; //How much the player is bouncing back after colliding 
+
+                if (this.CollisionBox.Y < gameObject.CollisionBox.Y)
+                {
+                    if (this.CollisionBox.X < gameObject.CollisionBox.X)
+                    {
+                        this.position.X = this.position.X - moveAway;
+                    }
+                    else
+                    {
+                        this.position.X = this.position.X + moveAway;
+                    }
+
+                    this.position.Y = this.position.Y - moveAway;
+                }
+
+                if (this.CollisionBox.Y > gameObject.CollisionBox.Y)
+                {
+                    if (this.CollisionBox.X < gameObject.CollisionBox.X)
+                    {
+                        this.position.X = this.position.X - moveAway;
+                    }
+                    else
+                    {
+                        this.position.X = this.position.X + moveAway;
+                    }
+
+                    this.position.Y = this.position.Y + moveAway;
+                }
                 
             }
             
@@ -187,8 +216,6 @@ namespace MortensKomeback2
                 currentIndex = 0;
             }
         }
-
-        
 
         #endregion
     }

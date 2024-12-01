@@ -27,7 +27,7 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            //throw new NotImplementedException();
+            
         }
 
         public override void Update(GameTime gameTime)
