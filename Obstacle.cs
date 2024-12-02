@@ -10,6 +10,15 @@ namespace MortensKomeback2
 {
     internal class Obstacle : GameObject
     {
+        #region field
+
+        #endregion
+
+        #region properties
+
+        #endregion
+
+        #region constructor
         /// <summary>
         /// The construction of AvSurface where it's placed by enteret input
         /// </summary>
@@ -20,6 +29,9 @@ namespace MortensKomeback2
             this.position = new Vector2(xPosition, yPosition);
         }
 
+        #endregion
+
+        #region method
         public override void LoadContent(ContentManager content)
         {
             this.Sprite = GameWorld.commonSprites["stone"];
@@ -34,5 +46,7 @@ namespace MortensKomeback2
         {
             //throw new NotImplementedException();
         }
+
+        #endregion
     }
 }
