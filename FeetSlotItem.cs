@@ -21,10 +21,19 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public FeetSlotItem(int playerclass)
+        public FeetSlotItem(int playerClass, bool found)
         {
-            sprite = GameWorld.commonSprites["feetItem"];
+            standardSprite = GameWorld.commonSprites["feetItem"];
+            if (found)
+            {
+                sprite = standardSprite;
+            }
+            else
+            {
+                sprite = GameWorld.commonSprites["blink"];
+            }
             itemName = "Boots of speed";
+            layer = 0.95f;
             speedBonus = 5f;
         }
 
@@ -39,11 +48,6 @@ namespace MortensKomeback2
         }
 
         public override void OnCollision(GameObject gameObject)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime)
         {
             //throw new NotImplementedException();
         }

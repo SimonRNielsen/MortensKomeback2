@@ -21,10 +21,11 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public TorsoSlotItem(int playerclass)
+        public TorsoSlotItem(int playerClass, bool found)
         {
-            sprite = GameWorld.commonSprites["torsoItem"];
-            switch (playerclass)
+            standardSprite = GameWorld.commonSprites["torsoItem"];
+            layer = 0.95f;
+            switch (playerClass)
             {
                 case 1:
                     damageReductionBonus = 10;
@@ -41,6 +42,10 @@ namespace MortensKomeback2
                     itemName = "Comfortable robe";
                     break;
             }
+            if (found)
+                sprite = standardSprite;
+            else
+                sprite = GameWorld.commonSprites["blink"];
         }
 
         #endregion
@@ -54,11 +59,6 @@ namespace MortensKomeback2
         }
 
         public override void OnCollision(GameObject gameObject)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime)
         {
             //throw new NotImplementedException();
         }
