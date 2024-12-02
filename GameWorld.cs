@@ -84,8 +84,7 @@ namespace MortensKomeback2
             LoadBackgroundSongs();
 
             // /*
-            playerInventory.Add(new MainHandItem((int)PlayerClass.Crusader, Vector2.Zero, false, true));
-            playerInventory.Add(new OffHandItem((int)PlayerClass.Crusader, Vector2.Zero, false, true));
+            playerInventory.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, true));
             playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
             playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
             playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
