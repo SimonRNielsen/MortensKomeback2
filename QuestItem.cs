@@ -7,23 +7,42 @@ namespace MortensKomeback2
     {
         #region Fields
 
-        private bool isUsed = false;
+        private bool isKey = false;
+        private bool healItem = false;
 
         #endregion
 
         #region Properties
 
-        public bool IsUsed { get => isUsed; set => isUsed = value; }
+        public bool IsKey { get => isKey; }
+        public bool HealItem { get => healItem; }
 
         #endregion
 
         #region Constructor
 
 
-        public QuestItem()
+        public QuestItem(int itemType, bool found)
         {
-            sprite = GameWorld.commonSprites["questItem"];
-            itemName = "Key";
+            switch (itemType)
+            {
+                case 0:
+                    standardSprite = GameWorld.commonSprites["questItem"];
+                    itemName = "Key";
+                    isUseable = true;
+                    isKey = true;
+                    break;
+                case 1:
+                    standardSprite = GameWorld.commonSprites["questItem"];
+                    itemName = "Gooseblood";
+                    isUseable = true;
+                    healItem = true;
+                    break;
+            }
+            if (found)
+                sprite = standardSprite;
+            else
+                sprite = GameWorld.commonSprites["blink"];
         }
 
         #endregion
@@ -39,12 +58,6 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
             //throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            if (isUsed)
-                health = 0;
         }
 
         #endregion

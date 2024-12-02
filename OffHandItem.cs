@@ -21,20 +21,30 @@ namespace MortensKomeback2
         #region Constructor
 
 
-        public OffHandItem(int playerclass)
+        public OffHandItem(int playerClass, bool enhanced, bool found)
         {
-            sprite = GameWorld.commonSprites["offHandItem"];
+            standardSprite = GameWorld.commonSprites["offHandItem"];
+            if (found)
+                sprite = standardSprite;
+            else
+                sprite = GameWorld.commonSprites["blink"];
+            layer = 0.95f;
             damageReductionBonus = 5;
-            switch (playerclass)
+            if (enhanced)
+            {
+                itemName = "Enhanced ";
+                damageReductionBonus = (int)(damageReductionBonus * 1.6f);
+            }
+            switch (playerClass)
             {
                 case 1:
-                    itemName = "Shield";
+                    itemName += "Shield";
                     break;
                 case 2:
-                    health = 0;
+                    isUsed = true;
                     break;
                 case 3:
-                    health = 0;
+                    isUsed = true;
                     break;
             }
         }
@@ -50,11 +60,6 @@ namespace MortensKomeback2
         }
 
         public override void OnCollision(GameObject gameObject)
-        {
-            //throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime gameTime)
         {
             //throw new NotImplementedException();
         }
