@@ -83,7 +83,14 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            // /*
+            playerInventory.Add(new MainHandItem((int)PlayerClass.Crusader, Vector2.Zero, false, true));
+            playerInventory.Add(new OffHandItem((int)PlayerClass.Crusader, Vector2.Zero, false, true));
+            playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
+            playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
+            playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
+            // */
+
             menu.Add(new Menu(Camera.Position, 3));
             
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
@@ -375,7 +382,9 @@ namespace MortensKomeback2
 
         }
 
-
+        /// <summary>
+        /// Marks sub-menu items as obsolete, which are then deleted after having been read
+        /// </summary>
         public static void MarkMenuItemsObsolete()
         {
             foreach (Menu menuItem in menu)
@@ -386,7 +395,10 @@ namespace MortensKomeback2
             }
         }
 
-
+        /// <summary>
+        /// Detects if the there are any buttons active, in this case a right-click menu which consists of only buttons
+        /// </summary>
+        /// <returns>true if any "ItemButtons", otherwise false</returns>
         public static bool DetectRightClickMenu()
         {
             bool exists = false;
@@ -397,7 +409,10 @@ namespace MortensKomeback2
             return exists;
         }
 
-
+        /// <summary>
+        /// Detects if inventory menu specificly is in existence
+        /// </summary>
+        /// <returns>true if inventory exists otherwise false</returns>
         public static bool DetectInventory()
         {
             bool inventoryOpen = false;
@@ -408,13 +423,17 @@ namespace MortensKomeback2
             return inventoryOpen;
         }
 
-
+        /// <summary>
+        /// Closes the game on next pass of "Update"
+        /// </summary>
         public static void ExitGame()
         {
             exitGame = true;
         }
 
-
+        /// <summary>
+        /// Clears all menus and runs GameWorlds "Initialize" to simulate a fresh start
+        /// </summary>
         private void Restart()
         {
             menu.Clear();
@@ -431,13 +450,17 @@ namespace MortensKomeback2
             restart = false;
         }
 
-
+        /// <summary>
+        /// Sets a bool that initializes the restart process
+        /// </summary>
         public static void InitiateRestart()
         {
             restart = true;
         }
 
-
+        /// <summary>
+        /// Gives start parameters (currently none)
+        /// </summary>
         public static void StartGame()
         {
             //Start game logic here

@@ -34,6 +34,11 @@ namespace MortensKomeback2
 
         #region Constructors
 
+        /// <summary>
+        /// Constructor for Button-class with visual presentation and functionality determined by "buttonType" int
+        /// </summary>
+        /// <param name="spawnPosition">Sets position for the Button</param>
+        /// <param name="buttonType">0 = Unpause, 1 = Close, 2 = Exit, 3 = Start, 4 = Restart, 10 = Open inventory, 11 & 101 = Cancel (different stages)</param>
         public Button(Vector2 spawnPosition, int buttonType)
         {
             position = spawnPosition;
@@ -83,6 +88,11 @@ namespace MortensKomeback2
             }
         }
 
+        /// <summary>
+        /// Overload of constructor for Button-class for use with "items"
+        /// </summary>
+        /// <param name="spawnPosition">Sets position for the Button</param>
+        /// <param name="item">Takes "Item"-class reference to manipulate it according to input</param>
         public Button(Vector2 spawnPosition, ref Item item)
         {
             position = spawnPosition;
@@ -107,7 +117,9 @@ namespace MortensKomeback2
 
         #region Methods
 
-
+        /// <summary>
+        /// Applies mouse-over effect and "Button"-pressed logic according to pre-selected construction parameters
+        /// </summary>
         public void OnCollision()
         {
             collision = true;
@@ -169,7 +181,11 @@ namespace MortensKomeback2
                 }
         }
 
-
+        /// <summary>
+        /// Sets collision to false on each pass to check anew if mouse "collides" with the "Button", also applies the actual effect or resets it
+        /// </summary>
+        /// <param name="gameTime">Not used, but part of inherited class parameters</param>
+        /// <exception cref="NotImplementedException">Non-valid Button has been constructed</exception>
         public override void Update(GameTime gameTime)
         {
             switch (buttonID)
@@ -201,7 +217,10 @@ namespace MortensKomeback2
             collision = false;
         }
 
-
+        /// <summary>
+        /// Checks collision between CollisionBox'es
+        /// </summary>
+        /// <param name="mousePointer">Checks for position of MousePointers CollisionBox</param>
         public void CheckCollision(MousePointer mousePointer)
         {
             if (CollisionBox.Intersects(mousePointer.CollisionBox))
@@ -210,16 +229,22 @@ namespace MortensKomeback2
             }
         }
 
-
+        /// <summary>
+        /// Overrides inherited Draw to also apply a DrawString and the visual mouse-over effect
+        /// </summary>
+        /// <param name="spriteBatch">Drawing logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Draw(sprite, Position, null, backgroundColor[backgroundColorIndex], rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
-            spriteBatch.DrawString(GameWorld.mortensKomebackFont, text, new Vector2(Position.X + textXDisplacement, Position.Y), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999f);
+            spriteBatch.DrawString(GameWorld.mortensKomebackFont, text, new Vector2(Position.X + textXDisplacement, Position.Y), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.00001f);
 
         }
 
-
+        /// <summary>
+        /// Not used for Button-class
+        /// </summary>
+        /// <param name="content">ContentManager logic</param>
         public override void LoadContent(ContentManager content)
         {
             //throw new NotImplementedException();

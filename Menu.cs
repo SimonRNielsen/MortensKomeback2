@@ -38,8 +38,16 @@ namespace MortensKomeback2
 
         #region Constructor
 
+        /// <summary>
+        /// Empty Constructor so sub-class isn't forced to use same parameters
+        /// </summary>
         public Menu() { }
 
+        /// <summary>
+        /// Constructor for Menus, type of menu is determined by the "type" int
+        /// </summary>
+        /// <param name="position">Sets position for the Menu</param>
+        /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro</param>
         public Menu(Vector2 position, int type)
         {
             isMenu = true;
@@ -75,22 +83,29 @@ namespace MortensKomeback2
 
         #region Methods
 
-
+        /// <summary>
+        /// Updates the state of the inventory
+        /// </summary>
+        /// <param name="gameTime">Not used - inherited from super-class</param>
         public override void Update(GameTime gameTime)
         {
             if (isInventory)
-            {
                 ShowInventory();
-            }
         }
 
-
+        /// <summary>
+        /// Not used, inherited from super-class
+        /// </summary>
+        /// <param name="content">Not used, inherited from super-class</param>
         public override void LoadContent(ContentManager content)
         {
             //throw new NotImplementedException();
         }
 
-
+        /// <summary>
+        /// Not used, inherited from super-class
+        /// </summary>
+        /// <param name="gameObject">Not used, inherited from super-class</param>
         public override void OnCollision(GameObject gameObject)
         {
             //throw new NotImplementedException();
@@ -98,9 +113,9 @@ namespace MortensKomeback2
 
 
         /// <summary>
-        /// Modified to recieve individual sprite, position, rotation, scale, spriteeffects and layerdepth from each individual gameobject
+        /// Modified to apply text and draw additional empty sprites to get a more immersive (and understandable) inventory feeling, uses switch-case for adaptability
         /// </summary>
-        /// <param name="spriteBatch">Drawing tool</param>
+        /// <param name="spriteBatch">Drawing logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
@@ -125,11 +140,16 @@ namespace MortensKomeback2
             }
         }
 
+        /// <summary>
+        /// Handles inventory logic i.e. position of items drawn, amount of items equipped, amount of useables/questitems
+        /// </summary>
         private void ShowInventory()
         {
+
+            //Unequipped inventory logic
             int spacer = 0;
-            int nextLine = 0;
-            int addLineCounter = 0;
+            byte additionalLines = 0;
+            byte addLineCounter = 0;
             keyCount = 0;
             healItem = 0;
 
@@ -137,12 +157,12 @@ namespace MortensKomeback2
             {
                 if (!(item is QuestItem))
                 {
-                    item.Position = new Vector2(position.X - 752 + (96 * nextLine), position.Y - 352 + spacer);
+                    item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
                     spacer += 96;
                     addLineCounter++;
                     if (addLineCounter == 9)
                     {
-                        nextLine++;
+                        additionalLines++;
                         addLineCounter = 0;
                         spacer = 0;
                     }
@@ -151,15 +171,16 @@ namespace MortensKomeback2
                 {
                     if ((item as QuestItem).IsKey)
                         keyCount++;
-                    if ((item as QuestItem).HealItem)
+                    else if ((item as QuestItem).HealItem)
                         healItem++;
                 }
             }
 
-            int mainHandItem = 0;
-            int offHandItem = 0;
-            int torsoItem = 0;
-            int feetItem = 0;
+            //Max 1 item of each kind equipped logic followed by equipped inventory logic
+            byte mainHandItem = 0;
+            byte offHandItem = 0;
+            byte torsoItem = 0;
+            byte feetItem = 0;
             Item tempItem;
             drawTwoHanded = false;
 
@@ -174,10 +195,17 @@ namespace MortensKomeback2
                 }
                 if (offHandItem > 1)
                 {
-                    tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
-                    tempItem.IsEquipped = false;
-                    GameWorld.playerInventory.Add(tempItem);
-                    GameWorld.equippedPlayerInventory.Remove(tempItem);
+                    try
+                    {
+                        tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
+                        tempItem.IsEquipped = false;
+                        GameWorld.playerInventory.Add(tempItem);
+                        GameWorld.equippedPlayerInventory.Remove(tempItem);
+                    }
+                    catch
+                    {
+                        continue;
+                    }
                 }
                 if (torsoItem > 1)
                 {
@@ -201,30 +229,30 @@ namespace MortensKomeback2
 
                 foreach (Item item in GameWorld.equippedPlayerInventory)
                 {
-                    if (item is MainHandItem)
+                    switch (item)
                     {
-                        if ((item as MainHandItem).IsTwoHanded)
-                        {
-                            drawTwoHanded = true;
-                            twoHandedSprite = item.Sprite;
-                        }
-                        item.Position = new Vector2(position.X + 300, position.Y - 200);
-                        mainHandItem++;
-                    }
-                    if (item is TorsoSlotItem)
-                    {
-                        item.Position = new Vector2(position.X + 500, position.Y - 200);
-                        torsoItem++;
-                    }
-                    if (item is OffHandItem)
-                    {
-                        item.Position = new Vector2(position.X + 700, position.Y - 200);
-                        offHandItem++;
-                    }
-                    if (item is FeetSlotItem)
-                    {
-                        item.Position = new Vector2(position.X + 500, position.Y);
-                        feetItem++;
+                        case MainHandItem:
+                            if ((item as MainHandItem).IsTwoHanded)
+                            {
+                                drawTwoHanded = true;
+                                twoHandedSprite = item.Sprite;
+                                offHandItem++;
+                            }
+                            item.Position = new Vector2(position.X + 300, position.Y - 200);
+                            mainHandItem++;
+                            break;
+                        case OffHandItem:
+                            item.Position = new Vector2(position.X + 700, position.Y - 200);
+                            offHandItem++;
+                            break;
+                        case TorsoSlotItem:
+                            item.Position = new Vector2(position.X + 500, position.Y - 200);
+                            torsoItem++;
+                            break;
+                        case FeetSlotItem:
+                            item.Position = new Vector2(position.X + 500, position.Y);
+                            feetItem++;
+                            break;
                     }
                 }
             } while (mainHandItem > 1 || offHandItem > 1 || torsoItem > 1 || feetItem > 1);

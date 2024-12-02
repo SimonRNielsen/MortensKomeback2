@@ -8,9 +8,7 @@ namespace MortensKomeback2
     {
         #region Fields
 
-        private bool inventoryOpen = false;
         private bool detectItem = false;
-        private bool rightClickActive = false;
 
         #endregion
 
@@ -29,9 +27,8 @@ namespace MortensKomeback2
         #region Constructor
 
         /// <summary>
-        /// Constructs a MousePointer with the intent of enabling "collision" with Button-class objects
+        /// Constructs a MousePointer with the intent of enabling "collision" with Button- & Item-class objects
         /// </summary>
-        /// <param name="graphics">Needed for translating precise location of mouse in comparison to game</param>
         public MousePointer()
         {
 
@@ -41,12 +38,13 @@ namespace MortensKomeback2
 
         #region Methods
 
+        /// <summary>
+        /// Handles input dependant on different conditions when run (initiated in GameWorld by right-clicking with mouse)
+        /// </summary>
         public void RightClickEvent()
         {
-            inventoryOpen = GameWorld.DetectInventory();
-            rightClickActive = GameWorld.DetectRightClickMenu();
 
-            if (!inventoryOpen && !rightClickActive)
+            if (!GameWorld.DetectInventory() && !GameWorld.DetectRightClickMenu() && !GameWorld.MenuActive)
             {
                 GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, 10));
             }
@@ -54,7 +52,7 @@ namespace MortensKomeback2
             else
             {
 
-                if (!rightClickActive)
+                if (!GameWorld.DetectRightClickMenu())
                 {
                     foreach (Item item in GameWorld.playerInventory)
                         CheckCollision(item);
@@ -62,16 +60,21 @@ namespace MortensKomeback2
                         CheckCollision(item);
                 }
 
+                /* No current conditions where this should be possible at the moment
                 if (GameWorld.RightMouseButtonClick && !GameWorld.MenuActive && !detectItem)
                 {
                     GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, 0));
                 }
+                */
 
                 detectItem = false;
             }
         }
 
-
+        /// <summary>
+        /// Detects if the mouse is colliding with the item and creates a button to handle that item
+        /// </summary>
+        /// <param name="item">Item being collided with</param>
         public void CheckCollision(Item item)
         {
             if (!(item is QuestItem))
@@ -82,23 +85,22 @@ namespace MortensKomeback2
                 }
         }
 
+        /// <summary>
+        /// Runs a Mouse-Over effect by activating the items OnCollision function, as long as it's not of the "QuestItem" class (should never happen so no need to check collision there)
+        /// </summary>
         public void MouseOver()
         {
             foreach (Item item in GameWorld.playerInventory)
             {
                 if (!(item is QuestItem))
                     if (item.CollisionBox.Intersects(CollisionBox))
-                    {
                         item.OnCollision();
-                    }
             }
             foreach (Item item in GameWorld.equippedPlayerInventory)
             {
                 if (!(item is QuestItem))
                     if (item.CollisionBox.Intersects(CollisionBox))
-                    {
                         item.OnCollision();
-                    }
             }
         }
 
