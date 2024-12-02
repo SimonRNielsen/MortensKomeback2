@@ -36,14 +36,16 @@ namespace MortensKomeback2
         {
             battlefieldPlayers[0] = player;
             battlefieldEnemies.Add(enemy);
-            GameWorld.Camera.Position = new Vector2(2000, 0);
-            this.Position = new Vector2(1500, 0);
+            this.Position = new Vector2(0, 1080*10);
+            GameWorld.Camera.Position = this.Position;
             //this.graphicsDevice = graphicsDevice;
             playerOriginPosition = player.Position;
-            player.Position = new Vector2(1200, 0); ;
-            enemy.Position = new Vector2(2700, -200);
+            player.Position = new Vector2(this.Position.X-700, this.Position.Y); ;
+            enemy.Position = new Vector2(this.Position.X+700, this.Position.Y);
             enemy.SpriteEffectIndex = 0;
             chosenAction = 0;
+            GameWorld.newGameObjects.Add(new Dialogue(new Vector2(0, this.Position.Y+320)));      //Dialogue box visual
+
         }
 
         #endregion
@@ -58,6 +60,7 @@ namespace MortensKomeback2
             textBox = new Rectangle(0, 0, 500, 50);
             /// Set a default color for the smallRectangle
             textBoxColor = Color.White;
+
         }
 
         public override void OnCollision(GameObject gameObject)
