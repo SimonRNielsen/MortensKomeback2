@@ -115,9 +115,12 @@ namespace MortensKomeback2
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || exitGame)
+            if (exitGame)
                 Exit();
 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                PauseGame();
+            
             // TODO: Add your update logic here
 
             if (restart)
@@ -296,6 +299,7 @@ namespace MortensKomeback2
             Texture2D loseScreen = Content.Load<Texture2D>("Sprites\\Menu\\loseScreen");
             Texture2D inventoryScreen = Content.Load<Texture2D>("Sprites\\Menu\\inventory");
             Texture2D statPanel = Content.Load<Texture2D>("Sprites\\Menu\\statPanel");
+            Texture2D pauseScreen = Content.Load<Texture2D>("Sprites\\Menu\\pauseScreen");
 
             commonSprites.Add("menuButton", menuButton);
             commonSprites.Add("button", button);
@@ -304,6 +308,7 @@ namespace MortensKomeback2
             commonSprites.Add("loseScreen", loseScreen);
             commonSprites.Add("inventory", inventoryScreen);
             commonSprites.Add("statPanel", statPanel);
+            commonSprites.Add("pauseScreen", pauseScreen);
 
         }
 
@@ -459,6 +464,11 @@ namespace MortensKomeback2
         public static void StartGame()
         {
             //Start game logic here
+        }
+
+        private void PauseGame()
+        {
+            newGameObjects.Add(new Menu(Camera.Position, 4));
         }
 
         #endregion

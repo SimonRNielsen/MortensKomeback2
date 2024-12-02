@@ -47,10 +47,11 @@ namespace MortensKomeback2
             buttonID = buttonType;
             switch (buttonID)
             {
-                case 0: //Not currently in use
+                case 0:
                     sprite = GameWorld.commonSprites["button"];
                     text = "Unpause";
-                    textXDisplacement = -18;
+                    layer = 0.9999f;
+                    textXDisplacement = -25;
                     break;
                 case 1:
                     sprite = GameWorld.commonSprites["button"];
@@ -61,6 +62,7 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["button"];
                     text = "Exit";
                     textXDisplacement = +2;
+                    layer = 0.9999f;
                     break;
                 case 3:
                     sprite = GameWorld.commonSprites["button"];

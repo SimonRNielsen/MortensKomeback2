@@ -48,7 +48,7 @@ namespace MortensKomeback2
         /// Constructor for Menus, type of menu is determined by the "type" int
         /// </summary>
         /// <param name="position">Sets position for the Menu</param>
-        /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro</param>
+        /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro, 4 = Pause</param>
         public Menu(Vector2 position, int type)
         {
 
@@ -77,6 +77,12 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["introScreen"];
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 300, Position.Y + 500), 3));
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
+                    break;
+                case 4:
+                    sprite = GameWorld.commonSprites["pauseScreen"];
+                    layer = 0.999f;
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 75, Position.Y + 25), 0));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 75, Position.Y + 25), 2));
                     break;
             }
 
@@ -140,6 +146,9 @@ namespace MortensKomeback2
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Torso", new Vector2(position.X + 495, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Offhand", new Vector2(position.X + 680, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Feet", new Vector2(position.X + 500, position.Y + 75), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
+                    break;
+                case 4:
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Game Paused", new Vector2(position.X - 65, position.Y - 40), textColor[0], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999999f);
                     break;
                 default:
                     break;

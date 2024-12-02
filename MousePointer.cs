@@ -52,7 +52,7 @@ namespace MortensKomeback2
             else
             {
 
-                if (!GameWorld.DetectRightClickMenu())
+                if (!GameWorld.DetectRightClickMenu() && GameWorld.DetectInventory())
                 {
                     foreach (Item item in GameWorld.playerInventory)
                         CheckCollision(item);
