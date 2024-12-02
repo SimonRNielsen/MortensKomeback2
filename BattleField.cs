@@ -21,6 +21,8 @@ namespace MortensKomeback2
         Texture2D pixel;
         Color textBoxColor;
         Vector2 playerOriginPosition;
+        private int chosenAction;
+        bool keysAreLifted;
 
 
         #endregion
@@ -41,6 +43,7 @@ namespace MortensKomeback2
             player.Position = new Vector2(1200, 0); ;
             enemy.Position = new Vector2(2700, -200);
             enemy.SpriteEffectIndex = 0;
+            chosenAction = 0;
         }
 
         #endregion
@@ -69,8 +72,10 @@ namespace MortensKomeback2
                 e.Animation(gameTime);
             }
             HandleInput();
-            int chosenAction = HandleInput();
-            TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass);
+            chosenAction = HandleInput();
+            TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
+            chosenAction = 0;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -86,18 +91,47 @@ namespace MortensKomeback2
             //Get the keyboard state
             KeyboardState keyState = Keyboard.GetState();
 
+            if (keyState.IsKeyDown(Keys.D1) || keyState.IsKeyDown(Keys.NumPad1) && keysAreLifted)
+            {
+                keysAreLifted = false;
+                return 1;
+            }
+
+            if (keyState.IsKeyDown(Keys.D2) || keyState.IsKeyDown(Keys.NumPad2) && keysAreLifted)
+            {
+                keysAreLifted = false;
+                return 2;
+            }
+
+            if (keyState.IsKeyDown(Keys.D3) || keyState.IsKeyDown(Keys.NumPad3) && keysAreLifted)
+            {
+                keysAreLifted = false;
+                return 3;
+            }
+
+            if (keyState.IsKeyUp(Keys.NumPad1) 
+                && keyState.IsKeyUp(Keys.NumPad2) 
+                && keyState.IsKeyUp(Keys.NumPad3) 
+                && keyState.IsKeyUp(Keys.D1) 
+                && keyState.IsKeyUp(Keys.D2) 
+                && keyState.IsKeyUp(Keys.D3) )
+            {
+                keysAreLifted = true;
+            }
+
             if (keyState.IsKeyDown(Keys.Q))
             {
                 battlefieldPlayers[0].Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
+                GameWorld.BattleActive = false;
             }
-            return 1;
+            return 0;
         }
 
         /// <summary>
         /// This method makes the action happen that the player and enemy has decided
         /// </summary>
-        private void TakeAction(int chosenAction, PlayerClass playerClass)
+        private void TakeAction(int chosenAction, PlayerClass playerClass, GameTime gameTime)
         {
             switch (chosenAction)
             {
@@ -108,7 +142,7 @@ namespace MortensKomeback2
                     }
                     else
                     {
-                        RangedAttack();
+                        RangedAttack(gameTime);
                     }
                     break;
                 case 2:
@@ -133,6 +167,8 @@ namespace MortensKomeback2
 
         private void MeleeAttack()
         {
+            battlefieldPlayers[0].Position += new Vector2(0, 3);
+
             //Move
             //Animate
             //Sound
@@ -141,8 +177,10 @@ namespace MortensKomeback2
 
         }
 
-        private void RangedAttack()
+        private void RangedAttack(GameTime gameTime)
         {
+            battlefieldPlayers[0].Position += new Vector2(0, 3);
+            battlefieldPlayers[0].Animation(gameTime);
             //Animate
             //Sound
             //Calculate hit
@@ -169,6 +207,8 @@ namespace MortensKomeback2
 
         private void Heal()
         {
+            battlefieldPlayers[0].Position += new Vector2(3, 0);
+
             //Animate
             //Sound
             //Calculate heal
