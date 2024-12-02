@@ -139,6 +139,32 @@ namespace MortensKomeback2
                 else if (menuActive && gameObject is Player)
                     gameObject.Update(gameTime);
 
+                //foreach (GameObject gameObject in gameObjects)
+                //{
+                    foreach (GameObject other in gameObjects)
+                    {
+
+                        if (gameObject is Player)
+                        {
+                            if (other is AvSurface || other is Obstacle)
+                            {
+                                gameObject.CheckCollision(other);
+                                other.CheckCollision(gameObject);
+                            }
+                        }
+
+                        if (gameObject is Enemy)
+                        {
+                            if (other is AvSurface || other is Obstacle)
+                            {
+                                gameObject.CheckCollision(other);
+                                other.CheckCollision(gameObject);
+                            }
+
+                        }
+                    }
+                //}
+
             }
 
             //Search & Pray logic
@@ -167,29 +193,8 @@ namespace MortensKomeback2
                 menu.Clear();
                 menuActive = false;
                 closeMenu = false;
-                gameObject.Update(gameTime);
+                //gameObject.Update(gameTime); Simon godkender denne til at slette :D
 
-                foreach (GameObject other in gameObjects)
-                {
-                    if (gameObject is Player)
-                    {
-                        if (other is AvSurface || other is Obstacle)
-                        {
-                            gameObject.CheckCollision(other);
-                            other.CheckCollision(gameObject);
-                        }
-                    }
-
-                    if (gameObject is Enemy)
-                    {
-                        if (other is AvSurface || other is Obstacle)
-                        {
-                            gameObject.CheckCollision(other);
-                            other.CheckCollision(gameObject);
-                        }
-                        
-                    }
-                }
             }
             if (DetectInventory())
                 mousePointer.MouseOver();
@@ -208,6 +213,7 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
+                
 
             newGameObjects.Clear();
 
@@ -334,7 +340,7 @@ namespace MortensKomeback2
             commonSprites.Add("feetItem", feet);
             commonSprites.Add("healItem", healItem);
             commonSprites.Add("blink", blink);
-            commonSprites.Add("feetItem", feet);
+            //commonSprites.Add("feetItem", feet); Sat dobbelt ind, kan slettes 
             commonSprites.Add("stone", stone);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
@@ -361,15 +367,7 @@ namespace MortensKomeback2
         private void LoadAnimationArrays()
         {
 
-            #region aggro goose
-            Texture2D[] aggroGooseSprites = new Texture2D[8];
-            for (int i = 0; i < 8; i++)
-            {
-                aggroGooseSprites[i] = Content.Load<Texture2D>("Sprites\\Charactor\\aggro" + i);
-            }
-            animationSprites.Add("AggroGoose", aggroGooseSprites);
-            #endregion
-            #endregion
+            //#endregion
 
             Texture2D[] areaArray = new Texture2D[5]
             {
