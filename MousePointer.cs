@@ -60,7 +60,6 @@ namespace MortensKomeback2
                         CheckCollision(item);
                 }
 
-                detectItem = false;
             }
 
         }
