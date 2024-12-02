@@ -159,11 +159,7 @@ namespace MortensKomeback2
             }
             if (rightMouseButtonClick)
                 mousePointer.RightClickEvent();
-#if DEBUG
-            if (menu.Count == 0 && menuActive)
-                closeMenu = true;
-#endif
-            if (closeMenu)
+            if (closeMenu || menu.Count == 0)
             {
                 menu.Clear();
                 menuActive = false;
