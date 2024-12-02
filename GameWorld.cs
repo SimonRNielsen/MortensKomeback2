@@ -118,7 +118,7 @@ namespace MortensKomeback2
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
 
-            newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
 
 
@@ -429,7 +429,7 @@ namespace MortensKomeback2
             Texture2D[] areaArray = new Texture2D[7] //rooms
             {
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
-            Content.Load<Texture2D>("Sprites\\area\\room_single"),
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
