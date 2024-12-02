@@ -65,18 +65,18 @@ namespace MortensKomeback2
         {
            
 
-            if (mortenAlive)
-            { 
+            //if (mortenAlive)
+            //{ 
 
-            healthCount = GameWorld.PlayerInstance.Health;
-            }
+            //healthCount = GameWorld.PlayerInstance.Health;
+            //}
 
-            // Update GUI state based on player status
-            if (GameWorld.PlayerInstance != null)
-            {
-                mortenAlive = GameWorld.PlayerInstance.Health > 0;
-                healthCount = GameWorld.PlayerInstance.Health;
-            }
+            //// Update GUI state based on player status
+            //if (GameWorld.PlayerInstance != null)
+            //{
+            //    mortenAlive = GameWorld.PlayerInstance.Health > 0;
+            //    healthCount = GameWorld.PlayerInstance.Health;
+            //}
 
         }
         public override void Draw(SpriteBatch spriteBatch)

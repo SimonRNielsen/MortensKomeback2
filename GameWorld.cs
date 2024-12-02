@@ -115,14 +115,18 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(3000, 0), 0));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(3000, -2160), 0));      //højre side, rum 2, secret + item
 
-            newGameObjects.Add(new Area(new Vector2(0, -443), 5));       //door
 
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+
+            newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+
+
 
             #region obstacle
             //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(-200, 0));
             newGameObjects.Add(new Obstacle(-200, 96));
+            newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
 
             #endregion
 
@@ -359,6 +363,7 @@ namespace MortensKomeback2
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
+            Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
 
 
             commonSprites.Add("questItem", quest);
@@ -378,6 +383,7 @@ namespace MortensKomeback2
             Texture2D questKey1Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey1Sprite");
             Texture2D questKey2Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey2Sprite");
             Texture2D questBibleSprite = Content.Load<Texture2D>("Sprites\\GUI\\questBibleSprite");
+            Texture2D dialogueBox = Content.Load<Texture2D>("Sprites\\GUI\\dialogueBox");
 
             commonSprites.Add("heartSprite", heartSprite);
             commonSprites.Add("weaponClassSprite", weaponClassSprite);
@@ -385,6 +391,7 @@ namespace MortensKomeback2
             commonSprites.Add("questKey1Sprite", questKey1Sprite);
             commonSprites.Add("questKey2Sprite", questKey2Sprite);
             commonSprites.Add("questBibleSprite", questBibleSprite);
+            commonSprites.Add("dialogueBox", dialogueBox);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
@@ -402,8 +409,6 @@ namespace MortensKomeback2
             commonSprites.Add("inventory", inventoryScreen);
             commonSprites.Add("statPanel", statPanel);
 
-            Texture2D dialogueBox = Content.Load<Texture2D>("Sprites\\GUI\\dialogueBox");
-            commonSprites.Add("dialogueBox", dialogueBox);
 
             //Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
             //commonSprites.Add("doorClosed_shadow", doorClosed);
@@ -421,7 +426,7 @@ namespace MortensKomeback2
 
             //#endregion
 
-            Texture2D[] areaArray = new Texture2D[6] //rooms
+            Texture2D[] areaArray = new Texture2D[7] //rooms
             {
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
@@ -429,6 +434,7 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"),
+            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"),
             };
             animationSprites.Add("areaStart", areaArray);
 

@@ -22,7 +22,7 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public Area(Vector2 placement, int areaArray /*int xPosition, int yPosition*/)
+        public Area(Vector2 placement, int areaArray)
         {
             this.position = placement;
             this.layer = 0f;

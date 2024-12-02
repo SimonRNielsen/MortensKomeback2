@@ -19,7 +19,7 @@ namespace MortensKomeback2
         private int currentLineIndex;        // Tracks the current line being displayed
         private SpriteFont dialogueFont;             // Font for displaying text
         private Vector2 textPosition;      // Where the text is drawn
-        private Vector2 boxPosition = new Vector2(100, 1000);         // Where the dialogue box is drawn
+        private Vector2 boxPosition;        // Where the dialogue box is drawn
         private bool dialogue;
 
         #endregion
@@ -33,7 +33,7 @@ namespace MortensKomeback2
         {
             this.position = placement;
             sprite = GameWorld.commonSprites["dialogueBox"];
-            Vector2 boxPosition = new Vector2(100, 1000);
+            //Vector2 boxPosition = new Vector2(100, 1000);
             Vector2 textPosition = new Vector2(100, 1000);
 
         }
