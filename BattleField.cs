@@ -23,6 +23,9 @@ namespace MortensKomeback2
         Vector2 playerOriginPosition;
         private int chosenAction;
         bool keysAreLifted;
+        float actionTimer = 0;
+        float actionTimerDuration = 5f;
+        bool actionOngoing = false;
 
 
         #endregion
@@ -36,15 +39,15 @@ namespace MortensKomeback2
         {
             battlefieldPlayers[0] = player;
             battlefieldEnemies.Add(enemy);
-            this.Position = new Vector2(0, 1080*10);
+            this.Position = new Vector2(0, 1080 * 10);
             GameWorld.Camera.Position = this.Position;
             //this.graphicsDevice = graphicsDevice;
             playerOriginPosition = player.Position;
-            player.Position = new Vector2(this.Position.X-700, this.Position.Y); ;
-            enemy.Position = new Vector2(this.Position.X+700, this.Position.Y);
+            player.Position = new Vector2(this.Position.X - 700, this.Position.Y); ;
+            enemy.Position = new Vector2(this.Position.X + 700, this.Position.Y);
             enemy.SpriteEffectIndex = 0;
             chosenAction = 0;
-            GameWorld.newGameObjects.Add(new Dialogue(new Vector2(0, this.Position.Y+320)));      //Dialogue box visual
+            GameWorld.newGameObjects.Add(new Dialogue(new Vector2(0, this.Position.Y + 320)));      //Dialogue box visual
 
         }
 
@@ -70,14 +73,35 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            
+            if(!actionOngoing)
+            {
+
+
             foreach (Enemy e in battlefieldEnemies)
             {
                 e.Animation(gameTime);
             }
+
             HandleInput();
             chosenAction = HandleInput();
+                if(chosenAction >0)
+                { actionOngoing = true; }
+            }
+            else if(actionOngoing && actionTimer< actionTimerDuration)
+            {
             TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
-            chosenAction = 0;
+            actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                actionTimer = 0;
+                actionOngoing = false;
+            }
+            
+
+            EnemyAction();
+
 
         }
 
@@ -112,12 +136,12 @@ namespace MortensKomeback2
                 return 3;
             }
 
-            if (keyState.IsKeyUp(Keys.NumPad1) 
-                && keyState.IsKeyUp(Keys.NumPad2) 
-                && keyState.IsKeyUp(Keys.NumPad3) 
-                && keyState.IsKeyUp(Keys.D1) 
-                && keyState.IsKeyUp(Keys.D2) 
-                && keyState.IsKeyUp(Keys.D3) )
+            if (keyState.IsKeyUp(Keys.NumPad1)
+                && keyState.IsKeyUp(Keys.NumPad2)
+                && keyState.IsKeyUp(Keys.NumPad3)
+                && keyState.IsKeyUp(Keys.D1)
+                && keyState.IsKeyUp(Keys.D2)
+                && keyState.IsKeyUp(Keys.D3))
             {
                 keysAreLifted = true;
             }
@@ -182,8 +206,10 @@ namespace MortensKomeback2
 
         private void RangedAttack(GameTime gameTime)
         {
-            battlefieldPlayers[0].Position += new Vector2(0, 3);
+
+            battlefieldPlayers[0].Position += new Vector2(0, 0.001f);
             battlefieldPlayers[0].Animation(gameTime);
+
             //Animate
             //Sound
             //Calculate hit
@@ -216,6 +242,11 @@ namespace MortensKomeback2
             //Sound
             //Calculate heal
             //Heal
+        }
+
+        private void EnemyAction()
+        {
+
         }
 
 
