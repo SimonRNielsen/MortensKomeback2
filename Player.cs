@@ -34,7 +34,6 @@ namespace MortensKomeback2
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
-            //this.scale = 0.75f;
         }
 
         #endregion
@@ -69,11 +68,14 @@ namespace MortensKomeback2
         /// <param name="gameObject">A gameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
-            
-            //if (gameObject is Door)
-            //{
-            // Open door to net area
-            //}
+
+            if (gameObject is Door)
+            {
+                
+                //Hvis døren er åben, gå igennem
+                //Hvis døren er lukket og har nøgle, lås op
+                //Hvis døren er låst - afvis
+            }
 
             if (gameObject is Item)
             { 

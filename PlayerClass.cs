@@ -11,6 +11,5 @@ namespace MortensKomeback2
         Crusader = 1,
         Munk = 2,
         Bishop = 3,
-        Dimmer
     }
 }
