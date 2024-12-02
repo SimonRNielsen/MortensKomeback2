@@ -29,6 +29,7 @@ namespace MortensKomeback2
             get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
         }
 
+        public int Health { get => health; } ///TIL IRENE
 
         public abstract void OnCollision(GameObject gameObject);
 
@@ -45,12 +46,15 @@ namespace MortensKomeback2
             spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
         }
 
-
-        public virtual void CheckCollision(GameObject other)
+        /// <summary>
+        /// Checking if two objects is colliding 
+        /// </summary>
+        /// <param name="gameObject">A GameObject</param>
+        public void CheckCollision(GameObject gameObject)
         {
-            if (CollisionBox.Intersects(other.CollisionBox))
+            if (CollisionBox.Intersects(gameObject.CollisionBox))
             {
-                OnCollision(other);
+                OnCollision(gameObject);
             }
         }
     }

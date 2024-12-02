@@ -16,11 +16,7 @@ namespace MortensKomeback2
         private GraphicsDeviceManager graphics;
         private float timeElapsed;
         private int currentIndex;
-
-        /// <summary>
-        /// Bool to change the spriteEffectIndex so the player face the direction is walking 
-        /// </summary>
-        private bool direction = true;
+        private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
 
         #endregion
 
@@ -29,12 +25,17 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
+        /// <summary>
+        /// The construction of a enemy
+        /// </summary>
+        /// <param name="_graphics">A GraphicsDeviceManager</param>
         public Enemy(GraphicsDeviceManager _graphics)
         {
             this.speed = 300;
             graphics = _graphics;
             this.health = 100;
             this.fps = 7f;
+            this.scale = 0.5f;
         }
 
         #endregion
@@ -43,19 +44,32 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
+            sprites = GameWorld.animationSprites["WalkingGoose"];
+            this.Sprite = sprites[0];
         }
 
+        /// <summary>
+        /// When the enemy is colliding with a AvSurface or Obstacle it will turn around and walk in that direction
+        /// </summary>
+        /// <param name="gameObject">A GameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
-            if (gameObject is Player)
+            if (gameObject is Obstacle || gameObject is AvSurface)
             {
-                //Load fight 
+                if (direction is true)
+                {
+                    direction = false;
+                }
+                else
+                {
+                    direction = true;
+                }
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 800f)
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f)
             {
                 sprites = GameWorld.animationSprites["AggroGoose"];
             }
@@ -63,11 +77,11 @@ namespace MortensKomeback2
             {
                 sprites = GameWorld.animationSprites["WalkingGoose"];
             }
-            this.Sprite = sprites[0];
 
             Movement(gameTime);
             Animation(gameTime);
         }
+
         public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
@@ -96,8 +110,13 @@ namespace MortensKomeback2
                 direction = true;
             }
 
+
         }
 
+        /// <summary>
+        /// Making an animation of the sprites
+        /// </summary>
+        /// <param name="gameTime">A GameTime</param>
         public override void Animation(GameTime gameTime)
         {
             //Adding the time which has passed since the last update
