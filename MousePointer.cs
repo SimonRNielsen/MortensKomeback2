@@ -69,6 +69,7 @@ namespace MortensKomeback2
 
                 detectItem = false;
             }
+
         }
 
         /// <summary>
@@ -77,12 +78,14 @@ namespace MortensKomeback2
         /// <param name="item">Item being collided with</param>
         public void CheckCollision(Item item)
         {
+
             if (!(item is QuestItem))
                 if (CollisionBox.Intersects(item.CollisionBox))
                 {
                     detectItem = true;
                     GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
                 }
+
         }
 
         /// <summary>
@@ -90,18 +93,17 @@ namespace MortensKomeback2
         /// </summary>
         public void MouseOver()
         {
+
             foreach (Item item in GameWorld.playerInventory)
-            {
                 if (!(item is QuestItem))
                     if (item.CollisionBox.Intersects(CollisionBox))
                         item.OnCollision();
-            }
+
             foreach (Item item in GameWorld.equippedPlayerInventory)
-            {
                 if (!(item is QuestItem))
                     if (item.CollisionBox.Intersects(CollisionBox))
                         item.OnCollision();
-            }
+
         }
 
         #endregion

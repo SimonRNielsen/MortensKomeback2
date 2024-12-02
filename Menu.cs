@@ -50,6 +50,7 @@ namespace MortensKomeback2
         /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro</param>
         public Menu(Vector2 position, int type)
         {
+
             isMenu = true;
             menuType = type;
             Position = position;
@@ -77,6 +78,7 @@ namespace MortensKomeback2
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
                     break;
             }
+
         }
 
         #endregion
@@ -89,8 +91,10 @@ namespace MortensKomeback2
         /// <param name="gameTime">Not used - inherited from super-class</param>
         public override void Update(GameTime gameTime)
         {
+
             if (isInventory)
                 ShowInventory();
+
         }
 
         /// <summary>
@@ -118,6 +122,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Drawing logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             base.Draw(spriteBatch);
             switch (menuType)
             {
@@ -138,6 +143,7 @@ namespace MortensKomeback2
                 default:
                     break;
             }
+
         }
 
         /// <summary>

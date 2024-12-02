@@ -29,6 +29,7 @@ namespace MortensKomeback2
         /// <param name="spawnPosition">Used to set spawnposition</param>
         public QuestItem(int itemType, bool found, Vector2 spawnPosition)
         {
+
             position = spawnPosition;
             layer = 0.95f;
             switch (itemType)
@@ -55,6 +56,7 @@ namespace MortensKomeback2
                 standardSprite = sprite;
                 sprite = GameWorld.commonSprites["blink"];
             }
+
         }
 
         #endregion

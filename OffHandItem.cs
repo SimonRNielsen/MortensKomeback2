@@ -29,6 +29,7 @@ namespace MortensKomeback2
         /// <param name="spawnPosition">Used to set spawnposition</param>
         public OffHandItem(int playerClass, Vector2 spawnPosition, bool enhanced, bool found)
         {
+
             sprite = GameWorld.commonSprites["offHandItem"];
             layer = 0.95f;
             damageReductionBonus = 5;
@@ -44,10 +45,10 @@ namespace MortensKomeback2
                     itemName += "Shield";
                     break;
                 case 2:
-                    isUsed = true;
+                    isUsed = true; //Deletes item - class doesn't use items in off-hand
                     break;
                 case 3:
-                    isUsed = true;
+                    isUsed = true; //Deletes item - class doesn't use items in off-hand
                     break;
             }
             if (!found)
@@ -55,6 +56,7 @@ namespace MortensKomeback2
                 standardSprite = sprite;
                 sprite = GameWorld.commonSprites["blink"];
             }
+
         }
 
         #endregion

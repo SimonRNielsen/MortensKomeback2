@@ -32,6 +32,7 @@ namespace MortensKomeback2
         /// <param name="found">Set to true if already in players inventory</param>
         public MainHandItem(int playerClass, Vector2 spawnPosition, bool enhanced, bool found)
         {
+
             damageBonus = 5;
             position = spawnPosition;
             layer = 0.95f;

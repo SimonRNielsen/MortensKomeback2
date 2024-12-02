@@ -41,6 +41,7 @@ namespace MortensKomeback2
         /// <param name="buttonType">0 = Unpause, 1 = Close, 2 = Exit, 3 = Start, 4 = Restart, 10 = Open inventory, 11 & 101 = Cancel (different stages)</param>
         public Button(Vector2 spawnPosition, int buttonType)
         {
+
             position = spawnPosition;
             layer = 0.998f;
             buttonID = buttonType;
@@ -86,6 +87,7 @@ namespace MortensKomeback2
                     itemButton = true;
                     break;
             }
+
         }
 
         /// <summary>
@@ -95,13 +97,14 @@ namespace MortensKomeback2
         /// <param name="item">Takes "Item"-class reference to manipulate it according to input</param>
         public Button(Vector2 spawnPosition, ref Item item)
         {
+
             position = spawnPosition;
             playerItem = item;
             itemButton = true;
             buttonID = 100;
             layer = 0.998f;
             sprite = GameWorld.commonSprites["menuButton"];
-            if (playerItem.IsEquipped)
+            if (GameWorld.equippedPlayerInventory.Contains(playerItem))
             {
                 text = "Unequip";
                 textXDisplacement = -18;
@@ -111,6 +114,7 @@ namespace MortensKomeback2
                 text = "Equip";
             }
             GameWorld.newGameObjects.Add(new Button(new Vector2(position.X, position.Y + sprite.Height), 101));
+
         }
 
         #endregion
@@ -122,6 +126,7 @@ namespace MortensKomeback2
         /// </summary>
         public void OnCollision()
         {
+
             collision = true;
             if (GameWorld.LeftMouseButtonClick)
                 switch (buttonID)
@@ -159,7 +164,7 @@ namespace MortensKomeback2
                         break;
 
                     case 100:
-                        if (playerItem.IsEquipped)
+                        if (GameWorld.equippedPlayerInventory.Contains(playerItem))
                         {
                             playerItem.IsEquipped = false;
                             GameWorld.playerInventory.Add(playerItem);
@@ -179,6 +184,7 @@ namespace MortensKomeback2
                         break;
 
                 }
+
         }
 
         /// <summary>
@@ -188,6 +194,7 @@ namespace MortensKomeback2
         /// <exception cref="NotImplementedException">Non-valid Button has been constructed</exception>
         public override void Update(GameTime gameTime)
         {
+
             switch (buttonID)
             {
                 case 0:
@@ -214,7 +221,9 @@ namespace MortensKomeback2
                 default:
                     throw new NotImplementedException();
             }
+
             collision = false;
+
         }
 
         /// <summary>
@@ -223,10 +232,10 @@ namespace MortensKomeback2
         /// <param name="mousePointer">Checks for position of MousePointers CollisionBox</param>
         public void CheckCollision(MousePointer mousePointer)
         {
+
             if (CollisionBox.Intersects(mousePointer.CollisionBox))
-            {
                 OnCollision();
-            }
+
         }
 
         /// <summary>

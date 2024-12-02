@@ -28,6 +28,7 @@ namespace MortensKomeback2
         /// <param name="spawnPosition">Used to set spawnposition</param>
         public FeetSlotItem(int playerClass, bool found, Vector2 spawnPosition)
         {
+
             if (found)
             {
                 sprite = GameWorld.commonSprites["feetItem"];
@@ -41,6 +42,7 @@ namespace MortensKomeback2
             itemName = "Boots of speed";
             layer = 0.95f;
             speedBonus = 5f;
+
         }
 
         #endregion

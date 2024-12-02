@@ -28,6 +28,7 @@ namespace MortensKomeback2
         /// <param name="spawnPosition">Used to set spawnposition</param>
         public TorsoSlotItem(int playerClass, bool found, Vector2 spawnPosition)
         {
+
             position = spawnPosition;
             layer = 0.95f;
             switch (playerClass)
@@ -55,6 +56,7 @@ namespace MortensKomeback2
                 sprite = GameWorld.commonSprites["blink"];
                 standardSprite = GameWorld.commonSprites["torsoItem"];
             }
+
         }
 
         #endregion

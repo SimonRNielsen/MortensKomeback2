@@ -55,6 +55,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">Synchronizes timer</param>
         public override void Update(GameTime gameTime)
         {
+
             collision = false;
             if (GameWorld.hiddenItems.Contains(this))
             {
@@ -71,6 +72,7 @@ namespace MortensKomeback2
                     timer = 0f;
                 }
             }
+
         }
 
         /// <summary>
@@ -78,7 +80,9 @@ namespace MortensKomeback2
         /// </summary>
         public void OnCollision()
         {
+
             collision = true;
+
         }
 
         /// <summary>
@@ -87,6 +91,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Draw logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             base.Draw(spriteBatch);
             if (collision)
             {
@@ -106,6 +111,7 @@ namespace MortensKomeback2
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + 5, position.Y - (sprite.Height * 2.5f)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
                 }
             }
+
         }
 
         #endregion
