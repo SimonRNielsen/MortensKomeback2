@@ -8,7 +8,7 @@ namespace MortensKomeback2
     {
         #region Fields
 
-        private bool detectItem = false;
+
 
         #endregion
 
@@ -60,13 +60,6 @@ namespace MortensKomeback2
                         CheckCollision(item);
                 }
 
-                /* No current conditions where this should be possible at the moment
-                if (GameWorld.RightMouseButtonClick && !GameWorld.MenuActive && !detectItem)
-                {
-                    GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, 0));
-                }
-                */
-
                 detectItem = false;
             }
 
@@ -82,7 +75,6 @@ namespace MortensKomeback2
             if (!(item is QuestItem))
                 if (CollisionBox.Intersects(item.CollisionBox))
                 {
-                    detectItem = true;
                     GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
                 }
 
