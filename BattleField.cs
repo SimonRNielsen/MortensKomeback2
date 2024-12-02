@@ -59,7 +59,7 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            //Nothing will happen: the battlefiel shouldn't collide with anything. 
         }
 
         public override void Update(GameTime gameTime)
