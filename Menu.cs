@@ -18,6 +18,7 @@ namespace MortensKomeback2
         private static int healItem;
         private int menuType;
         protected int textColorIndex;
+        private bool isInOutro = false;
         private bool isInventory = false;
         private bool drawTwoHanded = false;
         protected bool isMenu = false;
@@ -34,6 +35,7 @@ namespace MortensKomeback2
         public bool IsInventory { get => isInventory; }
         public bool IsMenu { get => isMenu; }
         public bool ButtonObsolete { get => buttonObsolete; set => buttonObsolete = value; }
+        public bool IsInOutro { get => isInOutro; }
 
         #endregion
 
@@ -67,16 +69,19 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["winScreen"];
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 300, Position.Y + 500), 4));
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
+                    isInOutro = true;
                     break;
                 case 2:
                     sprite = GameWorld.commonSprites["loseScreen"];
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 300, Position.Y + 500), 4));
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
+                    isInOutro = true;
                     break;
                 case 3:
                     sprite = GameWorld.commonSprites["introScreen"];
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 300, Position.Y + 500), 3));
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
+                    isInOutro= true;
                     break;
                 case 4:
                     sprite = GameWorld.commonSprites["pauseScreen"];

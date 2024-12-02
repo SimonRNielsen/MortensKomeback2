@@ -17,6 +17,7 @@ namespace MortensKomeback2
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
         private static Vector2 mousePosition;
+        private bool escape;
         private static bool leftMouseButtonClick;
         private static bool rightMouseButtonClick;
         private static bool closeMenu = false;
@@ -91,7 +92,7 @@ namespace MortensKomeback2
             // */
 
             menu.Add(new Menu(Camera.Position, 3));
-            
+
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
@@ -118,9 +119,18 @@ namespace MortensKomeback2
             if (exitGame)
                 Exit();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                PauseGame();
-            
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && !escape)
+            {
+                if (menuActive && !DetectInOutro())
+                    closeMenu = true;
+                else if (DetectInOutro()) { }
+                else
+                    newGameObjects.Add(new Menu(Camera.Position, 4));
+                escape = true;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.Escape))
+                escape = false;
+
             // TODO: Add your update logic here
 
             if (restart)
@@ -236,7 +246,7 @@ namespace MortensKomeback2
 
 #if DEBUG
             _spriteBatch.Draw(commonSprites["collisionTexture"], mousePointer.CollisionBox, null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            
+
 #endif
 
             _spriteBatch.End();
@@ -424,6 +434,20 @@ namespace MortensKomeback2
         }
 
         /// <summary>
+        /// Detects if Intro or Outro menu specificly is in existence
+        /// </summary>
+        /// <returns>true if inventory exists otherwise false</returns>
+        public static bool DetectInOutro()
+        {
+            bool inOutroOpen = false;
+            foreach (Menu menuItem in menu)
+                if (menuItem.IsMenu)
+                    if (menuItem.IsInOutro)
+                        inOutroOpen = true;
+            return inOutroOpen;
+        }
+
+        /// <summary>
         /// Closes the game on next pass of "Update"
         /// </summary>
         public static void ExitGame()
@@ -464,11 +488,6 @@ namespace MortensKomeback2
         public static void StartGame()
         {
             //Start game logic here
-        }
-
-        private void PauseGame()
-        {
-            newGameObjects.Add(new Menu(Camera.Position, 4));
         }
 
         #endregion
