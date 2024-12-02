@@ -416,6 +416,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/GUI/dialogueBox.png
 
+#begin Sprites/GUI/dialogueBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/GUI/dialogueBox.png
+
 #begin Sprites/GUI/heartSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -476,7 +488,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/GUI/questRosarySprite.png
 
-#begin Sprites/GUI/weaponSprite.png
+#begin Sprites/GUI/weaponClassSprite.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -486,7 +498,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/GUI/weaponSprite.png
+/build:Sprites/GUI/weaponClassSprite.png
 
 #begin Sprites/Item/feetPlaceholder.png
 /importer:TextureImporter

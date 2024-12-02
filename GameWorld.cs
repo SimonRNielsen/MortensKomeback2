@@ -116,9 +116,9 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new Area(new Vector2(0, -443), 5));       //door
 
-            newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI
 
-            //newGameObjects.Add(new Dialogue(new Vector2(100, 400))); //dialogue
+            newGameObjects.Add(new Dialogue(new Vector2(0, 320))); //dialogue
 
             base.Initialize();
 
@@ -315,14 +315,14 @@ namespace MortensKomeback2
 
             //GUI
             Texture2D heartSprite = Content.Load<Texture2D>("Sprites\\GUI\\heartSprite");
-            Texture2D weaponSprite = Content.Load<Texture2D>("Sprites\\GUI\\weaponSprite");
+            Texture2D weaponClassSprite = Content.Load<Texture2D>("Sprites\\GUI\\weaponClassSprite");
             Texture2D questRosarySprite = Content.Load<Texture2D>("Sprites\\GUI\\questRosarySprite");
             Texture2D questKey1Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey1Sprite");
             Texture2D questKey2Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey2Sprite");
             Texture2D questBibleSprite = Content.Load<Texture2D>("Sprites\\GUI\\questBibleSprite");
 
             commonSprites.Add("heartSprite", heartSprite);
-            commonSprites.Add("weaponSprite", weaponSprite);
+            commonSprites.Add("weaponClassSprite", weaponClassSprite);
             commonSprites.Add("questRosarySprite", questRosarySprite);
             commonSprites.Add("questKey1Sprite", questKey1Sprite);
             commonSprites.Add("questKey2Sprite", questKey2Sprite);

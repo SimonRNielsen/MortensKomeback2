@@ -15,18 +15,9 @@ namespace MortensKomeback2
     internal class GUI : GameObject
     {
         #region Fields
-        private Texture2D heartSprite;
-        private Texture2D weaponSprite;
-        private Texture2D questKey1Sprite;
-        private Texture2D questKey2Sprite;
-        private Texture2D questRosarySprite;
-        private Texture2D questBibleSprite;
-        //private Texture2D[] questItemSprite;
         private static int healthCount;
         private Vector2 heartPosition;
-        private Vector2 weaponPosition; 
-        //private Vector2 questItemPosition;
-        //private SpriteFont mortalKombatFont;
+        private Vector2 weaponClassPosition; 
         private bool mortenAlive;
         #endregion
 
@@ -34,12 +25,12 @@ namespace MortensKomeback2
         /// <summary>
         /// Accessing Players health
         /// </summary>
-        public static int HealthCount { get => healthCount; set => healthCount = value; }
+      //  public static int HealthCount { get => healthCount; set => healthCount = value; }
 
         /// <summary>
         /// Shows picked class sprite-weapon
         /// </summary>
-        public Texture2D WeaponSprite { get => weaponSprite; set => weaponSprite = value; }
+       // public Texture2D WeaponSprite { get => weaponSprite; set => weaponSprite = value; }
 
         /// <summary>
         /// Shows quest items picked up. For example: Keys, rosary..
@@ -48,14 +39,12 @@ namespace MortensKomeback2
 
         #endregion
 
-        #region Constructor
-        public GUI(Vector2 placement/*int xPosition, int yPosition*/)
+        #region Constructor                                                   
+        public GUI(Vector2 placement)
         {
             this.position = placement;
-            //heartPosition = new Vector2(200, 200);
-            sprite = GameWorld.commonSprites["heartSprite"];
-            
-
+            heartPosition = new Vector2(200, 200);
+            weaponClassPosition = new Vector2(200, 300);
         }
         #endregion
         
@@ -82,25 +71,26 @@ namespace MortensKomeback2
             healthCount = GameWorld.PlayerInstance.Health;
             }
 
-            //if (healthCount < 100)
-            //{
-
-            //}
-            //else if (health <= 0)
-            //{
-            //    mortenAlive = false;
-            //}
-
-
+            // Update GUI state based on player status
+            if (GameWorld.PlayerInstance != null)
+            {
+                mortenAlive = GameWorld.PlayerInstance.Health > 0;
+                healthCount = GameWorld.PlayerInstance.Health;
+            }
 
         }
-        public void GuiTest()
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            sprite = GameWorld.commonSprites["heartSprite"];
+            // Draw the heart icon for health
+            spriteBatch.Draw(GameWorld.commonSprites["heartSprite"], heartPosition, Color.White);
 
+            // Draw weapon icon (or other relevant GUI elements)
+            spriteBatch.Draw(GameWorld.commonSprites["weaponClassSprite"], weaponClassPosition, Color.White);
 
+            // Optionally, draw health as text
+            //SpriteFont font = GameWorld.commonSprites["mortensKomebackFont"];
+            spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
         }
-
 
 
 
