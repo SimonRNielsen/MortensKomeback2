@@ -32,8 +32,8 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass)
         {
-            this.speed = 600;
-            this.health = 100;
+            this.speed = 600; //Not sure what health should be
+            this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.PlayerClass = playerClass;
         }
@@ -41,6 +41,10 @@ namespace MortensKomeback2
         #endregion
 
         #region method
+        /// <summary>
+        /// Loading the different content for the different kind of PlayerClass
+        /// </summary>
+        /// <param name="content"></param>
         public override void LoadContent(ContentManager content)
         {
             sprites = new Texture2D[4];
@@ -56,11 +60,17 @@ namespace MortensKomeback2
                     break;
             }
             
+            //Start sprite
             this.Sprite = sprites[0];
         }
 
+        /// <summary>
+        /// What the different outcome is for the player when it's colliding with a gameObject
+        /// </summary>
+        /// <param name="gameObject">A gameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
+            
             //if (gameObject is Door)
             //{
             // Open door to net area
@@ -73,7 +83,42 @@ namespace MortensKomeback2
 
             if (gameObject is AvSurface)
             {
-                //Take damage
+                //Reduse the players health
+                health = health - 10; //Not sure if it should be 10
+            }
+
+            if (gameObject is Obstacle)
+            {
+                int moveAway = 30; //How much the player is bouncing back after colliding 
+
+                if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
+                {
+                    if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                    {
+                        this.position.X = this.position.X - moveAway; //Moving higher up
+                    }
+                    else
+                    {
+                        this.position.X = this.position.X + moveAway; //Moving down
+                    }
+
+                    this.position.Y = this.position.Y - moveAway; //Moving further to the left
+                }
+
+                if (this.CollisionBox.Y > gameObject.CollisionBox.Y) //The same but to the right
+                {
+                    if (this.CollisionBox.X < gameObject.CollisionBox.X)
+                    {
+                        this.position.X = this.position.X - moveAway;
+                    }
+                    else
+                    {
+                        this.position.X = this.position.X + moveAway;
+                    }
+
+                    this.position.Y = this.position.Y + moveAway;
+                }
+                
             }
             if ( gameObject is Enemy)
             {
