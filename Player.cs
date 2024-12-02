@@ -71,7 +71,7 @@ namespace MortensKomeback2
 
             if (gameObject is Door)
             {
-                
+                 
                 //Hvis døren er åben, gå igennem
                 //Hvis døren er lukket og har nøgle, lås op
                 //Hvis døren er låst - afvis
