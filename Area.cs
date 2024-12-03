@@ -10,20 +10,27 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
+
+    
     internal class Area : GameObject
     {
 
         #region fields
-        public static Dictionary<string, Rectangle> RoomBoundaries = new()
-        {
-            {"Room1", new Rectangle(50,50,800,600) },
-            {"Room2", new Rectangle(500,50,700,500) }
-        };
+        //public static Dictionary<string, Rectangle> RoomBoundaries = new()
+        //{
+        //    {"Room1", new Rectangle(50,50,800,600) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) },
+        //    {"Room2", new Rectangle(500,50,700,500) }
+        //};
 
-        //Current room boundary
-        public static Rectangle CurrentRoomBoundary = RoomBoundaries["Room1"];
+        ////Current room boundary
+        //public static Rectangle CurrentRoomBoundary = RoomBoundaries["Room1"];
 
-        //private int spriteID; //Which sprite is going to be used
 
         #endregion
 
@@ -32,13 +39,11 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public Area(Vector2 placement,/* float layer,*/ int areaArray )
+        public Area(Vector2 placement, int areaArray )
         {
             this.position = placement;
-            this.layer = 0.0f; //this.layer = layer;
+            this.layer = 0.0f;
             this.scale = 1f;
-            /*this.position.X = xPosition;
-            this.position.Y = yPosition;*/
             this.health = 1;
             this.sprites = GameWorld.animationSprites["areaStart"];
             this.sprite = sprites[areaArray];
@@ -61,6 +66,16 @@ namespace MortensKomeback2
         {
             
         }
+
+        //public void ChangeRoom(string newRoom)
+        //{
+        //    if (RoomBoundaries.ContainsKey(newRoom))
+        //    {
+        //        CurrentRoomBoundary = RoomBoundaries[newRoom];
+        //    }
+        //}
+
+
         #endregion
     }
 }

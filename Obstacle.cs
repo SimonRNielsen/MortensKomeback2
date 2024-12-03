@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="xPosition">X position</param>
         /// <param name="yPosition">Y position</param>
-        public Obstacle(int xPosition, int yPosition)
+        public Obstacle(int xPosition, int yPosition )
         {
             this.position = new Vector2(xPosition, yPosition);
         }

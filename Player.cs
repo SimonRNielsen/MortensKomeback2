@@ -31,12 +31,13 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass)
         {
-            this.healthMax = health;
+            //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
             this.scale = 0.75f;
+            this.position = new Vector2(0,-400);
         }
 
         #endregion
@@ -129,6 +130,7 @@ namespace MortensKomeback2
             HandleInput();
             Movement(gameTime);
             Animation(gameTime);
+            base.Update(gameTime);
         }
 
 

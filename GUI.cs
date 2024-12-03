@@ -52,7 +52,7 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-    
+           
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -78,18 +78,18 @@ namespace MortensKomeback2
             //}
 
         }
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            // Draw the heart icon for health
-            spriteBatch.Draw(GameWorld.commonSprites["heartSprite"], heartPosition, Color.White);
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    // Draw the heart icon for health
+        //    spriteBatch.Draw(GameWorld.commonSprites["heartSprite"], heartPosition, Color.White);
 
-            // Draw weapon icon (or other relevant GUI elements)
-            spriteBatch.Draw(GameWorld.commonSprites["weaponClassSprite"], weaponClassPosition, Color.White);
+        //    // Draw weapon icon (or other relevant GUI elements)
+        //    spriteBatch.Draw(GameWorld.commonSprites["weaponClassSprite"], weaponClassPosition, Color.White);
 
-            // Optionally, draw health as text
-            //SpriteFont font = GameWorld.commonSprites["mortensKomebackFont"];
-            spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
-        }
+        //    // Optionally, draw health as text
+        //    //SpriteFont font = GameWorld.commonSprites["mortensKomebackFont"];
+        //    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
+        //}
 
 
 

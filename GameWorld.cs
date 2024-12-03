@@ -52,6 +52,7 @@ namespace MortensKomeback2
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
+        public static Rectangle CurrentRoomBoundary { get; internal set; }
 
         SpriteFont font1;
 
@@ -126,15 +127,16 @@ namespace MortensKomeback2
             Texture2D bar = GameWorld.commonSprites["healthBarRed"];
             newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
 
-            newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
             #endregion
 
 
             #region obstacle
             //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(-200, 0));
-            newGameObjects.Add(new Obstacle(-200, 96));
+            //newGameObjects.Add(new Obstacle(-200, 0));
+            //newGameObjects.Add(new Obstacle(-200, 96));
+
             newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
 
             #endregion
@@ -372,7 +374,7 @@ namespace MortensKomeback2
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
-            Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
+           // Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
 
 
             commonSprites.Add("questItem", quest);
@@ -423,8 +425,8 @@ namespace MortensKomeback2
             commonSprites.Add("statPanel", statPanel);
 
 
-            //Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
-            //commonSprites.Add("doorClosed_shadow", doorClosed);
+            Texture2D doorClosed2 = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
+            commonSprites.Add("doorClosed_shadow", doorClosed2);
 
 
 
