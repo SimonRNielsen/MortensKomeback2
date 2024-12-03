@@ -208,8 +208,10 @@ namespace MortensKomeback2
 
         private void RangedAttack(GameTime gameTime)
         {
+            //Animate
             battlefieldPlayers[0].Animation(gameTime);
 
+            //Move
             if ((battlefieldPlayers[0].Position.X <= this.Position.X + 700) && (move == 1))
                 battlefieldPlayers[0].Position += new Vector2(5f, 0);
             else if ((battlefieldPlayers[0].Position.X >= this.Position.X + 700) && (move == 1))
@@ -228,7 +230,7 @@ namespace MortensKomeback2
             }
 
 
-            //Animate
+
             //Sound
             //Calculate hit
             //Calculate damage
