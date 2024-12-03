@@ -22,6 +22,7 @@ namespace MortensKomeback2
         protected bool isAlive = true;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
+        public int Health { get => health; } ///til GUI
 
         public Texture2D Sprite { get => sprite; set => sprite = value; }
         public Vector2 Position { get => position; set => position = value; }
@@ -47,12 +48,15 @@ namespace MortensKomeback2
             spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
         }
 
-
-        public virtual void CheckCollision(GameObject other)
+        /// <summary>
+        /// Checking if two objects is colliding 
+        /// </summary>
+        /// <param name="gameObject">A GameObject</param>
+        public void CheckCollision(GameObject gameObject)
         {
-            if (CollisionBox.Intersects(other.CollisionBox))
+            if (CollisionBox.Intersects(gameObject.CollisionBox))
             {
-                OnCollision(other);
+                OnCollision(gameObject);
             }
         }
     }
