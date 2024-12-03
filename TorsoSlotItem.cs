@@ -20,10 +20,16 @@ namespace MortensKomeback2
 
         #region Constructor
 
-
-        public TorsoSlotItem(int playerClass, bool found)
+        /// <summary>
+        /// Constructor for TorsoSlotItem class
+        /// </summary>
+        /// <param name="playerClass">Used to determine what class "Player" is and if any special logic should be applied</param>
+        /// <param name="found">Set to true if already in players inventory</param>
+        /// <param name="spawnPosition">Used to set spawnposition</param>
+        public TorsoSlotItem(int playerClass, bool found, Vector2 spawnPosition)
         {
-            standardSprite = GameWorld.commonSprites["torsoItem"];
+
+            position = spawnPosition;
             layer = 0.95f;
             switch (playerClass)
             {
@@ -37,27 +43,39 @@ namespace MortensKomeback2
                     itemName = "Flexible robe";
                     healthBonus = 10;
                     break;
+
                 case 3:
                     healthBonus = 20;
                     itemName = "Comfortable robe";
                     break;
             }
             if (found)
-                sprite = standardSprite;
+                sprite = GameWorld.commonSprites["torsoItem"];
             else
+            {
                 sprite = GameWorld.commonSprites["blink"];
+                standardSprite = GameWorld.commonSprites["torsoItem"];
+            }
+
         }
 
         #endregion
 
         #region Methods
 
-
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="content">Not used</param>
         public override void LoadContent(ContentManager content)
         {
             //throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="gameObject">Not Used</param>
         public override void OnCollision(GameObject gameObject)
         {
             //throw new NotImplementedException();

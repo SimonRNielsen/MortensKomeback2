@@ -34,17 +34,24 @@ namespace MortensKomeback2
 
         #region Constructors
 
+        /// <summary>
+        /// Constructor for Button-class with visual presentation and functionality determined by "buttonType" int
+        /// </summary>
+        /// <param name="spawnPosition">Sets position for the Button</param>
+        /// <param name="buttonType">0 = Unpause, 1 = Close, 2 = Exit, 3 = Start, 4 = Restart, 10 = Open inventory, 11 & 101 = Cancel (different stages)</param>
         public Button(Vector2 spawnPosition, int buttonType)
         {
+
             position = spawnPosition;
             layer = 0.998f;
             buttonID = buttonType;
             switch (buttonID)
             {
-                case 0: //Not currently in use
+                case 0:
                     sprite = GameWorld.commonSprites["button"];
                     text = "Unpause";
-                    textXDisplacement = -18;
+                    layer = 0.9999f;
+                    textXDisplacement = -25;
                     break;
                 case 1:
                     sprite = GameWorld.commonSprites["button"];
@@ -55,6 +62,7 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["button"];
                     text = "Exit";
                     textXDisplacement = +2;
+                    layer = 0.9999f;
                     break;
                 case 3:
                     sprite = GameWorld.commonSprites["button"];
@@ -81,17 +89,24 @@ namespace MortensKomeback2
                     itemButton = true;
                     break;
             }
+
         }
 
+        /// <summary>
+        /// Overload of constructor for Button-class for use with "items"
+        /// </summary>
+        /// <param name="spawnPosition">Sets position for the Button</param>
+        /// <param name="item">Takes "Item"-class reference to manipulate it according to input</param>
         public Button(Vector2 spawnPosition, ref Item item)
         {
+
             position = spawnPosition;
             playerItem = item;
             itemButton = true;
             buttonID = 100;
             layer = 0.998f;
             sprite = GameWorld.commonSprites["menuButton"];
-            if (playerItem.IsEquipped)
+            if (GameWorld.equippedPlayerInventory.Contains(playerItem))
             {
                 text = "Unequip";
                 textXDisplacement = -18;
@@ -101,15 +116,19 @@ namespace MortensKomeback2
                 text = "Equip";
             }
             GameWorld.newGameObjects.Add(new Button(new Vector2(position.X, position.Y + sprite.Height), 101));
+
         }
 
         #endregion
 
         #region Methods
 
-
+        /// <summary>
+        /// Applies mouse-over effect and "Button"-pressed logic according to pre-selected construction parameters
+        /// </summary>
         public void OnCollision()
         {
+
             collision = true;
             if (GameWorld.LeftMouseButtonClick)
                 switch (buttonID)
@@ -147,7 +166,7 @@ namespace MortensKomeback2
                         break;
 
                     case 100:
-                        if (playerItem.IsEquipped)
+                        if (GameWorld.equippedPlayerInventory.Contains(playerItem))
                         {
                             playerItem.IsEquipped = false;
                             GameWorld.playerInventory.Add(playerItem);
@@ -167,11 +186,17 @@ namespace MortensKomeback2
                         break;
 
                 }
+
         }
 
-
+        /// <summary>
+        /// Sets collision to false on each pass to check anew if mouse "collides" with the "Button", also applies the actual effect or resets it
+        /// </summary>
+        /// <param name="gameTime">Not used, but part of inherited class parameters</param>
+        /// <exception cref="NotImplementedException">Non-valid Button has been constructed</exception>
         public override void Update(GameTime gameTime)
         {
+
             switch (buttonID)
             {
                 case 0:
@@ -198,28 +223,39 @@ namespace MortensKomeback2
                 default:
                     throw new NotImplementedException();
             }
+
             collision = false;
+
         }
 
-
+        /// <summary>
+        /// Checks collision between CollisionBox'es
+        /// </summary>
+        /// <param name="mousePointer">Checks for position of MousePointers CollisionBox</param>
         public void CheckCollision(MousePointer mousePointer)
         {
+
             if (CollisionBox.Intersects(mousePointer.CollisionBox))
-            {
                 OnCollision();
-            }
+
         }
 
-
+        /// <summary>
+        /// Overrides inherited Draw to also apply a DrawString and the visual mouse-over effect
+        /// </summary>
+        /// <param name="spriteBatch">Drawing logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
 
             spriteBatch.Draw(sprite, Position, null, backgroundColor[backgroundColorIndex], rotation, new Vector2(sprite.Width / 2, sprite.Height / 2), scale, SpriteEffects.None, layer);
-            spriteBatch.DrawString(GameWorld.mortensKomebackFont, text, new Vector2(Position.X + textXDisplacement, Position.Y), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999f);
+            spriteBatch.DrawString(GameWorld.mortensKomebackFont, text, new Vector2(Position.X + textXDisplacement, Position.Y), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.00001f);
 
         }
 
-
+        /// <summary>
+        /// Not used for Button-class
+        /// </summary>
+        /// <param name="content">ContentManager logic</param>
         public override void LoadContent(ContentManager content)
         {
             //throw new NotImplementedException();

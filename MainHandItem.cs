@@ -4,7 +4,7 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class MainHandItem : Item, ITwoHandedItem
+    internal class MainHandItem : Item
     {
         #region Fields
 
@@ -23,38 +23,51 @@ namespace MortensKomeback2
 
         #region Constructor
 
-
-        public MainHandItem(int playerClass, Vector2 position, bool enhanced, bool found)
+        /// <summary>
+        /// Constructor for MainHandItem class
+        /// </summary>
+        /// <param name="playerClass">Used to determine what class "Player" is and if any special logic should be applied</param>
+        /// <param name="spawnPosition">Used to set spawnposition</param>
+        /// <param name="enhanced">If true, applies a 60% bonus to damageBonus</param>
+        /// <param name="found">Set to true if already in players inventory</param>
+        public MainHandItem(int playerClass, Vector2 spawnPosition, bool enhanced, bool found)
         {
+
             damageBonus = 5;
+            position = spawnPosition;
+            layer = 0.95f;
             if (enhanced)
             {
                 damageBonus = (int)(damageBonus * 1.6f);
                 itemName = "Enhanced ";
             }
-            Position = position;
-            layer = 0.95f;
             switch (playerClass)
             {
                 case 1:
-                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
                     itemName += "Sword";
                     break;
                 case 2:
-                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
-                    itemName += "Sling";
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
                     implement = implementTwohanded;
+                    isTwoHanded = true;
+                    damageBonus = implement.StatBoost(damageBonus);
+                    itemName += "Sling";
                     break;
                 case 3:
-                    standardSprite = GameWorld.commonSprites["mainHandItem"]; //Mage
-                    itemName += "Staff";
+                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
                     implement = implementTwohanded;
+                    isTwoHanded = true;
+                    damageBonus = implement.StatBoost(damageBonus);
+                    itemName += "Staff";
                     break;
             }
-            if (found)
-                sprite = standardSprite;
-            else
+            if (!found)
+            {
+                standardSprite = sprite;
                 sprite = GameWorld.commonSprites["blink"];
+            }
+
         }
 
 
@@ -62,20 +75,22 @@ namespace MortensKomeback2
 
         #region Methods
 
-
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="content">Not used</param>
         public override void LoadContent(ContentManager content)
         {
-            if (implement is ITwoHandedItem && !isTwoHanded)
-            {
-                isTwoHanded = true;
-                damageBonus = implement.StatBoost(damageBonus);
-            }
+            
         }
 
-
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="gameObject">Not Used</param>
         public override void OnCollision(GameObject gameObject)
         {
-            //
+
         }
 
         #endregion

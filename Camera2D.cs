@@ -15,7 +15,7 @@ namespace MortensKomeback2
         #region Properties
 
         /// <summary>
-        /// Property to access the posi
+        /// Property to access the position of the object
         /// </summary>
         public Vector2 Position
         {

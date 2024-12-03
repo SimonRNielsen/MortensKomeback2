@@ -18,13 +18,14 @@ namespace MortensKomeback2
         private SpriteBatch _spriteBatch;
         private static Camera2D camera;
         private static Vector2 mousePosition;
+        private bool escape;
         private static bool leftMouseButtonClick;
         private static bool rightMouseButtonClick;
         private static bool closeMenu = false;
         private static bool menuActive;
         private static bool exitGame = false;
         private static bool restart = false;
-        private static MousePointer mousePointer;
+        private static MousePointer mousePointer = new MousePointer();
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
@@ -83,7 +84,6 @@ namespace MortensKomeback2
             _graphics.PreferredBackBufferHeight = 1080;
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
-            mousePointer = new MousePointer();
 
             //Preloading of all assets
             mortensKomebackFont = Content.Load<SpriteFont>("mortalKombatFont");
@@ -92,10 +92,13 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            newGameObjects.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
-            menu.Add(new Menu(Camera.Position, 3));
+            hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             
-            PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
+            menu.Add(new Menu(Camera.Position, 3));
+
+            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -131,6 +134,7 @@ namespace MortensKomeback2
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
             #endregion
 
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
             #region obstacle
             //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
@@ -155,8 +159,20 @@ namespace MortensKomeback2
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape) || exitGame)
+            if (exitGame)
                 Exit();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) && !escape)
+            {
+                if (menuActive && !DetectInOutro())
+                    closeMenu = true;
+                else if (DetectInOutro()) { }
+                else
+                    newGameObjects.Add(new Menu(Camera.Position, 4));
+                escape = true;
+            }
+            if (Keyboard.GetState().IsKeyUp(Keys.Escape))
+                escape = false;
 
             // TODO: Add your update logic here
 
@@ -179,33 +195,33 @@ namespace MortensKomeback2
                 else if (menuActive && gameObject is Player)
                     gameObject.Update(gameTime);
 
-                //foreach (GameObject gameObject in gameObjects)
-                //{
-                    foreach (GameObject other in gameObjects)
+                
+                foreach (GameObject other in gameObjects)
+                {
+                    if (gameObject is Player)
                     {
-
-                        if (gameObject is Player)
+                        if (other is AvSurface || other is Obstacle)
                         {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-                        }
-
-                        if (gameObject is Enemy)
-                        {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
                         }
                     }
-                //}
+
+                    if (gameObject is Enemy)
+                    {
+                        if (other is AvSurface || other is Obstacle)
+                        {
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
+                        }
+
+                    }
+                }
+                
 
             }
+
+            gameObjects.RemoveAll(obj => obj.IsAlive == false);
 
             //Search & Pray logic
             foreach (Item item in hiddenItems)
@@ -224,11 +240,7 @@ namespace MortensKomeback2
             }
             if (rightMouseButtonClick)
                 mousePointer.RightClickEvent();
-#if DEBUG
-            if (menu.Count == 0 && menuActive)
-                closeMenu = true;
-#endif
-            if (closeMenu)
+            if (closeMenu || menu.Count == 0)
             {
                 menu.Clear();
                 menuActive = false;
@@ -310,7 +322,8 @@ namespace MortensKomeback2
 
 
 #if DEBUG
-            DrawMouseCollisionBox();
+            _spriteBatch.Draw(commonSprites["collisionTexture"], mousePointer.CollisionBox, null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
 #endif
 
             _spriteBatch.End();
@@ -331,21 +344,6 @@ namespace MortensKomeback2
 
             if (gameObject is Item)
                 color = Color.Purple;
-
-            _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-        }
-
-        private void DrawMouseCollisionBox()
-        {
-            Color color = Color.Red;
-            Rectangle collisionBox = mousePointer.CollisionBox;
-            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
-            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
-            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
-            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
 
             _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
             _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
@@ -374,7 +372,7 @@ namespace MortensKomeback2
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
-           // Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
+            Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
 
 
             commonSprites.Add("questItem", quest);
@@ -415,6 +413,7 @@ namespace MortensKomeback2
             Texture2D loseScreen = Content.Load<Texture2D>("Sprites\\Menu\\loseScreen");
             Texture2D inventoryScreen = Content.Load<Texture2D>("Sprites\\Menu\\inventory");
             Texture2D statPanel = Content.Load<Texture2D>("Sprites\\Menu\\statPanel");
+            Texture2D pauseScreen = Content.Load<Texture2D>("Sprites\\Menu\\pauseScreen");
 
             commonSprites.Add("menuButton", menuButton);
             commonSprites.Add("button", button);
@@ -423,6 +422,7 @@ namespace MortensKomeback2
             commonSprites.Add("loseScreen", loseScreen);
             commonSprites.Add("inventory", inventoryScreen);
             commonSprites.Add("statPanel", statPanel);
+            commonSprites.Add("pauseScreen", pauseScreen);
 
 
             Texture2D doorClosed2 = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
@@ -448,8 +448,8 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
-            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"),
-            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"),
+            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
+            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -514,7 +514,9 @@ namespace MortensKomeback2
 
         }
 
-
+        /// <summary>
+        /// Marks sub-menu items as obsolete, which are then deleted after having been read
+        /// </summary>
         public static void MarkMenuItemsObsolete()
         {
             foreach (Menu menuItem in menu)
@@ -525,7 +527,10 @@ namespace MortensKomeback2
             }
         }
 
-
+        /// <summary>
+        /// Detects if the there are any buttons active, in this case a right-click menu which consists of only buttons
+        /// </summary>
+        /// <returns>true if any "ItemButtons", otherwise false</returns>
         public static bool DetectRightClickMenu()
         {
             bool exists = false;
@@ -536,7 +541,10 @@ namespace MortensKomeback2
             return exists;
         }
 
-
+        /// <summary>
+        /// Detects if inventory menu specificly is in existence
+        /// </summary>
+        /// <returns>true if inventory exists otherwise false</returns>
         public static bool DetectInventory()
         {
             bool inventoryOpen = false;
@@ -547,13 +555,31 @@ namespace MortensKomeback2
             return inventoryOpen;
         }
 
+        /// <summary>
+        /// Detects if Intro or Outro menu specificly is in existence
+        /// </summary>
+        /// <returns>true if inventory exists otherwise false</returns>
+        public static bool DetectInOutro()
+        {
+            bool inOutroOpen = false;
+            foreach (Menu menuItem in menu)
+                if (menuItem.IsMenu)
+                    if (menuItem.IsInOutro)
+                        inOutroOpen = true;
+            return inOutroOpen;
+        }
 
+        /// <summary>
+        /// Closes the game on next pass of "Update"
+        /// </summary>
         public static void ExitGame()
         {
             exitGame = true;
         }
 
-
+        /// <summary>
+        /// Clears all menus and runs GameWorlds "Initialize" to simulate a fresh start
+        /// </summary>
         private void Restart()
         {
             menu.Clear();
@@ -565,20 +591,37 @@ namespace MortensKomeback2
             animationSprites.Clear();
             commonSounds.Clear();
             backgroundMusic.Clear();
+            hiddenItems.Clear();
             Initialize();
             restart = false;
         }
 
-
+        /// <summary>
+        /// Sets a bool that initializes the restart process
+        /// </summary>
         public static void InitiateRestart()
         {
             restart = true;
         }
 
-
+        /// <summary>
+        /// Gives start parameters (currently none)
+        /// </summary>
         public static void StartGame()
         {
             //Start game logic here
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list">list to be parsed for NPCs</param>
+        /// <returns>List with NPC references</returns>
+        private List<GameObject> FindNPCLocation(ref List<GameObject> list)
+        {
+            List<GameObject> interactables = new List<GameObject>();
+            interactables = list.FindAll(npc => npc is NPC);
+            return interactables;
         }
 
         #endregion

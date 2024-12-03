@@ -380,7 +380,7 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/morten_sprite2.png
 
-#begin Sprites/DEBUG/pixel.png
+#begin Sprites/DEBUG/96x96.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -390,8 +390,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/DEBUG/pixel.png
+/build:Sprites/DEBUG/96x96.png
 
+#begin Sprites/DEBUG/pixel.png
 #begin Sprites/GUI/dialogueBox.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -427,6 +428,7 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/GUI/HealthBar/healthBarBlack.png
+/build:Sprites/DEBUG/pixel.png
 
 #begin Sprites/GUI/HealthBar/healthBarRed.png
 /importer:TextureImporter
@@ -643,6 +645,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/menuButton.png
+
+#begin Sprites/Menu/pauseScreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/pauseScreen.png
 
 #begin Sprites/Menu/statPanel.png
 /importer:TextureImporter
