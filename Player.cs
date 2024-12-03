@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System;
 
 namespace MortensKomeback2
@@ -15,6 +16,7 @@ namespace MortensKomeback2
         private int currentIndex;
         private bool praying;
         private bool searching;
+        private List<NPC> nPCList;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -28,12 +30,13 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player(PlayerClass playerClass)
+        public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
             this.speed = 600;
             this.health = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
+            nPCList = nPCs;
         }
 
         #endregion
@@ -53,7 +56,7 @@ namespace MortensKomeback2
                     sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
             }
-            
+
             this.Sprite = sprites[0];
         }
 
@@ -65,7 +68,7 @@ namespace MortensKomeback2
             //}
 
             if (gameObject is Item)
-            { 
+            {
                 //Collect item
             }
 
@@ -141,7 +144,7 @@ namespace MortensKomeback2
 
             if (keyState.IsKeyDown(Keys.Z) && !searching)
             {
-                Search();
+                Interact();
                 searching = true;
             }
 
@@ -173,7 +176,7 @@ namespace MortensKomeback2
             {
                 return;
             }
-            
+
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -189,29 +192,58 @@ namespace MortensKomeback2
             }
         }
 
+
         private void Pray()
         {
+
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
                 if (distance < 300 && distance > -300)
                     item.IsFound = true;
             }
+
         }
 
-        private void Search()
+
+        private void Interact()
         {
-            foreach (Item item in GameWorld.hiddenItems)
+
+            bool npcNearby = false;
+
+            foreach (NPC npc in nPCList)
             {
-                float distance = Vector2.Distance(position, item.Position);
+                float distance = Vector2.Distance(npc.Position, position);
                 if (distance < 100 && distance > -100)
                 {
-                    item.IsPickedUp = true;
-                    item.IsFound = false;
-                    item.Sprite = item.StandardSprite;
-                    GameWorld.playerInventory.Add(item);
+                    npcNearby = true;
+                    InitiateDialog(npc);
+                }
+                if (npcNearby)
+                    break;
+            }
+
+            if (!npcNearby)
+            {
+                foreach (Item item in GameWorld.hiddenItems)
+                {
+                    float distance = Vector2.Distance(position, item.Position);
+                    if (distance < 100 && distance > -100)
+                    {
+                        item.IsPickedUp = true;
+                        item.IsFound = false;
+                        item.Sprite = item.StandardSprite;
+                        GameWorld.playerInventory.Add(item);
+                    }
                 }
             }
+
+        }
+
+
+        private void InitiateDialog(NPC npc)
+        {
+
         }
 
         #endregion

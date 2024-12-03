@@ -93,7 +93,7 @@ namespace MortensKomeback2
 
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
             //newGameObjects.Add(new Player());
@@ -488,6 +488,18 @@ namespace MortensKomeback2
         public static void StartGame()
         {
             //Start game logic here
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list">list to be parsed for NPCs</param>
+        /// <returns>List with NPC references</returns>
+        private List<NPC> FindNPCLocation(ref List<GameObject> list)
+        {
+            List<NPC> nPCs = new List<NPC>();
+            nPCs = list.FindAll(npc => npc is NPC).ConvertAll(npc => npc as NPC);
+            return nPCs;
         }
 
         #endregion
