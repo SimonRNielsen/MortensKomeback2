@@ -49,8 +49,13 @@ namespace MortensKomeback2
 
         #region Methods
 
+        /// <summary>
+        /// Handles reset of collision and rotation of sprite + reset of timer that "reveals" the item
+        /// </summary>
+        /// <param name="gameTime">Synchronizes timer</param>
         public override void Update(GameTime gameTime)
         {
+
             collision = false;
             if (GameWorld.hiddenItems.Contains(this))
             {
@@ -67,22 +72,46 @@ namespace MortensKomeback2
                     timer = 0f;
                 }
             }
+
         }
 
+        /// <summary>
+        /// Sets collision bool that's triggered remotely
+        /// </summary>
         public void OnCollision()
         {
+
             collision = true;
+
         }
 
-
+        /// <summary>
+        /// Overriden from base to add a graphic mouse-over effect that shows the items "stat"-bonus'
+        /// </summary>
+        /// <param name="spriteBatch">Draw logic</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             base.Draw(spriteBatch);
             if (collision)
             {
-                spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[SpriteEffectIndex], 0.92f);
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + (sprite.Width / 2) + 30, position.Y - (sprite.Height / 2)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
+                if (!(this is OffHandItem))
+                {
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + (sprite.Width / 2) + 30, position.Y - (sprite.Height / 2)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
+                }
+                else if ((this is OffHandItem) && !isEquipped)
+                {
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + (sprite.Width / 2) + 30, position.Y - (sprite.Height / 2)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
+                }
+                else
+                {
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X, position.Y - (sprite.Height * 2.5f)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + 5, position.Y - (sprite.Height * 2.5f)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
+                }
             }
+
         }
 
         #endregion
