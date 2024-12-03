@@ -19,8 +19,10 @@ namespace MortensKomeback2
         protected float rotation;
         protected int health = 1;
         private int spriteEffectIndex;
+        private bool isAlive = true;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
+
         public int Health { get => health; } ///til GUI
 
         public Texture2D Sprite { get => sprite; set => sprite = value; }
@@ -29,6 +31,7 @@ namespace MortensKomeback2
         {
             get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
         }
+        public bool IsAlive { get => isAlive; set => isAlive = value; }
 
         public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
 

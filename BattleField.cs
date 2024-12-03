@@ -26,6 +26,7 @@ namespace MortensKomeback2
         float actionTimer = 0;
         float actionTimerDuration = 5f;
         bool actionOngoing = false;
+        private int move = 1;
 
 
         #endregion
@@ -73,32 +74,32 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            
-            if(!actionOngoing)
-            {
-
 
             foreach (Enemy e in battlefieldEnemies)
             {
                 e.Animation(gameTime);
             }
-
-            HandleInput();
-            chosenAction = HandleInput();
-                if(chosenAction >0)
+            //Action logic: if there is no acton going on, player should be able to choose actions   
+            if (!actionOngoing)
+            {
+                HandleInput();
+                chosenAction = HandleInput();
+                if (chosenAction > 0)
                 { actionOngoing = true; }
             }
-            else if(actionOngoing && actionTimer< actionTimerDuration)
+            //If the action is happening, the player shouldn't be able to do anything but watch the anctions onfold
+            else if (actionOngoing /*&& actionTimer < actionTimerDuration*/)
             {
-            TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
-            actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
+                //actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else
-            {
-                actionTimer = 0;
-                actionOngoing = false;
-            }
-            
+            //When the timer is up, the action has ended.
+            //else
+            //{
+            //    actionTimer = 0;
+            //    actionOngoing = false;
+            //}
+
 
             EnemyAction();
 
@@ -151,6 +152,7 @@ namespace MortensKomeback2
                 battlefieldPlayers[0].Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
+                IsAlive = false;
             }
             return 0;
         }
@@ -206,9 +208,25 @@ namespace MortensKomeback2
 
         private void RangedAttack(GameTime gameTime)
         {
-
-            battlefieldPlayers[0].Position += new Vector2(0, 0.001f);
             battlefieldPlayers[0].Animation(gameTime);
+
+            if ((battlefieldPlayers[0].Position.X <= this.Position.X + 700) && (move == 1))
+                battlefieldPlayers[0].Position += new Vector2(5f, 0);
+            else if ((battlefieldPlayers[0].Position.X >= this.Position.X + 700) && (move == 1))
+            {
+                move = 2;
+            }
+
+            else if ((battlefieldPlayers[0].Position.X > this.Position.X - 700) && (move == 2))
+            {
+                battlefieldPlayers[0].Position -= new Vector2(5f, 0);
+            }
+            else
+            {
+                actionOngoing = false;
+                move = 1;
+            }
+
 
             //Animate
             //Sound

@@ -267,6 +267,8 @@ namespace MortensKomeback2
 
             newGameObjects.Clear();
 
+            //Removes dead objects
+            gameObjects.RemoveAll(gameObject => gameObject.IsAlive == false);
 
             base.Update(gameTime);
         }
