@@ -18,8 +18,8 @@ namespace MortensKomeback2
         protected float speed;
         protected float rotation;
         protected int health = 1;
-        private int spriteEffectIndex;
-        private bool isAlive = true;
+        protected int spriteEffectIndex;
+        protected bool isAlive = true;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
 

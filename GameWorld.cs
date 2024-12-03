@@ -96,13 +96,13 @@ namespace MortensKomeback2
             hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            
+
             menu.Add(new Menu(Camera.Position, 3));
 
             PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
-            newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
+            newGameObjects.Add(new Area(new Vector2(0, 0), 1));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 2160), 3));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4));  //main room
@@ -131,7 +131,7 @@ namespace MortensKomeback2
             //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(-200, 0));
             newGameObjects.Add(new Obstacle(-200, 96));
-            newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
+            newGameObjects.Add(new Area(new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
 
             #endregion
 
@@ -183,35 +183,35 @@ namespace MortensKomeback2
                 if (!menuActive && !battleActive)
                     gameObject.Update(gameTime);
                 //Måske skrotte nedenstående?
-                else if (menuActive && gameObject is Player)
-                    gameObject.Update(gameTime);
-                else if (battleActive && gameObject is BattleField)
+                /*else if (menuActive && gameObject is Player)
+                    gameObject.Update(gameTime); */
+                else if (battleActive && gameObject is BattleField && !menuActive)
                     gameObject.Update(gameTime);
 
                 //foreach (GameObject gameObject in gameObjects)
                 //{
-                    foreach (GameObject other in gameObjects)
+                foreach (GameObject other in gameObjects)
+                {
+
+                    if (gameObject is Player)
                     {
-
-                        if (gameObject is Player)
+                        if (other is AvSurface || other is Obstacle)
                         {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-                        }
-
-                        if (gameObject is Enemy)
-                        {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
                         }
                     }
+
+                    if (gameObject is Enemy)
+                    {
+                        if (other is AvSurface || other is Obstacle)
+                        {
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
+                        }
+
+                    }
+                }
                 //}
 
             }
@@ -222,16 +222,23 @@ namespace MortensKomeback2
             hiddenItems.RemoveAll(found => found.IsPickedUp == true);
 
             //Menu logic
+
             foreach (Menu menuItem in menu)
             {
-                menuActive = true;
-                menuItem.Update(gameTime);
-                if (menuItem is Button)
+                if (BattleActive && (menuItem.IsInventory || menuItem.IsInOutro))
                 {
-                    (menuItem as Button).CheckCollision(mousePointer);
+                    continue;
                 }
+                
+                    menuActive = true;
+                    menuItem.Update(gameTime);
+                    if (menuItem is Button)
+                    {
+                        (menuItem as Button).CheckCollision(mousePointer);
+                    }
+                
             }
-            if (rightMouseButtonClick)
+            if (rightMouseButtonClick && !(BattleActive))
                 mousePointer.RightClickEvent();
             if (closeMenu || menu.Count == 0)
             {
@@ -245,6 +252,7 @@ namespace MortensKomeback2
                 mousePointer.MouseOver();
             menu.RemoveAll(menuItem => menuItem.ButtonObsolete == true);
             playerInventory.RemoveAll(useable => useable.IsUsed == true);
+
 
             //Test collision for batllefield
             foreach (GameObject p in gameObjects)
@@ -274,7 +282,7 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
-                
+
 
             newGameObjects.Clear();
 
