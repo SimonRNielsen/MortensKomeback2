@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using System;
 
 namespace MortensKomeback2
@@ -14,7 +15,10 @@ namespace MortensKomeback2
         private float timeElapsed;
         private int currentIndex;
         private bool praying;
-        private bool searching;
+        private bool interact;
+        private bool inventory;
+        private byte interactRange = 100;
+        private List<GameObject> interactableObjects;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -28,12 +32,13 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player(PlayerClass playerClass)
+        public Player(PlayerClass playerClass, List<GameObject> interactables)
         {
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
+            interactableObjects = interactables;
         }
 
         #endregion
@@ -57,7 +62,7 @@ namespace MortensKomeback2
                     sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
             }
-            
+
             //Start sprite
             this.Sprite = sprites[0];
         }
@@ -81,7 +86,7 @@ namespace MortensKomeback2
             }
 
             if (gameObject is Item)
-            { 
+            {
                 //Collect item
             }
 
@@ -122,9 +127,9 @@ namespace MortensKomeback2
 
                     this.position.Y = this.position.Y + moveAway;
                 }
-                
+
             }
-            
+
         }
 
         public override void Update(GameTime gameTime)
@@ -184,21 +189,36 @@ namespace MortensKomeback2
             //The player is Pray
             if (keyState.IsKeyDown(Keys.P) && !praying)
             {
-                Pray();
+                Pray(interactRange);
                 praying = true;
             }
 
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
-            if (keyState.IsKeyDown(Keys.Z) && !searching)
+            if (keyState.IsKeyDown(Keys.E) && !interact)
             {
-                Search();
-                searching = true;
+                Interact(interactRange);
+                interact = true;
             }
 
-            if (keyState.IsKeyUp(Keys.Z))
-                searching = false;
+            if (keyState.IsKeyUp(Keys.E))
+                interact = false;
+
+            if (keyState.IsKeyDown(Keys.I) && !inventory && !GameWorld.DetectInventory())
+            {
+                GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
+                inventory = true;
+            }
+            else if (keyState.IsKeyDown(Keys.I) && !inventory && GameWorld.DetectInventory())
+            {
+                GameWorld.CloseMenu = true;
+                inventory = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.I))
+                inventory = false;
+
         }
 
         /// <summary>
@@ -225,7 +245,7 @@ namespace MortensKomeback2
             {
                 return;
             }
-            
+
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -241,29 +261,73 @@ namespace MortensKomeback2
             }
         }
 
-        private void Pray()
+        /// <summary>
+        /// Flips a bool on all items within a certain distance from the Player (currently set to 300 pixels)
+        /// </summary>
+        /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
+        private void Pray(byte range)
         {
+
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
-                if (distance < 300 && distance > -300)
+                if (distance < (range * 3) && distance > (-range * 3))
                     item.IsFound = true;
             }
+
         }
 
-        private void Search()
+        /// <summary>
+        /// Makes the Player do a certain interaction with Item/NPC class depending on what it is
+        /// </summary>
+        /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
+        private void Interact(byte range)
         {
-            foreach (Item item in GameWorld.hiddenItems)
+
+            bool interactableNearby = false;
+            float distance;
+
+            foreach (GameObject gameObject in interactableObjects)
             {
-                float distance = Vector2.Distance(position, item.Position);
-                if (distance < 100 && distance > -100)
+                if (gameObject is NPC)
                 {
-                    item.IsPickedUp = true;
-                    item.IsFound = false;
-                    item.Sprite = item.StandardSprite;
-                    GameWorld.playerInventory.Add(item);
+                    distance = Vector2.Distance(gameObject.Position, position);
+                    if (distance < range && distance > -range)
+                    {
+                        interactableNearby = true;
+                        InitiateDialog(gameObject as NPC);
+                    }
+                    if (interactableNearby)
+                        break;
+                }
+
+
+            }
+
+            if (!interactableNearby)
+            {
+                foreach (Item item in GameWorld.hiddenItems)
+                {
+                    distance = Vector2.Distance(position, item.Position);
+                    if (distance < range && distance > -range)
+                    {
+                        item.IsPickedUp = true;
+                        item.IsFound = false;
+                        item.Sprite = item.StandardSprite;
+                        GameWorld.playerInventory.Add(item);
+                    }
                 }
             }
+
+        }
+
+        /// <summary>
+        /// Currently empty template to initiate dialog between Player and predetermined NPC
+        /// </summary>
+        /// <param name="nPC">NPC to initate dialog with</param>
+        private void InitiateDialog(NPC nPC)
+        {
+
         }
 
         #endregion
