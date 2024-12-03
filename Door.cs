@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    internal class Door : Obstacle
+    internal class Door : GameObject
     {
         #region field
+        private DoorTypes type;
         private int doorNumber;
         protected bool doorOpen;
         private bool locked;
@@ -22,10 +23,11 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Door(int xPosition, int yPosition, int doorNumber) : base(xPosition, yPosition)
+        public Door(DoorTypes dt) 
         {
-            this.doorNumber = doorNumber;
+            this.type = dt;
             DoorOpen = false;
+            this.layer = 0.2f;
         }
 
 
@@ -34,18 +36,20 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            if(locked)
+            this.sprites = GameWorld.animationSprites["areaStart"];
+            switch (type)
             {
-
+                case DoorTypes.Open:
+                    this.Sprite = sprites[6];
+                    break;
+                case DoorTypes.Closed:
+                    this.Sprite = sprites[5];
+                    break;
+                case DoorTypes.Locked:
+                    this.Sprite = sprites[5];
+                    break;
             }
-            if (DoorOpen) //Open
-            {
-
-            }
-            else //Closed
-            {
-
-            }
+            
         }
 
 
@@ -58,6 +62,16 @@ namespace MortensKomeback2
                 case 2: locked = true;
                     break;
             }
+        }
+
+        public override void OnCollision(GameObject gameObject)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
         }
 
 

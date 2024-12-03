@@ -124,8 +124,8 @@ namespace MortensKomeback2
 
             #region obstacle
             //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(-200, 0));
-            newGameObjects.Add(new Obstacle(-200, 96));
+            newGameObjects.Add(new Obstacle(400, 0));
+            newGameObjects.Add(new Obstacle(-400, 00));
             newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
 
             #endregion
@@ -364,6 +364,7 @@ namespace MortensKomeback2
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
             Texture2D doorClosed = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow"); //door closed
+            Texture2D doorOpen = Content.Load<Texture2D>("Sprites\\Area\\doorOpen_shadow"); //door open
 
 
             commonSprites.Add("questItem", quest);
@@ -433,8 +434,8 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
-            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"),
-            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"),
+            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
+            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             };
             animationSprites.Add("areaStart", areaArray);
 

@@ -69,9 +69,12 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
 
-            if (gameObject is Door)
+            if (gameObject is Door door)
             {
-                 
+                 if ( door.DoorOpen)
+                {
+                    
+                }
                 //Hvis døren er åben, gå igennem
                 //Hvis døren er lukket og har nøgle, lås op
                 //Hvis døren er låst - afvis
