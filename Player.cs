@@ -210,10 +210,11 @@ namespace MortensKomeback2
         {
 
             bool npcNearby = false;
+            float distance;
 
             foreach (NPC npc in nPCList)
             {
-                float distance = Vector2.Distance(npc.Position, position);
+                distance = Vector2.Distance(npc.Position, position);
                 if (distance < 100 && distance > -100)
                 {
                     npcNearby = true;
@@ -227,7 +228,7 @@ namespace MortensKomeback2
             {
                 foreach (Item item in GameWorld.hiddenItems)
                 {
-                    float distance = Vector2.Distance(position, item.Position);
+                    distance = Vector2.Distance(position, item.Position);
                     if (distance < 100 && distance > -100)
                     {
                         item.IsPickedUp = true;
