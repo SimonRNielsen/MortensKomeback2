@@ -258,6 +258,7 @@ namespace MortensKomeback2
         /// <summary>
         /// Flips a bool on all items within a certain distance from the Player (currently set to 300 pixels)
         /// </summary>
+        /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
 
