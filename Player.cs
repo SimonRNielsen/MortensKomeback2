@@ -15,7 +15,7 @@ namespace MortensKomeback2
         private float timeElapsed;
         private int currentIndex;
         private bool praying;
-        private bool searching;
+        private bool interact;
         private List<NPC> nPCList;
 
         /// <summary>
@@ -142,14 +142,14 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
-            if (keyState.IsKeyDown(Keys.Z) && !searching)
+            if (keyState.IsKeyDown(Keys.E) && !interact)
             {
                 Interact();
-                searching = true;
+                interact = true;
             }
 
-            if (keyState.IsKeyUp(Keys.Z))
-                searching = false;
+            if (keyState.IsKeyUp(Keys.E))
+                interact = false;
         }
 
         /// <summary>
