@@ -603,11 +603,11 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="list">list to be parsed for NPCs</param>
         /// <returns>List with NPC references</returns>
-        private List<NPC> FindNPCLocation(ref List<GameObject> list)
+        private List<GameObject> FindNPCLocation(ref List<GameObject> list)
         {
-            List<NPC> nPCs = new List<NPC>();
-            nPCs = list.FindAll(npc => npc is NPC).ConvertAll(npc => npc as NPC);
-            return nPCs;
+            List<GameObject> interactables = new List<GameObject>();
+            interactables = list.FindAll(npc => npc is NPC);
+            return interactables;
         }
 
         #endregion

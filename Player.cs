@@ -18,7 +18,7 @@ namespace MortensKomeback2
         private bool interact;
         private bool inventory;
         private byte interactRange = 100;
-        private List<NPC> nPCList;
+        private List<GameObject> interactableObjects;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -32,13 +32,13 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player(PlayerClass playerClass, List<NPC> nPCs)
+        public Player(PlayerClass playerClass, List<GameObject> interactables)
         {
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
-            nPCList = nPCs;
+            interactableObjects = interactables;
         }
 
         #endregion
@@ -62,7 +62,7 @@ namespace MortensKomeback2
                     sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
             }
-            
+
             //Start sprite
             this.Sprite = sprites[0];
         }
@@ -73,7 +73,7 @@ namespace MortensKomeback2
         /// <param name="gameObject">A gameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
-            
+
             //if (gameObject is Door)
             //{
             // Open door to net area
@@ -121,9 +121,9 @@ namespace MortensKomeback2
 
                     this.position.Y = this.position.Y + moveAway;
                 }
-                
+
             }
-            
+
         }
 
         public override void Update(GameTime gameTime)
@@ -264,7 +264,7 @@ namespace MortensKomeback2
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
-                if (distance < range * 3 && distance > -range * 3)
+                if (distance < (range * 3) && distance > (-range * 3))
                     item.IsFound = true;
             }
 
@@ -277,22 +277,27 @@ namespace MortensKomeback2
         private void Interact(byte range)
         {
 
-            bool nPCNearby = false;
+            bool interactableNearby = false;
             float distance;
 
-            foreach (NPC nPC in nPCList)
+            foreach (GameObject gameObject in interactableObjects)
             {
-                distance = Vector2.Distance(nPC.Position, position);
-                if (distance < range && distance > -range)
+                if (gameObject is NPC)
                 {
-                    nPCNearby = true;
-                    InitiateDialog(nPC);
+                    distance = Vector2.Distance(gameObject.Position, position);
+                    if (distance < range && distance > -range)
+                    {
+                        interactableNearby = true;
+                        InitiateDialog(gameObject as NPC);
+                    }
+                    if (interactableNearby)
+                        break;
                 }
-                if (nPCNearby)
-                    break;
+
+
             }
 
-            if (!nPCNearby)
+            if (!interactableNearby)
             {
                 foreach (Item item in GameWorld.hiddenItems)
                 {
