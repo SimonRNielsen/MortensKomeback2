@@ -12,7 +12,16 @@ namespace MortensKomeback2
     {
         #region field
         protected bool surfaceContact = false; //I don't know if I need it
+        protected int damage;
 
+
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Property for accessing the base damage a character can deal to other characters
+        /// </summary>
+        public int Damage { get => damage; set => damage = value; }
         #endregion
 
         public override void LoadContent(ContentManager content)

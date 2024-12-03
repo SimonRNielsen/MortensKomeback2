@@ -18,9 +18,10 @@ namespace MortensKomeback2
         private int currentIndex;
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
 
+
         #endregion
 
-        #region properti
+        #region Properties
 
         #endregion
 
@@ -33,11 +34,12 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             graphics = _graphics;
-            this.health = 100;
+            this.health = 10;
             this.fps = 7f;
             this.scale = 0.5f;
             sprite = GameWorld.animationSprites["WalkingGoose"][0];
             this.Position = new Vector2(0, -300);
+            this.Damage = 10;
         }
 
         #endregion
@@ -82,6 +84,8 @@ namespace MortensKomeback2
 
             Movement(gameTime);
             Animation(gameTime);
+            if (this.Health <= 0)
+            { IsAlive = false; }
         }
 
         public override void Movement(GameTime gameTime)

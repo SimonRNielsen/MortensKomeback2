@@ -25,8 +25,11 @@ namespace MortensKomeback2
         bool keysAreLifted;
         float actionTimer = 0;
         float actionTimerDuration = 5f;
-        bool actionOngoing = false;
+        bool playerActionOngoing = false;
+        bool enemyActionOngoing = false;
         private int move = 1;
+        private int playerDamageReductionBonus = 0;
+        private int playerDamageBonus = 0;
 
 
         #endregion
@@ -49,7 +52,11 @@ namespace MortensKomeback2
             enemy.SpriteEffectIndex = 0;
             chosenAction = 0;
             GameWorld.newGameObjects.Add(new Dialogue(new Vector2(0, this.Position.Y + 320)));      //Dialogue box visual
-
+            foreach (Item i in GameWorld.equippedPlayerInventory)
+            {
+                playerDamageBonus += i.DamageBonus;
+                playerDamageReductionBonus += i.DamageReductionBonus;
+            }
         }
 
         #endregion
@@ -80,30 +87,37 @@ namespace MortensKomeback2
                 e.Animation(gameTime);
             }
             //Action logic: if there is no acton going on, player should be able to choose actions   
-            if (!actionOngoing)
+            if (!playerActionOngoing && !enemyActionOngoing)
             {
                 HandleInput();
                 chosenAction = HandleInput();
                 if (chosenAction > 0)
-                { actionOngoing = true; }
+                { playerActionOngoing = true; }
             }
             //If the action is happening, the player shouldn't be able to do anything but watch the anctions onfold
-            else if (actionOngoing /*&& actionTimer < actionTimerDuration*/)
+            if (playerActionOngoing /*&& actionTimer < actionTimerDuration*/)
             {
                 TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
                 //actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
+            else if (enemyActionOngoing)
+            {
+                EnemyAction();
+            }
+            foreach (Enemy e in battlefieldEnemies)
+            {
+                if (battlefieldEnemies[0].Health <= 0)
+                {
+                    battlefieldEnemies[0].IsAlive = false;
+                }
+            }
+                battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
             //When the timer is up, the action has ended.
             //else
             //{
             //    actionTimer = 0;
             //    actionOngoing = false;
             //}
-
-
-            EnemyAction();
-
-
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -217,15 +231,22 @@ namespace MortensKomeback2
             else if ((battlefieldPlayers[0].Position.X >= this.Position.X + 700) && (move == 1))
             {
                 move = 2;
-            }
+                battlefieldEnemies[0].Health -= (battlefieldPlayers[0].Damage + playerDamageBonus);
 
+            }
             else if ((battlefieldPlayers[0].Position.X > this.Position.X - 700) && (move == 2))
             {
                 battlefieldPlayers[0].Position -= new Vector2(5f, 0);
             }
             else
             {
-                actionOngoing = false;
+                playerActionOngoing = false;
+                if (battlefieldEnemies.Count >0)
+                {
+                    enemyActionOngoing = true;
+                }
+                else
+                { WinBattle(); }
                 move = 1;
             }
 
@@ -265,6 +286,29 @@ namespace MortensKomeback2
         }
 
         private void EnemyAction()
+        {
+            if ((battlefieldEnemies[0].Position.X >= this.Position.X - 700) && (move == 1))
+                battlefieldEnemies[0].Position -= new Vector2(5f, 0);
+            else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 500) && (move == 1))
+            {
+                move = 2;
+                battlefieldPlayers[0].Health -= (battlefieldEnemies[0].Damage - playerDamageReductionBonus);
+            }
+            else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (move == 2))
+            {
+                battlefieldEnemies[0].Position += new Vector2(5f, 0);
+            }
+            else
+            {
+                enemyActionOngoing = false;
+                move = 1;
+            }
+        }
+
+        /// <summary>
+        /// When an enemy is defeated, the battle is won. Show specific text, and lets the player return form the battle. 
+        /// </summary>
+        private void WinBattle()
         {
 
         }

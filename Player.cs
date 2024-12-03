@@ -41,6 +41,7 @@ namespace MortensKomeback2
             this.fps = 2f;
             this.PlayerClass = playerClass;
             interactableObjects = interactables;
+            this.Damage = 10;
         }
 
         #endregion
