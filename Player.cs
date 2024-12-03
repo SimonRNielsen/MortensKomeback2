@@ -16,6 +16,8 @@ namespace MortensKomeback2
         private int currentIndex;
         private bool praying;
         private bool interact;
+        private bool inventory;
+        private byte interactRange = 100;
         private List<NPC> nPCList;
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace MortensKomeback2
             //The player is Pray
             if (keyState.IsKeyDown(Keys.P) && !praying)
             {
-                Pray();
+                Pray(interactRange);
                 praying = true;
             }
 
@@ -144,12 +146,27 @@ namespace MortensKomeback2
 
             if (keyState.IsKeyDown(Keys.E) && !interact)
             {
-                Interact();
+                Interact(interactRange);
                 interact = true;
             }
 
             if (keyState.IsKeyUp(Keys.E))
                 interact = false;
+
+            if (keyState.IsKeyDown(Keys.I) && !inventory && !GameWorld.DetectInventory())
+            {
+                GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
+                inventory = true;
+            }
+            else if (keyState.IsKeyDown(Keys.I) && !inventory && GameWorld.DetectInventory())
+            {
+                GameWorld.CloseMenu = true;
+                inventory = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.I))
+                inventory = false;
+
         }
 
         /// <summary>
@@ -192,44 +209,49 @@ namespace MortensKomeback2
             }
         }
 
-
-        private void Pray()
+        /// <summary>
+        /// Flips a bool on all items within a certain distance from the Player (currently set to 300 pixels)
+        /// </summary>
+        private void Pray(byte range)
         {
 
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
-                if (distance < 300 && distance > -300)
+                if (distance < range * 3 && distance > -range * 3)
                     item.IsFound = true;
             }
 
         }
 
-
-        private void Interact()
+        /// <summary>
+        /// Makes the Player do a certain interaction with Item/NPC class depending on what it is
+        /// </summary>
+        /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
+        private void Interact(byte range)
         {
 
-            bool npcNearby = false;
+            bool nPCNearby = false;
             float distance;
 
-            foreach (NPC npc in nPCList)
+            foreach (NPC nPC in nPCList)
             {
-                distance = Vector2.Distance(npc.Position, position);
-                if (distance < 100 && distance > -100)
+                distance = Vector2.Distance(nPC.Position, position);
+                if (distance < range && distance > -range)
                 {
-                    npcNearby = true;
-                    InitiateDialog(npc);
+                    nPCNearby = true;
+                    InitiateDialog(nPC);
                 }
-                if (npcNearby)
+                if (nPCNearby)
                     break;
             }
 
-            if (!npcNearby)
+            if (!nPCNearby)
             {
                 foreach (Item item in GameWorld.hiddenItems)
                 {
                     distance = Vector2.Distance(position, item.Position);
-                    if (distance < 100 && distance > -100)
+                    if (distance < range && distance > -range)
                     {
                         item.IsPickedUp = true;
                         item.IsFound = false;
@@ -241,8 +263,11 @@ namespace MortensKomeback2
 
         }
 
-
-        private void InitiateDialog(NPC npc)
+        /// <summary>
+        /// Currently empty template to initiate dialog between Player and predetermined NPC
+        /// </summary>
+        /// <param name="nPC">NPC to initate dialog with</param>
+        private void InitiateDialog(NPC nPC)
         {
 
         }

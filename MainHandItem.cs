@@ -4,7 +4,7 @@ using System;
 
 namespace MortensKomeback2
 {
-    internal class MainHandItem : Item, ITwoHandedItem
+    internal class MainHandItem : Item
     {
         #region Fields
 

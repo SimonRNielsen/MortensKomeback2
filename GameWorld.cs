@@ -84,13 +84,10 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            // /*
-            playerInventory.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, true));
-            playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
-            playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
-            playerInventory.Add(new QuestItem(1, true, Vector2.Zero));
-            // */
-
+            hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            
             menu.Add(new Menu(Camera.Position, 3));
 
             PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
@@ -153,6 +150,8 @@ namespace MortensKomeback2
                     gameObject.Update(gameTime);
 
             }
+
+            gameObjects.RemoveAll(obj => obj.IsAlive == false);
 
             //Search & Pray logic
             foreach (Item item in hiddenItems)
