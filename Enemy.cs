@@ -57,11 +57,9 @@ namespace MortensKomeback2
         {
             if (gameObject is Obstacle)
             {
-
                 if (gameObject.CollisionBox.X + gameObject.CollisionBox.Width + 30 > this.CollisionBox.X + this.sprite.Width)
                 {
                     this.direction = false;
-                    this.spriteEffectIndex = 2;
                 }
                 else if (gameObject.CollisionBox.X  - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X )
                 {
@@ -73,7 +71,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f)
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
             {
                 sprites = GameWorld.animationSprites["AggroGoose"];
             }

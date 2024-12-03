@@ -53,16 +53,8 @@ namespace MortensKomeback2
         }
 
 
-        public void loadDoor(int doorNumber)
-        {
-            switch (doorNumber)
-            {
-                case 1: GameWorld.PlayerInstance.Position = new Vector2(200, 200);
-                    break;
-                case 2: locked = true;
-                    break;
-            }
-        }
+        
+        
 
         public override void OnCollision(GameObject gameObject)
         {

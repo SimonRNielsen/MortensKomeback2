@@ -123,8 +123,8 @@ namespace MortensKomeback2
 
 
             #region obstacle
-            //newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(400, 0));
+            newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
+            newGameObjects.Add(new Obstacle(500, 0));
             newGameObjects.Add(new Obstacle(-400, 00));
             newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
 
@@ -168,31 +168,29 @@ namespace MortensKomeback2
                 else if (menuActive && gameObject is Player)
                     gameObject.Update(gameTime);
 
-                //foreach (GameObject gameObject in gameObjects)
-                //{
-                    foreach (GameObject other in gameObjects)
+                
+                foreach (GameObject other in gameObjects)
+                {
+                    if (gameObject is Player)
                     {
-
-                        if (gameObject is Player)
+                        if (other is AvSurface || other is Obstacle)
                         {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-                        }
-
-                        if (gameObject is Enemy)
-                        {
-                            if (other is AvSurface || other is Obstacle)
-                            {
-                                gameObject.CheckCollision(other);
-                                other.CheckCollision(gameObject);
-                            }
-
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
                         }
                     }
-                //}
+
+                    if (gameObject is Enemy)
+                    {
+                        if (other is AvSurface || other is Obstacle)
+                        {
+                            gameObject.CheckCollision(other);
+                            other.CheckCollision(gameObject);
+                        }
+
+                    }
+                }
+                
 
             }
 
