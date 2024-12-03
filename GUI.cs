@@ -18,7 +18,6 @@ namespace MortensKomeback2
         private static int healthCount;
         private Vector2 heartPosition;
         private Vector2 weaponClassPosition; 
-        private bool mortenAlive;
         #endregion
 
         #region Properties
@@ -42,9 +41,9 @@ namespace MortensKomeback2
         #region Constructor                                                   
         public GUI(Vector2 placement)
         {
+            this.layer = 0.9f;
             this.position = placement;
-            heartPosition = new Vector2(200, 200);
-            weaponClassPosition = new Vector2(200, 300);
+            this.sprite = GameWorld.commonSprites["heartSprite"];
         }
         #endregion
         
@@ -63,15 +62,15 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-           
+
 
             //if (mortenAlive)
-            //{ 
+            //{
 
-            //healthCount = GameWorld.PlayerInstance.Health;
+            //    healthCount = GameWorld.PlayerInstance.Health;
             //}
 
-            //// Update GUI state based on player status
+            //Update GUI state based on player status
             //if (GameWorld.PlayerInstance != null)
             //{
             //    mortenAlive = GameWorld.PlayerInstance.Health > 0;

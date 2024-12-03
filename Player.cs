@@ -15,6 +15,7 @@ namespace MortensKomeback2
         private int currentIndex;
         private bool praying;
         private bool searching;
+        
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -30,11 +31,12 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass)
         {
+            this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
-            //this.scale = 0.75f;
+            this.scale = 0.75f;
         }
 
         #endregion

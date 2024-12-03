@@ -12,6 +12,9 @@ namespace MortensKomeback2
     {
         #region field
         protected bool surfaceContact = false; //I don't know if I need it
+        protected float healthMax;
+        protected bool isAlive;
+
 
         #endregion
 
@@ -37,5 +40,14 @@ namespace MortensKomeback2
         //void Interact(GameObject gameObject);
 
         public abstract void Animation(GameTime gameTime);
+
+        public virtual void GetHit(int damage)
+        {
+            health -= damage;
+
+            if (health <= 0)
+                isAlive = false;
+
+        }
     }
 }

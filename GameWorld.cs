@@ -97,6 +97,9 @@ namespace MortensKomeback2
             PlayerInstance = new Player(PlayerClass.Bishop); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
+
+
+            #region area
             newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 2160), 3));    //main room
@@ -114,12 +117,18 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new Area(new Vector2(3000, 0), 0));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(3000, -2160), 0));      //højre side, rum 2, secret + item
+            #endregion
 
+            #region GUI
 
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
 
+            newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-
+            #endregion
 
 
             #region obstacle
@@ -384,6 +393,8 @@ namespace MortensKomeback2
             Texture2D questKey2Sprite = Content.Load<Texture2D>("Sprites\\GUI\\questKey2Sprite");
             Texture2D questBibleSprite = Content.Load<Texture2D>("Sprites\\GUI\\questBibleSprite");
             Texture2D dialogueBox = Content.Load<Texture2D>("Sprites\\GUI\\dialogueBox");
+            Texture2D healthBarBlack = Content.Load<Texture2D>("Sprites\\GUI\\HealthBar\\healthBarBlack");
+            Texture2D healthBarRed = Content.Load<Texture2D>("Sprites\\GUI\\HealthBar\\healthBarRed");
 
             commonSprites.Add("heartSprite", heartSprite);
             commonSprites.Add("weaponClassSprite", weaponClassSprite);
@@ -392,6 +403,8 @@ namespace MortensKomeback2
             commonSprites.Add("questKey2Sprite", questKey2Sprite);
             commonSprites.Add("questBibleSprite", questBibleSprite);
             commonSprites.Add("dialogueBox", dialogueBox);
+            commonSprites.Add("healthBarBlack", healthBarBlack);
+            commonSprites.Add("healthBarRed", healthBarRed);
 
             Texture2D menuButton = Content.Load<Texture2D>("Sprites\\Menu\\menuButton");
             Texture2D button = Content.Load<Texture2D>("Sprites\\Menu\\button");
