@@ -141,9 +141,6 @@ namespace MortensKomeback2
             //newGameObjects.Add(new Obstacle(-200, 0));
             //newGameObjects.Add(new Obstacle(-200, 96));
 
-            //newGameObjects.Add(new Area (new Vector2(0, -430), 5, "door1T"));       //door - skal laves om til at være obstacle
-            newGameObjects.Add(new Area (new Vector2(200, -430), 7, "door2T"));       //door - skal laves om til at være obstacle
-
             #endregion
 
             base.Initialize();
@@ -424,14 +421,6 @@ namespace MortensKomeback2
             commonSprites.Add("inventory", inventoryScreen);
             commonSprites.Add("statPanel", statPanel);
             commonSprites.Add("pauseScreen", pauseScreen);
-
-
-            Texture2D doorClosed2 = Content.Load<Texture2D>("Sprites\\Area\\doorClosed_shadow");
-            commonSprites.Add("doorClosed_shadow", doorClosed2);
-
-
-
-
         }
 
         /// <summary>
@@ -442,16 +431,16 @@ namespace MortensKomeback2
 
             //#endregion
 
-            Texture2D[] areaArray = new Texture2D[8] //rooms
+            Texture2D[] areaArray = new Texture2D[5] //rooms
             {
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
-            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
-            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4")
+            //Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
+            //Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
+            //Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -459,9 +448,9 @@ namespace MortensKomeback2
          {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
+            Content.Load<Texture2D>("Sprites\\area\\doorLocked") //locked door
          };
-            animationSprites.Add("areaStart", doorArray);
+            animationSprites.Add("doorStart", doorArray);
 
             #region Morten
 
@@ -479,27 +468,6 @@ namespace MortensKomeback2
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
             animationSprites.Add("monkAnimArray", monkAnimArray);
-
-            //Texture2D[] mortenBishopArray = new Texture2D[1] //rooms
-            //{
-            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop")
-
-            //};
-            //animationSprites.Add("mortenBishop", mortenBishopArray);
-
-            //Texture2D[] mortenMonkArray = new Texture2D[1] //rooms
-            //{
-            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk")
-
-            //};
-            //animationSprites.Add("mortenMonk", mortenMonkArray);
-
-            //Texture2D[] mortenCrusaderArray = new Texture2D[1] //rooms
-            //{
-            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader")
-
-            //};
-            //animationSprites.Add("mortenCrusader", mortenCrusaderArray);
 
             #endregion
 

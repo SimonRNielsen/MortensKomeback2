@@ -16,21 +16,7 @@ namespace MortensKomeback2
     {
 
         #region fields
-        //public static Dictionary<string, Rectangle> RoomBoundaries = new()
-        //{
-        //    {"Room1", new Rectangle(50,50,800,600) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) },
-        //    {"Room2", new Rectangle(500,50,700,500) }
-        //};
-
-        ////Current room boundary
-        //public static Rectangle CurrentRoomBoundary = RoomBoundaries["Room1"];
-
+    
 
         #endregion
 
@@ -46,7 +32,7 @@ namespace MortensKomeback2
             this.scale = 1f;
             this.health = 1;
             this.sprites = GameWorld.animationSprites["areaStart"];
-            this.sprite = sprites[areaArray];
+            this.sprite = GameWorld.animationSprites["areaStart"][areaArray]; //sprites[areaArray];
         }
 
         #endregion
