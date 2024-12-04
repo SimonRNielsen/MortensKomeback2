@@ -36,6 +36,7 @@ namespace MortensKomeback2
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
         public static SpriteFont mortensKomebackFont;
         private static Color grayGoose = new Color(209, 208, 206);
+        private List<Area> area51 = new List<Area>();
 
 
 
@@ -98,11 +99,11 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
+            //newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
 
-            menu.Add(new Menu(Camera.Position, 3));
+            //menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation()); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -188,6 +189,8 @@ namespace MortensKomeback2
             if (restart)
                 Restart();
 
+            PlayerInRoom();
+
             var mouseState = Mouse.GetState();
 
             mousePosition = new Vector2((int)(mouseState.X / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / Camera.Zoom) + (int)Camera.Position.X, (int)(mouseState.Y / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / Camera.Zoom) + 20 + (int)Camera.Position.Y);
@@ -228,10 +231,9 @@ namespace MortensKomeback2
                     }
 
                     if (gameObject is Area)
-                    {
                         if (other is Player)
+                            if ((gameObject as Area).Room == (other as Player).InRoom)
                             (gameObject as Area).CheckCollision(other);
-                    }
                 }
 
 
@@ -279,7 +281,11 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
-
+            if (area51.Count == 0)
+                foreach (GameObject gameObject in gameObjects)
+                    if (gameObject is Area)
+                        area51.Add(gameObject as Area);
+            
 
             newGameObjects.Clear();
 
@@ -727,21 +733,21 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="list">list to be parsed for NPCs</param>
         /// <returns>List with NPC references</returns>
-        private List<NPC> FindNPCLocation(ref List<GameObject> list)
+        private List<NPC> FindNPCLocation()
         {
-            List<NPC> nPCs = new List<NPC>();
-            nPCs = list.FindAll(npc => npc is NPC).ConvertAll(npc => npc as NPC);
+            List<NPC> nPCs = gameObjects.FindAll(npc => npc is NPC).ConvertAll(npc => (NPC)npc);
             return nPCs;
         }
 
-
+        /// <summary>
+        /// Used to locate a healing item
+        /// </summary>
+        /// <returns>Healing Item</returns>
         public static Item FindHealingItem()
         {
-            QuestItem healItem;
-            var list = playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => questItem as QuestItem);
-            healItem = list.Find(healItem => healItem.HealItem == true);
-            return healItem;
+            return playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => (QuestItem)questItem).Find(questItem => questItem.HealItem == true);
         }
+
 
         public void UpdateCamera()
         {
@@ -751,6 +757,24 @@ namespace MortensKomeback2
                 camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
             }
         }
+
+        /// <summary>
+        /// Updates the name of which room the player is in by calculating which room is closest
+        /// </summary>
+        private void PlayerInRoom()
+        {
+            float distance = 2000;
+            foreach (Area area in area51)
+            {
+                float distanceToPlayer = Vector2.Distance(playerInstance.Position, area.Position);
+                if (distanceToPlayer < distance)
+                {
+                    playerInstance.InRoom = area.Room;
+                    distance = distanceToPlayer;
+                }
+            }
+        }
+
         #region
         #endregion
     }

@@ -39,6 +39,8 @@ namespace MortensKomeback2
                 }
                 if (this is Enemy)
                     health += value;
+                if (health < 0)
+                    isAlive = false;
             }
         }
         public Texture2D Sprite { get => sprite; set => sprite = value; }
