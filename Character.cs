@@ -15,6 +15,8 @@ namespace MortensKomeback2
         private int maxHealth;
         private int currentHealth;
         protected int damage;
+        private HealthBar healthbar;
+        private bool battleActive;
 
         protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
@@ -58,8 +60,10 @@ namespace MortensKomeback2
             //position = newPosition;
 
 
+            if (battleActive)
+            { 
 
-
+            }
         }
 
 

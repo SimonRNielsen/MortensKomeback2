@@ -110,27 +110,26 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 2160), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room10"));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room11"));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room12"));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
 
-            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0, "Room2"));          //ventre side, rum 1, nonne
-            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 2
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 3 enemies
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 4), 0, "Room5"));   //ventre side, rum 4, 
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 6), 0, "Room7"));   //ventre side, rum 5, enemies
-            newGameObjects.Add(new Area(new Vector2(-9000, 1080 * 4), 0, "Room6"));   //ventre side, rum 6, item
+            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0, "Room2"));          //ventre side, rum 2, nonne
+            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 4 enemies
+            newGameObjects.Add(new Area(new Vector2(-9000, 0 * 4), 0, "Room5"));   //ventre side, rum 5, item
+          
 
-            newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room8"));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room9"));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room6"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
-            #region GUI
+            //#region GUI
 
-            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
-            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
+            //Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
+            //Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
@@ -468,9 +467,6 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4")
-            //Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
-            //Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            //Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -495,9 +491,16 @@ namespace MortensKomeback2
             Texture2D[] monkAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
             animationSprites.Add("monkAnimArray", monkAnimArray);
+
+            Texture2D[] crusaderAnimArray = new Texture2D[4];
+            for (int i = 0; i < 4; i++)
+            {
+                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+            }
+            animationSprites.Add("crusaderAnimArray", crusaderAnimArray);
 
             #endregion
 
@@ -668,7 +671,7 @@ namespace MortensKomeback2
                 camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
             }
         }
-
+        #region
         #endregion
     }
 }
