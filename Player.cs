@@ -18,7 +18,7 @@ namespace MortensKomeback2
         private bool interact;
         private bool inventory;
         private byte interactRange = 100;
-        private List<GameObject> interactableObjects;
+        private List<NPC> nPCList;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -32,13 +32,13 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Player(PlayerClass playerClass, List<GameObject> interactables)
+        public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
-            interactableObjects = interactables;
+            nPCList = nPCs;
         }
 
         #endregion
@@ -57,6 +57,7 @@ namespace MortensKomeback2
                 case PlayerClass.Crusader:
                     break;
                 case PlayerClass.Munk:
+                    sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
                 case PlayerClass.Bishop:
                     sprites = GameWorld.animationSprites["BishopMorten"];
@@ -261,7 +262,7 @@ namespace MortensKomeback2
         /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
-
+            Heal();
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
@@ -278,27 +279,22 @@ namespace MortensKomeback2
         private void Interact(byte range)
         {
 
-            bool interactableNearby = false;
+            bool nPCNearby = false;
             float distance;
 
-            foreach (GameObject gameObject in interactableObjects)
+            foreach (GameObject gameObject in nPCList)
             {
-                if (gameObject is NPC)
+                distance = Vector2.Distance(gameObject.Position, position);
+                if (distance < range && distance > -range)
                 {
-                    distance = Vector2.Distance(gameObject.Position, position);
-                    if (distance < range && distance > -range)
-                    {
-                        interactableNearby = true;
-                        InitiateDialog(gameObject as NPC);
-                    }
-                    if (interactableNearby)
-                        break;
+                    nPCNearby = true;
+                    InitiateDialog(gameObject as NPC);
                 }
-
-
+                if (nPCNearby)
+                    break;
             }
 
-            if (!interactableNearby)
+            if (!nPCNearby)
             {
                 foreach (Item item in GameWorld.hiddenItems)
                 {
@@ -322,6 +318,21 @@ namespace MortensKomeback2
         private void InitiateDialog(NPC nPC)
         {
 
+        }
+
+
+        public void Heal()
+        {
+            Item healingItem = GameWorld.FindHealingItem();
+            if (playerClass == PlayerClass.Bishop)
+            {
+                Health = 10;
+            }
+            else if (healingItem != null)
+            {
+                Health = 10;
+                healingItem.IsUsed = true;
+            }
         }
 
         #endregion

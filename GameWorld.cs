@@ -92,12 +92,14 @@ namespace MortensKomeback2
             LoadBackgroundSongs();
 
             hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            playerInventory.Add(new TorsoSlotItem(3, true, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Munk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
             newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
@@ -235,8 +237,6 @@ namespace MortensKomeback2
                 menu.Clear();
                 menuActive = false;
                 closeMenu = false;
-                //gameObject.Update(gameTime); Simon godkender denne til at slette :D
-
             }
             if (DetectInventory())
                 mousePointer.MouseOver();
@@ -603,11 +603,20 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="list">list to be parsed for NPCs</param>
         /// <returns>List with NPC references</returns>
-        private List<GameObject> FindNPCLocation(ref List<GameObject> list)
+        private List<NPC> FindNPCLocation(ref List<GameObject> list)
         {
-            List<GameObject> interactables = new List<GameObject>();
-            interactables = list.FindAll(npc => npc is NPC);
-            return interactables;
+            List<NPC> nPCs = new List<NPC>();
+            nPCs = list.FindAll(npc => npc is NPC).ConvertAll(npc => npc as NPC);
+            return nPCs;
+        }
+
+        
+        public static Item FindHealingItem()
+        {
+            QuestItem healItem;
+            var list = playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => questItem as QuestItem);
+            healItem = list.Find(healItem => healItem.HealItem == true);
+            return healItem;
         }
 
         #endregion
