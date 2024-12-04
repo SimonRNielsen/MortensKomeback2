@@ -16,7 +16,7 @@ namespace MortensKomeback2
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private static Camera2D camera;
+        public static Camera2D camera; //Set to public so it can change position when the player is teleporting
         private static Vector2 mousePosition;
         private bool escape;
         private static bool leftMouseButtonClick;
@@ -129,8 +129,11 @@ namespace MortensKomeback2
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0));
             newGameObjects.Add(new Obstacle(-400, 00));
-            newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
-
+            //newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
+            newGameObjects.Add(new Door(0, -443, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
+            newGameObjects.Add(new Door(-3000, -443, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
+            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
+            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
             #endregion
 
             base.Initialize();
@@ -188,16 +191,17 @@ namespace MortensKomeback2
                 {
                     if (gameObject is Player)
                     {
-                        if (other is AvSurface || other is Obstacle)
+                        if (other is AvSurface || other is Obstacle || other is Door)
                         {
                             gameObject.CheckCollision(other);
                             other.CheckCollision(gameObject);
                         }
+
                     }
 
                     if (gameObject is Enemy)
                     {
-                        if (other is AvSurface || other is Obstacle)
+                        if (other is Obstacle)
                         {
                             gameObject.CheckCollision(other);
                             other.CheckCollision(gameObject);

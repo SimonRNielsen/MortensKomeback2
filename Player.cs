@@ -39,6 +39,8 @@ namespace MortensKomeback2
             this.fps = 2f;
             this.playerClass = playerClass;
             interactableObjects = interactables;
+            this.layer = 0.25f;
+
         }
 
         #endregion
@@ -74,25 +76,9 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
 
-            if (gameObject is Door door)
-            {
-                 if ( door.DoorOpen)
-                {
-                    
-                }
-                //Hvis døren er åben, gå igennem
-                //Hvis døren er lukket og har nøgle, lås op
-                //Hvis døren er låst - afvis
-            }
-
-            if (gameObject is Item)
-            {
-                //Collect item
-            }
-
             if (gameObject is AvSurface)
             {
-                //Reduse the players health
+                //Reduse the players health when waking through
                 health = health - 10; //Not sure if it should be 10
             }
 
@@ -320,6 +306,29 @@ namespace MortensKomeback2
             }
 
         }
+
+        /// <summary>
+        /// Attempts to find a key in the players inventory
+        /// </summary>
+        /// <returns>Instance of a key or null when no key is found</returns>
+        public static Item FindKey()
+        {
+            Item key = GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
+
+            return key;
+        }
+
+        /// <summary>
+        /// Removes an item from the players inventory
+        /// </summary>
+        /// <param name="item">Item to be removed</param>
+        public static void RemoveItem(Item item)
+        {
+            GameWorld.playerInventory.Remove(item);
+        }
+
+
+
 
         /// <summary>
         /// Currently empty template to initiate dialog between Player and predetermined NPC
