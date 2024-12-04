@@ -95,8 +95,8 @@ namespace MortensKomeback2
 
             hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            playerInventory.Add(new QuestItem(1, false, Vector2.Zero));
+            playerInventory.Add(new QuestItem(0, true, Vector2.Zero)); 
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
             
@@ -145,10 +145,10 @@ namespace MortensKomeback2
             newGameObjects.Add(new Obstacle(-400, 00));
 
             #region doors
-            newGameObjects.Add(new Door(0, -443+15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443+15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
-            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
-            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
+            newGameObjects.Add(new Door(0, -443+15, DoorTypes.Locked, DoorRotation.Top, new Vector2(-3000, 0))); // Teleports to left room 1
+            newGameObjects.Add(new Door(-3000, -443+15, DoorTypes.Open, DoorRotation.Top, Vector2.Zero)); // Teleports to main room from left room 1
+            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, DoorRotation.Right, Vector2.Zero)); // Teleports to main room from right room 1
+            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, DoorRotation.Left, new Vector2(3000, 0))); // Teleports to main room from right room 1
 
             #endregion
 

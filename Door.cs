@@ -12,21 +12,24 @@ namespace MortensKomeback2
     {
         #region field
         private DoorTypes type;
+        private DoorRotation doorRotation;
 
         private readonly Vector2 teleportPosition;
         #endregion
 
         #region properties
         internal DoorTypes Type { get => type; set => type = value; }
+        internal DoorRotation DoorRotation { get => doorRotation; set => doorRotation = value; }
 
         #endregion
 
         #region constructor
-        public Door(float xPosition, float yPosition, DoorTypes dt, Vector2 teleportPosition)
+        public Door(float xPosition, float yPosition, DoorTypes dt, DoorRotation dr, Vector2 teleportPosition)
         {
             this.position.X = xPosition;
             this.position.Y = yPosition;
             this.Type = dt;
+            this.DoorRotation = dr;
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
         }
@@ -42,12 +45,29 @@ namespace MortensKomeback2
             {
                 case DoorTypes.Open:
                     this.Sprite = sprites[1];
+                    this.rotation = 200f;
                     break;
                 case DoorTypes.Closed:
                     this.Sprite = sprites[0];
                     break;
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
+                    break;
+            }
+
+            switch (DoorRotation)
+            {
+                case DoorRotation.Top:
+                    this.rotation = 0;
+                    break;
+                case DoorRotation.Buttom:
+                    this.rotation = 600;
+                    break;
+                case DoorRotation.Left:
+                    this.rotation = 900;
+                    break;
+                case DoorRotation.Right:
+                    this.rotation = 300;
                     break;
             }
         }
@@ -62,7 +82,7 @@ namespace MortensKomeback2
             Open();
             // does not behave correctly when placed on the side
             if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
-                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom))
+                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom) && Type == DoorTypes.Open)
                 Teleport(GameWorld.PlayerInstance);
         }
 
@@ -106,7 +126,7 @@ namespace MortensKomeback2
                     return;
                 }
                 Type = DoorTypes.Open;
-                Player.RemoveItem(key); //Remove key when used
+                (key as QuestItem).IsUsed = true; //Remove key when used
             }
         }
 

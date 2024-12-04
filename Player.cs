@@ -23,12 +23,12 @@ namespace MortensKomeback2
         private int healthBonus;
 
         private bool searching;
-        
+
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
-        private bool direction = true; 
+        private bool direction = true;
 
         #endregion
 
@@ -68,7 +68,7 @@ namespace MortensKomeback2
                     sprites = GameWorld.animationSprites["CrusaderMorten"];
                     break;
                 case PlayerClass.Monk:
-                    sprites = GameWorld.animationSprites["MonkMorten"]; 
+                    sprites = GameWorld.animationSprites["MonkMorten"];
                     break;
                 case PlayerClass.Bishop:
                     sprites = GameWorld.animationSprites["BishopMorten"];
@@ -326,10 +326,10 @@ namespace MortensKomeback2
         /// Attempts to find a key in the players inventory
         /// </summary>
         /// <returns>Instance of a key or null when no key is found</returns>
-        public static Item FindKey()
+        public static QuestItem FindKey()
         {
-            Item key = GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
-
+            var possibleKeys = GameWorld.playerInventory.FindAll(i => i is QuestItem);
+            QuestItem key = (QuestItem)possibleKeys.Find(i => (i as QuestItem).IsKey == true);
             return key;
         }
 
@@ -352,7 +352,7 @@ namespace MortensKomeback2
         {
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
-            
+
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
