@@ -692,3 +692,10 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Obstacle/stone.png
 
+#begin standardFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:standardFont.spritefont
+

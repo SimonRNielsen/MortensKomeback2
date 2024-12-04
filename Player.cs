@@ -131,7 +131,7 @@ namespace MortensKomeback2
                     if (GameWorld.BattleActive == false)
                     {
                         GameWorld.BattleActive = true;
-                        GameWorld.newGameObjects.Add(new BattleField(this, gameObject as Enemy));
+                        GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
 
                     }
                 }

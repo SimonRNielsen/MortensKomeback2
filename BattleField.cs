@@ -13,12 +13,8 @@ namespace MortensKomeback2
     internal class BattleField : GameObject
     {
         #region Fields
-        public static Player[] battlefieldPlayers = new Player[1];
         public static List<Enemy> battlefieldEnemies = new List<Enemy>();
-        private Rectangle textBox;
         GraphicsDevice graphicsDevice;
-        // A single-pixel texture
-        Texture2D pixel;
         Color textBoxColor;
         Vector2 playerOriginPosition;
         private int chosenAction;
@@ -30,7 +26,14 @@ namespace MortensKomeback2
         private int move = 1;
         private int playerDamageReductionBonus = 0;
         private int playerDamageBonus = 0;
-
+        private SpriteFont standardFont;
+        private Dialogue battlefieldDialogue;
+        private Vector2 textOrigin;
+        private float textScale;
+        private string attackText;
+        private string blockText;
+        private string healText;
+        private bool battleWon = false;
 
         #endregion
 
@@ -39,24 +42,28 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public BattleField(Player player, Enemy enemy)
+        public BattleField(Enemy enemy)
         {
-            battlefieldPlayers[0] = player;
+
             battlefieldEnemies.Add(enemy);
             this.Position = new Vector2(0, 1080 * 10);
             GameWorld.Camera.Position = this.Position;
             //this.graphicsDevice = graphicsDevice;
-            playerOriginPosition = player.Position;
-            player.Position = new Vector2(this.Position.X - 700, this.Position.Y); ;
+            playerOriginPosition = GameWorld.PlayerInstance.Position;
+            GameWorld.PlayerInstance.Position = new Vector2(this.Position.X - 700, this.Position.Y); ;
             enemy.Position = new Vector2(this.Position.X + 700, this.Position.Y);
             enemy.SpriteEffectIndex = 0;
             chosenAction = 0;
-            GameWorld.newGameObjects.Add(new Dialogue(new Vector2(0, this.Position.Y + 320)));      //Dialogue box visual
+            battlefieldDialogue = new Dialogue(new Vector2(this.Position.X, this.Position.Y + 320));
+            GameWorld.newGameObjects.Add(battlefieldDialogue);      //Dialogue box visual
             foreach (Item i in GameWorld.equippedPlayerInventory)
             {
                 playerDamageBonus += i.DamageBonus;
                 playerDamageReductionBonus += i.DamageReductionBonus;
             }
+            textOrigin = Vector2.Zero;
+            textScale = 2f;
+
         }
 
         #endregion
@@ -64,13 +71,27 @@ namespace MortensKomeback2
         #region Methods
         public override void LoadContent(ContentManager content)
         {
-            /// Create the single-pixel texture
-            pixel = content.Load<Texture2D>("Sprites\\Menu\\button");
+            textBoxColor = Color.Beige;
+            standardFont = content.Load<SpriteFont>("standardFont");
+            switch (GameWorld.PlayerInstance.PlayerClass)
+            {
+                case (PlayerClass)1:
+                    attackText = "Melee attack!";
+                    blockText = "Block";
+                    healText = "Heal (drink goose blood)";
+                    break;
+                case (PlayerClass)2:
+                    attackText = "Ranged attack!";
+                    blockText = "Block";
+                    healText = "Heal (drink goose blood)";
+                    break;
+                case (PlayerClass)3:
+                    attackText = "Magic attack!";
+                    blockText = "Evade";
+                    healText = "Heal (holy magic)";
+                    break;
+            }
 
-
-            textBox = new Rectangle(0, 0, 500, 50);
-            /// Set a default color for the smallRectangle
-            textBoxColor = Color.White;
 
         }
 
@@ -97,7 +118,7 @@ namespace MortensKomeback2
             //If the action is happening, the player shouldn't be able to do anything but watch the anctions onfold
             if (playerActionOngoing /*&& actionTimer < actionTimerDuration*/)
             {
-                TakeAction(chosenAction, battlefieldPlayers[0].PlayerClass, gameTime);
+                TakeAction(chosenAction, GameWorld.PlayerInstance.PlayerClass, gameTime);
                 //actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
             else if (enemyActionOngoing)
@@ -111,7 +132,7 @@ namespace MortensKomeback2
                     battlefieldEnemies[0].IsAlive = false;
                 }
             }
-                battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
+            battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
             //When the timer is up, the action has ended.
             //else
             //{
@@ -122,7 +143,13 @@ namespace MortensKomeback2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(pixel, Position, textBox, textBoxColor, rotation, Vector2.Zero, scale, SpriteEffects.None, 1);
+            if (!playerActionOngoing && !enemyActionOngoing)
+            {
+                spriteBatch.DrawString(standardFont, "Choose your action for this battle round!", battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "1) " +attackText, battlefieldDialogue.Position - new Vector2((float)(820), 90), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "2) " +blockText, battlefieldDialogue.Position - new Vector2((float)(820), 50), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "3) " + healText, battlefieldDialogue.Position - new Vector2((float)(820), 10), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+            }
         }
 
         private int HandleInput()
@@ -163,7 +190,7 @@ namespace MortensKomeback2
 
             if (keyState.IsKeyDown(Keys.Q))
             {
-                battlefieldPlayers[0].Position = playerOriginPosition;
+                GameWorld.PlayerInstance.Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
                 IsAlive = false;
@@ -210,7 +237,7 @@ namespace MortensKomeback2
 
         private void MeleeAttack()
         {
-            battlefieldPlayers[0].Position += new Vector2(0, 3);
+            GameWorld.PlayerInstance.Position += new Vector2(0, 3);
 
             //Move
             //Animate
@@ -223,25 +250,25 @@ namespace MortensKomeback2
         private void RangedAttack(GameTime gameTime)
         {
             //Animate
-            battlefieldPlayers[0].Animation(gameTime);
+            GameWorld.PlayerInstance.Animation(gameTime);
 
             //Move
-            if ((battlefieldPlayers[0].Position.X <= this.Position.X + 700) && (move == 1))
-                battlefieldPlayers[0].Position += new Vector2(5f, 0);
-            else if ((battlefieldPlayers[0].Position.X >= this.Position.X + 700) && (move == 1))
+            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (move == 1))
+                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (move == 1))
             {
                 move = 2;
-                battlefieldEnemies[0].Health -= (battlefieldPlayers[0].Damage + playerDamageBonus);
+                battlefieldEnemies[0].Health -= (GameWorld.PlayerInstance.Damage + playerDamageBonus);
 
             }
-            else if ((battlefieldPlayers[0].Position.X > this.Position.X - 700) && (move == 2))
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
             {
-                battlefieldPlayers[0].Position -= new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
             }
             else
             {
                 playerActionOngoing = false;
-                if (battlefieldEnemies.Count >0)
+                if (battlefieldEnemies.Count > 0)
                 {
                     enemyActionOngoing = true;
                 }
@@ -254,8 +281,6 @@ namespace MortensKomeback2
 
             //Sound
             //Calculate hit
-            //Calculate damage
-            //Do damage
         }
 
         private void Block()
@@ -277,7 +302,7 @@ namespace MortensKomeback2
 
         private void Heal()
         {
-            battlefieldPlayers[0].Position += new Vector2(3, 0);
+            GameWorld.PlayerInstance.Position += new Vector2(3, 0);
 
             //Animate
             //Sound
@@ -292,7 +317,7 @@ namespace MortensKomeback2
             else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 500) && (move == 1))
             {
                 move = 2;
-                battlefieldPlayers[0].Health -= (battlefieldEnemies[0].Damage - playerDamageReductionBonus);
+                GameWorld.PlayerInstance.Health -= (battlefieldEnemies[0].Damage - playerDamageReductionBonus);
             }
             else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (move == 2))
             {
@@ -310,7 +335,7 @@ namespace MortensKomeback2
         /// </summary>
         private void WinBattle()
         {
-
+            battleWon = true;
         }
 
 
