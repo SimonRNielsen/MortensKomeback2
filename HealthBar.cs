@@ -80,11 +80,11 @@ namespace MortensKomeback2
 
         public void UpdateHealth(int health)
         {
-            this.health = Health;
+            //this.health = Health;
 
-            // Calculate the width of the foreground based on the health percentage
-            float healthPercentage = (float)health / GameWorld.PlayerInstance.healthMax;
-            foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
+            //// Calculate the width of the foreground based on the health percentage
+            //float healthPercentage = (float)health / GameWorld.PlayerInstance.healthMax;
+            //foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 
         public void Draw(SpriteBatch spriteBatch)

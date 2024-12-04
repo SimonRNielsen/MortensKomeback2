@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
@@ -38,58 +35,82 @@ namespace MortensKomeback2
 
         }
 
+        public Dialogue(Vector2 placement, Character character)
+        {
+            this.position = placement;
+            sprite = GameWorld.commonSprites["dialogueBox"];
+            Vector2 textPosition = new Vector2(position.X, position.Y);
+            NPCDialogue(character);
+            dialogue = true;
+            layer = layer + 0.1f;
+        }
+
         #endregion
 
         #region methods
 
         public override void LoadContent(ContentManager content)
         {
-            
+
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            {
+                GameWorld.Dialogue = false;
+                isAlive = false;
+            }
+
         }
 
-        public void NPCdialogue()
-        { 
-        switch (nPCText)
+        public void NPCDialogue(Character character)
+        {
+            GameWorld.Dialogue = true;
+            string caseName = string.Empty;
+            if (character is NPC)
+                caseName = (character as NPC).NPCClass;
+            if (character is Boss)
+                caseName = "Boss";
+            switch (caseName)
             {
+                case "Munk":
+                    nPCText = "Hej, jeg hedder Kaj, jeg er munk, folk kalder mig Kaj Munk";
+                    break;
                 case "Nun":
                     //if (QuestItem)
                     //{ 
                     //    //skriv dette
+                    //      (character as NPC).NPCClass = "";
                     //}
-                    //else 
-                    //skriv dette
-
-                    Console.WriteLine("Npc tekst 1");
-                    break;
-                case "Munk":
-                    Console.WriteLine("Npc tekst 2");
-
+                    //else
+                    nPCText = "Jeg er foede for oekologisk-minded kannibaler";
                     break;
                 case "Boss":
-                    Console.WriteLine("Npc tekst 3");
-
+                    nPCText = "I AM GOOSIFER! *Evil laughter*";
                     break;
                 case "Letter":
-                    Console.WriteLine("Npc tekst 4");
-
+                    nPCText = "It's a mi, da pope-a";
                     break;
                 default:
-                    Console.WriteLine("This NPC has no further quests");
-
+                    nPCText = "This NPC has no further quests";
                     break;
             }
 
+        }
 
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (dialogue)
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(textPosition.X - (1920/2) + 100, textPosition.Y - (1080/2) + 700), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.1f);
         }
 
         #endregion

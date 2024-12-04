@@ -12,18 +12,21 @@ namespace MortensKomeback2
     internal class NPC : Character
     {
         #region field
-        private string[] npcClass = new string[2] {"Munk", "Nun"};
+        private string[] npcClass = new string[3] {"Munk", "Nun", "Letter"};
+        private int classSelection;
 
         #endregion
 
         #region properti
 
+        public string NPCClass { get => npcClass[classSelection]; set => NPCClass = value; }
+
         #endregion
 
         #region constructor
-        public NPC()
+        public NPC(int npcClass)
         {
-
+            classSelection = npcClass;
 
         }
         #endregion

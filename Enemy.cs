@@ -39,6 +39,8 @@ namespace MortensKomeback2
             this.scale = 0.5f;
         }
 
+        public Enemy() { }
+
         #endregion
 
         #region method
@@ -50,7 +52,7 @@ namespace MortensKomeback2
         }
 
         /// <summary>
-        /// When the enemy is colliding with a AvSurface or Obstacle it will turn around and walk in that direction
+        /// When the enemy is colliding with a Obstacle it will turn around and walk in that direction
         /// </summary>
         /// <param name="gameObject">A GameObject</param>
         public override void OnCollision(GameObject gameObject)

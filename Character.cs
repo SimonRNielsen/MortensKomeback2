@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
@@ -16,8 +12,10 @@ namespace MortensKomeback2
         private HealthBar healthbar;
         private bool battleActive;
 
-        protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+        #endregion
 
+        #region properties
+        protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
         #endregion
 

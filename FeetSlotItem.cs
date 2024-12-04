@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace MortensKomeback2
 {
@@ -26,7 +25,7 @@ namespace MortensKomeback2
         /// <param name="playerClass">Used to determine what class "Player" is and if any special logic should be applied</param>
         /// <param name="found">Set to true if already in players inventory</param>
         /// <param name="spawnPosition">Used to set spawnposition</param>
-        public FeetSlotItem(int playerClass, bool found, Vector2 spawnPosition)
+        public FeetSlotItem(PlayerClass playerClass, bool found, Vector2 spawnPosition)
         {
 
             if (found)

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MortensKomeback2
+﻿namespace MortensKomeback2
 {
     /// <summary>
     /// Interface for "Two-Handed" Items that currently only adds a "Statboost" function that doubles a specified int, designed for the "damageBonus" stat
