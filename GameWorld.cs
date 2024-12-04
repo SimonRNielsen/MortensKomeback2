@@ -13,7 +13,7 @@ namespace MortensKomeback2
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        public static Camera2D camera; //Set to public so it can change position when the player is teleporting
+        private static Camera2D camera; 
         private static Vector2 mousePosition;
         private bool escape;
         private static bool leftMouseButtonClick;
