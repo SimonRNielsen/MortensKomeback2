@@ -16,11 +16,67 @@ namespace MortensKomeback2
     {
 
         #region fields
-    
+        //private int spriteID; //Which sprite is going to be used
+        private bool topCollision;
+        private bool bottomCollision;
+        private bool leftCollision;
+        private bool rightCollision;
 
         #endregion
 
         #region Properties
+
+        public Rectangle LeftCollisionBox
+        {
+            get
+            {
+                if (leftCollision)
+                {
+                    return new Rectangle((int)Position.X - (sprite.Width / 2), (int)Position.Y - (sprite.Height / 2), 1, sprite.Height);
+                }
+                else
+                    return new Rectangle();
+            }
+        }
+
+        public Rectangle RightCollisionBox
+        {
+            get
+            {
+                if (rightCollision)
+                {
+                    return new Rectangle((int)Position.X + (sprite.Width / 2), (int)Position.Y - (sprite.Height / 2), 1, sprite.Height);
+                }
+                else
+                    return new Rectangle();
+            }
+        }
+
+        public Rectangle TopCollisionBox
+        {
+            get
+            {
+                if (topCollision)
+                {
+                    return new Rectangle((int)Position.X - (sprite.Width / 2), (int)Position.Y - (sprite.Height / 2), sprite.Width, 1);
+                }
+                else
+                    return new Rectangle();
+            }
+        }
+
+        public Rectangle BottomCollisionBox
+        {
+            get
+            {
+                if (bottomCollision)
+                {
+                    return new Rectangle((int)Position.X - (sprite.Width / 2), (int)Position.Y + (sprite.Height / 2), sprite.Width, 1);
+                }
+                else
+                    return new Rectangle();
+            }
+        }
 
         #endregion
 
