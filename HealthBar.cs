@@ -14,16 +14,35 @@ namespace MortensKomeback2
     {
         #region Fields
         private Texture2D initalSprite;
+
+        private Texture2D barBackground;
+        private Texture2D barForeground;
+        private Rectangle backgroundRectangle;
+        private Rectangle foregroundRectangle;
+        private int maxHealth;
+        private int currentHealth;
         #endregion
 
         //Constructor is instantiated in GameWorld 
         //There it will be given the right sprite
         #region Constructors
-        public HealthBar(Vector2 placement, Texture2D initalSprite, float layer)
+        //public HealthBar(Vector2 placement, Texture2D initalSprite, float layer)
+        //{
+        //    this.position = placement;
+        //    this.sprite = initalSprite;
+        //    this.layer = layer;
+        //}
+
+        public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
         {
-            this.position = placement;
-            this.sprite = initalSprite;
-            this.layer = layer;
+            barBackground = background;
+            barForeground = foreground;
+            this.maxHealth = maxHealth;
+            currentHealth = maxHealth;
+
+            // Set rectangles based on position and size
+            backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         }
 
         #endregion
@@ -58,6 +77,24 @@ namespace MortensKomeback2
         public override void Update(GameTime gameTime)
         {
            
+        }
+
+        public void UpdateHealth(int currentHealth)
+        {
+            this.currentHealth = currentHealth;
+
+            // Calculate the width of the foreground based on the health percentage
+            float healthPercentage = (float)currentHealth / maxHealth;
+            foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            // Draw the background
+            spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
+
+            // Draw the foreground (current health)
+            spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
         }
         #endregion
 
