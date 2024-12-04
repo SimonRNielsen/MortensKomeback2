@@ -28,7 +28,7 @@ namespace MortensKomeback2
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
-        private bool direction = true;
+        private bool direction = true; 
 
         #endregion
 
