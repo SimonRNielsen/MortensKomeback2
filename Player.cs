@@ -21,6 +21,7 @@ namespace MortensKomeback2
         private int limitedHeals = 5;
         private int maxHealth = 100;
         private int healthBonus;
+        private string inRoom = "Room1";
 
         private bool searching;
         
@@ -36,6 +37,8 @@ namespace MortensKomeback2
 
         public int MaxHealth { get => maxHealth; }
         public int HealthBonus { get => healthBonus; set => healthBonus = value; }
+        public string InRoom { get => inRoom; set => inRoom = value; }
+        public Vector2 Velocity { get => velocity; set => velocity = value; }
 
         #endregion
 
@@ -131,8 +134,8 @@ namespace MortensKomeback2
         public override void Update(GameTime gameTime)
         {
             GameWorld.Camera.Position = new Vector2(GameWorld.Camera.Position.X, position.Y);
-            HandleInput();
             Movement(gameTime);
+            HandleInput();
             Animation(gameTime);
             base.Update(gameTime);
         }

@@ -69,7 +69,7 @@ namespace MortensKomeback2
         /// Checking if two objects is colliding 
         /// </summary>
         /// <param name="gameObject">A GameObject</param>
-        public void CheckCollision(GameObject gameObject)
+        public virtual void CheckCollision(GameObject gameObject)
         {
             if (CollisionBox.Intersects(gameObject.CollisionBox))
             {

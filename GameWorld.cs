@@ -99,7 +99,7 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
-            
+
             menu.Add(new Menu(Camera.Position, 3));
 
             PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
@@ -108,7 +108,7 @@ namespace MortensKomeback2
 
 
             #region area
-            newGameObjects.Add(new Area(new Vector2(0,0), 1, "Room1"));       //main room
+            newGameObjects.Add(new Area(new Vector2(0, 0), 1, "Room1"));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 2160), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
@@ -120,7 +120,7 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 3 enemies
             newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 4 enemies
             newGameObjects.Add(new Area(new Vector2(-9000, 0 * 4), 0, "Room5"));   //ventre side, rum 5, item
-          
+
 
             newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room6"));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room7"));      //højre side, rum 2, secret + item
@@ -145,8 +145,8 @@ namespace MortensKomeback2
             newGameObjects.Add(new Obstacle(-400, 00));
 
             #region doors
-            newGameObjects.Add(new Door(0, -443+15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443+15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
+            newGameObjects.Add(new Door(0, -443 + 15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
+            newGameObjects.Add(new Door(-3000, -443 + 15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
             newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
             newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
 
@@ -204,7 +204,7 @@ namespace MortensKomeback2
                 else if (menuActive && gameObject is Player)
                     gameObject.Update(gameTime);
 
-                
+
                 foreach (GameObject other in gameObjects)
                 {
                     if (gameObject is Player)
@@ -226,8 +226,14 @@ namespace MortensKomeback2
                         }
 
                     }
+
+                    if (gameObject is Area)
+                    {
+                        if (other is Player)
+                            (gameObject as Area).CheckCollision(other);
+                    }
                 }
-                
+
 
             }
 
@@ -273,7 +279,7 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
-                
+
 
             newGameObjects.Clear();
 
@@ -296,6 +302,13 @@ namespace MortensKomeback2
                 gameObject.Draw(_spriteBatch);
 #if DEBUG
                 DrawCollisionBox(gameObject);
+                if (gameObject is Area)
+                {
+                    DrawLeftCollisionBox(gameObject);
+                    DrawRightCollisionBox(gameObject);
+                    DrawBottomCollisionBox(gameObject);
+                    DrawTopCollisionBox(gameObject);
+                }
 #endif
 
             }
@@ -343,20 +356,100 @@ namespace MortensKomeback2
 #if DEBUG
         private void DrawCollisionBox(GameObject gameObject)
         {
-            Color color = Color.Red;
-            Rectangle collisionBox = gameObject.CollisionBox;
-            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
-            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
-            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
-            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+            if (!(gameObject is Area))
+            {
 
-            if (gameObject is Item)
-                color = Color.Purple;
+                Color color = Color.Red;
+                Rectangle collisionBox = gameObject.CollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
 
-            _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                if (gameObject is Item)
+                    color = Color.Purple;
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            }
+        }
+        private void DrawLeftCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).LeftCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawRightCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).RightCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawTopCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).TopCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawBottomCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).BottomCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
         }
 #endif
 
@@ -641,7 +734,7 @@ namespace MortensKomeback2
             return nPCs;
         }
 
-        
+
         public static Item FindHealingItem()
         {
             QuestItem healItem;
