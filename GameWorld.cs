@@ -98,7 +98,7 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
+            newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 350), new NPC(2)));
             
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -110,20 +110,20 @@ namespace MortensKomeback2
             #region area
             newGameObjects.Add(new Area(new Vector2(0,0), 1, "Room1"));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
-            newGameObjects.Add(new Area(new Vector2(0, 2160), 3, "Room1b"));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080*2), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 6), 0, "Room8"));  // våbenhus - enemies
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 8), 0, "Room9"));  // puzzle
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 10), 0, "Room10"));  // boss fight
 
-            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0, "Room2"));          //ventre side, rum 2, nonne
-            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 3 enemies
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 4 enemies
-            newGameObjects.Add(new Area(new Vector2(-9000, 0 * 4), 0, "Room5"));   //ventre side, rum 5, item
+            newGameObjects.Add(new Area(new Vector2(0, -1080*2), 0, "Room2"));          //ventre side, rum 2, nonne
+            newGameObjects.Add(new Area(new Vector2(0, -1080*4), 0, "Room3"));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 6), 0, "Room4"));     //ventre side, rum 4 enemies
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
           
 
-            newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room6"));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room7"));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(0, -1080*10), 0, "Room6"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(3000, -1080*12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
             //#region GUI
@@ -468,23 +468,23 @@ namespace MortensKomeback2
             }
             animationSprites.Add("bishop", bishop);
 
-            Texture2D[] monkAnimArray = new Texture2D[4];
+            Texture2D[] monk = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
             animationSprites.Add("monk", monk);
 
-            Texture2D[] crusaderAnimArray = new Texture2D[4];
+            Texture2D[] crusader = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
             animationSprites.Add("crusader", crusader);
 
             #endregion
 
-            #endregion
+            
             #region goose
             Texture2D[] gooseSprites = new Texture2D[8];
             for (int i = 0; i < 8; i++)
