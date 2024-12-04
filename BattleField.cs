@@ -34,6 +34,11 @@ namespace MortensKomeback2
         private string blockText;
         private string healText;
         private bool battleWon = false;
+        private Random randomAction;
+        private int enemyAction;
+        bool blocking = false;
+        string enemyActionText;
+        string playerActionText;
 
         #endregion
 
@@ -91,7 +96,9 @@ namespace MortensKomeback2
                     healText = "Heal (holy magic)";
                     break;
             }
-
+            randomAction = new Random();
+            enemyActionText = "";
+            playerActionText = "";
 
         }
 
@@ -108,12 +115,14 @@ namespace MortensKomeback2
                 e.Animation(gameTime);
             }
             //Action logic: if there is no acton going on, player should be able to choose actions   
+            //The enemies action is also chosen here at random
             if (!playerActionOngoing && !enemyActionOngoing)
             {
                 HandleInput();
                 chosenAction = HandleInput();
                 if (chosenAction > 0)
                 { playerActionOngoing = true; }
+                enemyAction = randomAction.Next(1, 3);
             }
             //If the action is happening, the player shouldn't be able to do anything but watch the anctions onfold
             if (playerActionOngoing /*&& actionTimer < actionTimerDuration*/)
@@ -146,9 +155,17 @@ namespace MortensKomeback2
             if (!playerActionOngoing && !enemyActionOngoing)
             {
                 spriteBatch.DrawString(standardFont, "Choose your action for this battle round!", battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "1) " +attackText, battlefieldDialogue.Position - new Vector2((float)(820), 90), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "2) " +blockText, battlefieldDialogue.Position - new Vector2((float)(820), 50), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "1) " + attackText, battlefieldDialogue.Position - new Vector2((float)(820), 90), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "2) " + blockText, battlefieldDialogue.Position - new Vector2((float)(820), 50), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
                 spriteBatch.DrawString(standardFont, "3) " + healText, battlefieldDialogue.Position - new Vector2((float)(820), 10), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+            }
+            if (playerActionOngoing)
+            {
+                spriteBatch.DrawString(standardFont, playerActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+            }
+            if (enemyActionOngoing)
+            {
+                spriteBatch.DrawString(standardFont, enemyActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
         }
 
@@ -208,7 +225,7 @@ namespace MortensKomeback2
                 case 1:
                     if (playerClass == (PlayerClass)1)
                     {
-                        MeleeAttack();
+                        MeleeAttack(gameTime);
                     }
                     else
                     {
@@ -226,7 +243,7 @@ namespace MortensKomeback2
                     }
                     break;
                 case 3:
-                    Heal();
+                    Heal(gameTime);
                     break;
 
                 default:
@@ -235,9 +252,38 @@ namespace MortensKomeback2
         }
 
 
-        private void MeleeAttack()
+        private void MeleeAttack(GameTime gameTime)
         {
-            GameWorld.PlayerInstance.Position += new Vector2(0, 3);
+            playerActionText = "You are attacking the enemy!";
+            //Animate
+            GameWorld.PlayerInstance.Animation(gameTime);
+
+            //Move
+            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (move == 1))
+                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (move == 1))
+            {
+                move = 2;
+                int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
+                battlefieldEnemies[0].Health -= currentDamage;
+                playerActionText = $"You dealt {currentDamage} to the enemy's health!";
+
+            }
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
+            {
+                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+            }
+            else
+            {
+                playerActionOngoing = false;
+                if (battlefieldEnemies.Count > 0)
+                {
+                    enemyActionOngoing = true;
+                }
+                else
+                { WinBattle(); }
+                move = 1;
+            }
 
             //Move
             //Animate
@@ -254,11 +300,16 @@ namespace MortensKomeback2
 
             //Move
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (move == 1))
+            {
                 GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+                playerActionText = "You are attacking the enemy from range!";
+            }
             else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (move == 1))
             {
                 move = 2;
-                battlefieldEnemies[0].Health -= (GameWorld.PlayerInstance.Damage + playerDamageBonus);
+                int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
+                battlefieldEnemies[0].Health -= currentDamage;
+                playerActionText = $"You dealt {currentDamage} to the enemy's health!";
 
             }
             else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
@@ -285,7 +336,32 @@ namespace MortensKomeback2
 
         private void Block()
         {
+            blocking = true;
             //Move
+            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 200) && (move == 1))
+            {
+                playerActionText = "You are trying to block the enemy's attack!";
+                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+            }
+            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X - 200) && (move == 1))
+            {
+                move = 2;
+            }
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
+            {
+                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+            }
+            else
+            {
+                playerActionOngoing = false;
+                if (battlefieldEnemies.Count > 0)
+                {
+                    enemyActionOngoing = true;
+                }
+                else
+                { WinBattle(); }
+                move = 1;
+            }
             //Animate
             //Sound
             //Calculate defense
@@ -293,6 +369,31 @@ namespace MortensKomeback2
 
         private void Evade()
         {
+            blocking = true;
+            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 200) && (move == 1))
+            {
+                playerActionText = "You are trying to evade the enemy's attack!";
+                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+            }
+            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + -200) && (move == 1))
+            {
+                move = 2;
+            }
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
+            {
+                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+            }
+            else
+            {
+                playerActionOngoing = false;
+                if (battlefieldEnemies.Count > 0)
+                {
+                    enemyActionOngoing = true;
+                }
+                else
+                { WinBattle(); }
+                move = 1;
+            }
             //Move
             //Animate
             //Sound
@@ -300,7 +401,7 @@ namespace MortensKomeback2
 
         }
 
-        private void Heal()
+        private void Heal(GameTime gameTime)
         {
             GameWorld.PlayerInstance.Position += new Vector2(3, 0);
 
@@ -312,22 +413,74 @@ namespace MortensKomeback2
 
         private void EnemyAction()
         {
-            if ((battlefieldEnemies[0].Position.X >= this.Position.X - 700) && (move == 1))
-                battlefieldEnemies[0].Position -= new Vector2(5f, 0);
-            else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 500) && (move == 1))
+            switch (enemyAction)
             {
-                move = 2;
-                GameWorld.PlayerInstance.Health -= (battlefieldEnemies[0].Damage - playerDamageReductionBonus);
+                case 1:
+                    if ((battlefieldEnemies[0].Position.X >= this.Position.X - 300) && (move == 1))
+                    {
+                        enemyActionText = "The enemy is attacking you!";
+                        battlefieldEnemies[0].Position -= new Vector2(5f, 0);
+                    }
+                    else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 300) && (move == 1))
+                    {
+                        move = 2;
+                        if (blocking)
+                        {
+                            int currentDamage = battlefieldEnemies[0].Damage - playerDamageReductionBonus - 5;
+                            if (currentDamage >= 0)
+                            {
+                                GameWorld.PlayerInstance.Health -= currentDamage;
+                                enemyActionText = $"The enemy dealt {currentDamage} damage! You negated 5 damage!";
+                            }
+                            else
+                                enemyActionText = $"The enemy dealt no damage! You negated 5 damage!";
+                            blocking = false;
+                        }
+                        else
+                        {
+                            int currentDamage = battlefieldEnemies[0].Damage - playerDamageReductionBonus;
+                            if (currentDamage >= 0)
+                            {
+                                GameWorld.PlayerInstance.Health -= currentDamage;
+                                enemyActionText = $"The enemy dealt {currentDamage} damage!";
+                            }
+                            else
+                                enemyActionText = $"The enemy dealt no damage!";
+                            blocking = false;
+                        }
+                    }
+                    else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (move == 2))
+                    {
+                        battlefieldEnemies[0].Position += new Vector2(5f, 0);
+                    }
+                    else
+                    {
+                        enemyActionOngoing = false;
+                        move = 1;
+                    }
+                    break;
+                case 2:
+                    enemyActionText = "The enemy heals itself for 5 health!";
+                    battlefieldEnemies[0].Health += 5;
+                    if ((battlefieldEnemies[0].Position.X >= this.Position.X - 700) && (move == 1))
+                        battlefieldEnemies[0].Position -= new Vector2(5f, 0);
+                    else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 500) && (move == 1))
+                    {
+                        move = 2;
+
+                    }
+                    else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (move == 2))
+                    {
+                        battlefieldEnemies[0].Position += new Vector2(5f, 0);
+                    }
+                    else
+                    {
+                        enemyActionOngoing = false;
+                        move = 1;
+                    }
+                    break;
             }
-            else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (move == 2))
-            {
-                battlefieldEnemies[0].Position += new Vector2(5f, 0);
-            }
-            else
-            {
-                enemyActionOngoing = false;
-                move = 1;
-            }
+
         }
 
         /// <summary>
