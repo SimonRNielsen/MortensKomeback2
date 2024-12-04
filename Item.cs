@@ -64,11 +64,11 @@ namespace MortensKomeback2
                     timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (timer >= revealTimer)
                         isFound = false;
-                    rotation += 0.2f;
+                    Rotation += 0.2f;
                 }
                 else
                 {
-                    rotation = 0f;
+                    Rotation = 0f;
                     timer = 0f;
                 }
             }
@@ -97,17 +97,17 @@ namespace MortensKomeback2
             {
                 if (!(this is OffHandItem))
                 {
-                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + (sprite.Width / 2) + 30, position.Y - (sprite.Height / 2)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
                 }
                 else if ((this is OffHandItem) && !isEquipped)
                 {
-                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + (sprite.Width / 2) + 25, position.Y - (sprite.Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + (sprite.Width / 2) + 30, position.Y - (sprite.Height / 2)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
                 }
                 else
                 {
-                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X, position.Y - (sprite.Height * 2.5f)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X, position.Y - (sprite.Height * 2.5f)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], 0.92f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{itemName}\nDmg+:{damageBonus}\nDR+:{damageReductionBonus}\nHP+:{healthBonus}\nSpd+:{speedBonus}", new Vector2(position.X + 5, position.Y - (sprite.Height * 2.5f)), Color.Black, 0f, Vector2.Zero, 2f, SpriteEffects.None, 0.93f);
                 }
             }

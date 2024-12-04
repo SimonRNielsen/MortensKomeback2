@@ -20,7 +20,7 @@ namespace MortensKomeback2
         private int chosenAction;
         bool keysAreLifted;
         float actionTimer = 0;
-        float actionTimerDuration = 5f;
+        float actionTimerDuration = 2f;
         bool playerActionOngoing = false;
         bool enemyActionOngoing = false;
         private int move = 1;
@@ -40,6 +40,7 @@ namespace MortensKomeback2
         string enemyActionText;
         string playerActionText;
         Texture2D[] playerDefaultSpriteArray;
+        Obstacle magic;
 
         #endregion
 
@@ -71,6 +72,7 @@ namespace MortensKomeback2
             textScale = 2f;
             GameWorld.PlayerInstance.SpriteEffectIndex = 0;
             playerDefaultSpriteArray = GameWorld.PlayerInstance.Sprites;
+            magic = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y);
 
         }
 
@@ -232,6 +234,8 @@ namespace MortensKomeback2
                     }
                     else
                     {
+                        magic.IsAlive = true;
+                        GameWorld.newGameObjects.Add(magic);
                         RangedAttack(gameTime);
                     }
                     break;
@@ -303,12 +307,13 @@ namespace MortensKomeback2
             GameWorld.PlayerInstance.Animation(gameTime);
 
             //Move
-            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (move == 1))
+            if ((magic.Position.X <= this.Position.X + 300) && (move == 1))
             {
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+                magic.Position += new Vector2(5f, 0);
+                magic.Rotation += 0.05f;
                 playerActionText = "You are attacking the enemy from range!";
             }
-            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (move == 1))
+            else if ((magic.Position.X >= this.Position.X + 300) && (move == 1))
             {
                 move = 2;
                 int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
@@ -316,12 +321,16 @@ namespace MortensKomeback2
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
 
             }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (move == 2))
+            else if (actionTimer<actionTimerDuration && move ==2)
             {
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+                actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                magic.Rotation +=0.1f;
             }
             else
             {
+                actionTimer = 0;
+                magic.IsAlive = false;
+                magic.Position = new Vector2(GameWorld.PlayerInstance.Position.X + 100, GameWorld.PlayerInstance.Position.Y);
                 playerActionOngoing = false;
                 if (battlefieldEnemies.Count > 0)
                 {

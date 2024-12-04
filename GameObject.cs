@@ -16,7 +16,7 @@ namespace MortensKomeback2
         protected float scale = 1f;
         protected float layer = 0.000001f;
         protected float speed;
-        protected float rotation;
+        private float rotation;
         protected int health = 1;
         protected int spriteEffectIndex;
         protected bool isAlive = true;
@@ -35,6 +35,7 @@ namespace MortensKomeback2
 
         public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
         public Texture2D[] Sprites { get => sprites; set => sprites = value; }
+        public float Rotation { get => rotation; set => rotation = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 
@@ -48,7 +49,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Drawing tool</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[SpriteEffectIndex], layer);
+            spriteBatch.Draw(Sprite, Position, null, drawColor, Rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[SpriteEffectIndex], layer);
         }
 
         /// <summary>
