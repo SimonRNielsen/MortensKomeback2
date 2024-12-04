@@ -12,7 +12,6 @@ namespace MortensKomeback2
     {
         #region field
         private DoorTypes type;
-        private int doorNumber;
 
         private readonly Vector2 teleportPosition;
         #endregion
@@ -38,24 +37,28 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            this.sprites = GameWorld.animationSprites["areaStart"];
+            this.sprites = GameWorld.animationSprites["doorStart"];
             switch (Type)
             {
                 case DoorTypes.Open:
-                    this.Sprite = sprites[6];
+                    this.Sprite = sprites[1];
                     break;
                 case DoorTypes.Closed:
-                    this.Sprite = sprites[5];
+                    this.Sprite = sprites[0];
                     break;
                 case DoorTypes.Locked:
-                    this.Sprite = sprites[5];
+                    this.Sprite = sprites[2];
                     break;
             }
         }
 
-
+        /// <summary>
+        /// Collision between the door and player
+        /// </summary>
+        /// <param name="gameObject">A gameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
+            Unlock();
             Open();
             // does not behave correctly when placed on the side
             if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
@@ -68,13 +71,13 @@ namespace MortensKomeback2
             switch (Type)
             {
                 case DoorTypes.Open:
-                    this.Sprite = sprites[6];
+                    this.Sprite = sprites[1];
                     break;
                 case DoorTypes.Closed:
-                    this.Sprite = sprites[5];
+                    this.Sprite = sprites[0];
                     break;
                 case DoorTypes.Locked:
-                    this.Sprite = sprites[5];
+                    this.Sprite = sprites[2];
                     break;
             }
         }
@@ -95,13 +98,16 @@ namespace MortensKomeback2
         /// </summary>
         public void Unlock()
         {
-            Item key = Player.FindKey();
-            if (key == null)
+            if( type == DoorTypes.Locked)
             {
-                return;
+                Item key = Player.FindKey();
+                if (key == null)
+                {
+                    return;
+                }
+                Type = DoorTypes.Open;
+                Player.RemoveItem(key); //Remove key when used
             }
-            Type = DoorTypes.Open;
-            Player.RemoveItem(key); //Remove key when used
         }
 
         /// <summary>

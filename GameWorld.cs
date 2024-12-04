@@ -92,13 +92,13 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            hiddenItems.Add(new MainHandItem((int)PlayerClass.Monk, Vector2.Zero, false, false));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -140,11 +140,15 @@ namespace MortensKomeback2
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0));
             newGameObjects.Add(new Obstacle(-400, 00));
-            //newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
-            newGameObjects.Add(new Door(0, -443, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
+
+            #region doors
+            newGameObjects.Add(new Door(0, -443+15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
+            newGameObjects.Add(new Door(-3000, -443+15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
             newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
             newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
+
+            #endregion
+
             #endregion
 
             base.Initialize();
@@ -443,9 +447,6 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4")
-            //Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
-            //Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            //Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -459,7 +460,6 @@ namespace MortensKomeback2
 
             #region Morten
 
-            #region Bishop
             Texture2D[] bishop = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
@@ -467,14 +467,19 @@ namespace MortensKomeback2
             }
             animationSprites.Add("BishopMorten", bishop);
 
-            Texture2D[] monkAnimArray = new Texture2D[4];
+            Texture2D[] monk = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("monkAnimArray", monkAnimArray);
+            animationSprites.Add("MonkMorten", monk);
 
-            #endregion
+            Texture2D[] crusader = new Texture2D[4];
+            for (int i = 0; i < 4; i++)
+            {
+                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+            }
+            animationSprites.Add("CrusaderMorten", crusader);
 
             #endregion
             #region goose

@@ -15,9 +15,11 @@ namespace MortensKomeback2
         private int maxHealth;
         private int currentHealth;
 
+        #endregion
+
+        #region properties
         protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
-
 
         #endregion
 

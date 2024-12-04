@@ -61,8 +61,10 @@ namespace MortensKomeback2
             switch (playerClass)
             {
                 case PlayerClass.Crusader:
+                    sprites = GameWorld.animationSprites["CrusaderMorten"];
                     break;
-                case PlayerClass.Munk:
+                case PlayerClass.Monk:
+                    sprites = GameWorld.animationSprites["MonkMorten"];
                     break;
                 case PlayerClass.Bishop:
                     sprites = GameWorld.animationSprites["BishopMorten"];
