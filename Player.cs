@@ -44,7 +44,7 @@ namespace MortensKomeback2
             this.playerClass = playerClass;
             interactableObjects = interactables;
             this.scale = 0.75f;
-            this.position = new Vector2(0,-400);
+            this.position = new Vector2(0,0);
         }
 
         #endregion
@@ -140,6 +140,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            GameWorld.Camera.Position = new Vector2(GameWorld.Camera.Position.X, position.Y);
             HandleInput();
             Movement(gameTime);
             Animation(gameTime);

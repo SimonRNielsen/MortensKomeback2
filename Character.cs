@@ -33,20 +33,20 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            Vector2 newPosition = position + velocity;
+            //Vector2 newPosition = position + velocity;
 
-            Rectangle bounds = GameWorld.CurrentRoomBoundary;
+            //Rectangle bounds = GameWorld.CurrentRoomBoundary;
 
-            if (newPosition.X > bounds.Left)
-                newPosition.X = bounds.Left;
-            if (newPosition.Y < bounds.Top)
-                newPosition.Y = bounds.Top;
-            if (newPosition.X > bounds.Right /*- sprite.Width*/)
-                newPosition.X = bounds.Right /*- sprite.Width*/;
-            if (newPosition.Y < bounds.Bottom /*- sprite.Height*/)
-                newPosition.Y = bounds.Bottom /*- sprite.Height*/;
+            //if (newPosition.X > bounds.Left)
+            //    newPosition.X = bounds.Left;
+            //if (newPosition.Y < bounds.Top)
+            //    newPosition.Y = bounds.Top;
+            //if (newPosition.X > bounds.Right /*- sprite.Width*/)
+            //    newPosition.X = bounds.Right /*- sprite.Width*/;
+            //if (newPosition.Y < bounds.Bottom /*- sprite.Height*/)
+            //    newPosition.Y = bounds.Bottom /*- sprite.Height*/;
 
-            position = newPosition;
+            //position = newPosition;
 
 
 

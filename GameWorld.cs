@@ -141,7 +141,8 @@ namespace MortensKomeback2
             //newGameObjects.Add(new Obstacle(-200, 0));
             //newGameObjects.Add(new Obstacle(-200, 96));
 
-            newGameObjects.Add(new Area (new Vector2(0, -443), 5));       //door - skal laves om til at være obstacle
+            newGameObjects.Add(new Area (new Vector2(0, -430), 5));       //door - skal laves om til at være obstacle
+            newGameObjects.Add(new Area (new Vector2(200, -430), 7));       //door - skal laves om til at være obstacle
 
             #endregion
 
@@ -441,7 +442,7 @@ namespace MortensKomeback2
 
             //#endregion
 
-            Texture2D[] areaArray = new Texture2D[7] //rooms
+            Texture2D[] areaArray = new Texture2D[8] //rooms
             {
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
@@ -450,6 +451,7 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
+            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -459,9 +461,37 @@ namespace MortensKomeback2
             Texture2D[] bishop = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\helligMortenHvid" + i);
+                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
             animationSprites.Add("BishopMorten", bishop);
+
+            Texture2D[] monkAnimArray = new Texture2D[4];
+            for (int i = 0; i < 4; i++)
+            {
+                bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+            }
+            animationSprites.Add("monkAnimArray", monkAnimArray);
+
+            //Texture2D[] mortenBishopArray = new Texture2D[1] //rooms
+            //{
+            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop")
+
+            //};
+            //animationSprites.Add("mortenBishop", mortenBishopArray);
+
+            //Texture2D[] mortenMonkArray = new Texture2D[1] //rooms
+            //{
+            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk")
+
+            //};
+            //animationSprites.Add("mortenMonk", mortenMonkArray);
+
+            //Texture2D[] mortenCrusaderArray = new Texture2D[1] //rooms
+            //{
+            //Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader")
+
+            //};
+            //animationSprites.Add("mortenCrusader", mortenCrusaderArray);
 
             #endregion
 
@@ -622,6 +652,15 @@ namespace MortensKomeback2
             List<GameObject> interactables = new List<GameObject>();
             interactables = list.FindAll(npc => npc is NPC);
             return interactables;
+        }
+
+        public void UpdateCamera()
+        {
+            if (playerInstance != null)
+            {
+                // Center the camera on the player
+                camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
+            }
         }
 
         #endregion
