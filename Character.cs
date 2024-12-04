@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
@@ -20,7 +16,6 @@ namespace MortensKomeback2
         #endregion
 
         #region properties
-        protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
         #endregion

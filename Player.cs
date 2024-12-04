@@ -48,6 +48,7 @@ namespace MortensKomeback2
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;
+            layer = 0.25f;
         }
 
         #endregion
