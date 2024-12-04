@@ -297,13 +297,13 @@ namespace MortensKomeback2
             bool nPCNearby = false;
             float distance;
 
-            foreach (GameObject gameObject in nPCList)
+            foreach (NPC nPC in nPCList)
             {
-                distance = Vector2.Distance(gameObject.Position, position);
+                distance = Vector2.Distance(nPC.Position, position);
                 if (distance < range && distance > -range)
                 {
                     nPCNearby = true;
-                    InitiateDialog(gameObject as NPC);
+                    GameWorld.newGameObjects.Add(new Dialogue(new Vector2(GameWorld.Camera.Position.X, GameWorld.Camera.Position.Y + 320), nPC));
                 }
                 if (nPCNearby)
                     break;
@@ -327,15 +327,8 @@ namespace MortensKomeback2
         }
 
         /// <summary>
-        /// Currently empty template to initiate dialog between Player and predetermined NPC
+        /// Performs a healing action for Player to recover missing health
         /// </summary>
-        /// <param name="nPC">NPC to initate dialog with</param>
-        private void InitiateDialog(NPC nPC)
-        {
-
-        }
-
-
         public void Heal()
         {
             int healAmount = 25;
@@ -345,6 +338,7 @@ namespace MortensKomeback2
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
                     Health = healAmount + 25;
+                    //if (!GameWorld.BattleActive)                      HUSK AT INDKOMMENTERE IGEN!!!!!
                     limitedHeals--;
                 }
                 else if (healingItem != null)
