@@ -87,7 +87,7 @@ namespace MortensKomeback2
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             // Draw the background
             spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
@@ -96,10 +96,6 @@ namespace MortensKomeback2
             spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
         }
         #endregion
-
-
-
-
 
     }
 }
