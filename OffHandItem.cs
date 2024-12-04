@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace MortensKomeback2
 {
@@ -27,7 +26,7 @@ namespace MortensKomeback2
         /// <param name="enhanced">If true, applies a 60% bonus to damageBonus</param>
         /// <param name="found">Set to true if already in players inventory</param>
         /// <param name="spawnPosition">Used to set spawnposition</param>
-        public OffHandItem(int playerClass, Vector2 spawnPosition, bool enhanced, bool found)
+        public OffHandItem(PlayerClass playerClass, Vector2 spawnPosition, bool enhanced, bool found)
         {
 
             sprite = GameWorld.commonSprites["offHandItem"];
@@ -36,10 +35,10 @@ namespace MortensKomeback2
             position = spawnPosition;
             if (enhanced)
             {
-                itemName = "Enhanced ";
+                itemName = "Blessed ";
                 damageReductionBonus = (int)(damageReductionBonus * 1.6f);
             }
-            switch (playerClass)
+            switch ((int)playerClass)
             {
                 case 1:
                     itemName += "Shield";

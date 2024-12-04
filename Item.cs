@@ -29,7 +29,6 @@ namespace MortensKomeback2
 
         #region Properties
 
-        public string ItemName { get => itemName; }
         public int HealthBonus { get => healthBonus; }
         public int DamageBonus { get => damageBonus; }
         public int DamageReductionBonus { get => damageReductionBonus; }

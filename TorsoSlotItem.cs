@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System;
 
 namespace MortensKomeback2
 {
@@ -26,12 +25,12 @@ namespace MortensKomeback2
         /// <param name="playerClass">Used to determine what class "Player" is and if any special logic should be applied</param>
         /// <param name="found">Set to true if already in players inventory</param>
         /// <param name="spawnPosition">Used to set spawnposition</param>
-        public TorsoSlotItem(int playerClass, bool found, Vector2 spawnPosition)
+        public TorsoSlotItem(PlayerClass playerClass, bool found, Vector2 spawnPosition)
         {
 
             position = spawnPosition;
             layer = 0.95f;
-            switch (playerClass)
+            switch ((int)playerClass)
             {
                 case 1:
                     damageReductionBonus = 10;
@@ -40,13 +39,13 @@ namespace MortensKomeback2
 
                 case 2:
                     damageReductionBonus = 5;
-                    itemName = "Flexible robe";
+                    itemName = "Common robe";
                     healthBonus = 10;
                     break;
 
                 case 3:
                     healthBonus = 20;
-                    itemName = "Comfortable robe";
+                    itemName = "Fancy robe";
                     break;
             }
             if (found)
