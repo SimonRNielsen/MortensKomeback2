@@ -155,7 +155,10 @@ namespace MortensKomeback2
             base.Update(gameTime);
             invulnerableTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (invulnerableTimer > invulnerable)
+            {
+                drawColor = Color.White;
                 invulnerability = false;
+            }
         }
 
 
@@ -369,6 +372,7 @@ namespace MortensKomeback2
             Health = -10;
             invulnerableTimer = 0;
             invulnerability = true;
+            drawColor = Color.Red;
         }
 
         /// <summary>

@@ -23,6 +23,7 @@ namespace MortensKomeback2
         private static bool exitGame = false;
         private static bool restart = false;
         private static bool dialogue = false;
+        private bool mortenLives = true;
         private static MousePointer mousePointer = new MousePointer();
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
@@ -37,9 +38,6 @@ namespace MortensKomeback2
         public static SpriteFont mortensKomebackFont;
         private static Color grayGoose = new Color(209, 208, 206);
         private List<Area> area51 = new List<Area>();
-
-
-
         private static Player playerInstance;
 
         #endregion
@@ -56,11 +54,6 @@ namespace MortensKomeback2
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
         public static Color GrayGoose { get => grayGoose; }
         public static Rectangle CurrentRoomBoundary { get; internal set; }
-
-        SpriteFont font1;
-
-        // The position to draw the text
-        Vector2 fontPos;
 
         #endregion
 
@@ -130,13 +123,12 @@ namespace MortensKomeback2
             //#region GUI
 
             Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            newGameObjects.Add(new HealthBar(barBG, 0.5f));
             Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar( bar, 0.55f));
+            newGameObjects.Add(new HealthBar(bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-            #endregion
 
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
@@ -169,9 +161,10 @@ namespace MortensKomeback2
 
         protected override void Update(GameTime gameTime)
         {
+
+            //Exit logic
             if (exitGame)
                 Exit();
-
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && !escape)
             {
                 if (menuActive && !DetectInOutro())
@@ -186,16 +179,25 @@ namespace MortensKomeback2
 
             // TODO: Add your update logic here
 
+            //Restart logic
             if (restart)
                 Restart();
 
+            //Location logic
             PlayerInRoom();
 
+            //Mouse input
             var mouseState = Mouse.GetState();
-
             mousePosition = new Vector2((int)(mouseState.X / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / Camera.Zoom) + (int)Camera.Position.X, (int)(mouseState.Y / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / Camera.Zoom) + 20 + (int)Camera.Position.Y);
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
+
+            //Loss logic
+            mortenLives = false;
+            if (playerInstance.IsAlive || DetectInOutro())
+                mortenLives = true;
+            if (!mortenLives)
+                newGameObjects.Add(new Menu(Camera.Position, 2));
 
             //Updates gameObjects and collision
             foreach (GameObject gameObject in gameObjects)
@@ -217,7 +219,6 @@ namespace MortensKomeback2
                             gameObject.CheckCollision(other);
                             other.CheckCollision(gameObject);
                         }
-
                     }
 
                     if (gameObject is Enemy)
@@ -233,7 +234,7 @@ namespace MortensKomeback2
                     if (gameObject is Area)
                         if (other is Player)
                             if ((gameObject as Area).Room == (other as Player).InRoom)
-                            (gameObject as Area).CheckCollision(other);
+                                (gameObject as Area).CheckCollision(other);
                 }
 
 
@@ -281,11 +282,12 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
+            //Creates a "map" for locating players position
             if (area51.Count == 0)
                 foreach (GameObject gameObject in gameObjects)
                     if (gameObject is Area)
                         area51.Add(gameObject as Area);
-            
+
 
             newGameObjects.Clear();
 
@@ -358,8 +360,8 @@ namespace MortensKomeback2
             base.Draw(gameTime);
         }
 
-
 #if DEBUG
+        #region DrawCollisionBoxes
         private void DrawCollisionBox(GameObject gameObject)
         {
             if (!(gameObject is Area))
@@ -457,8 +459,9 @@ namespace MortensKomeback2
 
             }
         }
+        #endregion
 #endif
-
+        #region Sprites & sound
         /// <summary>
         /// Loads sprites into the "commonSprites" Dictionary
         /// </summary>
@@ -551,11 +554,11 @@ namespace MortensKomeback2
             animationSprites.Add("areaStart", areaArray);
 
             Texture2D[] doorArray = new Texture2D[3] //rooms
-         {
+            {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             Content.Load<Texture2D>("Sprites\\area\\doorLocked") //locked door
-         };
+            };
             animationSprites.Add("doorStart", doorArray);
 
             #region Morten
@@ -631,7 +634,7 @@ namespace MortensKomeback2
 
 
         }
-
+        #endregion
         /// <summary>
         /// Marks sub-menu items as obsolete, which are then deleted after having been read
         /// </summary>
@@ -731,9 +734,8 @@ namespace MortensKomeback2
         }
 
         /// <summary>
-        /// 
+        /// Function to make a list for Player of NPCs to interact with
         /// </summary>
-        /// <param name="list">list to be parsed for NPCs</param>
         /// <returns>List with NPC references</returns>
         private List<NPC> FindNPCLocation()
         {
@@ -750,7 +752,7 @@ namespace MortensKomeback2
             return playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => (QuestItem)questItem).Find(questItem => questItem.HealItem == true);
         }
 
-
+        /* 0 references so outcommented, also seems obsolete?
         public void UpdateCamera()
         {
             if (playerInstance != null)
@@ -759,23 +761,25 @@ namespace MortensKomeback2
                 camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
             }
         }
+        */
 
         /// <summary>
         /// Updates the name of which room the player is in by calculating which room is closest
         /// </summary>
         private void PlayerInRoom()
         {
-            float distance = 2000;
+            float closestRoom = 2000;
             foreach (Area area in area51)
             {
                 float distanceToPlayer = Vector2.Distance(playerInstance.Position, area.Position);
-                if (distanceToPlayer < distance)
+                if (distanceToPlayer < closestRoom)
                 {
                     playerInstance.InRoom = area.Room;
-                    distance = distanceToPlayer;
+                    closestRoom = distanceToPlayer;
                 }
             }
         }
 
+        #endregion
     }
 }

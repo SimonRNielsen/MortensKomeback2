@@ -39,7 +39,7 @@ namespace MortensKomeback2
                 }
                 if (this is Enemy)
                     health += value;
-                if (health < 0)
+                if (health <= 0)
                     isAlive = false;
             }
         }
