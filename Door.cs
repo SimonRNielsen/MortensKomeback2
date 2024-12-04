@@ -36,17 +36,17 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            this.sprites = GameWorld.animationSprites["areaStart"];
+            this.Sprites = GameWorld.animationSprites["areaStart"];
             switch (type)
             {
                 case DoorTypes.Open:
-                    this.Sprite = sprites[6];
+                    this.Sprite = Sprites[6];
                     break;
                 case DoorTypes.Closed:
-                    this.Sprite = sprites[5];
+                    this.Sprite = Sprites[5];
                     break;
                 case DoorTypes.Locked:
-                    this.Sprite = sprites[5];
+                    this.Sprite = Sprites[5];
                     break;
             }
             

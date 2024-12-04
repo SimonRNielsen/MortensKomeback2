@@ -8,7 +8,7 @@ namespace MortensKomeback2
     public abstract class GameObject
     {
         protected Texture2D sprite;
-        protected Texture2D[] sprites;
+        private Texture2D[] sprites;
         protected Vector2 position;
         protected Vector2 origin;
         protected Vector2 velocity;
@@ -34,6 +34,7 @@ namespace MortensKomeback2
         public bool IsAlive { get => isAlive; set => isAlive = value; }
 
         public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
+        public Texture2D[] Sprites { get => sprites; set => sprites = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 

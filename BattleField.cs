@@ -39,6 +39,7 @@ namespace MortensKomeback2
         bool blocking = false;
         string enemyActionText;
         string playerActionText;
+        Texture2D[] playerDefaultSpriteArray;
 
         #endregion
 
@@ -69,6 +70,7 @@ namespace MortensKomeback2
             textOrigin = Vector2.Zero;
             textScale = 2f;
             GameWorld.PlayerInstance.SpriteEffectIndex = 0;
+            playerDefaultSpriteArray = GameWorld.PlayerInstance.Sprites;
 
         }
 
@@ -244,6 +246,7 @@ namespace MortensKomeback2
                     }
                     break;
                 case 3:
+                    GameWorld.PlayerInstance.Sprites = GameWorld.animationSprites["crusaderAnimArray"]; //TODO : Insert right sprite array. Like Magic heal. 
                     Heal(gameTime);
                     break;
 
@@ -404,6 +407,8 @@ namespace MortensKomeback2
 
         private void Heal(GameTime gameTime)
         {
+            GameWorld.PlayerInstance.Animation(gameTime);
+
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 400) && (move == 1))
             {
                 playerActionText = "You are trying to heal yourself...";
@@ -430,6 +435,8 @@ namespace MortensKomeback2
             else
             {
                 playerActionOngoing = false;
+                GameWorld.PlayerInstance.Sprites = playerDefaultSpriteArray; 
+                GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[0];
                 if (battlefieldEnemies.Count > 0)
                 {
                     enemyActionOngoing = true;

@@ -59,7 +59,7 @@ namespace MortensKomeback2
         /// <param name="content"></param>
         public override void LoadContent(ContentManager content)
         {
-            sprites = new Texture2D[4];
+            Sprites = new Texture2D[4];
 
             switch (PlayerClass)
             {
@@ -68,12 +68,12 @@ namespace MortensKomeback2
                 case PlayerClass.Munk:
                     break;
                 case PlayerClass.Bishop:
-                    sprites = GameWorld.animationSprites["BishopMorten"];
+                    Sprites = GameWorld.animationSprites["BishopMorten"];
                     break;
             }
 
             //Start sprite
-            this.Sprite = sprites[0];
+            this.Sprite = Sprites[0];
         }
 
         /// <summary>
@@ -270,10 +270,10 @@ namespace MortensKomeback2
 
             currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[currentIndex];
+            sprite = Sprites[currentIndex];
 
             //Restart the animation
-            if (currentIndex >= sprites.Length - 1)
+            if (currentIndex >= Sprites.Length - 1)
             {
                 timeElapsed = 0;
                 currentIndex = 0;

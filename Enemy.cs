@@ -49,8 +49,8 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            sprites = GameWorld.animationSprites["WalkingGoose"];
-            this.Sprite = sprites[0];
+            Sprites = GameWorld.animationSprites["WalkingGoose"];
+            this.Sprite = Sprites[0];
         }
 
         /// <summary>
@@ -77,11 +77,11 @@ namespace MortensKomeback2
         {
             if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
             {
-                sprites = GameWorld.animationSprites["AggroGoose"];
+                Sprites = GameWorld.animationSprites["AggroGoose"];
             }
             else
             {
-                sprites = GameWorld.animationSprites["WalkingGoose"];
+                Sprites = GameWorld.animationSprites["WalkingGoose"];
             }
 
             Movement(gameTime);
@@ -131,10 +131,10 @@ namespace MortensKomeback2
 
             currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[currentIndex];
+            sprite = Sprites[currentIndex];
 
             //Restart the animation
-            if (currentIndex >= sprites.Length - 1)
+            if (currentIndex >= Sprites.Length - 1)
             {
                 timeElapsed = 0;
                 currentIndex = 0;
