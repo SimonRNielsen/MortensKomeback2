@@ -41,11 +41,12 @@ namespace MortensKomeback2
         public override void LoadContent(ContentManager content)
         {
             this.sprites = GameWorld.animationSprites["doorStart"];
+            
+            //Switch for the different kind of sprites to DoorTypes
             switch (Type)
             {
                 case DoorTypes.Open:
                     this.Sprite = sprites[1];
-                    this.rotation = 200f;
                     break;
                 case DoorTypes.Closed:
                     this.Sprite = sprites[0];
@@ -55,19 +56,20 @@ namespace MortensKomeback2
                     break;
             }
 
+            //Switch for the different kind of DoorRotation to make sure the sprite will fit correct up against the wall 
             switch (DoorRotation)
             {
                 case DoorRotation.Top:
                     this.rotation = 0;
                     break;
                 case DoorRotation.Buttom:
-                    this.rotation = 600;
+                    this.rotation = 600f;
                     break;
                 case DoorRotation.Left:
-                    this.rotation = 900;
+                    this.rotation = 300f;
                     break;
                 case DoorRotation.Right:
-                    this.rotation = 300;
+                    this.rotation = 900f;
                     break;
             }
         }
