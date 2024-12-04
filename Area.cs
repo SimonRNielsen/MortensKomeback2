@@ -39,7 +39,7 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public Area(Vector2 placement, int areaArray )
+        public Area(Vector2 placement, int areaArray, string roomName )
         {
             this.position = placement;
             this.layer = 0.0f;

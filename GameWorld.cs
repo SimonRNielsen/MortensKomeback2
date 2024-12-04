@@ -104,23 +104,23 @@ namespace MortensKomeback2
 
 
             #region area
-            newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080), 2));    //main room
-            newGameObjects.Add(new Area(new Vector2(0, 2160), 3));    //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4));  //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0,0), 1, "Room1"));       //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 2160), 3, "Room1b"));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room10"));  // våbenhus - enemies
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room11"));  // puzzle
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room12"));  // boss fight
 
-            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0));          //ventre side, rum 1, nonne
-            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0));     //ventre side, rum 2
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0));     //ventre side, rum 3 enemies
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 4), 0));   //ventre side, rum 4, 
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 6), 0));   //ventre side, rum 5, enemies
-            newGameObjects.Add(new Area(new Vector2(-9000, 1080 * 4), 0));   //ventre side, rum 6, item
+            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0, "Room2"));          //ventre side, rum 1, nonne
+            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 2
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 4), 0, "Room5"));   //ventre side, rum 4, 
+            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 6), 0, "Room7"));   //ventre side, rum 5, enemies
+            newGameObjects.Add(new Area(new Vector2(-9000, 1080 * 4), 0, "Room6"));   //ventre side, rum 6, item
 
-            newGameObjects.Add(new Area(new Vector2(3000, 0), 0));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room8"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room9"));      //højre side, rum 2, secret + item
             #endregion
 
             #region GUI
@@ -141,8 +141,8 @@ namespace MortensKomeback2
             //newGameObjects.Add(new Obstacle(-200, 0));
             //newGameObjects.Add(new Obstacle(-200, 96));
 
-            newGameObjects.Add(new Area (new Vector2(0, -430), 5));       //door - skal laves om til at være obstacle
-            newGameObjects.Add(new Area (new Vector2(200, -430), 7));       //door - skal laves om til at være obstacle
+            //newGameObjects.Add(new Area (new Vector2(0, -430), 5, "door1T"));       //door - skal laves om til at være obstacle
+            newGameObjects.Add(new Area (new Vector2(200, -430), 7, "door2T"));       //door - skal laves om til at være obstacle
 
             #endregion
 
@@ -454,6 +454,14 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
             };
             animationSprites.Add("areaStart", areaArray);
+
+            Texture2D[] doorArray = new Texture2D[3] //rooms
+         {
+            Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
+            Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
+            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
+         };
+            animationSprites.Add("areaStart", doorArray);
 
             #region Morten
 
