@@ -220,16 +220,12 @@ namespace MortensKomeback2
                 }
                 if (offHandItem > 1)
                 {
-                    try
+                    tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
+                    if (tempItem is OffHandItem && !GameWorld.playerInventory.Contains(tempItem))
                     {
-                        tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
                         tempItem.IsEquipped = false;
                         GameWorld.playerInventory.Add(tempItem);
                         GameWorld.equippedPlayerInventory.Remove(tempItem);
-                    }
-                    catch
-                    {
-                        continue;
                     }
                 }
                 if (torsoItem > 1)
