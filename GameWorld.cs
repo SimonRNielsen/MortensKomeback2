@@ -25,6 +25,7 @@ namespace MortensKomeback2
         private static bool menuActive;
         private static bool exitGame = false;
         private static bool restart = false;
+        private static bool dialogue = false;
         private static MousePointer mousePointer = new MousePointer();
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
@@ -37,6 +38,7 @@ namespace MortensKomeback2
         public static Dictionary<string, SoundEffect> commonSounds = new Dictionary<string, SoundEffect>();
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
         public static SpriteFont mortensKomebackFont;
+        private static Color grayGoose = new Color(209, 208, 206);
 
 
 
@@ -52,7 +54,9 @@ namespace MortensKomeback2
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
+        public static bool Dialogue { set => dialogue = value; }
         internal static Player PlayerInstance { get => playerInstance; private set => playerInstance = value; }
+        public static Color GrayGoose { get => grayGoose; }
 
         SpriteFont font1;
 
@@ -91,11 +95,12 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
-            playerInventory.Add(new TorsoSlotItem(3, true, Vector2.Zero));
+            hiddenItems.Add(new MainHandItem(PlayerClass.Munk, Vector2.Zero, false, false));
+            playerInventory.Add(new TorsoSlotItem(PlayerClass.Munk, true, Vector2.Zero));
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
             
             menu.Add(new Menu(Camera.Position, 3));
 

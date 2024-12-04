@@ -26,12 +26,12 @@ namespace MortensKomeback2
         /// <param name="playerClass">Used to determine what class "Player" is and if any special logic should be applied</param>
         /// <param name="found">Set to true if already in players inventory</param>
         /// <param name="spawnPosition">Used to set spawnposition</param>
-        public TorsoSlotItem(int playerClass, bool found, Vector2 spawnPosition)
+        public TorsoSlotItem(PlayerClass playerClass, bool found, Vector2 spawnPosition)
         {
 
             position = spawnPosition;
             layer = 0.95f;
-            switch (playerClass)
+            switch ((int)playerClass)
             {
                 case 1:
                     damageReductionBonus = 10;
