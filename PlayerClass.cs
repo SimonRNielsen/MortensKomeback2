@@ -9,7 +9,7 @@ namespace MortensKomeback2
     enum PlayerClass
     {
         Crusader = 1,
-        Munk = 2,
+        Monk = 2,
         Bishop = 3,
     }
 }

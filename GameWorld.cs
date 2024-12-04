@@ -92,13 +92,13 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            hiddenItems.Add(new MainHandItem((int)PlayerClass.Munk, Vector2.Zero, false, false));
+            hiddenItems.Add(new MainHandItem((int)PlayerClass.Monk, Vector2.Zero, false, false));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -124,10 +124,10 @@ namespace MortensKomeback2
 
             //#region GUI
 
-            //Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
-            //Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar( bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
@@ -456,21 +456,21 @@ namespace MortensKomeback2
             {
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
-            animationSprites.Add("BishopMorten", bishop);
+            animationSprites.Add("bishop", bishop);
 
-            Texture2D[] monkAnimArray = new Texture2D[4];
+            Texture2D[] monk = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("monkAnimArray", monkAnimArray);
+            animationSprites.Add("monk", monk);
 
-            Texture2D[] crusaderAnimArray = new Texture2D[4];
+            Texture2D[] crusader = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("crusaderAnimArray", crusaderAnimArray);
+            animationSprites.Add("crusader", crusader);
 
             #endregion
 

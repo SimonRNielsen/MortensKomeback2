@@ -12,12 +12,10 @@ namespace MortensKomeback2
     {
         #region field
         protected bool surfaceContact = false; //I don't know if I need it
-        private int maxHealth;
         private int currentHealth;
         private HealthBar healthbar;
         private bool battleActive;
 
-        protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
 
