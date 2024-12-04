@@ -83,7 +83,7 @@ namespace MortensKomeback2
             this.health = Health;
 
             // Calculate the width of the foreground based on the health percentage
-            float healthPercentage = (float)health / GameWorld.PlayerInstance.healthMax;
+            float healthPercentage = (float)health / GameWorld.PlayerInstance.MaxHealth;
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 

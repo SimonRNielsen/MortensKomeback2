@@ -572,16 +572,16 @@ namespace MortensKomeback2
             {
                 monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("monk", monk);
+            animationSprites.Add("monk", monkAnimArray);
 
             Texture2D[] crusaderAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
                 crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("crusader", crusader);
+            animationSprites.Add("crusader", crusaderAnimArray);
 
-            #endregion
+            //#endregion
 
             #endregion
             #region goose
@@ -777,7 +777,5 @@ namespace MortensKomeback2
             }
         }
 
-        #region
-        #endregion
     }
 }
