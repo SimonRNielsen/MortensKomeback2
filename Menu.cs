@@ -171,20 +171,28 @@ namespace MortensKomeback2
 
             foreach (Item item in GameWorld.playerInventory)
             {
+                if (addLineCounter == 9)
+                {
+                    additionalLines++;
+                    addLineCounter = 0;
+                    spacer = 0;
+                }
                 if (!(item is QuestItem))
                 {
                     item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
                     spacer += 96;
                     addLineCounter++;
-                    if (addLineCounter == 9)
-                    {
-                        additionalLines++;
-                        addLineCounter = 0;
-                        spacer = 0;
-                    }
                 }
                 else if (item is QuestItem)
                 {
+                    if (!(item as QuestItem).IsKey || !(item as QuestItem).HealItem)
+                    {
+                        item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
+                        spacer += 96;
+                        addLineCounter++;
+                    }
+                    else
+                        item.Position = new Vector2(-10000, -10000);
                     if ((item as QuestItem).IsKey)
                         keyCount++;
                     else if ((item as QuestItem).HealItem)
