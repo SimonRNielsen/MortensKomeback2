@@ -38,7 +38,7 @@ namespace MortensKomeback2
         public Player(PlayerClass playerClass, List<GameObject> interactables)
         {
             //this.healthMax = health;
-            this.speed = 600; //Not sure what health should be
+            this.speed = 600; //Not sure what spped should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.playerClass = playerClass;
