@@ -99,7 +99,7 @@ namespace MortensKomeback2
             
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Munk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
             newGameObjects.Add(new Area(new Vector2(0,0), 1));       //main room
