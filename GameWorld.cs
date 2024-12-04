@@ -138,10 +138,10 @@ namespace MortensKomeback2
             newGameObjects.Add(new Obstacle(-400, 00));
 
             #region doors
-            newGameObjects.Add(new Door(0, -443 + 15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443 + 15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
-            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
-            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
+            newGameObjects.Add(new Door(0, -443 + 15, DoorTypes.Closed, new Vector2(-3000, 0), area51)); // Teleports to left room 1
+            newGameObjects.Add(new Door(-3000, -443 + 15, DoorTypes.Open, Vector2.Zero, area51)); // Teleports to main room from left room 1
+            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero, area51)); // Teleports to main room from right room 1
+            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0), area51)); // Teleports to main room from right room 1
 
             #endregion
 
