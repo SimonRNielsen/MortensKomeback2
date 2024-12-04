@@ -19,6 +19,10 @@ namespace MortensKomeback2
         private bool inventory;
         private byte interactRange = 100;
         private List<NPC> nPCList;
+        private int limitedHeals = 5;
+        private int maxHealth = 100;
+        private int healthBonus;
+        private bool healing;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -28,6 +32,9 @@ namespace MortensKomeback2
         #endregion
 
         #region properti
+
+        public int MaxHealth { get => maxHealth; }
+        public int HealthBonus { get => healthBonus; set => healthBonus = value; }
 
         #endregion
 
@@ -214,6 +221,15 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.I))
                 inventory = false;
 
+            if (keyState.IsKeyDown(Keys.H) && !healing)
+            {
+                Heal();
+                healing = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.H))
+                healing = false;
+
         }
 
         /// <summary>
@@ -262,7 +278,6 @@ namespace MortensKomeback2
         /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
-            Heal();
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
@@ -323,16 +338,20 @@ namespace MortensKomeback2
 
         public void Heal()
         {
+            int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
-            if (playerClass == PlayerClass.Bishop)
-            {
-                Health = 10;
-            }
-            else if (healingItem != null)
-            {
-                Health = 10;
-                healingItem.IsUsed = true;
-            }
+            
+            if (!(health == maxHealth + healthBonus))
+                if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
+                {
+                    Health = healAmount + 25;
+                    limitedHeals--;
+                }
+                else if (healingItem != null)
+                {
+                    Health = healAmount;
+                    healingItem.IsUsed = true;
+                }
         }
 
         #endregion

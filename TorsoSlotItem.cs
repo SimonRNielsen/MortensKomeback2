@@ -40,13 +40,13 @@ namespace MortensKomeback2
 
                 case 2:
                     damageReductionBonus = 5;
-                    itemName = "Flexible robe";
+                    itemName = "Common robe";
                     healthBonus = 10;
                     break;
 
                 case 3:
                     healthBonus = 20;
-                    itemName = "Comfortable robe";
+                    itemName = "Fancy robe";
                     break;
             }
             if (found)

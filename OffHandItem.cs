@@ -36,7 +36,7 @@ namespace MortensKomeback2
             position = spawnPosition;
             if (enhanced)
             {
-                itemName = "Enhanced ";
+                itemName = "Blessed ";
                 damageReductionBonus = (int)(damageReductionBonus * 1.6f);
             }
             switch (playerClass)

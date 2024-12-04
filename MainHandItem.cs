@@ -39,7 +39,7 @@ namespace MortensKomeback2
             if (enhanced)
             {
                 damageBonus = (int)(damageBonus * 1.6f);
-                itemName = "Enhanced ";
+                itemName = "Blessed ";
             }
             switch (playerClass)
             {

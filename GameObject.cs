@@ -22,28 +22,25 @@ namespace MortensKomeback2
         protected bool isAlive = true;
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
-        private int healthBonus;
+
         public int Health
         {
             get => health;
             set
             {
-                healthBonus = 0;
                 if (this is Player)
                 {
-                    foreach (Item item in GameWorld.equippedPlayerInventory)
-                        healthBonus += item.HealthBonus;
-                    if (health + value <= 100 + healthBonus)
+                    if (health > health + (this as Player).HealthBonus)
+                        health = health + (this as Player).HealthBonus;
+                    if (health + value <= (this as Player).MaxHealth + (this as Player).HealthBonus)
                         health += value;
                     else
-                        health = 100 + healthBonus;
+                        health = (this as Player).MaxHealth + (this as Player).HealthBonus;
                 }
                 if (this is Enemy)
                     health += value;
             }
-
-        } ///til GUI
-
+        }
         public Texture2D Sprite { get => sprite; set => sprite = value; }
         public Vector2 Position { get => position; set => position = value; }
         public virtual Rectangle CollisionBox

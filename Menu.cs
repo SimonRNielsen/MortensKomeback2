@@ -81,7 +81,7 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["introScreen"];
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 300, Position.Y + 500), 3));
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 300, Position.Y + 500), 2));
-                    isInOutro= true;
+                    isInOutro = true;
                     break;
                 case 4:
                     sprite = GameWorld.commonSprites["pauseScreen"];
@@ -204,6 +204,7 @@ namespace MortensKomeback2
             byte feetItem = 0;
             Item tempItem;
             drawTwoHanded = false;
+            int healthBonus = 0;
 
             do
             {
@@ -247,9 +248,11 @@ namespace MortensKomeback2
                 offHandItem = 0;
                 torsoItem = 0;
                 feetItem = 0;
+                healthBonus = 0;
 
                 foreach (Item item in GameWorld.equippedPlayerInventory)
                 {
+                    healthBonus += item.HealthBonus;
                     switch (item)
                     {
                         case MainHandItem:
@@ -277,6 +280,8 @@ namespace MortensKomeback2
                     }
                 }
             } while (mainHandItem > 1 || offHandItem > 1 || torsoItem > 1 || feetItem > 1);
+
+            GameWorld.PlayerInstance.HealthBonus = healthBonus;
 
         }
 
