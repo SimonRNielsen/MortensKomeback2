@@ -93,8 +93,8 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            hiddenItems.Add(new MainHandItem(PlayerClass.Munk, Vector2.Zero, false, false));
-            playerInventory.Add(new TorsoSlotItem(PlayerClass.Munk, true, Vector2.Zero));
+            hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
+            playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
