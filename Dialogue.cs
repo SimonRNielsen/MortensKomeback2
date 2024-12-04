@@ -39,7 +39,6 @@ namespace MortensKomeback2
         {
             this.position = placement;
             sprite = GameWorld.commonSprites["dialogueBox"];
-            //Vector2 boxPosition = new Vector2(100, 1000);
             Vector2 textPosition = new Vector2(position.X, position.Y);
             NPCDialogue(character);
             dialogue = true;
