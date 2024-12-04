@@ -20,6 +20,9 @@ namespace MortensKomeback2
         private byte interactRange = 100;
         private List<GameObject> interactableObjects;
 
+        private bool searching;
+        
+
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
@@ -36,11 +39,14 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<GameObject> interactables)
         {
+            //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
             this.PlayerClass = playerClass;
             interactableObjects = interactables;
+            this.scale = 0.75f;
+            this.position = new Vector2(0,0);
             this.Damage = 10;
         }
 
@@ -77,10 +83,16 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
 
-            //if (gameObject is Door)
-            //{
-            // Open door to net area
-            //}
+            if (gameObject is Door door)
+            {
+                 if ( door.DoorOpen)
+                {
+                    
+                }
+                //Hvis døren er åben, gå igennem
+                //Hvis døren er lukket og har nøgle, lås op
+                //Hvis døren er låst - afvis
+            }
 
             if (gameObject is Item)
             {
@@ -139,9 +151,11 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            GameWorld.Camera.Position = new Vector2(GameWorld.Camera.Position.X, position.Y);
             HandleInput();
             Movement(gameTime);
             Animation(gameTime);
+            base.Update(gameTime);
         }
 
 
@@ -269,6 +283,7 @@ namespace MortensKomeback2
         /// <summary>
         /// Flips a bool on all items within a certain distance from the Player (currently set to 300 pixels)
         /// </summary>
+        /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
 
