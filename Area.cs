@@ -10,8 +10,11 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
+
+    
     internal class Area : GameObject
     {
+
         #region fields
         //private int spriteID; //Which sprite is going to be used
         private bool topCollision;
@@ -78,16 +81,14 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor
-        public Area(Vector2 placement, int areaArray)
+        public Area(Vector2 placement, int areaArray, string roomName )
         {
             this.position = placement;
-            this.layer = 0f;
+            this.layer = 0.0f;
             this.scale = 1f;
-            /*this.position.X = xPosition;
-            this.position.Y = yPosition;*/
             this.health = 1;
-            this.sprites = GameWorld.animationSprites["areaStart"];
-            this.sprite = sprites[areaArray];
+            //this.sprites = GameWorld.animationSprites["areaStart"];
+            this.sprite = GameWorld.animationSprites["areaStart"][areaArray]; //sprites[areaArray];
         }
 
         #endregion
@@ -107,6 +108,16 @@ namespace MortensKomeback2
         {
             
         }
+
+        //public void ChangeRoom(string newRoom)
+        //{
+        //    if (RoomBoundaries.ContainsKey(newRoom))
+        //    {
+        //        CurrentRoomBoundary = RoomBoundaries[newRoom];
+        //    }
+        //}
+
+
         #endregion
     }
 }

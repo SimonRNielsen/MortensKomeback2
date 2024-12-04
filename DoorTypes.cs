@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    enum PlayerClass
+    enum DoorTypes
     {
-        Crusader = 1,
-        Monk = 2,
-        Bishop = 3,
+        Open = 1,
+        Closed = 2,
+        Locked = 3,
     }
 }

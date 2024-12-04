@@ -22,6 +22,9 @@ namespace MortensKomeback2
         private int maxHealth = 100;
         private int healthBonus;
 
+        private bool searching;
+        
+
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
@@ -39,6 +42,7 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
+            //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
@@ -60,9 +64,10 @@ namespace MortensKomeback2
             switch (playerClass)
             {
                 case PlayerClass.Crusader:
+                    sprites = GameWorld.animationSprites["CrusaderMorten"];
                     break;
-                case PlayerClass.Munk:
-                    sprites = GameWorld.animationSprites["BishopMorten"];
+                case PlayerClass.Monk:
+                    sprites = GameWorld.animationSprites["MonkMorten"]; 
                     break;
                 case PlayerClass.Bishop:
                     sprites = GameWorld.animationSprites["BishopMorten"];
@@ -80,19 +85,9 @@ namespace MortensKomeback2
         public override void OnCollision(GameObject gameObject)
         {
 
-            //if (gameObject is Door)
-            //{
-            // Open door to net area
-            //}
-
-            if (gameObject is Item)
-            {
-                //Collect item
-            }
-
             if (gameObject is AvSurface)
             {
-                //Reduse the players health
+                //Reduse the players health when waking through
                 health = health - 10; //Not sure if it should be 10
             }
 
@@ -134,9 +129,11 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            GameWorld.Camera.Position = new Vector2(GameWorld.Camera.Position.X, position.Y);
             HandleInput();
             Movement(gameTime);
             Animation(gameTime);
+            base.Update(gameTime);
         }
 
 
@@ -323,6 +320,29 @@ namespace MortensKomeback2
             }
 
         }
+
+        /// <summary>
+        /// Attempts to find a key in the players inventory
+        /// </summary>
+        /// <returns>Instance of a key or null when no key is found</returns>
+        public static Item FindKey()
+        {
+            Item key = GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
+
+            return key;
+        }
+
+        /// <summary>
+        /// Removes an item from the players inventory
+        /// </summary>
+        /// <param name="item">Item to be removed</param>
+        public static void RemoveItem(Item item)
+        {
+            GameWorld.playerInventory.Remove(item);
+        }
+
+
+
 
         /// <summary>
         /// Performs a healing action for Player to recover missing health

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MortensKomeback2
 {
-    internal class AvSurface : Obstacle
+    internal class AvSurface : GameObject
     {
         #region field
         private float timeElapsed;
@@ -27,7 +27,7 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="xPosition">X position</param>
         /// <param name="yPosition">Y position</param>
-        public AvSurface(int xPosition, int yPosition) : base(xPosition, yPosition)
+        public AvSurface(int xPosition, int yPosition) 
         {
             this.fps = 15;
             this.position = new Vector2(xPosition, yPosition);
@@ -65,6 +65,11 @@ namespace MortensKomeback2
                 timeElapsed = 0;
                 currentIndex = 0;
             }
+        }
+
+        public override void OnCollision(GameObject gameObject)
+        {
+            //throw new NotImplementedException();
         }
 
         #endregion

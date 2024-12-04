@@ -39,10 +39,7 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            if (gameObject is Player)
-            {
-                //Load quest 
-            }
+            
         }
 
         public override void Update(GameTime gameTime)

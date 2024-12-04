@@ -14,6 +14,7 @@ namespace MortensKomeback2
     {
         #region field
         private GraphicsDeviceManager graphics;
+        private float deltaTime;
         private float timeElapsed;
         private int currentIndex;
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
@@ -32,7 +33,7 @@ namespace MortensKomeback2
         public Enemy(GraphicsDeviceManager _graphics)
         {
             this.speed = 300;
-            graphics = _graphics;
+            this.graphics = _graphics;
             this.health = 100;
             this.fps = 7f;
             this.scale = 0.5f;
@@ -51,27 +52,28 @@ namespace MortensKomeback2
         }
 
         /// <summary>
-        /// When the enemy is colliding with a AvSurface or Obstacle it will turn around and walk in that direction
+        /// When the enemy is colliding with a Obstacle it will turn around and walk in that direction
         /// </summary>
         /// <param name="gameObject">A GameObject</param>
         public override void OnCollision(GameObject gameObject)
         {
-            if (gameObject is Obstacle || gameObject is AvSurface)
+            if (gameObject is Obstacle)
             {
-                if (direction is true)
+                if (gameObject.CollisionBox.X + gameObject.CollisionBox.Width + 30 > this.CollisionBox.X + this.sprite.Width)
                 {
-                    direction = false;
+                    this.direction = false;
                 }
-                else
+                else if (gameObject.CollisionBox.X  - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X )
                 {
-                    direction = true;
+                    this.direction = true;
                 }
+
             }
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f)
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
             {
                 sprites = GameWorld.animationSprites["AggroGoose"];
             }
@@ -87,31 +89,30 @@ namespace MortensKomeback2
         public override void Movement(GameTime gameTime)
         {
             //Calculating the deltatime which is the time that has passed since the last frame
-            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             velocity = new Vector2(1, 0);
 
-            //The player is moving by the result of HandleInput and deltaTime
+            //The enemys movement 
             if (direction)
             {
                 position += (velocity * speed * deltaTime);
                 this.spriteEffectIndex = 1;
             }
-            else
+            if (!direction)
             {
                 position -= (velocity * speed * deltaTime);
                 this.spriteEffectIndex = 0;
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f)
+            if (position.X >= graphics.PreferredBackBufferWidth/2)
             {
                 direction = false;
             }
-            if (position.X <= -(graphics.PreferredBackBufferWidth - Sprite.Width * 3.5f))
+            if (position.X <= -(graphics.PreferredBackBufferWidth/2))
             {
                 direction = true;
             }
-
 
         }
 
