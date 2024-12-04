@@ -17,12 +17,12 @@ namespace MortensKomeback2
         private bool praying;
         private bool interact;
         private bool inventory;
+        private bool healing;
         private byte interactRange = 100;
         private List<NPC> nPCList;
         private int limitedHeals = 5;
         private int maxHealth = 100;
         private int healthBonus;
-        private bool healing;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
