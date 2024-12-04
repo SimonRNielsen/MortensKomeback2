@@ -31,7 +31,7 @@ namespace MortensKomeback2
             this.layer = 0.0f;
             this.scale = 1f;
             this.health = 1;
-            this.sprites = GameWorld.animationSprites["areaStart"];
+            //this.sprites = GameWorld.animationSprites["areaStart"];
             this.sprite = GameWorld.animationSprites["areaStart"][areaArray]; //sprites[areaArray];
         }
 
