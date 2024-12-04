@@ -20,6 +20,9 @@ namespace MortensKomeback2
         private byte interactRange = 100;
         private List<GameObject> interactableObjects;
 
+        private bool searching;
+        
+
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
@@ -34,6 +37,7 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<GameObject> interactables)
         {
+            //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
             this.fps = 2f;
@@ -120,9 +124,11 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            GameWorld.Camera.Position = new Vector2(GameWorld.Camera.Position.X, position.Y);
             HandleInput();
             Movement(gameTime);
             Animation(gameTime);
+            base.Update(gameTime);
         }
 
 

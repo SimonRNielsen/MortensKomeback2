@@ -12,6 +12,12 @@ namespace MortensKomeback2
     {
         #region field
         protected bool surfaceContact = false; //I don't know if I need it
+        private int maxHealth;
+        private int currentHealth;
+
+        protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
+        protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+
 
         #endregion
 
@@ -27,7 +33,24 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            //Vector2 newPosition = position + velocity;
+
+            //Rectangle bounds = GameWorld.CurrentRoomBoundary;
+
+            //if (newPosition.X > bounds.Left)
+            //    newPosition.X = bounds.Left;
+            //if (newPosition.Y < bounds.Top)
+            //    newPosition.Y = bounds.Top;
+            //if (newPosition.X > bounds.Right /*- sprite.Width*/)
+            //    newPosition.X = bounds.Right /*- sprite.Width*/;
+            //if (newPosition.Y < bounds.Bottom /*- sprite.Height*/)
+            //    newPosition.Y = bounds.Bottom /*- sprite.Height*/;
+
+            //position = newPosition;
+
+
+
+
         }
 
 
@@ -37,5 +60,14 @@ namespace MortensKomeback2
         //void Interact(GameObject gameObject);
 
         public abstract void Animation(GameTime gameTime);
+
+        public virtual void GetHit(int damage)
+        {
+            health -= damage;
+
+            if (health <= 0) ;
+                //isAlive = false;
+
+        }
     }
 }
