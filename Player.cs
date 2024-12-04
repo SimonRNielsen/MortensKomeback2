@@ -12,6 +12,7 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
+        private int healthMax;
         private bool praying;
         private bool interact;
         private bool inventory;
@@ -34,6 +35,8 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
+        public int HealthMax { get => healthMax; set => healthMax = value; }
+
         #endregion
 
         #region properti
@@ -51,6 +54,7 @@ namespace MortensKomeback2
             //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
+            HealthMax = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;
@@ -70,14 +74,14 @@ namespace MortensKomeback2
 
             switch (playerClass)
             {
-                case PlayerClass.Crusader:
-                    sprites = GameWorld.animationSprites["CrusaderMorten"];
-                    break;
                 case PlayerClass.Monk:
-                    sprites = GameWorld.animationSprites["MonkMorten"]; 
+                    sprites = GameWorld.animationSprites["monk"];
+                    break;
+                case PlayerClass.Crusader:
+                    sprites = GameWorld.animationSprites["crusader"];
                     break;
                 case PlayerClass.Bishop:
-                    sprites = GameWorld.animationSprites["BishopMorten"];
+                    sprites = GameWorld.animationSprites["bishop"];
                     break;
             }
 

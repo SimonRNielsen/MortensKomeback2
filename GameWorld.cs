@@ -129,10 +129,10 @@ namespace MortensKomeback2
 
             //#region GUI
 
-            //Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
-            //Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar( bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
@@ -565,21 +565,23 @@ namespace MortensKomeback2
             {
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
-            animationSprites.Add("BishopMorten", bishop);
+            animationSprites.Add("bishop", bishop);
 
-            Texture2D[] monk = new Texture2D[4];
+            Texture2D[] monkAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("MonkMorten", monk);
+            animationSprites.Add("monk", monk);
 
-            Texture2D[] crusader = new Texture2D[4];
+            Texture2D[] crusaderAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("CrusaderMorten", crusader);
+            animationSprites.Add("crusader", crusader);
+
+            #endregion
 
             #endregion
             #region goose
