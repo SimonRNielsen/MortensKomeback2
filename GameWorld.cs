@@ -117,14 +117,14 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 8), 0, "Room9"));  // puzzle
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 10), 0, "Room10"));  // boss fight
 
-            newGameObjects.Add(new Area(new Vector2(-3000, 0), 0, "Room2"));          //ventre side, rum 2, nonne
-            newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 3 enemies
-            newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 4 enemies
-            newGameObjects.Add(new Area(new Vector2(-9000, 0 * 4), 0, "Room5"));   //ventre side, rum 5, item
+            newGameObjects.Add(new Area(new Vector2(0, -1080*2), 0, "Room2"));          //ventre side, rum 2, nonne
+            newGameObjects.Add(new Area(new Vector2(0, -1080*4), 0, "Room3"));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 6), 0, "Room4"));     //ventre side, rum 4 enemies
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
 
 
             newGameObjects.Add(new Area(new Vector2(0, -1080*10), 0, "Room6"));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(new Vector2(3000, -1080*12), 0, "Room7"));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(0, -1080*12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
             //#region GUI
