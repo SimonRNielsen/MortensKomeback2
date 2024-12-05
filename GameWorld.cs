@@ -87,12 +87,9 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
-            hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
-            playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            //newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
+            //hiddenItems.Add(new QuestItem(0, false, Vector2.Zero)); //Key
+            //hiddenItems.Add(new QuestItem(1, false, Vector2.Zero)); //Blood of Geesus
+            //hiddenItems.Add(new QuestItem(2, false, Vector2.Zero)); //Popes Mitre
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -488,6 +485,7 @@ namespace MortensKomeback2
             Texture2D feet = Content.Load<Texture2D>("Sprites\\Item\\feetPlaceholder");
             Texture2D healItem = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
+            Texture2D mitre = Content.Load<Texture2D>("Sprites\\Item\\mitre");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -496,6 +494,7 @@ namespace MortensKomeback2
             commonSprites.Add("feetItem", feet);
             commonSprites.Add("healItem", healItem);
             commonSprites.Add("blink", blink);
+            commonSprites.Add("mitre", mitre);
 
             #endregion
             #region GUI
@@ -657,12 +656,9 @@ namespace MortensKomeback2
         /// </summary>
         public static void MarkMenuItemsObsolete()
         {
-            foreach (Menu menuItem in menu)
-            {
-                if (menuItem is Button)
-                    if ((menuItem as Button).ItemButton)
-                        (menuItem as Button).ButtonObsolete = true;
-            }
+
+            menu.FindAll(button => button is Button).ConvertAll(button => (Button)button).FindAll(button => button.ItemButton == true).ForEach(Button => Button.ButtonObsolete = true);
+            
         }
 
         /// <summary>
@@ -671,12 +667,14 @@ namespace MortensKomeback2
         /// <returns>true if any "ItemButtons", otherwise false</returns>
         public static bool DetectRightClickMenu()
         {
+
             bool exists = false;
             foreach (Menu menuItem in menu)
                 if (menuItem is Button)
                     if ((menuItem as Button).ItemButton)
                         exists = true;
             return exists;
+
         }
 
         /// <summary>
@@ -685,12 +683,14 @@ namespace MortensKomeback2
         /// <returns>true if inventory exists otherwise false</returns>
         public static bool DetectInventory()
         {
+
             bool inventoryOpen = false;
             foreach (Menu menuItem in menu)
                 if (menuItem.IsMenu)
                     if (menuItem.IsInventory)
                         inventoryOpen = true;
             return inventoryOpen;
+
         }
 
         /// <summary>
@@ -699,12 +699,14 @@ namespace MortensKomeback2
         /// <returns>true if inventory exists otherwise false</returns>
         public static bool DetectInOutro()
         {
+
             bool inOutroOpen = false;
             foreach (Menu menuItem in menu)
                 if (menuItem.IsMenu)
                     if (menuItem.IsInOutro)
                         inOutroOpen = true;
             return inOutroOpen;
+            
         }
 
         /// <summary>
@@ -712,7 +714,9 @@ namespace MortensKomeback2
         /// </summary>
         public static void ExitGame()
         {
+
             exitGame = true;
+
         }
 
         /// <summary>
@@ -720,6 +724,7 @@ namespace MortensKomeback2
         /// </summary>
         private void Restart()
         {
+
             menu.Clear();
             gameObjects.Clear();
             newGameObjects.Clear();
@@ -730,8 +735,10 @@ namespace MortensKomeback2
             commonSounds.Clear();
             backgroundMusic.Clear();
             hiddenItems.Clear();
+            playerInstance = null;
             Initialize();
             restart = false;
+
         }
 
         /// <summary>
@@ -739,7 +746,9 @@ namespace MortensKomeback2
         /// </summary>
         public static void InitiateRestart()
         {
+
             restart = true;
+
         }
 
         /// <summary>
@@ -747,7 +756,9 @@ namespace MortensKomeback2
         /// </summary>
         public static void StartGame()
         {
+
             newGameObjects.Add(new Menu(Camera.Position, 5));
+
         }
 
         /// <summary>
@@ -756,7 +767,9 @@ namespace MortensKomeback2
         /// <returns>List with NPC references</returns>
         private List<NPC> FindNPCLocation()
         {
+
             return gameObjects.FindAll(npc => npc is NPC).ConvertAll(npc => (NPC)npc);
+
         }
 
         /// <summary>
@@ -765,7 +778,9 @@ namespace MortensKomeback2
         /// <returns>Healing Item</returns>
         public static Item FindHealingItem()
         {
+
             return playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => (QuestItem)questItem).Find(questItem => questItem.HealItem == true);
+
         }
 
         /* 0 references so outcommented, also seems obsolete?
@@ -784,6 +799,7 @@ namespace MortensKomeback2
         /// </summary>
         private void PlayerInRoom()
         {
+
             float closestRoom = 2000;
             foreach (Area area in area51)
             {
@@ -794,6 +810,7 @@ namespace MortensKomeback2
                     closestRoom = distanceToPlayer;
                 }
             }
+
         }
         #endregion
         #endregion

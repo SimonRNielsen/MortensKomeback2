@@ -55,6 +55,15 @@ namespace MortensKomeback2
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
+            if (GameWorld.PlayerInstance != null)
+            {
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
+                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
+            }
         }
 
         #endregion
@@ -152,7 +161,6 @@ namespace MortensKomeback2
             invulnerableTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (invulnerableTimer > invulnerable)
             {
-                drawColor = Color.White;
                 invulnerability = false;
             }
         }
@@ -371,7 +379,6 @@ namespace MortensKomeback2
             Health -= 10;
             invulnerableTimer = 0;
             invulnerability = true;
-            drawColor = Color.Red;
 
         }
 
@@ -387,16 +394,27 @@ namespace MortensKomeback2
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
-                    Health = healAmount + 25;
+                    Health += healAmount + 25;
                     //if (!GameWorld.BattleActive)                      HUSK AT INDKOMMENTERE IGEN!!!!!
                     limitedHeals--;
                 }
                 else if (healingItem != null)
                 {
-                    Health = healAmount;
+                    Health += healAmount;
                     healingItem.IsUsed = true;
                 }
 
+        }
+
+        /// <summary>
+        /// Overrides to give a damage "effect" on Player
+        /// </summary>
+        /// <param name="spriteBatch">Drawing tool</param>
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (invulnerability)
+                spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
         }
 
         #endregion

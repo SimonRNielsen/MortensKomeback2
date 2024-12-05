@@ -92,13 +92,13 @@ namespace MortensKomeback2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!GameWorld.DetectInOutro())
+            if (!GameWorld.DetectInOutro() && !GameWorld.DetectInventory())
             {
                 // Draw the background
-                spriteBatch.Draw(GameWorld.commonSprites["healthBarBlack"], position, backgroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.9f);
+                spriteBatch.Draw(GameWorld.commonSprites["healthBarBlack"], position, backgroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, layer);
 
                 // Draw the foreground (current health)
-                spriteBatch.Draw(sprite, position, foregroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.9f);
+                spriteBatch.Draw(sprite, position, foregroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, layer + 0.1f);
             }
         }
         #endregion

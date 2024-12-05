@@ -154,7 +154,7 @@ namespace MortensKomeback2
                 case 0:
                     if (drawTwoHanded)
                         spriteBatch.Draw(twoHandedSprite, new Vector2(position.X + 700 - (twoHandedSprite.Width / 2), position.Y - 200 - (twoHandedSprite.Height / 2)), null, whiteOpaque, rotation, Vector2.Zero, scale, objectSpriteEffects[1], layer + 0.1f);
-                    spriteBatch.Draw(GameWorld.PlayerInstance.Sprite, new Vector2(position.X - 400, position.Y - 400), null, drawColor, rotation, Vector2.Zero, scale * 3, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.PlayerInstance.Sprite, new Vector2(position.X - 400, position.Y - 400), null, drawColor, rotation, Vector2.Zero, scale * 4f, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Backpack", new Vector2(position.X - 735, position.Y - 450), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.Draw(GameWorld.commonSprites["healItem"], new Vector2(position.X + 300 - (GameWorld.commonSprites["healItem"].Width / 2), position.Y + 300 - (GameWorld.commonSprites["healItem"].Height / 2)), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Blood of Geesus:{healItem}", new Vector2(position.X + 400, position.Y + 300), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);

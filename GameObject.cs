@@ -30,8 +30,8 @@ namespace MortensKomeback2
             {
                 if (this is Player)
                 {
-                    if (health > health + (this as Player).HealthBonus)
-                        health = health + (this as Player).HealthBonus;
+                    if (health > (this as Player).MaxHealth + (this as Player).HealthBonus)
+                        health = (this as Player).MaxHealth + (this as Player).HealthBonus;
                     if (value >= (this as Player).MaxHealth + (this as Player).HealthBonus)
                         health = (this as Player).MaxHealth + (this as Player).HealthBonus;
                     else
