@@ -23,8 +23,26 @@ namespace MortensKomeback2
         protected SpriteEffects[] objectSpriteEffects = new SpriteEffects[3] { SpriteEffects.None, SpriteEffects.FlipHorizontally, SpriteEffects.FlipVertically };
         protected Color drawColor = Color.White;
 
-        public int Health { get => health; set => health = value;} ///til GUI
-
+        public int Health
+        {
+            get => health;
+            set
+            {
+                if (this is Player)
+                {
+                    if (health > health + (this as Player).HealthBonus)
+                        health = health + (this as Player).HealthBonus;
+                    if (health + value <= (this as Player).MaxHealth + (this as Player).HealthBonus)
+                        health += value;
+                    else
+                        health = (this as Player).MaxHealth + (this as Player).HealthBonus;
+                }
+                if (this is Enemy)
+                    health += value;
+                if (health < 0)
+                    isAlive = false;
+            }
+        }
         public Texture2D Sprite { get => sprite; set => sprite = value; }
         public Vector2 Position { get => position; set => position = value; }
         public virtual Rectangle CollisionBox
@@ -56,7 +74,7 @@ namespace MortensKomeback2
         /// Checking if two objects is colliding 
         /// </summary>
         /// <param name="gameObject">A GameObject</param>
-        public void CheckCollision(GameObject gameObject)
+        public virtual void CheckCollision(GameObject gameObject)
         {
             if (CollisionBox.Intersects(gameObject.CollisionBox))
             {

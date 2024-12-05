@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
@@ -12,15 +8,15 @@ namespace MortensKomeback2
     {
         #region field
         protected bool surfaceContact = false; //I don't know if I need it
-        private int maxHealth;
         private int currentHealth;
         protected int damage;
         private HealthBar healthbar;
         private bool battleActive;
 
-        protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
-        protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
+        #endregion
 
+        #region properties
+        protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
 
         #endregion
