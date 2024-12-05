@@ -22,7 +22,7 @@ namespace MortensKomeback2
         private int maxHealth = 100;
         private int healthBonus;
         private string inRoom;
-        private float invulnerable = 1.5f;
+        private float invulnerable = 1f;
         private float invulnerableTimer;
         private bool invulnerability;
 
