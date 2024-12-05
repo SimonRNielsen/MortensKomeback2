@@ -12,8 +12,6 @@ namespace MortensKomeback2
     {
         #region field
         private DoorTypes type;
-        private bool doOnce = false;
-        private List<Area> myAreas;
 
         private readonly Vector2 teleportPosition;
         #endregion
@@ -24,14 +22,13 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public Door(float xPosition, float yPosition, DoorTypes dt, Vector2 teleportPosition, List<Area> areaList)
+        public Door(float xPosition, float yPosition, DoorTypes dt, Vector2 teleportPosition)
         {
             this.position.X = xPosition;
             this.position.Y = yPosition;
             this.Type = dt;
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
-            myAreas = areaList;
         }
 
 
@@ -82,38 +79,6 @@ namespace MortensKomeback2
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
                     break;
-            }
-            if (myAreas != null && !doOnce)
-            {
-                doOnce = true;
-                float maxDistance = 2000;
-                Area myRoom = null;
-                foreach (Area area in myAreas)
-                {
-                    float distance = Vector2.Distance(position, area.Position);
-                    if (distance < maxDistance)
-                    {
-                        myRoom = area;
-                        maxDistance = distance;
-                    }
-                }
-                if (position.Y < (myRoom.Position.Y - 300))
-                {
-                    //Normal
-                }
-                else if (position.Y > (myRoom.Position.Y + 300))
-                {
-                    spriteEffectIndex = 2;
-                }
-                else if (position.X < (myRoom.Position.X - 500))
-                {
-                    rotation = (((22f / 7f) / 2f) * 3f);
-                    spriteEffectIndex = 1;
-                }
-                else if (position.X > (myRoom.Position.X + 500))
-                {
-                    rotation = (((22f / 7f) / 2f));
-                }
             }
         }
 

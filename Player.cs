@@ -12,7 +12,6 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
-        private int healthMax;
         private bool praying;
         private bool interact;
         private bool inventory;
@@ -28,14 +27,13 @@ namespace MortensKomeback2
         private bool invulnerability;
 
         private bool searching;
-        
+
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
         /// </summary>
         private bool direction = true;
 
-        public int HealthMax { get => healthMax; set => healthMax = value; }
 
         #endregion
 
@@ -51,10 +49,8 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
-            HealthMax = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;
@@ -108,26 +104,26 @@ namespace MortensKomeback2
 
                 if (CollisionBox.Intersects(gameObject.CollisionBox))
 
-                if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
-                {
-                    
-                    if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                    if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
                     {
-                        //velocity.X = -1f;
-                        //position.X--;
-                        this.position.X = this.position.X - moveAway; //Moving higher up
-                    }
-                    else
-                    {
-                        //velocity.X = 1f;
-                        //position.X++;
-                        this.position.X = this.position.X + moveAway; //Moving down
-                    }
 
-                    //velocity.Y = -1f;
-                    //position.Y--;
-                    this.position.Y = this.position.Y - moveAway; //Moving further to the left
-                }
+                        if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                        {
+                            //velocity.X = -1f;
+                            //position.X--;
+                            this.position.X = this.position.X - moveAway; //Moving higher up
+                        }
+                        else
+                        {
+                            //velocity.X = 1f;
+                            //position.X++;
+                            this.position.X = this.position.X + moveAway; //Moving down
+                        }
+
+                        //velocity.Y = -1f;
+                        //position.Y--;
+                        this.position.Y = this.position.Y - moveAway; //Moving further to the left
+                    }
 
                 if (this.CollisionBox.Y > gameObject.CollisionBox.Y) //The same but to the right
                 {
@@ -298,6 +294,7 @@ namespace MortensKomeback2
         /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
+
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
@@ -352,9 +349,7 @@ namespace MortensKomeback2
         /// <returns>Instance of a key or null when no key is found</returns>
         public static Item FindKey()
         {
-            Item key = GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
-
-            return key;
+            return GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
         }
 
 
@@ -364,16 +359,20 @@ namespace MortensKomeback2
         /// <param name="item">Item to be removed</param>
         public static void RemoveItem(Item item)
         {
+
             GameWorld.playerInventory.Remove(item);
+
         }
 
 
         private void TakeEnvironmentDamage()
         {
-            Health = -10;
+
+            Health -= 10;
             invulnerableTimer = 0;
             invulnerability = true;
             drawColor = Color.Red;
+
         }
 
         /// <summary>
@@ -381,9 +380,10 @@ namespace MortensKomeback2
         /// </summary>
         public void Heal()
         {
+
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
-            
+
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
@@ -396,6 +396,7 @@ namespace MortensKomeback2
                     Health = healAmount;
                     healingItem.IsUsed = true;
                 }
+
         }
 
         #endregion
