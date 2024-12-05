@@ -538,7 +538,7 @@ namespace MortensKomeback2
                                     if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
-                                        playerActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
+                                        enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
                                     }
                                 }
                                 else
@@ -547,7 +547,7 @@ namespace MortensKomeback2
                                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
-                                        playerActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
+                                        enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
                                     }
 
                                 }
