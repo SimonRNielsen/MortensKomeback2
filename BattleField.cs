@@ -301,14 +301,7 @@ namespace MortensKomeback2
             }
             else
             {
-                playerActionOngoing = false;
-                if (battlefieldEnemies.Count > 0)
-                {
-                    enemyActionOngoing = true;
-                }
-                else
-                { WinBattle(); }
-                move = 1;
+                EndAction("player");
             }
 
             //Move
@@ -384,14 +377,7 @@ namespace MortensKomeback2
             }
             else
             {
-                playerActionOngoing = false;
-                if (battlefieldEnemies.Count > 0)
-                {
-                    enemyActionOngoing = true;
-                }
-                else
-                { WinBattle(); }
-                move = 1;
+                EndAction("player");
             }
             //Animate
             //Sound
@@ -416,14 +402,7 @@ namespace MortensKomeback2
             }
             else
             {
-                playerActionOngoing = false;
-                if (battlefieldEnemies.Count > 0)
-                {
-                    enemyActionOngoing = true;
-                }
-                else
-                { WinBattle(); }
-                move = 1;
+                EndAction("player");
             }
             //Move
             //Animate
@@ -472,16 +451,7 @@ namespace MortensKomeback2
             }
             else
             {
-                playerActionOngoing = false;
-                GameWorld.PlayerInstance.Sprites = playerDefaultSpriteArray;
-                GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[0];
-                if (battlefieldEnemies.Count > 0)
-                {
-                    enemyActionOngoing = true;
-                }
-                else
-                { WinBattle(); }
-                move = 1;
+                EndAction("player");
             }
             //Animate
             //Sound
@@ -570,8 +540,7 @@ namespace MortensKomeback2
                         }
                         else
                         {
-                            enemyActionOngoing = false;
-                            move = 1;
+                            EndAction("enemy");
                         }
                         break;
                     }
@@ -582,9 +551,26 @@ namespace MortensKomeback2
         /// <summary>
         /// When an enemy is defeated, the battle is won. Show specific text, and lets the player return form the battle. 
         /// </summary>
-        private void WinBattle()
+        private void EndAction(String actor)
         {
-            battleWon = true;
+            if (actor.ToLower() == "player")
+            {
+                playerActionOngoing = false;
+                if (battlefieldEnemies.Count > 0)
+                {
+                    enemyActionOngoing = true;
+                }
+                else
+                {
+                    battleWon = true;
+                }
+                move = 1;
+            }
+            else if (actor.ToLower() == "enemy")
+            {
+                enemyActionOngoing = false;
+                move = 1;
+            }
 
         }
 
