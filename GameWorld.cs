@@ -569,7 +569,7 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
-            Content.Load<Texture2D>("Sprites\\area\\secretBricks") //secret door
+            Content.Load<Texture2D>("Sprites\\area\\sercretBricks") //secret door
          };
             animationSprites.Add("doorStart", doorArray);
 
