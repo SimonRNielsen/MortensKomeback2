@@ -575,19 +575,19 @@ namespace MortensKomeback2
             }
             animationSprites.Add("bishop", bishop);
 
-            Texture2D[] monkAnimArray = new Texture2D[4];
+            Texture2D[] monk = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("monk", monkAnimArray);
+            animationSprites.Add("monk", monk);
 
-            Texture2D[] crusaderAnimArray = new Texture2D[4];
+            Texture2D[] crusader = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("crusader", crusaderAnimArray);
+            animationSprites.Add("crusader", crusader);
 
             //#endregion
 

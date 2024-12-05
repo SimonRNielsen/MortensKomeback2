@@ -32,18 +32,18 @@ namespace MortensKomeback2
             this.DoorRotation = dr;
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
-            switch (position.X)
-            {
-                case > 750:
-                    rotation = 1.5708f;
-                    break;
-                case < -750:
-                    spriteEffectIndex = 2;
-                    rotation = 1.5708f;
-                    break;
-                default:
-                    break;
-            }
+            //switch (position.X)
+            //{
+            //    case > 750:
+            //        rotation = 1.5708f;
+            //        break;
+            //    case < -750:
+            //        spriteEffectIndex = 2;
+            //        rotation = 1.5708f;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
 
