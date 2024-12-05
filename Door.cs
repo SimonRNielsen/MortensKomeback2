@@ -151,6 +151,7 @@ namespace MortensKomeback2
         public void Teleport(Player player)
         {
             player.Position = this.teleportPosition;
+            GameWorld.Camera.Position = this.teleportPosition;
         }
         #endregion
     }

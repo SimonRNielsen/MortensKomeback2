@@ -152,13 +152,6 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, DoorRotation.Left, Vector2.Zero)); // Teleports to main room from right room 1
             newGameObjects.Add(new Door(800+23, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(3000, 0))); // Teleports to main room from right room 1
 
-
-            //TEST DØRE
-            //newGameObjects.Add(new Door(-800-20, 0, DoorTypes.Closed, DoorRotation.Left, new Vector2(3000, -2000))); // Teleports to main room from right room 1
-
-            //newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room7"));      //højre side, rum 2, secret + item
-
-            //newGameObjects.Add(new Door(3000, -2160, DoorTypes.Open, DoorRotation.Top, Vector2.Zero));
             #endregion
 
             #endregion
