@@ -113,9 +113,9 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080*2), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 6), 0, "Room8"));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 8), 0, "Room9"));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 10), 0, "Room10"));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
 
             newGameObjects.Add(new Area(new Vector2(0, -1080*2), 0, "Room2"));          //ventre side, rum 2, nonne
             newGameObjects.Add(new Area(new Vector2(0, -1080*4), 0, "Room3"));     //ventre side, rum 3 enemies
