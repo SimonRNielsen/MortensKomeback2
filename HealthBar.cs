@@ -120,11 +120,11 @@ namespace MortensKomeback2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            // Draw the background
-            spriteBatch.Draw(GameWorld.commonSprites["barBackground"], backgroundRectangle, Color.White);
+            //// Draw the background
+            //spriteBatch.Draw(GameWorld.commonSprites["barBackground"], backgroundRectangle, Color.White);
 
-            // Draw the foreground (current health)
-            spriteBatch.Draw(GameWorld.commonSprites["barForeground"], foregroundRectangle, Color.White);
+            //// Draw the foreground (current health)
+            //spriteBatch.Draw(GameWorld.commonSprites["barForeground"], foregroundRectangle, Color.White);
         }
         #endregion
 

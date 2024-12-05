@@ -599,12 +599,12 @@ namespace MortensKomeback2
             };
             animationSprites.Add("areaStart", areaArray);
 
-            Texture2D[] doorArray = new Texture2D[4] //rooms
+            Texture2D[] doorArray = new Texture2D[3] //rooms
          {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
-            Content.Load<Texture2D>("Sprites\\area\\secretBricks") //secret door
+            //Content.Load<Texture2D>("Sprites\\area\\secretBricks") //secret door
          };
             animationSprites.Add("doorStart", doorArray);
 
@@ -631,7 +631,7 @@ namespace MortensKomeback2
             }
             animationSprites.Add("crusader", crusader);
 
-            //#endregion
+            #endregion
 
             
             #region goose
@@ -829,5 +829,5 @@ namespace MortensKomeback2
 
     }
 }
-#endregion
-#endregion
+//#endregion
+//#endregion
