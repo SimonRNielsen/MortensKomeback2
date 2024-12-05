@@ -8,7 +8,7 @@ namespace MortensKomeback2
     public abstract class GameObject
     {
         protected Texture2D sprite;
-        private Texture2D[] sprites;
+        protected Texture2D[] sprites;
         protected Vector2 position;
         protected Vector2 origin;
         protected Vector2 velocity;
@@ -16,7 +16,7 @@ namespace MortensKomeback2
         protected float scale = 1f;
         protected float layer = 0.000001f;
         protected float speed;
-        private float rotation;
+        protected float rotation;
         protected int health = 1;
         protected int spriteEffectIndex;
         protected bool isAlive = true;
@@ -32,13 +32,13 @@ namespace MortensKomeback2
                 {
                     if (health > health + (this as Player).HealthBonus)
                         health = health + (this as Player).HealthBonus;
-                    if (health + value <= (this as Player).MaxHealth + (this as Player).HealthBonus)
-                        health += value;
-                    else
+                    if (value >= (this as Player).MaxHealth + (this as Player).HealthBonus)
                         health = (this as Player).MaxHealth + (this as Player).HealthBonus;
+                    else
+                        health = value;
                 }
                 if (this is Enemy)
-                    health += value;
+                    health = value;
                 if (health < 0)
                     isAlive = false;
             }

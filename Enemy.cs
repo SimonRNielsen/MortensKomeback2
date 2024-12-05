@@ -35,7 +35,7 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             this.graphics = _graphics;
-            this.health = 100;
+            this.health = 15;
             this.fps = 7f;
             this.scale = 0.5f;
             sprite = GameWorld.animationSprites["WalkingGoose"][0];

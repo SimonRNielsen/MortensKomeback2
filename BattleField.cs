@@ -15,7 +15,8 @@ namespace MortensKomeback2
         #region Fields
         public static List<Enemy> battlefieldEnemies = new List<Enemy>();
         GraphicsDevice graphicsDevice;
-        Color textBoxColor;
+        Color textBodyColor;
+        Color textHeaderColor;
         Vector2 playerOriginPosition;
         private int chosenAction;
         bool keysAreLifted;
@@ -81,7 +82,8 @@ namespace MortensKomeback2
         #region Methods
         public override void LoadContent(ContentManager content)
         {
-            textBoxColor = Color.Beige;
+            textBodyColor = GameWorld.GrayGoose;
+            textHeaderColor = Color.Black;
             standardFont = content.Load<SpriteFont>("standardFont");
             switch (GameWorld.PlayerInstance.PlayerClass)
             {
@@ -125,7 +127,7 @@ namespace MortensKomeback2
             {
                 HandleInput();
                 chosenAction = HandleInput();
-                if (chosenAction > 0)
+                if (chosenAction > 0 && !(battleWon))
                 { playerActionOngoing = true; }
                 enemyAction = randomAction.Next(1, 5);
             }
@@ -147,6 +149,7 @@ namespace MortensKomeback2
                 }
             }
             battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
+
             //When the timer is up, the action has ended.
             //else
             //{
@@ -157,21 +160,28 @@ namespace MortensKomeback2
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!playerActionOngoing && !enemyActionOngoing)
+            if (!playerActionOngoing && !enemyActionOngoing && !battleWon)
             {
-                spriteBatch.DrawString(standardFont, "Choose your action for this battle round!", battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "1) " + attackText, battlefieldDialogue.Position - new Vector2((float)(820), 90), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "2) " + blockText, battlefieldDialogue.Position - new Vector2((float)(820), 50), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "3) " + healText, battlefieldDialogue.Position - new Vector2((float)(820), 10), textBoxColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "Choose your action for this battle round!", battlefieldDialogue.Position - new Vector2((float)(820), 130), textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "1) " + attackText, battlefieldDialogue.Position - new Vector2((float)(820), 90), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "2) " + blockText, battlefieldDialogue.Position - new Vector2((float)(820), 50), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "3) " + healText, battlefieldDialogue.Position - new Vector2((float)(820), 10), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
             if (playerActionOngoing)
             {
-                spriteBatch.DrawString(standardFont, playerActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, playerActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
             if (enemyActionOngoing)
             {
-                spriteBatch.DrawString(standardFont, enemyActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), Color.Black, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, enemyActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
+            if(battleWon)
+            {
+                spriteBatch.DrawString(standardFont, "You have won the battle!" , battlefieldDialogue.Position - new Vector2((float)(820), 130), textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "Press \"Entter\" to return...", battlefieldDialogue.Position - new Vector2((float)(820), 90), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+
+            }
+
         }
 
         private int HandleInput()
@@ -217,6 +227,14 @@ namespace MortensKomeback2
                 GameWorld.BattleActive = false;
                 IsAlive = false;
             }
+
+            if (battleWon && keyState.IsKeyDown(Keys.Enter))
+            {
+                GameWorld.PlayerInstance.Position = playerOriginPosition;
+                GameWorld.Camera.Position = Vector2.Zero;
+                GameWorld.BattleActive = false;
+                IsAlive = false;
+            }
             return 0;
         }
 
@@ -250,7 +268,7 @@ namespace MortensKomeback2
                     }
                     break;
                 case 3:
-                    GameWorld.PlayerInstance.Sprites = GameWorld.animationSprites["crusaderAnimArray"]; //TODO : Insert right sprite array. Like Magic heal. 
+                    //  GameWorld.PlayerInstance.Sprites = GameWorld.animationSprites["crusaderAnimArray"]; //TODO : Insert right sprite array. Like Magic heal. 
                     Heal(gameTime);
                     break;
 
@@ -321,10 +339,10 @@ namespace MortensKomeback2
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
 
             }
-            else if (actionTimer<actionTimerDuration && move ==2)
+            else if (actionTimer < actionTimerDuration && move == 2)
             {
                 actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                magic.Rotation +=0.1f;
+                magic.Rotation += 0.1f;
             }
             else
             {
@@ -337,7 +355,7 @@ namespace MortensKomeback2
                     enemyActionOngoing = true;
                 }
                 else
-                { WinBattle(); }
+                { battleWon = true; }
                 move = 1;
             }
 
@@ -426,10 +444,21 @@ namespace MortensKomeback2
             else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + -400) && (move == 1))
             {
                 move = 2;
-                if (GameWorld.PlayerInstance.Health < 100)
+                if (GameWorld.PlayerInstance.Health < GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus)
                 {
-                    GameWorld.PlayerInstance.Health += 10;
-                    playerActionText = "You heal yourself for 10 health!";
+                    bool succes = GameWorld.PlayerInstance.Heal();
+                    if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && succes)
+                    {
+                        playerActionText = "You heal yourself for 50 health!";
+                    }
+                    else if (succes)
+                    {
+                        playerActionText = "You heal yourself for 25 health!";
+                    }
+                    else if (succes == false)
+                    {
+                        playerActionText = "You don't have any healing items!";
+                    }
                 }
                 else
                 {
@@ -444,7 +473,7 @@ namespace MortensKomeback2
             else
             {
                 playerActionOngoing = false;
-                GameWorld.PlayerInstance.Sprites = playerDefaultSpriteArray; 
+                GameWorld.PlayerInstance.Sprites = playerDefaultSpriteArray;
                 GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[0];
                 if (battlefieldEnemies.Count > 0)
                 {
@@ -556,6 +585,7 @@ namespace MortensKomeback2
         private void WinBattle()
         {
             battleWon = true;
+
         }
 
 

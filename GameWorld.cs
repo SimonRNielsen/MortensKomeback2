@@ -104,7 +104,7 @@ namespace MortensKomeback2
 
             menu.Add(new Menu(Camera.Position, 3));
 
-            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation()); //Using it as a reference to get the players position
+            PlayerInstance = new Player(PlayerClass.Bishop, FindNPCLocation()); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
@@ -112,28 +112,28 @@ namespace MortensKomeback2
             #region area
             newGameObjects.Add(new Area(new Vector2(0, 0), 1, "Room1"));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
-            newGameObjects.Add(new Area(new Vector2(0, 1080*2), 3, "Room1b"));    //main room
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 2), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
 
-            newGameObjects.Add(new Area(new Vector2(0, -1080*2), 0, "Room2"));          //ventre side, rum 2, nonne
-            newGameObjects.Add(new Area(new Vector2(0, -1080*4), 0, "Room3"));     //ventre side, rum 3 enemies
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 2), 0, "Room2"));          //ventre side, rum 2, nonne
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 4), 0, "Room3"));     //ventre side, rum 3 enemies
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 6), 0, "Room4"));     //ventre side, rum 4 enemies
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
 
 
-            newGameObjects.Add(new Area(new Vector2(0, -1080*10), 0, "Room6"));           //højre side, rum 1, munk
-            newGameObjects.Add(new Area(new Vector2(0, -1080*12), 0, "Room7"));      //højre side, rum 2, secret + item
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
             //#region GUI
 
             Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            newGameObjects.Add(new HealthBar(barBG, 0.5f));
             Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar( bar, 0.55f));
+            newGameObjects.Add(new HealthBar(bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
@@ -237,7 +237,7 @@ namespace MortensKomeback2
                     if (gameObject is Area)
                         if (other is Player)
                             if ((gameObject as Area).Room == (other as Player).InRoom)
-                            (gameObject as Area).CheckCollision(other);
+                                (gameObject as Area).CheckCollision(other);
                 }
 
 
@@ -256,14 +256,14 @@ namespace MortensKomeback2
                 {
                     continue;
                 }
-                
-                    menuActive = true;
-                    menuItem.Update(gameTime);
-                    if (menuItem is Button)
-                    {
-                        (menuItem as Button).CheckCollision(mousePointer);
-                    }
-                
+
+                menuActive = true;
+                menuItem.Update(gameTime);
+                if (menuItem is Button)
+                {
+                    (menuItem as Button).CheckCollision(mousePointer);
+                }
+
             }
             if (rightMouseButtonClick && !(BattleActive))
                 mousePointer.RightClickEvent();
@@ -311,7 +311,7 @@ namespace MortensKomeback2
                 foreach (GameObject gameObject in gameObjects)
                     if (gameObject is Area)
                         area51.Add(gameObject as Area);
-            
+
 
             newGameObjects.Clear();
 
@@ -336,7 +336,7 @@ namespace MortensKomeback2
                 gameObject.Draw(_spriteBatch);
 #if DEBUG
                 if (!(gameObject is BattleField))
-                { DrawCollisionBox(gameObject); });
+                { DrawCollisionBox(gameObject); }
                 if (gameObject is Area)
                 {
                     DrawLeftCollisionBox(gameObject);
@@ -612,7 +612,7 @@ namespace MortensKomeback2
 
             //#endregion
 
-            
+
             #region goose
             Texture2D[] gooseSprites = new Texture2D[8];
             for (int i = 0; i < 8; i++)

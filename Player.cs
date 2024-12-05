@@ -28,7 +28,7 @@ namespace MortensKomeback2
         private bool invulnerability;
 
         private bool searching;
-        
+
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -61,6 +61,7 @@ namespace MortensKomeback2
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
+            Damage = 10;
         }
 
         #endregion
@@ -77,13 +78,13 @@ namespace MortensKomeback2
             switch (PlayerClass)
             {
                 case PlayerClass.Monk:
-                    sprites = GameWorld.animationSprites["monk"];
+                    Sprites = GameWorld.animationSprites["monk"];
                     break;
                 case PlayerClass.Crusader:
-                    sprites = GameWorld.animationSprites["crusader"];
+                    Sprites = GameWorld.animationSprites["crusader"];
                     break;
                 case PlayerClass.Bishop:
-                    Sprites = GameWorld.animationSprites["BishopMorten"];
+                    Sprites = GameWorld.animationSprites["bishop"];
                     break;
             }
 
@@ -110,26 +111,26 @@ namespace MortensKomeback2
 
                 if (CollisionBox.Intersects(gameObject.CollisionBox))
 
-                if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
-                {
-                    
-                    if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                    if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
                     {
-                        //velocity.X = -1f;
-                        //position.X--;
-                        this.position.X = this.position.X - moveAway; //Moving higher up
-                    }
-                    else
-                    {
-                        //velocity.X = 1f;
-                        //position.X++;
-                        this.position.X = this.position.X + moveAway; //Moving down
-                    }
 
-                    //velocity.Y = -1f;
-                    //position.Y--;
-                    this.position.Y = this.position.Y - moveAway; //Moving further to the left
-                }
+                        if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                        {
+                            //velocity.X = -1f;
+                            //position.X--;
+                            this.position.X = this.position.X - moveAway; //Moving higher up
+                        }
+                        else
+                        {
+                            //velocity.X = 1f;
+                            //position.X++;
+                            this.position.X = this.position.X + moveAway; //Moving down
+                        }
+
+                        //velocity.Y = -1f;
+                        //position.Y--;
+                        this.position.Y = this.position.Y - moveAway; //Moving further to the left
+                    }
 
                 if (this.CollisionBox.Y > gameObject.CollisionBox.Y) //The same but to the right
                 {
@@ -146,15 +147,15 @@ namespace MortensKomeback2
                 }
 
             }
-            if ( gameObject is Enemy)
+            if (gameObject is Enemy)
             {
-                    if (GameWorld.BattleActive == false)
-                    {
-                        GameWorld.BattleActive = true;
-                        GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
+                if (GameWorld.BattleActive == false)
+                {
+                    GameWorld.BattleActive = true;
+                    GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
 
-                    }
                 }
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -376,7 +377,7 @@ namespace MortensKomeback2
 
         private void TakeEnvironmentDamage()
         {
-            Health = -10;
+            Health -= 10;
             invulnerableTimer = 0;
             invulnerability = true;
         }
@@ -384,23 +385,26 @@ namespace MortensKomeback2
         /// <summary>
         /// Performs a healing action for Player to recover missing health
         /// </summary>
-        public void Heal()
+        public bool Heal()
         {
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
-            
+
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
-                    Health = healAmount + 25;
-                    //if (!GameWorld.BattleActive)                      HUSK AT INDKOMMENTERE IGEN!!!!!
-                    limitedHeals--;
+                    Health += healAmount + 25;
+                    if (!GameWorld.BattleActive)
+                        limitedHeals--;
+                    return true;
                 }
                 else if (healingItem != null)
                 {
-                    Health = healAmount;
+                    Health += healAmount;
                     healingItem.IsUsed = true;
+                    return true;
                 }
+            return false;
         }
 
         #endregion
