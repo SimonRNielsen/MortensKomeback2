@@ -28,7 +28,7 @@ namespace MortensKomeback2
         private bool invulnerability;
 
         private bool searching;
-        
+
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -52,7 +52,7 @@ namespace MortensKomeback2
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
             //this.healthMax = health;
-            this.speed = 600; //Not sure what health should be
+            this.speed = 600; //Not sure what spped should be
             this.health = 100; //Not sure what health should be
             //HealthMax = 100;
             this.fps = 2f;
@@ -347,10 +347,10 @@ namespace MortensKomeback2
         /// Attempts to find a key in the players inventory
         /// </summary>
         /// <returns>Instance of a key or null when no key is found</returns>
-        public static Item FindKey()
+        public static QuestItem FindKey()
         {
-            Item key = GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
-
+            var possibleKeys = GameWorld.playerInventory.FindAll(i => i is QuestItem);
+            QuestItem key = (QuestItem)possibleKeys.Find(i => (i as QuestItem).IsKey == true);
             return key;
         }
 
@@ -378,7 +378,7 @@ namespace MortensKomeback2
         {
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
-            
+
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {

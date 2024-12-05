@@ -12,35 +12,27 @@ namespace MortensKomeback2
     {
         #region field
         private DoorTypes type;
+        private DoorRotation doorRotation;
 
         private readonly Vector2 teleportPosition;
         #endregion
 
         #region properties
         internal DoorTypes Type { get => type; set => type = value; }
+        internal DoorRotation DoorRotation { get => doorRotation; set => doorRotation = value; }
 
         #endregion
 
         #region constructor
-        public Door(float xPosition, float yPosition, DoorTypes dt, Vector2 teleportPosition)
+        public Door(float xPosition, float yPosition, DoorTypes dt, DoorRotation dr, Vector2 teleportPosition)
         {
             this.position.X = xPosition;
             this.position.Y = yPosition;
             this.Type = dt;
+            this.DoorRotation = dr;
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
-            switch (position.X)
-            {
-                case > 750:
-                    rotation = 1.5708f;
-                    break;
-                case < -750:
-                    spriteEffectIndex = 2;
-                    rotation = 1.5708f;
-                    break;
-                default:
-                    break;
-            }
+            
         }
 
 
@@ -50,6 +42,8 @@ namespace MortensKomeback2
         public override void LoadContent(ContentManager content)
         {
             this.sprites = GameWorld.animationSprites["doorStart"];
+            
+            //Switch for the different kind of sprites to DoorTypes
             switch (Type)
             {
                 case DoorTypes.Open:
@@ -66,6 +60,23 @@ namespace MortensKomeback2
                         break;
 
             }
+
+            //Switch for the different kind of DoorRotation to make sure the sprite will fit correct up against the wall 
+            switch (DoorRotation)
+            {
+                case DoorRotation.Top:
+                    this.rotation = 0;
+                    break;
+                case DoorRotation.Bottom:
+                    this.rotation = 600f;
+                    break;
+                case DoorRotation.Left:
+                    this.rotation = 300f;
+                    break;
+                case DoorRotation.Right:
+                    this.rotation = 900f;
+                    break;
+            }
         }
 
         /// <summary>
@@ -78,7 +89,10 @@ namespace MortensKomeback2
             Open();
             // does not behave correctly when placed on the side
             if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
-                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom))
+                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom) && Type == DoorTypes.Open)
+                Teleport(GameWorld.PlayerInstance);
+            if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
+                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom) && Type == DoorTypes.Secret)
                 Teleport(GameWorld.PlayerInstance);
         }
 
@@ -110,6 +124,7 @@ namespace MortensKomeback2
             {
                 Type = DoorTypes.Open;
             }
+
         }
 
         /// <summary>
@@ -125,7 +140,7 @@ namespace MortensKomeback2
                     return;
                 }
                 Type = DoorTypes.Open;
-                Player.RemoveItem(key); //Remove key when used
+                (key as QuestItem).IsUsed = true; //Remove key when used
             }
         }
 
@@ -136,6 +151,7 @@ namespace MortensKomeback2
         public void Teleport(Player player)
         {
             player.Position = this.teleportPosition;
+            //GameWorld.Camera.Position = this.teleportPosition;
         }
         #endregion
     }
