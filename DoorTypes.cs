@@ -11,5 +11,6 @@ namespace MortensKomeback2
         Open = 1,
         Closed = 2,
         Locked = 3,
+        Secret = 4
     }
 }

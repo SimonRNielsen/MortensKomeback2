@@ -12,7 +12,7 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
-        private int healthMax;
+        //private int healthMax;
         private bool praying;
         private bool interact;
         private bool inventory;
@@ -35,7 +35,7 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
-        public int HealthMax { get => healthMax; set => healthMax = value; }
+        //public int HealthMax { get => healthMax; set => healthMax = value; }
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace MortensKomeback2
             //this.healthMax = health;
             this.speed = 600; //Not sure what health should be
             this.health = 100; //Not sure what health should be
-            HealthMax = 100;
+            //HealthMax = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;

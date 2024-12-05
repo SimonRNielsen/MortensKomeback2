@@ -22,14 +22,19 @@ namespace MortensKomeback2
         #endregion
 
         //Constructor is instantiated in GameWorld 
-        //There it will be given the right sprite
-        #region Constructors
-        public HealthBar( Texture2D initalSprite, float layer)
-        {
-            this.sprite = initalSprite;
-            this.layer = layer;
-        }
+        //There it's given the right sprite
+        //#region Constructors
 
+        //#region Fields
+        //private Texture2D barBackground;
+        //private Texture2D barForeground;
+        //private Rectangle backgroundRectangle;
+        //private Rectangle foregroundRectangle;
+        private int maxHealth;
+        private int currentHealth;
+        //#endregion
+
+        //#region Constructor
         //public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
         //{
         //    barBackground = background;
@@ -37,19 +42,38 @@ namespace MortensKomeback2
         //    this.maxHealth = maxHealth;
         //    currentHealth = maxHealth;
 
-
-        //    // Set rectangles based on position and size
+        //    // Set up rectangles based on position and size
         //    backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         //    foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
         //}
+        //#endregion
 
-        #endregion
+        public HealthBar(Texture2D initalSprite, float layer)
+        {
+            this.sprite = initalSprite;
+            this.layer = layer;
+        }
+
+        public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
+        {
+            barBackground = background;
+            barForeground = foreground;
+            this.maxHealth = maxHealth;
+            currentHealth = maxHealth;
+
+
+            // Set rectangles based on position and size
+            backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        }
+
+
 
         #region Properties
         /// <summary>
         /// Gives the possibility to read the sprite, but most importantly change it in GameWorld
         /// </summary>
-        public Texture2D InitalSprite { get => initalSprite; set => initalSprite = value; }
+        //public Texture2D InitalSprite { get => initalSprite; set => initalSprite = value; }
         #endregion
 
         #region Methods
@@ -80,20 +104,27 @@ namespace MortensKomeback2
 
         public void UpdateHealth(int health)
         {
-            //this.health = Health;
+            this.health = Health;
 
             // Calculate the width of the foreground based on the health percentage
             float healthPercentage = (float)health / GameWorld.PlayerInstance.MaxHealth;
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
+
+            //currentHealth = MathHelper.Clamp(health, 0, maxHealth);
+
+            //// Adjust the foreground width based on current health percentage
+            //float healthPercentage = (float)currentHealth / maxHealth;
+            //foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //// Draw the background
-            //spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
+            // Draw the background
+            spriteBatch.Draw(GameWorld.commonSprites["barBackground"], backgroundRectangle, Color.White);
 
-            //// Draw the foreground (current health)
-            //spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
+            // Draw the foreground (current health)
+            spriteBatch.Draw(GameWorld.commonSprites["barForeground"], foregroundRectangle, Color.White);
         }
         #endregion
 

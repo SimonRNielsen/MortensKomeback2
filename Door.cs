@@ -61,6 +61,10 @@ namespace MortensKomeback2
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
                     break;
+                case DoorTypes.Secret:
+                    this.Sprite = sprites[3];
+                        break;
+
             }
         }
 
@@ -90,6 +94,9 @@ namespace MortensKomeback2
                     break;
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
+                    break;
+                case DoorTypes.Secret:
+                    this.Sprite = sprites[3];
                     break;
             }
         }
