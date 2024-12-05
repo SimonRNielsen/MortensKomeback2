@@ -13,35 +13,35 @@ namespace MortensKomeback2
     internal class BattleField : GameObject
     {
         #region Fields
-        public static List<Enemy> battlefieldEnemies = new List<Enemy>();
-        GraphicsDevice graphicsDevice;
-        Color textBodyColor;
-        Color textHeaderColor;
-        Vector2 playerOriginPosition;
+        private bool battleWon = false;
+        private bool blocking = false;
+        private bool enemyActionOngoing = false;
+        private bool keysAreLifted;
+        private bool playerActionOngoing = false;
+        private Color textBodyColor;
+        private Color textHeaderColor;
+        private Dialogue battlefieldDialogue;
+        private GraphicsDevice graphicsDevice;
+        private float actionTimer = 0;
+        private float actionTimerDuration = 2f;
+        private float textScale;
         private int chosenAction;
-        bool keysAreLifted;
-        float actionTimer = 0;
-        float actionTimerDuration = 2f;
-        bool playerActionOngoing = false;
-        bool enemyActionOngoing = false;
+        private int enemyAction;
         private int move = 1;
         private int playerDamageReductionBonus = 0;
         private int playerDamageBonus = 0;
+        public static List<Enemy> battlefieldEnemies = new List<Enemy>();
+        private Obstacle magic;
+        private Random randomAction;
         private SpriteFont standardFont;
-        private Dialogue battlefieldDialogue;
-        private Vector2 textOrigin;
-        private float textScale;
         private string attackText;
         private string blockText;
+        private string enemyActionText;
         private string healText;
-        private bool battleWon = false;
-        private Random randomAction;
-        private int enemyAction;
-        bool blocking = false;
-        string enemyActionText;
-        string playerActionText;
-        Texture2D[] playerDefaultSpriteArray;
-        Obstacle magic;
+        private string playerActionText;
+        private Texture2D[] playerDefaultSpriteArray;
+        private Vector2 playerOriginPosition;
+        private Vector2 textOrigin;
 
         #endregion
 
@@ -78,7 +78,11 @@ namespace MortensKomeback2
         }
 
         #endregion
-
+        /// <summary>
+        /// Loads text based on playerClass and sets colors for fonts. 
+        /// Ovverride of GameObjects LoadContent.
+        /// </summary>
+        /// <param name="content">ContentManager</param>
         #region Methods
         public override void LoadContent(ContentManager content)
         {
@@ -90,17 +94,17 @@ namespace MortensKomeback2
                 case (PlayerClass)1:
                     attackText = "Melee attack!";
                     blockText = "Block";
-                    healText = "Heal (drink goose blood)";
+                    healText = "Heal (drink Blood of Geesus)";
                     break;
                 case (PlayerClass)2:
                     attackText = "Ranged attack!";
-                    blockText = "Block";
-                    healText = "Heal (drink goose blood)";
+                    blockText = "Evade";
+                    healText = "Heal (drink Blood of Geesus)";
                     break;
                 case (PlayerClass)3:
                     attackText = "Magic attack!";
                     blockText = "Evade";
-                    healText = "Heal (holy magic)";
+                    healText = "Heal (Holy Magic)";
                     break;
             }
             randomAction = new Random();
