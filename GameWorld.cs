@@ -296,8 +296,9 @@ namespace MortensKomeback2
         {
             GraphicsDevice.Clear(Color.Black);
 
-
-
+#if DEBUG
+            bool disableCollisionDrawing = Keyboard.GetState().IsKeyDown(Keys.Space);
+#endif
             // TODO: Add your drawing code here
             _spriteBatch.Begin(transformMatrix: Camera.GetTransformation(), samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
@@ -306,13 +307,16 @@ namespace MortensKomeback2
 
                 gameObject.Draw(_spriteBatch);
 #if DEBUG
-                DrawCollisionBox(gameObject);
-                if (gameObject is Area)
+                if (disableCollisionDrawing)
                 {
-                    DrawLeftCollisionBox(gameObject);
-                    DrawRightCollisionBox(gameObject);
-                    DrawBottomCollisionBox(gameObject);
-                    DrawTopCollisionBox(gameObject);
+                    DrawCollisionBox(gameObject);
+                    if (gameObject is Area)
+                    {
+                        DrawLeftCollisionBox(gameObject);
+                        DrawRightCollisionBox(gameObject);
+                        DrawBottomCollisionBox(gameObject);
+                        DrawTopCollisionBox(gameObject);
+                    }
                 }
 #endif
 
@@ -323,14 +327,16 @@ namespace MortensKomeback2
                 foreach (Item item in playerInventory)
                 {
                     item.Draw(_spriteBatch);
-                    DrawCollisionBox(item);
+                    if (disableCollisionDrawing)
+                        DrawCollisionBox(item);
                     item.Update(gameTime);
                 }
 
                 foreach (Item item in equippedPlayerInventory)
                 {
                     item.Draw(_spriteBatch);
-                    DrawCollisionBox(item);
+                    if (disableCollisionDrawing)
+                        DrawCollisionBox(item);
                     item.Update(gameTime);
                 }
             }
@@ -658,7 +664,7 @@ namespace MortensKomeback2
         {
 
             menu.FindAll(button => button is Button).ConvertAll(button => (Button)button).FindAll(button => button.ItemButton == true).ForEach(Button => Button.ButtonObsolete = true);
-            
+
         }
 
         /// <summary>
@@ -706,7 +712,7 @@ namespace MortensKomeback2
                     if (menuItem.IsInOutro)
                         inOutroOpen = true;
             return inOutroOpen;
-            
+
         }
 
         /// <summary>
