@@ -167,6 +167,23 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, -1080*4 + bottomSide, DoorTypes.Closed, DoorRotation.Bottom, new Vector2(0, -1080 * 8 + topSide + 120))); //3.5
             newGameObjects.Add(new Door(0, -1080 * 8 + topSide, DoorTypes.Closed, DoorRotation.Top, new Vector2(0, -1080 * 4 + bottomSide - 120))); //5.3
 
+            newGameObjects.Add(new Door(rigthSide, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(leftTele, -1080 * 10))); //1.6
+            newGameObjects.Add(new Door(leftSide, -1080 * 10, DoorTypes.Open, DoorRotation.Left, new Vector2(rigthTele, 0))); //6.1
+
+            newGameObjects.Add(new Door(540, -1080 * 10 + topSide + 55, DoorTypes.Secret, DoorRotation.Top, new Vector2(leftSide/2 - 50, -1080 * 12 + bottomSide - 150))); //6.7
+            newGameObjects.Add(new Door(-540, -1080 * 12 + bottomSide - 55, DoorTypes.Secret, DoorRotation.Bottom, new Vector2(rigthSide / 2 + 100, -1080 * 10 + topSide + 150))); //7.6
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 3, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 5 + topSide + 120))); //1C.8
+            newGameObjects.Add(new Door(0, topSide + 1080 * 5, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080*3 + bottomSide - 120))); //8.1C
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //Skal være locked 8.9
+            newGameObjects.Add(new Door(0, topSide + 1080 * 7, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 5 + bottomSide - 120))); //9.8
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
+            newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide -120))); //10.9
+
+            #endregion
+
 
 //            HealthBar playerHealthBar = new HealthBar(
 //            commonSprites["barBackground"],
@@ -184,24 +201,11 @@ namespace MortensKomeback2
             Texture2D barForeground = GameWorld.commonSprites["healthBarRed"];
             newGameObjects.Add(new HealthBar(barForeground, 0.55f));
 
-            newGameObjects.Add(new Door(rigthSide, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(leftTele, -1080 * 10))); //1.6
-            newGameObjects.Add(new Door(leftSide, -1080 * 10, DoorTypes.Open, DoorRotation.Left, new Vector2(rigthTele, 0))); //6.1
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
 
-            //Secret
 
-            newGameObjects.Add(new Door(0, bottomSide + 1080 * 3, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 5 + topSide + 120))); //1C.8
-            newGameObjects.Add(new Door(0, topSide + 1080 * 5, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080*3 + bottomSide - 120))); //8.1C
-
-            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //Skal være locked 8.9
-            newGameObjects.Add(new Door(0, topSide + 1080 * 7, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 5 + bottomSide - 120))); //9.8
-
-            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
-            newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 9 + bottomSide -120))); //10.9
-
-            #endregion
 
 
             base.Initialize();
@@ -599,12 +603,12 @@ namespace MortensKomeback2
             };
             animationSprites.Add("areaStart", areaArray);
 
-            Texture2D[] doorArray = new Texture2D[3] //rooms
+            Texture2D[] doorArray = new Texture2D[4] //rooms
          {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
             Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
-            //Content.Load<Texture2D>("Sprites\\area\\secretBricks") //secret door
+            Content.Load<Texture2D>("Sprites\\area\\sercretBricks"), //secret door
          };
             animationSprites.Add("doorStart", doorArray);
 

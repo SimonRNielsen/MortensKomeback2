@@ -91,6 +91,9 @@ namespace MortensKomeback2
             if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
                    (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom) && Type == DoorTypes.Open)
                 Teleport(GameWorld.PlayerInstance);
+            if ((this.CollisionBox.Center.X >= gameObject.CollisionBox.Left && this.CollisionBox.Center.X <= gameObject.CollisionBox.Right) &&
+                   (this.CollisionBox.Center.Y >= gameObject.CollisionBox.Top && this.CollisionBox.Center.Y <= gameObject.CollisionBox.Bottom) && Type == DoorTypes.Secret)
+                Teleport(GameWorld.PlayerInstance);
         }
 
         public override void Update(GameTime gameTime)
@@ -121,6 +124,7 @@ namespace MortensKomeback2
             {
                 Type = DoorTypes.Open;
             }
+
         }
 
         /// <summary>
