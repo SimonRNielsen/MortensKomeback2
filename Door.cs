@@ -55,6 +55,10 @@ namespace MortensKomeback2
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
                     break;
+                case DoorTypes.Secret:
+                    this.Sprite = sprites[3];
+                        break;
+
             }
 
             //Switch for the different kind of DoorRotation to make sure the sprite will fit correct up against the wall 
@@ -101,6 +105,9 @@ namespace MortensKomeback2
                     break;
                 case DoorTypes.Locked:
                     this.Sprite = sprites[2];
+                    break;
+                case DoorTypes.Secret:
+                    this.Sprite = sprites[3];
                     break;
             }
         }

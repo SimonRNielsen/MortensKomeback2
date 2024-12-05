@@ -167,8 +167,28 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, -1080*4 + bottomSide, DoorTypes.Closed, DoorRotation.Bottom, new Vector2(0, -1080 * 8 + topSide + 120))); //3.5
             newGameObjects.Add(new Door(0, -1080 * 8 + topSide, DoorTypes.Closed, DoorRotation.Top, new Vector2(0, -1080 * 4 + bottomSide - 120))); //5.3
 
+
+//            HealthBar playerHealthBar = new HealthBar(
+//            commonSprites["barBackground"],
+//            commonSprites["barForeground"],
+//            100,
+//            new Vector2(50, 50),
+//            new Vector2(200, 20) // Size: width=200px, height=20px
+//);
+//            GameWorld.newGameObjects.Add(playerHealthBar);
+
+//            // Add to the game objects list for updating and drawing
+
+            Texture2D barBackground = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar(barBackground, 0.5f));
+            Texture2D barForeground = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar(barForeground, 0.55f));
+
             newGameObjects.Add(new Door(rigthSide, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(leftTele, -1080 * 10))); //1.6
             newGameObjects.Add(new Door(leftSide, -1080 * 10, DoorTypes.Open, DoorRotation.Left, new Vector2(rigthTele, 0))); //6.1
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+
 
             //Secret
 
@@ -579,11 +599,12 @@ namespace MortensKomeback2
             };
             animationSprites.Add("areaStart", areaArray);
 
-            Texture2D[] doorArray = new Texture2D[3] //rooms
+            Texture2D[] doorArray = new Texture2D[4] //rooms
          {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            Content.Load<Texture2D>("Sprites\\area\\doorLocked") //locked door
+            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
+            Content.Load<Texture2D>("Sprites\\area\\secretBricks") //secret door
          };
             animationSprites.Add("doorStart", doorArray);
 
@@ -808,4 +829,5 @@ namespace MortensKomeback2
 
     }
 }
+#endregion
 #endregion
