@@ -60,13 +60,13 @@ namespace MortensKomeback2
             {
                 if (isFound)
                 {
+                    rotation += 0.2f;
                     timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                     if (timer >= revealTimer)
                     {
                         rotation = 0f;
                         isFound = false;
                     }
-                    rotation += 0.2f;
                 }
                 else
                 {
