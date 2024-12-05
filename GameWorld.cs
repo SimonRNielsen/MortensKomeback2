@@ -121,11 +121,7 @@ namespace MortensKomeback2
             #endregion
 
             //#region GUI
-
-            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar(barBG, 0.5f));
-            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar(bar, 0.55f));
+            newGameObjects.Add(new HealthBar(0.55f, 1));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual

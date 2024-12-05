@@ -15,8 +15,6 @@ namespace MortensKomeback2
         #region Fields
         private Texture2D initalSprite;
 
-        private Texture2D barBackground;
-        private Texture2D barForeground;
         private Rectangle backgroundRectangle;
         private Rectangle foregroundRectangle;
         #endregion
@@ -24,9 +22,14 @@ namespace MortensKomeback2
         //Constructor is instantiated in GameWorld 
         //There it will be given the right sprite
         #region Constructors
-        public HealthBar( Texture2D initalSprite, float layer)
+        public HealthBar(float layer, int type)
         {
-            this.sprite = initalSprite;
+            switch (type)
+            {
+                case 1:
+                    sprite = GameWorld.commonSprites["healthBarRed"];
+                    break;
+            }
             this.layer = layer;
         }
 
@@ -70,30 +73,33 @@ namespace MortensKomeback2
             //    Rectangle healthBarRect = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, (int)(healthBarForeground.Width * healthPercentage), healthBarForeground.Height);
 
             //}
+            backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
+            foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
         }
 
         public override void Update(GameTime gameTime)
         {
-            this.position = new Vector2(GameWorld.Camera.Position.X - 680, GameWorld.Camera.Position.Y -460);
-
+            this.position = new Vector2(GameWorld.Camera.Position.X - 750, GameWorld.Camera.Position.Y - 460);
+            UpdateHealth();
         }
 
-        public void UpdateHealth(int health)
+        public void UpdateHealth()
         {
-            this.health = Health;
-
             // Calculate the width of the foreground based on the health percentage
-            float healthPercentage = (float)health / GameWorld.PlayerInstance.MaxHealth;
+            float healthPercentage = (float)(GameWorld.PlayerInstance.Health / (float)(GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus));
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            // Draw the background
-            spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
+            if (!GameWorld.DetectInOutro())
+            {
+                // Draw the background
+                spriteBatch.Draw(GameWorld.commonSprites["healthBarBlack"], position, backgroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.9f);
 
-            // Draw the foreground (current health)
-            spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
+                // Draw the foreground (current health)
+                spriteBatch.Draw(sprite, position, foregroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, 0.9f);
+            }
         }
         #endregion
 
