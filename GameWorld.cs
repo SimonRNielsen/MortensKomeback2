@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System;
 
 namespace MortensKomeback2
 {
@@ -40,6 +41,7 @@ namespace MortensKomeback2
         private List<Area> area51 = new List<Area>();
         private static Player playerInstance;
         public static List<NPC> nPCs;
+        private static Random random = new Random();
 
         #endregion
 
@@ -54,6 +56,7 @@ namespace MortensKomeback2
         public static bool Dialogue { set => dialogue = value; }
         internal static Player PlayerInstance { get => playerInstance; set => playerInstance = value; }
         public static Color GrayGoose { get => grayGoose; }
+        public static Random Random { get => random; }
 
         #endregion
 
@@ -642,7 +645,31 @@ namespace MortensKomeback2
         private void LoadCommonSounds()
         {
 
+            #region Player
 
+            SoundEffect playerAv = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\morten_Av");
+            SoundEffect playerWalk1 = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\walkSound");
+            SoundEffect playerWalk2 = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\walkSound2");
+
+            commonSounds.Add("playerAv", playerAv);
+            commonSounds.Add("playerWalk1", playerWalk1);
+            commonSounds.Add("playerWalk2", playerWalk2);
+
+            #endregion
+            #region Menu
+
+            SoundEffect equipItem = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Menu\\powerUp_Sound");
+
+            commonSounds.Add("equipItem", equipItem);
+
+            #endregion
+            #region Enemy
+
+            SoundEffect aggroGoose = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Enemy\\gooseSound_Short");
+
+            commonSounds.Add("aggroGoose", aggroGoose);
+
+            #endregion
 
         }
 

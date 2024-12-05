@@ -203,12 +203,14 @@ namespace MortensKomeback2
                             playerItem.IsEquipped = false;
                             GameWorld.playerInventory.Add(playerItem);
                             GameWorld.equippedPlayerInventory.Remove(playerItem);
+                            GameWorld.commonSounds["equipItem"].Play();
                         }
                         else
                         {
                             playerItem.IsEquipped = true;
                             GameWorld.equippedPlayerInventory.Add(playerItem);
                             GameWorld.playerInventory.Remove(playerItem);
+                            GameWorld.commonSounds["equipItem"].Play();
                         }
                         GameWorld.MarkMenuItemsObsolete();
                         break;
