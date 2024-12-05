@@ -9,7 +9,7 @@ namespace MortensKomeback2
     enum DoorRotation
     {
         Top = 1,
-        Buttom = 2,
+        Bottom = 2,
         Left = 3,
         Right = 4
     }

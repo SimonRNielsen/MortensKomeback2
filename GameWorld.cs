@@ -108,6 +108,24 @@ namespace MortensKomeback2
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
+            //#region GUI
+
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar( bar, 0.55f));
+
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+            #endregion
+
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+
+            #region obstacle
+            newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
+            newGameObjects.Add(new Obstacle(500, 0));
+            newGameObjects.Add(new Obstacle(-400, 00));
+            #endregion
 
             #region area
             newGameObjects.Add(new Area(new Vector2(0, 0), 1, "Room1"));       //main room
@@ -128,33 +146,43 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080*12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
-            //#region GUI
-
-            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar( barBG, 0.5f));
-            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar( bar, 0.55f));
-
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-            #endregion
-
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-
-            #region obstacle
-            newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(500, 0));
-            newGameObjects.Add(new Obstacle(-400, 00));
-
             #region doors
-            newGameObjects.Add(new Door(0, -443+15, DoorTypes.Locked, DoorRotation.Top, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443+15, DoorTypes.Open, DoorRotation.Top, Vector2.Zero)); // Teleports to main room from left room 1
-            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, DoorRotation.Left, Vector2.Zero)); // Teleports to main room from right room 1
-            newGameObjects.Add(new Door(800+23, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(3000, 0))); // Teleports to main room from right room 1
+            float leftSide = -820;
+            float rigthSide = 820;
+            float topSide = -430;
+            float bottomSide = 430;
+
+            float leftTele = -700;
+            float rigthTele = 700;
+
+            newGameObjects.Add(new Door(leftSide, 0, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 2))); //1.2
+            newGameObjects.Add(new Door(rigthSide, -1080*2, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele,0))); //2.1
+
+            newGameObjects.Add(new Door(leftSide, -1080 * 2, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 4))); //2.3
+            newGameObjects.Add(new Door(rigthSide, -1080 * 4, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele, -1080 * 2))); //3.2
+
+            newGameObjects.Add(new Door(leftSide, -1080 * 4, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 6))); //3.4
+            newGameObjects.Add(new Door(rigthSide, -1080 * 6, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele, -1080 * 4))); //4.3
+
+            newGameObjects.Add(new Door(0, -1080*4 + bottomSide, DoorTypes.Closed, DoorRotation.Bottom, new Vector2(0, -1080 * 8 + topSide + 120))); //3.5
+            newGameObjects.Add(new Door(0, -1080 * 8 + topSide, DoorTypes.Closed, DoorRotation.Top, new Vector2(0, -1080 * 4 + bottomSide - 120))); //5.3
+
+            newGameObjects.Add(new Door(rigthSide, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(leftTele, -1080 * 10))); //1.6
+            newGameObjects.Add(new Door(leftSide, -1080 * 10, DoorTypes.Open, DoorRotation.Left, new Vector2(rigthTele, 0))); //6.1
+
+            //Secret
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 3, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 5 + topSide + 120))); //1C.8
+            newGameObjects.Add(new Door(0, topSide + 1080 * 5, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080*3 + bottomSide - 120))); //8.1C
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //Skal være locked 8.9
+            newGameObjects.Add(new Door(0, topSide + 1080 * 7, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 5 + bottomSide - 120))); //9.8
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
+            newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 9 + bottomSide -120))); //10.9
 
             #endregion
 
-            #endregion
 
             base.Initialize();
 
