@@ -12,7 +12,7 @@ namespace MortensKomeback2
     {
         #region field
         private DoorTypes type;
-        private Area myRoom;
+        private bool doOnce = false;
         private List<Area> myAreas;
 
         private readonly Vector2 teleportPosition;
@@ -32,20 +32,6 @@ namespace MortensKomeback2
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
             myAreas = areaList;
-            /*
-            switch (position.X)
-            {
-                case > 750:
-                    rotation = 1.5708f;
-                    break;
-                case < -750:
-                    spriteEffectIndex = 2;
-                    rotation = 1.5708f;
-                    break;
-                default:
-                    break;
-            }
-            */
         }
 
 
@@ -97,9 +83,11 @@ namespace MortensKomeback2
                     this.Sprite = sprites[2];
                     break;
             }
-            if (myAreas != null && myRoom == null)
+            if (myAreas != null && !doOnce)
             {
+                doOnce = true;
                 float maxDistance = 2000;
+                Area myRoom = null;
                 foreach (Area area in myAreas)
                 {
                     float distance = Vector2.Distance(position, area.Position);
