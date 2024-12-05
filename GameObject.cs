@@ -39,6 +39,8 @@ namespace MortensKomeback2
                 }
                 if (this is Enemy)
                     health += value;
+                if (health < 0)
+                    isAlive = false;
             }
         }
         public Texture2D Sprite { get => sprite; set => sprite = value; }
@@ -69,7 +71,7 @@ namespace MortensKomeback2
         /// Checking if two objects is colliding 
         /// </summary>
         /// <param name="gameObject">A GameObject</param>
-        public void CheckCollision(GameObject gameObject)
+        public virtual void CheckCollision(GameObject gameObject)
         {
             if (CollisionBox.Intersects(gameObject.CollisionBox))
             {

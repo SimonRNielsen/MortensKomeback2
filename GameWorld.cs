@@ -36,6 +36,7 @@ namespace MortensKomeback2
         public static Dictionary<string, Song> backgroundMusic = new Dictionary<string, Song>();
         public static SpriteFont mortensKomebackFont;
         private static Color grayGoose = new Color(209, 208, 206);
+        private List<Area> area51 = new List<Area>();
 
 
 
@@ -98,17 +99,18 @@ namespace MortensKomeback2
             playerInventory.Add(new QuestItem(1, false, Vector2.Zero));
             playerInventory.Add(new QuestItem(0, true, Vector2.Zero)); 
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
-            
-            menu.Add(new Menu(Camera.Position, 3));
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            //newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2)));
 
-            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation(ref gameObjects)); //Using it as a reference to get the players position
+            //menu.Add(new Menu(Camera.Position, 3));
+
+            PlayerInstance = new Player(PlayerClass.Monk, FindNPCLocation()); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
 
             #region area
-            newGameObjects.Add(new Area(new Vector2(0,0), 1, "Room1"));       //main room
+            newGameObjects.Add(new Area(new Vector2(0, 0), 1, "Room1"));       //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080), 2, "Room1a"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 2160), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
@@ -120,7 +122,7 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(-6000, 0), 0, "Room3"));     //ventre side, rum 3 enemies
             newGameObjects.Add(new Area(new Vector2(-6000, 1080 * 2), 0, "Room4"));     //ventre side, rum 4 enemies
             newGameObjects.Add(new Area(new Vector2(-9000, 0 * 4), 0, "Room5"));   //ventre side, rum 5, item
-          
+
 
             newGameObjects.Add(new Area(new Vector2(3000, 0), 0, "Room6"));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(3000, -2160), 0, "Room7"));      //højre side, rum 2, secret + item
@@ -128,10 +130,10 @@ namespace MortensKomeback2
 
             //#region GUI
 
-            //Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), barBG, 0.5f));
-            //Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            //newGameObjects.Add(new HealthBar(new Vector2(-680, -430), bar, 0.55f));
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar( bar, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
@@ -195,6 +197,8 @@ namespace MortensKomeback2
             if (restart)
                 Restart();
 
+            PlayerInRoom();
+
             var mouseState = Mouse.GetState();
 
             mousePosition = new Vector2((int)(mouseState.X / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / Camera.Zoom) + (int)Camera.Position.X, (int)(mouseState.Y / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / Camera.Zoom) + 20 + (int)Camera.Position.Y);
@@ -211,7 +215,7 @@ namespace MortensKomeback2
                 else if (menuActive && gameObject is Player)
                     gameObject.Update(gameTime);
 
-                
+
                 foreach (GameObject other in gameObjects)
                 {
                     if (gameObject is Player)
@@ -233,8 +237,13 @@ namespace MortensKomeback2
                         }
 
                     }
+
+                    if (gameObject is Area)
+                        if (other is Player)
+                            if ((gameObject as Area).Room == (other as Player).InRoom)
+                            (gameObject as Area).CheckCollision(other);
                 }
-                
+
 
             }
 
@@ -280,7 +289,11 @@ namespace MortensKomeback2
                     gameObjects.Add(newGameObject);
             }
 
-                
+            if (area51.Count == 0)
+                foreach (GameObject gameObject in gameObjects)
+                    if (gameObject is Area)
+                        area51.Add(gameObject as Area);
+            
 
             newGameObjects.Clear();
 
@@ -303,6 +316,13 @@ namespace MortensKomeback2
                 gameObject.Draw(_spriteBatch);
 #if DEBUG
                 DrawCollisionBox(gameObject);
+                if (gameObject is Area)
+                {
+                    DrawLeftCollisionBox(gameObject);
+                    DrawRightCollisionBox(gameObject);
+                    DrawBottomCollisionBox(gameObject);
+                    DrawTopCollisionBox(gameObject);
+                }
 #endif
 
             }
@@ -350,20 +370,100 @@ namespace MortensKomeback2
 #if DEBUG
         private void DrawCollisionBox(GameObject gameObject)
         {
-            Color color = Color.Red;
-            Rectangle collisionBox = gameObject.CollisionBox;
-            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
-            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
-            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
-            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+            if (!(gameObject is Area))
+            {
 
-            if (gameObject is Item)
-                color = Color.Purple;
+                Color color = Color.Red;
+                Rectangle collisionBox = gameObject.CollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
 
-            _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
-            _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                if (gameObject is Item)
+                    color = Color.Purple;
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+            }
+        }
+        private void DrawLeftCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).LeftCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawRightCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).RightCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawTopCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).TopCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
+        }
+        private void DrawBottomCollisionBox(GameObject gameObject)
+        {
+            if (gameObject is Area)
+            {
+
+                Color color = Color.Red;
+                Rectangle collisionBox = (gameObject as Area).BottomCollisionBox;
+                Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+                Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+                Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+                Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+                _spriteBatch.Draw(commonSprites["collisionTexture"], topLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], bottomLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], rightLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+                _spriteBatch.Draw(commonSprites["collisionTexture"], leftLine, null, color, 0, Vector2.Zero, SpriteEffects.None, 1f);
+
+            }
         }
 #endif
 
@@ -473,21 +573,23 @@ namespace MortensKomeback2
             {
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
-            animationSprites.Add("BishopMorten", bishop);
+            animationSprites.Add("bishop", bishop);
 
-            Texture2D[] monk = new Texture2D[4];
+            Texture2D[] monkAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                monk[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
+                monkAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenMonk" + i);
             }
-            animationSprites.Add("MonkMorten", monk);
+            animationSprites.Add("monk", monkAnimArray);
 
-            Texture2D[] crusader = new Texture2D[4];
+            Texture2D[] crusaderAnimArray = new Texture2D[4];
             for (int i = 0; i < 4; i++)
             {
-                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
+                crusaderAnimArray[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("CrusaderMorten", crusader);
+            animationSprites.Add("crusader", crusaderAnimArray);
+
+            //#endregion
 
             #endregion
             #region goose
@@ -641,21 +743,21 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="list">list to be parsed for NPCs</param>
         /// <returns>List with NPC references</returns>
-        private List<NPC> FindNPCLocation(ref List<GameObject> list)
+        private List<NPC> FindNPCLocation()
         {
-            List<NPC> nPCs = new List<NPC>();
-            nPCs = list.FindAll(npc => npc is NPC).ConvertAll(npc => npc as NPC);
+            List<NPC> nPCs = gameObjects.FindAll(npc => npc is NPC).ConvertAll(npc => (NPC)npc);
             return nPCs;
         }
 
-        
+        /// <summary>
+        /// Used to locate a healing item
+        /// </summary>
+        /// <returns>Healing Item</returns>
         public static Item FindHealingItem()
         {
-            QuestItem healItem;
-            var list = playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => questItem as QuestItem);
-            healItem = list.Find(healItem => healItem.HealItem == true);
-            return healItem;
+            return playerInventory.FindAll(questItem => questItem is QuestItem).ConvertAll(questItem => (QuestItem)questItem).Find(questItem => questItem.HealItem == true);
         }
+
 
         public void UpdateCamera()
         {
@@ -665,7 +767,23 @@ namespace MortensKomeback2
                 camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
             }
         }
-        #region
-        #endregion
+
+        /// <summary>
+        /// Updates the name of which room the player is in by calculating which room is closest
+        /// </summary>
+        private void PlayerInRoom()
+        {
+            float distance = 2000;
+            foreach (Area area in area51)
+            {
+                float distanceToPlayer = Vector2.Distance(playerInstance.Position, area.Position);
+                if (distanceToPlayer < distance)
+                {
+                    playerInstance.InRoom = area.Room;
+                    distance = distanceToPlayer;
+                }
+            }
+        }
+
     }
 }

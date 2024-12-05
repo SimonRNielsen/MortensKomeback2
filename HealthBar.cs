@@ -19,31 +19,29 @@ namespace MortensKomeback2
         private Texture2D barForeground;
         private Rectangle backgroundRectangle;
         private Rectangle foregroundRectangle;
-        private int maxHealth;
-        private int currentHealth;
         #endregion
 
         //Constructor is instantiated in GameWorld 
         //There it will be given the right sprite
         #region Constructors
-        //public HealthBar(Vector2 placement, Texture2D initalSprite, float layer)
-        //{
-        //    this.position = placement;
-        //    this.sprite = initalSprite;
-        //    this.layer = layer;
-        //}
-
-        public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
+        public HealthBar( Texture2D initalSprite, float layer)
         {
-            barBackground = background;
-            barForeground = foreground;
-            this.maxHealth = maxHealth;
-            currentHealth = maxHealth;
-
-            // Set rectangles based on position and size
-            backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-            foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+            this.sprite = initalSprite;
+            this.layer = layer;
         }
+
+        //public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
+        //{
+        //    barBackground = background;
+        //    barForeground = foreground;
+        //    this.maxHealth = maxHealth;
+        //    currentHealth = maxHealth;
+
+
+        //    // Set rectangles based on position and size
+        //    backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        //    foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        //}
 
         #endregion
 
@@ -76,31 +74,28 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-           
+            this.position = new Vector2(GameWorld.Camera.Position.X - 680, GameWorld.Camera.Position.Y -460);
+
         }
 
-        public void UpdateHealth(int currentHealth)
+        public void UpdateHealth(int health)
         {
-            this.currentHealth = currentHealth;
+            //this.health = Health;
 
             // Calculate the width of the foreground based on the health percentage
-            float healthPercentage = (float)currentHealth / maxHealth;
+            float healthPercentage = (float)health / GameWorld.PlayerInstance.MaxHealth;
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
-            // Draw the background
-            spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
+            //// Draw the background
+            //spriteBatch.Draw(barBackground, backgroundRectangle, Color.White);
 
-            // Draw the foreground (current health)
-            spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
+            //// Draw the foreground (current health)
+            //spriteBatch.Draw(barForeground, foregroundRectangle, Color.White);
         }
         #endregion
-
-
-
-
 
     }
 }
