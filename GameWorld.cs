@@ -98,7 +98,8 @@ namespace MortensKomeback2
 
             hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
+            playerInventory.Add(new QuestItem(1, false, Vector2.Zero));
+            playerInventory.Add(new QuestItem(0, true, Vector2.Zero)); 
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
 
@@ -108,6 +109,24 @@ namespace MortensKomeback2
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
+            //#region GUI
+
+            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar( barBG, 0.5f));
+            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar( bar, 0.55f));
+
+            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+            #endregion
+
+            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
+
+            #region obstacle
+            newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
+            newGameObjects.Add(new Obstacle(500, 0));
+            newGameObjects.Add(new Obstacle(-400, 00));
+            #endregion
 
             #region area
             newGameObjects.Add(new Area(new Vector2(0, 0), 1, "Room1"));       //main room
@@ -128,33 +147,67 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
 
-            //#region GUI
+            #region doors
+            float leftSide = -820;
+            float rigthSide = 820;
+            float topSide = -430;
+            float bottomSide = 430;
 
-            Texture2D barBG = GameWorld.commonSprites["healthBarBlack"];
-            newGameObjects.Add(new HealthBar(barBG, 0.5f));
-            Texture2D bar = GameWorld.commonSprites["healthBarRed"];
-            newGameObjects.Add(new HealthBar(bar, 0.55f));
+            float leftTele = -700;
+            float rigthTele = 700;
+
+            newGameObjects.Add(new Door(leftSide, 0, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 2))); //1.2
+            newGameObjects.Add(new Door(rigthSide, -1080*2, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele,0))); //2.1
+
+            newGameObjects.Add(new Door(leftSide, -1080 * 2, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 4))); //2.3
+            newGameObjects.Add(new Door(rigthSide, -1080 * 4, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele, -1080 * 2))); //3.2
+
+            newGameObjects.Add(new Door(leftSide, -1080 * 4, DoorTypes.Closed, DoorRotation.Left, new Vector2(rigthTele, -1080 * 6))); //3.4
+            newGameObjects.Add(new Door(rigthSide, -1080 * 6, DoorTypes.Open, DoorRotation.Right, new Vector2(leftTele, -1080 * 4))); //4.3
+
+            newGameObjects.Add(new Door(0, -1080*4 + bottomSide, DoorTypes.Closed, DoorRotation.Bottom, new Vector2(0, -1080 * 8 + topSide + 120))); //3.5
+            newGameObjects.Add(new Door(0, -1080 * 8 + topSide, DoorTypes.Closed, DoorRotation.Top, new Vector2(0, -1080 * 4 + bottomSide - 120))); //5.3
+
+            newGameObjects.Add(new Door(rigthSide, 0, DoorTypes.Closed, DoorRotation.Right, new Vector2(leftTele, -1080 * 10))); //1.6
+            newGameObjects.Add(new Door(leftSide, -1080 * 10, DoorTypes.Open, DoorRotation.Left, new Vector2(rigthTele, 0))); //6.1
+
+            newGameObjects.Add(new Door(540, -1080 * 10 + topSide + 55, DoorTypes.Secret, DoorRotation.Top, new Vector2(leftSide/2 - 50, -1080 * 12 + bottomSide - 150))); //6.7
+            newGameObjects.Add(new Door(-540, -1080 * 12 + bottomSide - 55, DoorTypes.Secret, DoorRotation.Bottom, new Vector2(rigthSide / 2 + 100, -1080 * 10 + topSide + 150))); //7.6
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 3, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 5 + topSide + 120))); //1C.8
+            newGameObjects.Add(new Door(0, topSide + 1080 * 5, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080*3 + bottomSide - 120))); //8.1C
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //Skal være locked 8.9
+            newGameObjects.Add(new Door(0, topSide + 1080 * 7, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 5 + bottomSide - 120))); //9.8
+
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
+            newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide -120))); //10.9
+
+            #endregion
+
+
+//            HealthBar playerHealthBar = new HealthBar(
+//            commonSprites["barBackground"],
+//            commonSprites["barForeground"],
+//            100,
+//            new Vector2(50, 50),
+//            new Vector2(200, 20) // Size: width=200px, height=20px
+//);
+//            GameWorld.newGameObjects.Add(playerHealthBar);
+
+//            // Add to the game objects list for updating and drawing
+
+            Texture2D barBackground = GameWorld.commonSprites["healthBarBlack"];
+            newGameObjects.Add(new HealthBar(barBackground, 0.5f));
+            Texture2D barForeground = GameWorld.commonSprites["healthBarRed"];
+            newGameObjects.Add(new HealthBar(barForeground, 0.55f));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-            #endregion
 
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
-            #region obstacle
-            newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(500, 0));
-            newGameObjects.Add(new Obstacle(-400, 00));
 
-            #region doors
-            newGameObjects.Add(new Door(0, -443 + 15, DoorTypes.Closed, new Vector2(-3000, 0))); // Teleports to left room 1
-            newGameObjects.Add(new Door(-3000, -443 + 15, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from left room 1
-            newGameObjects.Add(new Door(2200, 0, DoorTypes.Open, Vector2.Zero)); // Teleports to main room from right room 1
-            newGameObjects.Add(new Door(800, 0, DoorTypes.Open, new Vector2(3000, 0))); // Teleports to main room from right room 1
 
-            #endregion
-
-            #endregion
 
 
             base.Initialize();
@@ -579,11 +632,12 @@ namespace MortensKomeback2
             };
             animationSprites.Add("areaStart", areaArray);
 
-            Texture2D[] doorArray = new Texture2D[3] //rooms
+            Texture2D[] doorArray = new Texture2D[4] //rooms
          {
             Content.Load<Texture2D>("Sprites\\area\\doorClosed_shadow"), //Closed door
             Content.Load<Texture2D>("Sprites\\area\\doorOpen_shadow"), //Open door
-            Content.Load<Texture2D>("Sprites\\area\\doorLocked") //locked door
+            Content.Load<Texture2D>("Sprites\\area\\doorLocked"), //locked door
+            Content.Load<Texture2D>("Sprites\\area\\sercretBricks"), //secret door
          };
             animationSprites.Add("doorStart", doorArray);
 
@@ -608,9 +662,9 @@ namespace MortensKomeback2
             {
                 crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
-            animationSprites.Add("crusader", monk);
+            animationSprites.Add("crusader", crusader);
 
-            //#endregion
+            #endregion
 
 
             #region goose
@@ -808,4 +862,5 @@ namespace MortensKomeback2
 
     }
 }
-#endregion
+//#endregion
+//#endregion
