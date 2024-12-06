@@ -186,8 +186,6 @@ namespace MortensKomeback2
             }
         }
 
-
-
         /// <summary>
         /// Handle the players keyboard input
         /// </summary>
