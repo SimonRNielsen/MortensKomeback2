@@ -39,8 +39,6 @@ namespace MortensKomeback2
             this.scale = 0.5f;
         }
 
-        public Enemy() { }
-
         #endregion
 
         #region method
@@ -67,7 +65,6 @@ namespace MortensKomeback2
                 {
                     this.direction = true;
                 }
-
             }
         }
 

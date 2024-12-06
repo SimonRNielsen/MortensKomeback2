@@ -46,7 +46,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            //throw new NotImplementedException();
+            
         }
 
         #endregion
