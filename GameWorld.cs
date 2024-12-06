@@ -98,7 +98,7 @@ namespace MortensKomeback2
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
             */
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, true, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
 
