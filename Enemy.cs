@@ -116,11 +116,11 @@ namespace MortensKomeback2
                 this.SpriteEffectIndex = 0;
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth / 2)
+            if (position.X >= 710)
             {
                 direction = false;
             }
-            if (position.X <= -(graphics.PreferredBackBufferWidth / 2))
+            if (position.X <= -710)
             {
                 direction = true;
             }

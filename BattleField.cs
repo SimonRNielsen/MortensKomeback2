@@ -27,12 +27,12 @@ namespace MortensKomeback2
         private float textScale;
         private int chosenAction;
         private int enemyAction;
-        private int actionPhase = 1;
+        private int actionPhase = 0;
         private int playerDamageReductionBonus = 0;
         private int playerDamageBonus = 0;
         public static List<Enemy> battlefieldEnemies = new List<Enemy>();
         private Obstacle egg;
-        private Obstacle magic;
+        private static Obstacle magic;
         private Random randomAction;
         private SpriteFont standardFont;
         private string attackText;
@@ -78,8 +78,9 @@ namespace MortensKomeback2
             GameWorld.PlayerInstance.SpriteEffectIndex = 0;
 
             //Adds new objects to be used for ranged attacks and healing:
-            magic = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y);
-            egg = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y);
+            magic = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y, "magic");
+
+            egg = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y, "egg");
 
             //Calculates damage bonus and defence bonus, based on the objects the player is wearing.
             foreach (Item i in GameWorld.equippedPlayerInventory)
@@ -128,6 +129,7 @@ namespace MortensKomeback2
                     healText = "Heal (Holy Magic)";
                     break;
             }
+
 
             //Instantiates randomAction
             randomAction = new Random();
@@ -291,14 +293,12 @@ namespace MortensKomeback2
                     {
                         //If the player is a Bishop, it will shoot magic.
                         magic.IsAlive = true;
-                        GameWorld.newGameObjects.Add(magic);
                         RangedAttack(gameTime, magic);
                     }
                     else
                     {
                         //If the player is a Monk, it will shoot an egg
                         egg.IsAlive = true;
-                        GameWorld.newGameObjects.Add(egg);
                         RangedAttack(gameTime, egg);
                     }
                     break;
@@ -323,6 +323,8 @@ namespace MortensKomeback2
         {
             //Animate
             GameWorld.PlayerInstance.Animation(gameTime);
+
+            BeginAction("player");
 
             //Move
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (actionPhase == 1))
@@ -361,11 +363,13 @@ namespace MortensKomeback2
             //Animate
             GameWorld.PlayerInstance.Animation(gameTime);
 
+            BeginAction("player");
+
             //Move
             if ((projectile.Position.X <= this.Position.X + 300) && (actionPhase == 1))
             {
-                magic.Position += new Vector2(5f, 0);
-                magic.Rotation += 0.05f;
+                projectile.Position += new Vector2(5f, 0);
+                projectile.Rotation += 0.05f;
                 playerActionText = "You are attacking the enemy from range!";
             }
             else if ((projectile.Position.X >= this.Position.X + 300) && (actionPhase == 1))
@@ -402,6 +406,8 @@ namespace MortensKomeback2
         private void Block()
         {
             blocking = true;
+
+            BeginAction("player");
             //Move
             if ((GameWorld.PlayerInstance.Position.X >= this.Position.X - 900) && (actionPhase == 1))
             {
@@ -432,6 +438,9 @@ namespace MortensKomeback2
         private void Evade()
         {
             blocking = true;
+
+            BeginAction("player");
+
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 200) && (actionPhase == 1))
             {
                 playerActionText = "You are trying to evade the enemy's attack!";
@@ -463,6 +472,8 @@ namespace MortensKomeback2
         private void Heal(GameTime gameTime)
         {
             GameWorld.PlayerInstance.Animation(gameTime);
+
+            BeginAction("player");
 
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 400) && (actionPhase == 1))
             {
@@ -514,6 +525,8 @@ namespace MortensKomeback2
         /// </summary>
         private void EnemyAction()
         {
+
+            BeginAction("enemy");
             switch (enemyAction)
             {
                 case 1:
@@ -628,14 +641,39 @@ namespace MortensKomeback2
                 {
                     battleWon = true;
                 }
-                actionPhase = 1;
             }
             else if (actor.ToLower() == "enemy")
             {
                 enemyActionOngoing = false;
-                actionPhase = 1;
             }
+            actionPhase = 0;
 
+        }
+        /// <summary>
+        /// Starts the action that is about to happen. Used for things that should only be handled ad the beginning of the action and not changed during. 
+        /// </summary>
+        /// <param name="actor"></param>
+        private void BeginAction(String actor)
+        {
+            if(actionPhase == 0)
+            { 
+            if (actor.ToLower() == "player")
+            {
+              if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && chosenAction == 1)
+                {
+                        GameWorld.newGameObjects.Add(magic);
+                }
+              else if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk)
+                {
+                    GameWorld.newGameObjects.Add(egg);
+                }
+            }
+            else if (actor.ToLower() == "enemy")
+            {
+               
+            }
+            actionPhase = 1;
+            }
         }
 
 
