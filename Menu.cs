@@ -205,7 +205,7 @@ namespace MortensKomeback2
                 }
                 else if (item is QuestItem)
                 {
-                    if (!(item as QuestItem).IsKey || !(item as QuestItem).HealItem)
+                    if (!(item as QuestItem).IsUseable)
                     {
                         item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
                         spacer += 96;

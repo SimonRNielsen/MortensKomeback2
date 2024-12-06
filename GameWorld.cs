@@ -93,10 +93,12 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
+            /*
             hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
-            playerInventory.Add(new QuestItem(1, false, Vector2.Zero));
-            playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
+            */
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(0, true, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
 
@@ -286,12 +288,10 @@ namespace MortensKomeback2
                             if ((gameObject as Area).Room == (other as Player).InRoom)
                                 (gameObject as Area).CheckCollision(other);
                 }
-
-
             }
-
             //Removes objects
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
+
             //Search & Pray logic
             foreach (Item item in hiddenItems)
                 item.Update(gameTime);
