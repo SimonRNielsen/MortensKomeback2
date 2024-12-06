@@ -33,18 +33,6 @@ namespace MortensKomeback2
             this.layer = layer;
         }
 
-        //#region Constructor
-        //public HealthBar(Texture2D background, Texture2D foreground, int maxHealth, Vector2 position, Vector2 size)
-        //{
-        //    barBackground = background;
-        //    barForeground = foreground;
-        //    this.maxHealth = maxHealth;
-        //    currentHealth = maxHealth;
-
-        //    // Set up rectangles based on position and size
-        //    backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-        //    foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
-        //}
 
         #endregion
 

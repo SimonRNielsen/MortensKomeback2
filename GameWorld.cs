@@ -290,6 +290,8 @@ namespace MortensKomeback2
 
             }
 
+            //Removes objects
+            gameObjects.RemoveAll(obj => obj.IsAlive == false);
             //Search & Pray logic
             foreach (Item item in hiddenItems)
                 item.Update(gameTime);
