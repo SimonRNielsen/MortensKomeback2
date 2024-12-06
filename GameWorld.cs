@@ -98,7 +98,7 @@ namespace MortensKomeback2
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
             */
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, true, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
 
@@ -109,8 +109,6 @@ namespace MortensKomeback2
             newGameObjects.Add(new Enemy(_graphics));
 
             //#region GUI
-
-            newGameObjects.Add(new HealthBar(0.5f, 1));
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual

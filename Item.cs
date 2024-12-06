@@ -68,7 +68,11 @@ namespace MortensKomeback2
                         isFound = false;
                     }
                 }
-
+                else
+                {
+                    rotation = 0f;
+                    timer = 0f;
+                }
             }
         }
 
