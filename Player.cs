@@ -210,7 +210,7 @@ namespace MortensKomeback2
             {
                 velocity += new Vector2(0, 1);
             }
-
+             
             //Player moves left when pressed A
             if (keyState.IsKeyDown(Keys.A))
             {
