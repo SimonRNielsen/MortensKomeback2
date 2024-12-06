@@ -37,7 +37,6 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
-
         internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
 
         #endregion
