@@ -28,7 +28,6 @@ namespace MortensKomeback2
         private float playDuration;
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
-
         private bool searching;
 
 
@@ -37,11 +36,11 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
-        internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
 
         #endregion
 
         #region properti
+        internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
 
         public int MaxHealth { get => maxHealth; }
         public int HealthBonus { get => healthBonus; set => healthBonus = value; }
@@ -123,19 +122,13 @@ namespace MortensKomeback2
 
                         if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
                         {
-                            //velocity.X = -1f;
-                            //position.X--;
                             this.position.X = this.position.X - moveAway; //Moving higher up
                         }
                         else
                         {
-                            //velocity.X = 1f;
-                            //position.X++;
                             this.position.X = this.position.X + moveAway; //Moving down
                         }
 
-                        //velocity.Y = -1f;
-                        //position.Y--;
                         this.position.Y = this.position.Y - moveAway; //Moving further to the left
                     }
 
@@ -393,13 +386,13 @@ namespace MortensKomeback2
         /// <summary>
         /// Removes an item from the players inventory
         /// </summary>
-        /// <param name="item">Item to be removed</param>
-        public static void RemoveItem(Item item)
-        {
+        ///// <param name="item">Item to be removed</param>
+        //public static void RemoveItem(Item item)
+        //{
 
-            GameWorld.playerInventory.Remove(item);
+        //    GameWorld.playerInventory.Remove(item);
 
-        }
+        //}
 
 
         private void TakeEnvironmentDamage()
