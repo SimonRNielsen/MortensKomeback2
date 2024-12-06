@@ -19,6 +19,7 @@ namespace MortensKomeback2
         private Vector2 boxPosition;        // Where the dialogue box is drawn
         private bool dialogue;
 
+
         #endregion
 
         #region properties
@@ -84,12 +85,6 @@ namespace MortensKomeback2
                     nPCText = "Hej, jeg hedder Kaj, jeg er munk, folk kalder mig Kaj Munk";
                     break;
                 case "Nun":
-                    //if (QuestItem)
-                    //{ 
-                    //    //skriv dette
-                    //      (character as NPC).NPCClass = "";
-                    //}
-                    //else
                     nPCText = "Jeg er foede for oekologisk-minded kannibaler";
                     break;
                 case "Boss":
@@ -110,7 +105,7 @@ namespace MortensKomeback2
         {
             base.Draw(spriteBatch);
             if (dialogue)
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(textPosition.X - (1920/2) + 100, textPosition.Y - (1080/2) + 700), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(textPosition.X - (1920/2) + 120, textPosition.Y - (1080/2) + 750), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.1f);
         }
 
         #endregion

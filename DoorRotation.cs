@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
-    enum DoorTypes
+    enum DoorRotation
     {
-        Open = 1,
-        Closed = 2,
-        Locked = 3,
-        Secret = 4
+        Top = 1,
+        Bottom = 2,
+        Left = 3,
+        Right = 4
     }
 }

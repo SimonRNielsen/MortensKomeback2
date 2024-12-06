@@ -373,11 +373,12 @@ namespace MortensKomeback2
         /// Attempts to find a key in the players inventory
         /// </summary>
         /// <returns>Instance of a key or null when no key is found</returns>
-        public static Item FindKey()
+        public static QuestItem FindKey()
         {
-            return GameWorld.playerInventory.Find(i => (i as QuestItem).IsKey);
+            var possibleKeys = GameWorld.playerInventory.FindAll(i => i is QuestItem);
+            QuestItem key = (QuestItem)possibleKeys.Find(i => (i as QuestItem).IsKey == true);
+            return key;
         }
-
 
         /// <summary>
         /// Removes an item from the players inventory
