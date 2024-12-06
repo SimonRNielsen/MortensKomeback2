@@ -12,7 +12,6 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
-        //private int healthMax;
         private bool praying;
         private bool interact;
         private bool inventory;
@@ -23,9 +22,12 @@ namespace MortensKomeback2
         private int maxHealth = 100;
         private int healthBonus;
         private string inRoom;
-        private float invulnerable = 1.5f;
+        private float invulnerable = 1f;
         private float invulnerableTimer;
         private bool invulnerability;
+        private float playDuration;
+        private float playDurationTimer = 0.5f;
+        private bool playFirst = false;
 
         private bool searching;
 
@@ -35,7 +37,6 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
-        //public int HealthMax { get => healthMax; set => healthMax = value; }
 
         internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
 
@@ -53,14 +54,22 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            //this.healthMax = health;
-            this.speed = 600; //Not sure what spped should be
+            this.speed = 600; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
-            //HealthMax = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
+            if (GameWorld.PlayerInstance != null)
+            {
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
+                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
+            }
+        }
             Damage = 10;
         }
 
@@ -163,10 +172,27 @@ namespace MortensKomeback2
             Movement(gameTime);
             HandleInput();
             Animation(gameTime);
+            playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (velocity != Vector2.Zero && playDuration > playDurationTimer)
+            {
+                playDuration = 0;
+                if (!playFirst)
+                {
+                    GameWorld.commonSounds["playerWalk2"].Play();
+                    playFirst = true;
+                }
+                else
+                {
+                    GameWorld.commonSounds["playerWalk1"].Play();
+                    playFirst = false;
+                }
+            }
             base.Update(gameTime);
             invulnerableTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (invulnerableTimer > invulnerable)
+            {
                 invulnerability = false;
+            }
         }
 
 
@@ -306,6 +332,7 @@ namespace MortensKomeback2
         /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
+
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
@@ -371,7 +398,9 @@ namespace MortensKomeback2
         /// <param name="item">Item to be removed</param>
         public static void RemoveItem(Item item)
         {
+
             GameWorld.playerInventory.Remove(item);
+
         }
 
 
@@ -380,6 +409,8 @@ namespace MortensKomeback2
             Health -= 10;
             invulnerableTimer = 0;
             invulnerability = true;
+            GameWorld.commonSounds["playerAv"].Play();
+
         }
 
         /// <summary>
@@ -387,6 +418,7 @@ namespace MortensKomeback2
         /// </summary>
         public bool Heal()
         {
+
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
 
@@ -404,7 +436,19 @@ namespace MortensKomeback2
                     healingItem.IsUsed = true;
                     return true;
                 }
-            return false;
+        return false;
+    }
+
+        /// <summary>
+        /// Overrides to give a damage "effect" on Player
+        /// </summary>
+        /// <param name="spriteBatch">Drawing tool</param>
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (invulnerability)
+                spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+            
         }
 
         #endregion

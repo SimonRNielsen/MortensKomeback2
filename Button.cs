@@ -70,6 +70,21 @@ namespace MortensKomeback2
                     text = "Restart";
                     textXDisplacement = -25;
                     break;
+                case 5:
+                    sprite = GameWorld.commonSprites["button"];
+                    text = "Crusader";
+                    textXDisplacement = -28;
+                    break;
+                case 6:
+                    sprite = GameWorld.commonSprites["button"];
+                    text = "Monk";
+                    textXDisplacement = -3;
+                    break;
+                case 7:
+                    sprite = GameWorld.commonSprites["button"];
+                    text = "Bishop";
+                    textXDisplacement = -12;
+                    break;
                 case 10:
                     sprite = GameWorld.commonSprites["menuButton"];
                     text = "Inventory";
@@ -152,6 +167,27 @@ namespace MortensKomeback2
                         GameWorld.CloseMenu = true;
                         break;
 
+                    case 5:
+                        GameWorld.PlayerInstance.IsAlive = false;
+                        GameWorld.PlayerInstance = new Player(PlayerClass.Crusader, GameWorld.nPCs);
+                        GameWorld.newGameObjects.Add(GameWorld.PlayerInstance);
+                        GameWorld.CloseMenu = true;
+                        break;
+
+                    case 6:
+                        GameWorld.PlayerInstance.IsAlive = false;
+                        GameWorld.PlayerInstance = new Player(PlayerClass.Monk, GameWorld.nPCs);
+                        GameWorld.newGameObjects.Add(GameWorld.PlayerInstance);
+                        GameWorld.CloseMenu = true;
+                        break;
+
+                    case 7:
+                        GameWorld.PlayerInstance.IsAlive = false;
+                        GameWorld.PlayerInstance = new Player(PlayerClass.Bishop, GameWorld.nPCs);
+                        GameWorld.newGameObjects.Add(GameWorld.PlayerInstance);
+                        GameWorld.CloseMenu = true;
+                        break;
+
                     case 10:
                         GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
                         GameWorld.MarkMenuItemsObsolete();
@@ -167,12 +203,14 @@ namespace MortensKomeback2
                             playerItem.IsEquipped = false;
                             GameWorld.playerInventory.Add(playerItem);
                             GameWorld.equippedPlayerInventory.Remove(playerItem);
+                            GameWorld.commonSounds["equipItem"].Play();
                         }
                         else
                         {
                             playerItem.IsEquipped = true;
                             GameWorld.equippedPlayerInventory.Add(playerItem);
                             GameWorld.playerInventory.Remove(playerItem);
+                            GameWorld.commonSounds["equipItem"].Play();
                         }
                         GameWorld.MarkMenuItemsObsolete();
                         break;
@@ -200,6 +238,9 @@ namespace MortensKomeback2
                 case 2:
                 case 3:
                 case 4:
+                case 5:
+                case 6:
+                case 7:
                     if (collision)
                         textColorIndex = 1;
                     else

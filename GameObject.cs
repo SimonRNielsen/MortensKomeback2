@@ -30,16 +30,16 @@ namespace MortensKomeback2
             {
                 if (this is Player)
                 {
-                    if (health > health + (this as Player).HealthBonus)
-                        health = health + (this as Player).HealthBonus;
+                    if (health > (this as Player).MaxHealth + (this as Player).HealthBonus)
+                        health = (this as Player).MaxHealth + (this as Player).HealthBonus;
                     if (value >= (this as Player).MaxHealth + (this as Player).HealthBonus)
                         health = (this as Player).MaxHealth + (this as Player).HealthBonus;
                     else
                         health = value;
                 }
-                if (this is Enemy)
+                else
                     health = value;
-                if (health < 0)
+                if (health <= 0)
                     isAlive = false;
             }
         }
@@ -47,7 +47,7 @@ namespace MortensKomeback2
         public Vector2 Position { get => position; set => position = value; }
         public virtual Rectangle CollisionBox
         {
-            get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
+            get { return new Rectangle((int)(Position.X - (Sprite.Width / 2) * scale), (int)(Position.Y - (Sprite.Height / 2) * scale), (int)(Sprite.Width * scale), (int)(Sprite.Height * scale)); }
         }
         public bool IsAlive { get => isAlive; set => isAlive = value; }
 

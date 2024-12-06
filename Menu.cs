@@ -22,6 +22,10 @@ namespace MortensKomeback2
         protected float textXDisplacement;
         private Color whiteOpaque = new Color(255, 255, 255) * 0.5f;
         protected Color[] textColor = new Color[3] { Color.DarkRed, Color.Yellow, Color.White };
+        private int dRBonus;
+        private int dmgBonus;
+        private int hpBonus;
+        private float spdBonus;
 
         #endregion
 
@@ -45,14 +49,14 @@ namespace MortensKomeback2
         /// Constructor for Menus, type of menu is determined by the "type" int
         /// </summary>
         /// <param name="position">Sets position for the Menu</param>
-        /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro, 4 = Pause</param>
+        /// <param name="type">0 = Inventory, 1 = Win, 2 = Loss, 3 = Intro, 4 = Pause, 5 = Character-selection</param>
         public Menu(Vector2 position, int type)
         {
 
             isMenu = true;
             menuType = type;
             Position = position;
-            layer = 0.9f;
+            layer = 0.8f;
             switch (menuType)
             {
                 case 0:
@@ -79,6 +83,20 @@ namespace MortensKomeback2
                     isInOutro = true;
                     break;
                 case 4:
+                    sprite = GameWorld.commonSprites["pauseScreen"];
+                    layer = 0.999f;
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 75, Position.Y + 25), 0));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 75, Position.Y + 25), 2));
+                    break;
+                case 5:
+                    sprite = GameWorld.commonSprites["characterScreen"];
+                    layer = 0.8f;
+                    isInOutro = true;
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 120, Position.Y + 330), 5));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 395, Position.Y + 330), 6));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 680, Position.Y + 330), 7));
+                    break;
+                default:
                     sprite = GameWorld.commonSprites["pauseScreen"];
                     layer = 0.999f;
                     GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X - 75, Position.Y + 25), 0));
@@ -146,6 +164,8 @@ namespace MortensKomeback2
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Torso", new Vector2(position.X + 495, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Offhand", new Vector2(position.X + 680, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Feet", new Vector2(position.X + 500, position.Y + 75), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.commonSprites["statPanel"], new Vector2(position.X + 375, position.Y - 450), null, drawColor, rotation, Vector2.Zero, scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Current HP:{GameWorld.PlayerInstance.Health}\nDmg Bonus:{dmgBonus}\nDR Bonus:{dRBonus}\nHP Bonus:{hpBonus}\nSpd Bonus:{spdBonus}", new Vector2(position.X + 413, position.Y - 432), textColor[textColorIndex], 0f, new Vector2(18, 8), 1.9f, SpriteEffects.None, layer + 0.2f);
                     break;
                 case 4:
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Game Paused", new Vector2(position.X - 65, position.Y - 40), textColor[0], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, 0.999999f);
@@ -171,20 +191,28 @@ namespace MortensKomeback2
 
             foreach (Item item in GameWorld.playerInventory)
             {
+                if (addLineCounter == 9)
+                {
+                    additionalLines++;
+                    addLineCounter = 0;
+                    spacer = 0;
+                }
                 if (!(item is QuestItem))
                 {
                     item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
                     spacer += 96;
                     addLineCounter++;
-                    if (addLineCounter == 9)
-                    {
-                        additionalLines++;
-                        addLineCounter = 0;
-                        spacer = 0;
-                    }
                 }
                 else if (item is QuestItem)
                 {
+                    if (!(item as QuestItem).IsKey || !(item as QuestItem).HealItem)
+                    {
+                        item.Position = new Vector2(position.X - 752 + (96 * additionalLines), position.Y - 352 + spacer);
+                        spacer += 96;
+                        addLineCounter++;
+                    }
+                    else
+                        item.Position = new Vector2(-10000, -10000);
                     if ((item as QuestItem).IsKey)
                         keyCount++;
                     else if ((item as QuestItem).HealItem)
@@ -212,16 +240,12 @@ namespace MortensKomeback2
                 }
                 if (offHandItem > 1)
                 {
-                    try
+                    tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
+                    if (tempItem is OffHandItem && !GameWorld.playerInventory.Contains(tempItem))
                     {
-                        tempItem = GameWorld.equippedPlayerInventory.Find(item => item is OffHandItem);
                         tempItem.IsEquipped = false;
                         GameWorld.playerInventory.Add(tempItem);
                         GameWorld.equippedPlayerInventory.Remove(tempItem);
-                    }
-                    catch
-                    {
-                        continue;
                     }
                 }
                 if (torsoItem > 1)
@@ -244,10 +268,20 @@ namespace MortensKomeback2
                 torsoItem = 0;
                 feetItem = 0;
                 healthBonus = 0;
+                hpBonus = 0;
+                dmgBonus = 0;
+                dRBonus = 0;
+                spdBonus = 0;
 
                 foreach (Item item in GameWorld.equippedPlayerInventory)
                 {
+
                     healthBonus += item.HealthBonus;
+                    hpBonus += item.HealthBonus;
+                    dRBonus += item.DamageReductionBonus;
+                    dmgBonus += item.DamageBonus;
+                    spdBonus += item.SpeedBonus;
+
                     switch (item)
                     {
                         case MainHandItem:

@@ -18,6 +18,8 @@ namespace MortensKomeback2
         private float timeElapsed;
         private int currentIndex;
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
+        private float playDuration;
+        private float playDurationTimer = 1f;
 
 
         #endregion
@@ -67,7 +69,7 @@ namespace MortensKomeback2
                 {
                     this.direction = false;
                 }
-                else if (gameObject.CollisionBox.X  - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X )
+                else if (gameObject.CollisionBox.X - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X)
                 {
                     this.direction = true;
                 }
@@ -77,6 +79,12 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (playDuration > playDurationTimer && sprite.Name.Contains("aggro"))
+            {
+                playDuration = 0f;
+                GameWorld.commonSounds["aggroGoose"].Play();
+            }
             if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
             {
                 Sprites = GameWorld.animationSprites["AggroGoose"];
@@ -111,11 +119,11 @@ namespace MortensKomeback2
                 this.SpriteEffectIndex = 0;
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth/2)
+            if (position.X >= graphics.PreferredBackBufferWidth / 2)
             {
                 direction = false;
             }
-            if (position.X <= -(graphics.PreferredBackBufferWidth/2))
+            if (position.X <= -(graphics.PreferredBackBufferWidth / 2))
             {
                 direction = true;
             }

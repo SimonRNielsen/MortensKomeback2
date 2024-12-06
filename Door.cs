@@ -32,7 +32,6 @@ namespace MortensKomeback2
             this.DoorRotation = dr;
             this.teleportPosition = teleportPosition;
             this.layer = 0.2f;
-            
         }
 
 
