@@ -68,8 +68,7 @@ namespace MortensKomeback2
                 GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
                 GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
                 GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
-            }
-        }
+            }        
             Damage = 10;
         }
 

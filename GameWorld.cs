@@ -74,6 +74,7 @@ namespace MortensKomeback2
         #endregion
 
         #region Methods
+        
 
         protected override void Initialize()
         {
@@ -111,7 +112,7 @@ namespace MortensKomeback2
 
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-            #endregion
+
 
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
@@ -139,7 +140,7 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
             #endregion
-            
+
             #region doors
             float leftSide = -820;
             float rigthSide = 820;
@@ -181,7 +182,7 @@ namespace MortensKomeback2
             #endregion
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-            
+
             #region obstacle
 
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
@@ -386,7 +387,7 @@ namespace MortensKomeback2
                 if (disableCollisionDrawing)
                 {
                     if (!(gameObject is BattleField))
-                { DrawCollisionBox(gameObject); }
+                    { DrawCollisionBox(gameObject); }
                     if (gameObject is Area)
                     {
                         DrawLeftCollisionBox(gameObject);
@@ -922,7 +923,6 @@ namespace MortensKomeback2
 
         }
         #endregion
+        #endregion
     }
 }
-//#endregion
-//#endregion

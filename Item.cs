@@ -66,15 +66,16 @@ namespace MortensKomeback2
                     {
                         rotation = 0f;
                         isFound = false;
-                    Rotation += 0.2f;
+                        Rotation += 0.2f;
+                    }
+                    else
+                    {
+                        Rotation = 0f;
+                        timer = 0f;
+                    }
                 }
-                else
-                {
-                    Rotation = 0f;
-                    timer = 0f;
-                }
-            }
 
+            }
         }
 
         /// <summary>
