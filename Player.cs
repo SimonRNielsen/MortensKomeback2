@@ -26,8 +26,8 @@ namespace MortensKomeback2
         private float invulnerableTimer;
         private bool invulnerability;
         private float playDuration;
-        private float playDurationTimer = 0.7f;
-        //private bool playAfter = false;
+        private float playDurationTimer = 0.5f;
+        private bool playFirst = false;
 
         private bool searching;
 
@@ -161,16 +161,19 @@ namespace MortensKomeback2
             HandleInput();
             Animation(gameTime);
             playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            /*if (velocity != Vector2.Zero && playDuration < 0.8f && !playAfter)
-            {
-                GameWorld.commonSounds["playerWalk2"].Play();
-                playAfter = true;
-            }*/
             if (velocity != Vector2.Zero && playDuration > playDurationTimer)
             {
                 playDuration = 0;
-                GameWorld.commonSounds["playerWalk1"].Play();
-                //playAfter = false;
+                if (!playFirst)
+                {
+                    GameWorld.commonSounds["playerWalk2"].Play();
+                    playFirst = true;
+                }
+                else
+                {
+                    GameWorld.commonSounds["playerWalk1"].Play();
+                    playFirst = false;
+                }
             }
             base.Update(gameTime);
             invulnerableTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
