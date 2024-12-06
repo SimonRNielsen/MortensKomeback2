@@ -19,8 +19,7 @@ namespace MortensKomeback2
         private Rectangle foregroundRectangle;
         #endregion
 
-        //Constructor is instantiated in GameWorld 
-        //There it will be given the right sprite
+        
         #region Constructors
         public HealthBar(float layer, int type)
         {
@@ -51,16 +50,6 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            //if (sprite == GameWorld.commonSprites["healthBarRed"])
-            //{
-            //    // Calculate health bar foreground width
-            //    //int healthPercentage = (int)CurrentHealth / MaxHealth;
-            //    //Rectangle healthBarRect = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, (int)(healthBarForeground.Width * healthPercentage), healthBarForeground.Height);
-
-            //    int healthPercentage = 50;
-            //    Rectangle healthBarRect = new Rectangle((int)healthBarPosition.X, (int)healthBarPosition.Y, (int)(healthBarForeground.Width * healthPercentage), healthBarForeground.Height);
-
-            //}
             backgroundRectangle = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
             foregroundRectangle = new Rectangle((int)position.X, (int)position.Y, sprite.Width, sprite.Height);
         }

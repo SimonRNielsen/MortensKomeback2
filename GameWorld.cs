@@ -106,13 +106,7 @@ namespace MortensKomeback2
             newGameObjects.Add(PlayerInstance);
             newGameObjects.Add(new Enemy(_graphics));
 
-            //#region GUI
-
             newGameObjects.Add(new HealthBar(0.5f, 1));
-
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
-
 
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
@@ -180,8 +174,6 @@ namespace MortensKomeback2
             newGameObjects.Add(new HealthBar(0.55f, 1));
 
             #endregion
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
             #region obstacle
 
