@@ -659,7 +659,7 @@ namespace MortensKomeback2
             { 
             if (actor.ToLower() == "player")
             {
-              if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop)
+              if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && chosenAction == 1)
                 {
                         GameWorld.newGameObjects.Add(magic);
                 }
