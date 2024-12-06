@@ -121,8 +121,8 @@ namespace MortensKomeback2
             #region Obstacles
 
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
-            newGameObjects.Add(new Obstacle(500, 0));
-            newGameObjects.Add(new Obstacle(-400, 00));
+            newGameObjects.Add(new Obstacle(500, 0, "stone"));
+            newGameObjects.Add(new Obstacle(-400, 00, "stone"));
 
             #endregion Obstacles
             #region Areas

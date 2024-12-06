@@ -78,9 +78,9 @@ namespace MortensKomeback2
             GameWorld.PlayerInstance.SpriteEffectIndex = 0;
 
             //Adds new objects to be used for ranged attacks and healing:
-            magic = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y);
+            magic = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y, "magic");
 
-            egg = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y);
+            egg = new Obstacle((int)(GameWorld.PlayerInstance.Position.X + 100), (int)GameWorld.PlayerInstance.Position.Y, "egg");
 
             //Calculates damage bonus and defence bonus, based on the objects the player is wearing.
             foreach (Item i in GameWorld.equippedPlayerInventory)
@@ -130,7 +130,6 @@ namespace MortensKomeback2
                     break;
             }
 
-            magic.Sprite = GameWorld.commonSprites["blink"];
 
             //Instantiates randomAction
             randomAction = new Random();

@@ -26,10 +26,26 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="xPosition">X position</param>
         /// <param name="yPosition">Y position</param>
-        public Obstacle(int xPosition, int yPosition )
+        public Obstacle(int xPosition, int yPosition, string obstacleType)
         {
             this.position = new Vector2(xPosition, yPosition);
-            this.Sprite = GameWorld.commonSprites["stone"];
+            switch (obstacleType.ToLower())
+            {
+                case "stone":
+                    this.Sprite = GameWorld.commonSprites["stone"];
+                    break;
+                case "egg":
+                    this.Sprite = GameWorld.commonSprites["stone"];
+                    break;
+                case "magic":
+                    this.Sprite = GameWorld.commonSprites["blink"];
+                    break;
+                default:
+                    this.Sprite = GameWorld.commonSprites["stone"];
+                    break;
+
+
+            }
         }
 
         #endregion
@@ -41,12 +57,12 @@ namespace MortensKomeback2
 
         public override void OnCollision(GameObject gameObject)
         {
-            
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            
+
         }
 
         #endregion
