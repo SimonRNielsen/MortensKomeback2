@@ -758,6 +758,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Item/mainHandPlaceholder.png
 
+#begin Sprites/Item/mitre.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/mitre.png
+
 #begin Sprites/Item/offHandPlaceholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -805,6 +817,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/button.png
+
+#begin Sprites/Menu/chooseCharacter.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Menu/chooseCharacter.png
 
 #begin Sprites/Menu/introScreen.png
 /importer:TextureImporter
@@ -937,4 +961,11 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Weapon/magic.png
+
+#begin standardFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:standardFont.spritefont
 

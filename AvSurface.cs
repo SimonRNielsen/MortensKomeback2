@@ -37,8 +37,8 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            sprites = GameWorld.animationSprites["firepit"];
-            this.Sprite = sprites[0]; 
+            Sprites = GameWorld.animationSprites["firepit"];
+            this.Sprite = Sprites[0]; 
         }
 
         public override void Update(GameTime gameTime)
@@ -57,10 +57,10 @@ namespace MortensKomeback2
 
             currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[currentIndex];
+            sprite = Sprites[currentIndex];
 
             //Restart the animation
-            if (currentIndex >= sprites.Length - 1)
+            if (currentIndex >= Sprites.Length - 1)
             {
                 timeElapsed = 0;
                 currentIndex = 0;

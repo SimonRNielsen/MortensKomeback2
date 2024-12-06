@@ -18,10 +18,13 @@ namespace MortensKomeback2
         private float timeElapsed;
         private int currentIndex;
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
+        private float playDuration;
+        private float playDurationTimer = 1f;
+
 
         #endregion
 
-        #region properti
+        #region Properties
 
         #endregion
 
@@ -34,9 +37,12 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             this.graphics = _graphics;
-            this.health = 100;
+            this.health = 15;
             this.fps = 7f;
             this.scale = 0.5f;
+            sprite = GameWorld.animationSprites["WalkingGoose"][0];
+            this.Position = new Vector2(0, -300);
+            this.Damage = 10;
         }
 
         public Enemy() { }
@@ -47,8 +53,8 @@ namespace MortensKomeback2
 
         public override void LoadContent(ContentManager content)
         {
-            sprites = GameWorld.animationSprites["WalkingGoose"];
-            this.Sprite = sprites[0];
+            Sprites = GameWorld.animationSprites["WalkingGoose"];
+            this.Sprite = Sprites[0];
         }
 
         /// <summary>
@@ -63,7 +69,7 @@ namespace MortensKomeback2
                 {
                     this.direction = false;
                 }
-                else if (gameObject.CollisionBox.X  - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X )
+                else if (gameObject.CollisionBox.X - gameObject.CollisionBox.Width - 30 < this.CollisionBox.X)
                 {
                     this.direction = true;
                 }
@@ -73,17 +79,25 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (playDuration > playDurationTimer && sprite.Name.Contains("aggro"))
+            {
+                playDuration = 0f;
+                GameWorld.commonSounds["aggroGoose"].Play();
+            }
             if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
             {
-                sprites = GameWorld.animationSprites["AggroGoose"];
+                Sprites = GameWorld.animationSprites["AggroGoose"];
             }
             else
             {
-                sprites = GameWorld.animationSprites["WalkingGoose"];
+                Sprites = GameWorld.animationSprites["WalkingGoose"];
             }
 
             Movement(gameTime);
             Animation(gameTime);
+            if (this.Health <= 0)
+            { IsAlive = false; }
         }
 
         public override void Movement(GameTime gameTime)
@@ -97,19 +111,19 @@ namespace MortensKomeback2
             if (direction)
             {
                 position += (velocity * speed * deltaTime);
-                this.spriteEffectIndex = 1;
+                this.SpriteEffectIndex = 1;
             }
             if (!direction)
             {
                 position -= (velocity * speed * deltaTime);
-                this.spriteEffectIndex = 0;
+                this.SpriteEffectIndex = 0;
             }
 
-            if (position.X >= graphics.PreferredBackBufferWidth/2)
+            if (position.X >= graphics.PreferredBackBufferWidth / 2)
             {
                 direction = false;
             }
-            if (position.X <= -(graphics.PreferredBackBufferWidth/2))
+            if (position.X <= -(graphics.PreferredBackBufferWidth / 2))
             {
                 direction = true;
             }
@@ -127,10 +141,10 @@ namespace MortensKomeback2
 
             currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[currentIndex];
+            sprite = Sprites[currentIndex];
 
             //Restart the animation
-            if (currentIndex >= sprites.Length - 1)
+            if (currentIndex >= Sprites.Length - 1)
             {
                 timeElapsed = 0;
                 currentIndex = 0;

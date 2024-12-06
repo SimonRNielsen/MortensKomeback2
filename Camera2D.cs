@@ -46,7 +46,7 @@ namespace MortensKomeback2
         {
             _graphicsDevice = graphicsDevice;
             Position = position;
-            Zoom = 01f;
+            Zoom = 1f;
             Rotation = 0.0f;
         }
 
