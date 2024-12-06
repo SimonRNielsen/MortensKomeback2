@@ -104,13 +104,31 @@ namespace MortensKomeback2
 
         #region Method
 
-
+        #region Unused Inherited
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="content">Not used</param>
         public override void LoadContent(ContentManager content)
         {
 
         }
 
+        /// <summary>
+        /// Not used
+        /// </summary>
+        /// <param name="gameObject">Not used</param>
+        public override void OnCollision(GameObject gameObject)
+        {
+            //throw new NotImplementedException();
+        }
 
+        #endregion
+
+        /// <summary>
+        /// Handles camera movement
+        /// </summary>
+        /// <param name="gameTime">Not used</param>
         public override void Update(GameTime gameTime)
         {
             if (room == GameWorld.PlayerInstance.InRoom)
@@ -210,11 +228,6 @@ namespace MortensKomeback2
             }
         }
 
-
-        public override void OnCollision(GameObject gameObject)
-        {
-            //throw new NotImplementedException();
-        }
 
         #endregion
     }

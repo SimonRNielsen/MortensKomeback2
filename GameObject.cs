@@ -30,16 +30,16 @@ namespace MortensKomeback2
             {
                 if (this is Player)
                 {
-                    if (health > health + (this as Player).HealthBonus)
-                        health = health + (this as Player).HealthBonus;
-                    if (health + value <= (this as Player).MaxHealth + (this as Player).HealthBonus)
-                        health += value;
-                    else
+                    if (health > (this as Player).MaxHealth + (this as Player).HealthBonus)
                         health = (this as Player).MaxHealth + (this as Player).HealthBonus;
+                    if (value >= (this as Player).MaxHealth + (this as Player).HealthBonus)
+                        health = (this as Player).MaxHealth + (this as Player).HealthBonus;
+                    else
+                        health = value;
                 }
-                if (this is Enemy)
-                    health += value;
-                if (health < 0)
+                else
+                    health = value;
+                if (health <= 0)
                     isAlive = false;
             }
         }
@@ -47,10 +47,13 @@ namespace MortensKomeback2
         public Vector2 Position { get => position; set => position = value; }
         public virtual Rectangle CollisionBox
         {
-            get { return new Rectangle((int)Position.X - (Sprite.Width / 2), (int)Position.Y - (Sprite.Height / 2), Sprite.Width, Sprite.Height); }
+            get { return new Rectangle((int)(Position.X - (Sprite.Width / 2) * scale), (int)(Position.Y - (Sprite.Height / 2) * scale), (int)(Sprite.Width * scale), (int)(Sprite.Height * scale)); }
         }
         public bool IsAlive { get => isAlive; set => isAlive = value; }
 
+        public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
+        public Texture2D[] Sprites { get => sprites; set => sprites = value; }
+        public float Rotation { get => rotation; set => rotation = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 
@@ -64,7 +67,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Drawing tool</param>
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, Position, null, drawColor, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer);
+            spriteBatch.Draw(Sprite, Position, null, drawColor, Rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[SpriteEffectIndex], layer);
         }
 
         /// <summary>

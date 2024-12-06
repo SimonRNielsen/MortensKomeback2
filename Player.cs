@@ -12,7 +12,6 @@ namespace MortensKomeback2
         private PlayerClass playerClass;
         private float timeElapsed;
         private int currentIndex;
-        //private int healthMax;
         private bool praying;
         private bool interact;
         private bool inventory;
@@ -23,9 +22,12 @@ namespace MortensKomeback2
         private int maxHealth = 100;
         private int healthBonus;
         private string inRoom;
-        private float invulnerable = 1.5f;
+        private float invulnerable = 1f;
         private float invulnerableTimer;
         private bool invulnerability;
+        private float playDuration;
+        private float playDurationTimer = 0.5f;
+        private bool playFirst = false;
 
         private bool searching;
 
@@ -35,7 +37,8 @@ namespace MortensKomeback2
         /// </summary>
         private bool direction = true;
 
-        //public int HealthMax { get => healthMax; set => healthMax = value; }
+
+        internal PlayerClass PlayerClass { get => playerClass; set => playerClass = value; }
 
         #endregion
 
@@ -51,14 +54,22 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            //this.healthMax = health;
-            this.speed = 600; //Not sure what spped should be
+            this.speed = 600; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
-            //HealthMax = 100;
             this.fps = 2f;
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
+            if (GameWorld.PlayerInstance != null)
+            {
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), false, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
+                GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
+                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
+            }        
+            Damage = 10;
         }
 
         #endregion
@@ -70,23 +81,23 @@ namespace MortensKomeback2
         /// <param name="content"></param>
         public override void LoadContent(ContentManager content)
         {
-            sprites = new Texture2D[4];
+            Sprites = new Texture2D[4];
 
-            switch (playerClass)
+            switch (PlayerClass)
             {
                 case PlayerClass.Monk:
-                    sprites = GameWorld.animationSprites["monk"];
+                    Sprites = GameWorld.animationSprites["monk"];
                     break;
                 case PlayerClass.Crusader:
-                    sprites = GameWorld.animationSprites["crusader"];
+                    Sprites = GameWorld.animationSprites["crusader"];
                     break;
                 case PlayerClass.Bishop:
-                    sprites = GameWorld.animationSprites["bishop"];
+                    Sprites = GameWorld.animationSprites["bishop"];
                     break;
             }
 
             //Start sprite
-            this.Sprite = sprites[0];
+            this.Sprite = Sprites[0];
         }
 
         /// <summary>
@@ -108,26 +119,26 @@ namespace MortensKomeback2
 
                 if (CollisionBox.Intersects(gameObject.CollisionBox))
 
-                if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
-                {
-                    
-                    if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                    if (this.CollisionBox.Y < gameObject.CollisionBox.Y) //Checking if the player is left to the obstacle
                     {
-                        //velocity.X = -1f;
-                        //position.X--;
-                        this.position.X = this.position.X - moveAway; //Moving higher up
-                    }
-                    else
-                    {
-                        //velocity.X = 1f;
-                        //position.X++;
-                        this.position.X = this.position.X + moveAway; //Moving down
-                    }
 
-                    //velocity.Y = -1f;
-                    //position.Y--;
-                    this.position.Y = this.position.Y - moveAway; //Moving further to the left
-                }
+                        if (this.CollisionBox.X < gameObject.CollisionBox.X) //Checking if the player is o  top of the obstacle
+                        {
+                            //velocity.X = -1f;
+                            //position.X--;
+                            this.position.X = this.position.X - moveAway; //Moving higher up
+                        }
+                        else
+                        {
+                            //velocity.X = 1f;
+                            //position.X++;
+                            this.position.X = this.position.X + moveAway; //Moving down
+                        }
+
+                        //velocity.Y = -1f;
+                        //position.Y--;
+                        this.position.Y = this.position.Y - moveAway; //Moving further to the left
+                    }
 
                 if (this.CollisionBox.Y > gameObject.CollisionBox.Y) //The same but to the right
                 {
@@ -144,7 +155,15 @@ namespace MortensKomeback2
                 }
 
             }
+            if (gameObject is Enemy)
+            {
+                if (GameWorld.BattleActive == false)
+                {
+                    GameWorld.BattleActive = true;
+                    GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
 
+                }
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -152,10 +171,27 @@ namespace MortensKomeback2
             Movement(gameTime);
             HandleInput();
             Animation(gameTime);
+            playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (velocity != Vector2.Zero && playDuration > playDurationTimer)
+            {
+                playDuration = 0;
+                if (!playFirst)
+                {
+                    GameWorld.commonSounds["playerWalk2"].Play();
+                    playFirst = true;
+                }
+                else
+                {
+                    GameWorld.commonSounds["playerWalk1"].Play();
+                    playFirst = false;
+                }
+            }
             base.Update(gameTime);
             invulnerableTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (invulnerableTimer > invulnerable)
+            {
                 invulnerability = false;
+            }
         }
 
 
@@ -187,7 +223,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.A))
             {
                 velocity += new Vector2(-1, 0);
-                this.spriteEffectIndex = 1;
+                this.SpriteEffectIndex = 1;
                 direction = true;
             }
 
@@ -195,7 +231,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyDown(Keys.D))
             {
                 velocity += new Vector2(1, 0);
-                this.spriteEffectIndex = 0;
+                this.SpriteEffectIndex = 0;
                 direction = false;
             }
 
@@ -279,10 +315,10 @@ namespace MortensKomeback2
 
             currentIndex = (int)(timeElapsed * fps);
 
-            sprite = sprites[currentIndex];
+            sprite = Sprites[currentIndex];
 
             //Restart the animation
-            if (currentIndex >= sprites.Length - 1)
+            if (currentIndex >= Sprites.Length - 1)
             {
                 timeElapsed = 0;
                 currentIndex = 0;
@@ -295,6 +331,7 @@ namespace MortensKomeback2
         /// <param name="range">Determines the radius for which the Player "interacts with items nearby</param>
         private void Pray(byte range)
         {
+
             foreach (Item item in GameWorld.hiddenItems)
             {
                 float distance = Vector2.Distance(position, item.Position);
@@ -360,37 +397,57 @@ namespace MortensKomeback2
         /// <param name="item">Item to be removed</param>
         public static void RemoveItem(Item item)
         {
+
             GameWorld.playerInventory.Remove(item);
+
         }
 
 
         private void TakeEnvironmentDamage()
         {
-            Health = -10;
+            Health -= 10;
             invulnerableTimer = 0;
             invulnerability = true;
+            GameWorld.commonSounds["playerAv"].Play();
+
         }
 
         /// <summary>
         /// Performs a healing action for Player to recover missing health
         /// </summary>
-        public void Heal()
+        public bool Heal()
         {
+
             int healAmount = 25;
             Item healingItem = GameWorld.FindHealingItem();
 
             if (!(health == maxHealth + healthBonus))
                 if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
                 {
-                    Health = healAmount + 25;
-                    //if (!GameWorld.BattleActive)                      HUSK AT INDKOMMENTERE IGEN!!!!!
-                    limitedHeals--;
+                    Health += healAmount + 25;
+                    if (!GameWorld.BattleActive)
+                        limitedHeals--;
+                    return true;
                 }
                 else if (healingItem != null)
                 {
-                    Health = healAmount;
+                    Health += healAmount;
                     healingItem.IsUsed = true;
+                    return true;
                 }
+        return false;
+    }
+
+        /// <summary>
+        /// Overrides to give a damage "effect" on Player
+        /// </summary>
+        /// <param name="spriteBatch">Drawing tool</param>
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (invulnerability)
+                spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+            
         }
 
         #endregion

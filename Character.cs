@@ -8,6 +8,7 @@ namespace MortensKomeback2
     {
         #region field
         private int currentHealth;
+        protected int damage;
         private HealthBar healthbar;
 
         #endregion
@@ -15,6 +16,14 @@ namespace MortensKomeback2
         #region properties
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
+
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Property for accessing the base damage a character can deal to other characters
+        /// </summary>
+        public int Damage { get => damage; set => damage = value; }
         #endregion
 
         #region constructor
