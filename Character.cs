@@ -17,7 +17,7 @@ namespace MortensKomeback2
         protected int CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
         /// <summary>
-        /// Property for accessing the base damage a character can deal to other characters
+        /// Property for accessing the base damage a character can deal to other characters 
         /// </summary>
         public int Damage { get => damage; set => damage = value; }
 
