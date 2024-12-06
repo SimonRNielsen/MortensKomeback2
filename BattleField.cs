@@ -364,8 +364,8 @@ namespace MortensKomeback2
             //Move
             if ((projectile.Position.X <= this.Position.X + 300) && (actionPhase == 1))
             {
-                magic.Position += new Vector2(5f, 0);
-                magic.Rotation += 0.05f;
+                projectile.Position += new Vector2(5f, 0);
+                projectile.Rotation += 0.05f;
                 playerActionText = "You are attacking the enemy from range!";
             }
             else if ((projectile.Position.X >= this.Position.X + 300) && (actionPhase == 1))
