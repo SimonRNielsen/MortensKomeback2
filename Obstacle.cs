@@ -29,6 +29,7 @@ namespace MortensKomeback2
         public Obstacle(int xPosition, int yPosition )
         {
             this.position = new Vector2(xPosition, yPosition);
+            this.Sprite = GameWorld.commonSprites["stone"];
         }
 
         #endregion
@@ -36,7 +37,6 @@ namespace MortensKomeback2
         #region method
         public override void LoadContent(ContentManager content)
         {
-            this.Sprite = GameWorld.commonSprites["stone"];
         }
 
         public override void OnCollision(GameObject gameObject)
