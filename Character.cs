@@ -31,26 +31,9 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            //Vector2 newPosition = position + velocity;
-
-            //Rectangle bounds = GameWorld.CurrentRoomBoundary;
-
-            //if (newPosition.X > bounds.Left)
-            //    newPosition.X = bounds.Left;
-            //if (newPosition.Y < bounds.Top)
-            //    newPosition.Y = bounds.Top;
-            //if (newPosition.X > bounds.Right /*- sprite.Width*/)
-            //    newPosition.X = bounds.Right /*- sprite.Width*/;
-            //if (newPosition.Y < bounds.Bottom /*- sprite.Height*/)
-            //    newPosition.Y = bounds.Bottom /*- sprite.Height*/;
-
-            //position = newPosition;
+         
 
 
-            if (battleActive)
-            { 
-
-            }
         }
 
 
@@ -61,13 +44,13 @@ namespace MortensKomeback2
 
         public abstract void Animation(GameTime gameTime);
 
-        public virtual void GetHit(int damage)
-        {
-            health -= damage;
+        //public virtual void GetHit(int damage)
+        //{
+        //    health -= damage;
 
-            if (health <= 0) ;
-                //isAlive = false;
+        //    if (health <= 0) ;
+        //        //isAlive = false;
 
-        }
+        //}
     }
 }
