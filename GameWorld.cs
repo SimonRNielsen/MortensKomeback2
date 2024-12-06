@@ -93,10 +93,12 @@ namespace MortensKomeback2
             LoadCommonSounds();
             LoadBackgroundSongs();
 
+            /*
             hiddenItems.Add(new MainHandItem(PlayerClass.Monk, Vector2.Zero, false, false));
             playerInventory.Add(new TorsoSlotItem(PlayerClass.Monk, true, Vector2.Zero));
-            playerInventory.Add(new QuestItem(1, false, Vector2.Zero));
-            playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
+            */
+            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(0, true, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
 
@@ -171,10 +173,10 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, bottomSide + 1080 * 3, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 5 + topSide + 120))); //1C.8
             newGameObjects.Add(new Door(0, topSide + 1080 * 5, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 3 + bottomSide - 120))); //8.1C
 
-            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //Skal være locked 8.9
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 5, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 7 + topSide + 120))); //8.9
             newGameObjects.Add(new Door(0, topSide + 1080 * 7, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 5 + bottomSide - 120))); //9.8
 
-            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Open, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
+            newGameObjects.Add(new Door(0, bottomSide + 1080 * 7, DoorTypes.Locked, DoorRotation.Bottom, new Vector2(0, 1080 * 9 + topSide + 120))); //9.10
             newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide - 120))); //10.9
             //#region GUI
             newGameObjects.Add(new HealthBar(0.55f, 1));
@@ -286,12 +288,10 @@ namespace MortensKomeback2
                             if ((gameObject as Area).Room == (other as Player).InRoom)
                                 (gameObject as Area).CheckCollision(other);
                 }
-
-
             }
-
             //Removes objects
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
+
             //Search & Pray logic
             foreach (Item item in hiddenItems)
                 item.Update(gameTime);
