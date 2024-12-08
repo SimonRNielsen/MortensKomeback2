@@ -93,11 +93,7 @@ namespace MortensKomeback2
             //Sets chosen action to zero
             chosenAction = 0;
 
-          this.sprite = GameWorld.animationSprites["areaStart"][0];
-            this.layer = 0.0000001f;
 
-            enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
-            GameWorld.newGameObjects.Add(enemyHealthbar);
         }
 
         #endregion
@@ -135,12 +131,19 @@ namespace MortensKomeback2
                     healText = "Heal (Holy Magic)";
                     break;
             }
+            //Adds background sprite
+            this.sprite = GameWorld.animationSprites["areaStart"][0];
+            this.layer = 0.0000001f;
 
+            //Adds healthbar for enemy
+            enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
+            GameWorld.newGameObjects.Add(enemyHealthbar);
 
             //Instantiates randomAction
             randomAction = new Random();
 
-            
+            //Temporary set sprite, until animation is done:
+            GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[1];
 
         }
 
@@ -332,7 +335,7 @@ namespace MortensKomeback2
         private void MeleeAttack(GameTime gameTime)
         {
             //Animate
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
@@ -371,7 +374,7 @@ namespace MortensKomeback2
         private void RangedAttack(GameTime gameTime, Obstacle projectile)
         {
             //Animate
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
@@ -481,7 +484,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         private void Heal(GameTime gameTime)
         {
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
