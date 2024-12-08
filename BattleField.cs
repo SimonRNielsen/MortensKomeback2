@@ -89,6 +89,11 @@ namespace MortensKomeback2
                 playerDamageBonus += i.DamageBonus;
                 playerDamageReductionBonus += i.DamageReductionBonus;
             }
+           
+
+            //Adds healthbar for enemy
+            enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
+            GameWorld.newGameObjects.Add(enemyHealthbar);
 
             //Sets chosen action to zero
             chosenAction = 0;
@@ -131,19 +136,17 @@ namespace MortensKomeback2
                     healText = "Heal (Holy Magic)";
                     break;
             }
-            //Adds background sprite
-            this.sprite = GameWorld.animationSprites["areaStart"][0];
-            this.layer = 0.0000001f;
 
-            //Adds healthbar for enemy
-            enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
-            GameWorld.newGameObjects.Add(enemyHealthbar);
 
             //Instantiates randomAction
             randomAction = new Random();
 
             //Temporary set sprite, until animation is done:
             GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[1];
+
+            //Adds background sprite
+            this.sprite = GameWorld.animationSprites["areaStart"][0];
+            this.layer = 0.0000001f;
 
         }
 
