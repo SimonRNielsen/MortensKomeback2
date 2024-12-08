@@ -52,9 +52,9 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            this.speed = 600; //Not sure what speed should be
+            this.speed = 800; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
-            this.fps = 2f;
+            this.fps = 4f;
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
