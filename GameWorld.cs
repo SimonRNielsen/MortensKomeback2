@@ -896,17 +896,6 @@ namespace MortensKomeback2
 
         }
 
-        /* 0 references so outcommented, also seems obsolete?
-        public void UpdateCamera()
-        {
-            if (playerInstance != null)
-            {
-                // Center the camera on the player
-                camera.Position = playerInstance.Position - new Vector2(1920 / 2, 1080 / 2);
-            }
-        }
-        */
-
         /// <summary>
         /// Updates the name of which room the player is in by calculating which room is closest
         /// </summary>
