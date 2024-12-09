@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 
@@ -62,8 +63,8 @@ namespace MortensKomeback2
             this.Position = new Vector2(0, 1080 * 10);
             GameWorld.Camera.Position = this.Position;
             playerOriginPosition = GameWorld.PlayerInstance.Position;
-            GameWorld.PlayerInstance.Position = new Vector2(this.Position.X - 700, this.Position.Y); ;
-            enemy.Position = new Vector2(this.Position.X + 700, this.Position.Y);
+            GameWorld.PlayerInstance.Position = new Vector2(this.Position.X - 600, this.Position.Y); ;
+            enemy.Position = new Vector2(this.Position.X + 600, this.Position.Y);
 
             //Dialogue box is added
             battlefieldDialogue = new Dialogue(new Vector2(this.Position.X, this.Position.Y + 320));
@@ -93,7 +94,6 @@ namespace MortensKomeback2
 
             //Sets chosen action to zero
             chosenAction = 0;
-
 
         }
 
@@ -159,6 +159,8 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         public override void Update(GameTime gameTime)
         {
+            
+
             //The enemy should allways be animated. 
             foreach (Enemy e in battlefieldEnemies)
             {
@@ -352,7 +354,7 @@ namespace MortensKomeback2
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
 
             }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (actionPhase == 2))
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
             {
                 GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
             }
@@ -434,7 +436,7 @@ namespace MortensKomeback2
             {
                 actionPhase = 2;
             }
-            else if ((GameWorld.PlayerInstance.Position.X < this.Position.X - 700) && (actionPhase == 2))
+            else if ((GameWorld.PlayerInstance.Position.X < this.Position.X - 600) && (actionPhase == 2))
             {
                 GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
             }
@@ -462,7 +464,7 @@ namespace MortensKomeback2
             {
                 actionPhase = 2;
             }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (actionPhase == 2))
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
             {
                 GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
             }
@@ -516,7 +518,7 @@ namespace MortensKomeback2
                     playerActionText = "You are already at full health!";
                 }
             }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (actionPhase == 2))
+            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
             {
                 GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
 
@@ -590,7 +592,7 @@ namespace MortensKomeback2
                                     enemyActionText = $"The enemy dealt no damage!";
                             }
                         }
-                        else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (actionPhase == 2))
+                        else if ((battlefieldEnemies[0].Position.X < this.Position.X + 600) && (actionPhase == 2))
                         {
                             battlefieldEnemies[0].Position += new Vector2(5f, 0);
                         }
@@ -621,7 +623,7 @@ namespace MortensKomeback2
                             }
 
                         }
-                        else if ((battlefieldEnemies[0].Position.X < this.Position.X + 700) && (actionPhase == 2))
+                        else if ((battlefieldEnemies[0].Position.X < this.Position.X + 600) && (actionPhase == 2))
                         {
                             battlefieldEnemies[0].Position += new Vector2(5f, 0);
 

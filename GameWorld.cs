@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
+using System.Reflection.Metadata;
 
 namespace MortensKomeback2
 {
@@ -43,6 +44,7 @@ namespace MortensKomeback2
         private static Player playerInstance;
         public static List<NPC> nPCs;
         private static Random random = new Random();
+        public static string currentTrack = null;
 
         #endregion Fields
 
@@ -760,6 +762,8 @@ namespace MortensKomeback2
             commonSounds.Add("aggroGoose", aggroGoose);
 
             #endregion Enemy
+        
+
 
         }
 
@@ -768,6 +772,27 @@ namespace MortensKomeback2
         /// </summary>
         private void LoadBackgroundSongs()
         {
+            #region Organ music
+            Song bgMusic = Content.Load<Song>("Sounds\\Music\\bgMusic");
+            backgroundMusic.Add("bgMusic", bgMusic);
+
+            Song battleMusic = Content.Load<Song>("Sounds\\Music\\battleMusic");
+            backgroundMusic.Add("battleMusic", battleMusic);
+
+            if (mortenLives)
+            {
+                MediaPlayer.Play(backgroundMusic["bgMusic"]);
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Volume = 0.15f;
+            }
+            else           
+            {
+                MediaPlayer.Play(backgroundMusic["battleMusic"]);
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Volume = 0.15f;
+            }
+
+            #endregion Organ Music
 
 
 
@@ -924,6 +949,8 @@ namespace MortensKomeback2
             }
 
         }
+
+       
         #endregion Functionality
         #endregion Methods
     }
