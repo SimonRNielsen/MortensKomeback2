@@ -18,10 +18,10 @@ namespace MortensKomeback2
         private Color textBodyColor;
         private Color textHeaderColor;
         private Dialogue battlefieldDialogue;
-        private GraphicsDevice graphicsDevice;
         private float actionTimer = 0;
         private float actionTimerDuration = 2f;
         private float textScale;
+        private HealthBar enemyHealthbar;
         private int chosenAction;
         private int enemyAction;
         private int actionPhase = 0;
@@ -85,9 +85,15 @@ namespace MortensKomeback2
                 playerDamageBonus += i.DamageBonus;
                 playerDamageReductionBonus += i.DamageReductionBonus;
             }
+           
+
+            //Adds healthbar for enemy
+            enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
+            GameWorld.newGameObjects.Add(enemyHealthbar);
 
             //Sets chosen action to zero
             chosenAction = 0;
+
 
         }
 
@@ -130,6 +136,13 @@ namespace MortensKomeback2
 
             //Instantiates randomAction
             randomAction = new Random();
+
+            //Temporary set sprite, until animation is done:
+            GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[1];
+
+            //Adds background sprite
+            this.sprite = GameWorld.animationSprites["areaStart"][0];
+            this.layer = 0.0000001f;
 
         }
 
@@ -177,6 +190,7 @@ namespace MortensKomeback2
                 if (battlefieldEnemies[0].Health <= 0)
                 {
                     battlefieldEnemies[0].IsAlive = false;
+                    enemyHealthbar.IsAlive = false;
                 }
             }
             //Removes all dead enemies. 
@@ -191,6 +205,7 @@ namespace MortensKomeback2
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+            base.Draw(spriteBatch);
             if (!playerActionOngoing && !enemyActionOngoing && !battleWon)
             {
                 spriteBatch.DrawString(standardFont, "Choose your action for this battle round!", battlefieldDialogue.Position - new Vector2((float)(820), 130), textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
@@ -319,7 +334,7 @@ namespace MortensKomeback2
         private void MeleeAttack(GameTime gameTime)
         {
             //Animate
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
@@ -358,7 +373,7 @@ namespace MortensKomeback2
         private void RangedAttack(GameTime gameTime, Obstacle projectile)
         {
             //Animate
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
@@ -468,7 +483,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         private void Heal(GameTime gameTime)
         {
-            GameWorld.PlayerInstance.Animation(gameTime);
+            //GameWorld.PlayerInstance.Animation(gameTime);
 
             BeginAction("player");
 
@@ -660,7 +675,7 @@ namespace MortensKomeback2
                 {
                         GameWorld.newGameObjects.Add(magic);
                 }
-              else if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk)
+              else if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk && chosenAction == 1)
                 {
                     GameWorld.newGameObjects.Add(egg);
                 }
