@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MortensKomeback2
 {
@@ -92,9 +86,11 @@ namespace MortensKomeback2
         //}
 
 
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    //spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, helpTextPosition, textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 1f);
 
-
-
+        //}
         #endregion
     }
 }

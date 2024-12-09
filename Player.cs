@@ -28,7 +28,6 @@ namespace MortensKomeback2
         private float playDuration;
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
-        private bool searching;
 
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace MortensKomeback2
                 GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
                 GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
                 GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
-            }        
+            }
             Damage = 10;
         }
 
@@ -208,7 +207,7 @@ namespace MortensKomeback2
             {
                 velocity += new Vector2(0, 1);
             }
-             
+
             //Player moves left when pressed A
             if (keyState.IsKeyDown(Keys.A))
             {
@@ -382,17 +381,8 @@ namespace MortensKomeback2
         }
 
         /// <summary>
-        /// Removes an item from the players inventory
+        /// Handles Player taking environment damage
         /// </summary>
-        ///// <param name="item">Item to be removed</param>
-        //public static void RemoveItem(Item item)
-        //{
-
-        //    GameWorld.playerInventory.Remove(item);
-
-        //}
-
-
         private void TakeEnvironmentDamage()
         {
             Health -= 10;
@@ -425,8 +415,10 @@ namespace MortensKomeback2
                     healingItem.IsUsed = true;
                     return true;
                 }
-        return false;
-    }
+
+            return false;
+
+        }
 
         /// <summary>
         /// Overrides to give a damage "effect" on Player
@@ -434,10 +426,11 @@ namespace MortensKomeback2
         /// <param name="spriteBatch">Drawing tool</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
+
             base.Draw(spriteBatch);
             if (invulnerability)
                 spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
-            
+
         }
 
         #endregion
