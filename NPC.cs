@@ -9,20 +9,31 @@ namespace MortensKomeback2
         #region field
         private string[] npcClass = new string[3] {"Munk", "Nun", "Letter"};
         private int classSelection;
+        private string spriteNPC;
 
         #endregion
 
         #region properti
 
         public string NPCClass { get => npcClass[classSelection]; set => NPCClass = value; }
+     
+    #endregion
 
-        #endregion
-
-        #region constructor
-        public NPC(int npcClass)
+    #region constructor
+    public NPC(int npcClass, int spriteNPC, Vector2 placement)
         {
             classSelection = npcClass;
+            position = placement;
 
+            switch (spriteNPC)
+            {
+                case 0:
+                    sprite = GameWorld.commonSprites["monkNPC"];
+                    break;
+                case 1:
+                    sprite = GameWorld.commonSprites["nunNPC"];
+                    break;
+            }
         }
         #endregion
 
@@ -39,7 +50,6 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
         }
 
         public override void Movement(GameTime gameTime)

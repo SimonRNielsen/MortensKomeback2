@@ -183,6 +183,12 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide - 120))); //10.9
 
             #endregion Doors
+            #region NPC
+
+            newGameObjects.Add(new NPC(0, 0, new Vector2(0, - 1080 * 10))); //monk
+            newGameObjects.Add(new NPC(1, 1, new Vector2(0, -1080 * 2))); //nun
+
+            #endregion NPC
 
             base.Initialize();
 
@@ -620,6 +626,13 @@ namespace MortensKomeback2
             commonSprites.Add("characterScreen", characterScreen);
 
             #endregion Menu & Button
+            #region NPC
+            Texture2D nunNPC = Content.Load<Texture2D>("Sprites\\Charactor\\nunNPC");
+            commonSprites.Add("nunNPC", nunNPC);
+
+            Texture2D monkNPC = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPC");
+            commonSprites.Add("monkNPC", monkNPC);
+            #endregion NPC
         }
 
         /// <summary>
