@@ -224,7 +224,7 @@ namespace MortensKomeback2
             if (battleWon)
             {
                 spriteBatch.DrawString(standardFont, "You have won the battle!", battlefieldDialogue.Position - new Vector2((float)(820), 130), textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
-                spriteBatch.DrawString(standardFont, "Press \"Entter\" to return...", battlefieldDialogue.Position - new Vector2((float)(820), 90), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(standardFont, "Press \"Enter\" to return...", battlefieldDialogue.Position - new Vector2((float)(820), 90), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
 
             }
 
@@ -447,35 +447,7 @@ namespace MortensKomeback2
             //Calculate defense
         }
 
-        private void Evade()
-        {
-            blocking = true;
-
-            BeginAction("player");
-
-            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 200) && (actionPhase == 1))
-            {
-                playerActionText = "You are trying to evade the enemy's attack!";
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
-            }
-            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + -200) && (actionPhase == 1))
-            {
-                actionPhase = 2;
-            }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 700) && (actionPhase == 2))
-            {
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
-            }
-            else
-            {
-                EndAction("player");
-            }
-            //Move
-            //Animate
-            //Sound
-            //Calculate defense
-
-        }
+        
         /// <summary>
         /// The Heal action. Users the players Heal() method from player class.
         /// Differentiates text depending on class, and thereby how much the player heals/ if healing items is neccessary.
