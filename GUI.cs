@@ -86,9 +86,11 @@ namespace MortensKomeback2
         //}
 
 
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    //spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, helpTextPosition, textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 1f);
 
-
-
+        //}
         #endregion
     }
 }
