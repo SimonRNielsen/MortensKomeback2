@@ -22,6 +22,7 @@ namespace MortensKomeback2
         private float actionTimer = 0;
         private float actionTimerDuration = 2f;
         private float textScale;
+        private HealthBar enemyHealthbar;
         private int chosenAction;
         private int enemyAction;
         private int actionPhase = 0;
@@ -40,7 +41,6 @@ namespace MortensKomeback2
         private Texture2D[] playerDefaultSpriteArray;
         private Vector2 playerOriginPosition;
         private Vector2 textOrigin;
-        private HealthBar enemyHealthbar;
 
         #endregion
 
