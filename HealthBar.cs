@@ -93,7 +93,7 @@ namespace MortensKomeback2
             if (enemyHealthbar == false)
                 healthPercentage = (float)(GameWorld.PlayerInstance.Health / (float)(GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus));
             else if (enemyHealthbar == true)
-                healthPercentage = (float)enemy.Health / 15f;
+                healthPercentage = (float)enemy.Health / enemy.MaxHealth;
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 

@@ -13,6 +13,10 @@ namespace MortensKomeback2
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
         private float playDuration;
         private float playDurationTimer = 1f;
+        private int maxHealth = 15;
+
+        public float MaxHealth { get => maxHealth;}
+
 
 
         #endregion
@@ -30,7 +34,7 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             this.graphics = _graphics;
-            this.health = 15;
+            this.health = maxHealth;
             this.fps = 7f;
             this.scale = 0.5f;
             sprite = GameWorld.animationSprites["WalkingGoose"][0];
