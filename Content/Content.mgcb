@@ -20,6 +20,18 @@
 /processorParam:TextureFormat=Compressed
 /build:mortalKombatFont.spritefont
 
+#begin Sounds/Music/god-rest-you-merry-gentlemen-christmas-carol-chapel-organ-9794.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Music/god-rest-you-merry-gentlemen-christmas-carol-chapel-organ-9794.mp3
+
+#begin Sounds/Music/royal-funeral-march-with-powerful-organ-248324.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Music/royal-funeral-march-with-powerful-organ-248324.mp3
+
 #begin Sounds/SoundEffects/Enemy/gooseSound_Short.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -974,6 +986,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Menu/winScreen.png
 
+#begin Sprites/Obstacle/egg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Obstacle/egg.png
+
+#begin Sprites/Obstacle/egg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Obstacle/egg.png
+
 #begin Sprites/Obstacle/firepit.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -997,6 +1033,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Obstacle/firepit0.png
+
+#begin Sprites/Obstacle/hole.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Obstacle/hole.png
+
+#begin Sprites/Obstacle/magic.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Obstacle/magic.png
+
+#begin Sprites/Obstacle/magicHeal.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Obstacle/magicHeal.png
 
 #begin Sprites/Obstacle/stone.png
 /importer:TextureImporter

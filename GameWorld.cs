@@ -122,7 +122,7 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0, "stone"));
-            newGameObjects.Add(new Obstacle(-400, 00, "stone"));
+            newGameObjects.Add(new Obstacle(-400, 00, "hole"));
 
             #endregion Obstacles
             #region Areas
@@ -555,8 +555,16 @@ namespace MortensKomeback2
             #region Obstacles
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
+            Texture2D hole = Content.Load<Texture2D>("Sprites\\Obstacle\\hole"); //Hole
+            Texture2D magic = Content.Load<Texture2D>("Sprites\\Obstacle\\magic"); //magic missile
+            Texture2D magicHeal = Content.Load<Texture2D>("Sprites\\Obstacle\\magicHeal"); //magic heal
+            Texture2D egg = Content.Load<Texture2D>("Sprites\\Obstacle\\egg"); //magic heal
 
             commonSprites.Add("stone", stone);
+            commonSprites.Add("hole", hole);
+            commonSprites.Add("magic", magic);
+            commonSprites.Add("magicHeal", magicHeal);
+            commonSprites.Add("egg", egg);
 
             #endregion Obstacles
             #region Items

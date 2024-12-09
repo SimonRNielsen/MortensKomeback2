@@ -28,13 +28,16 @@ namespace MortensKomeback2
                     this.Sprite = GameWorld.commonSprites["stone"];
                     break;
                 case "egg":
-                    this.Sprite = GameWorld.commonSprites["stone"];
+                    this.Sprite = GameWorld.commonSprites["egg"];
                     break;
                 case "magic":
-                    this.Sprite = GameWorld.commonSprites["blink"];
+                    this.Sprite = GameWorld.commonSprites["magic"];
+                    break;
+                case "magicHeal":
+                    this.Sprite = GameWorld.commonSprites["magicHeal"];
                     break;
                 default:
-                    this.Sprite = GameWorld.commonSprites["stone"];
+                    this.Sprite = GameWorld.commonSprites["hole"];
                     break;
 
 
