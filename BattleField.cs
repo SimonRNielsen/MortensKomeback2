@@ -18,7 +18,6 @@ namespace MortensKomeback2
         private Color textBodyColor;
         private Color textHeaderColor;
         private Dialogue battlefieldDialogue;
-        private GraphicsDevice graphicsDevice;
         private float actionTimer = 0;
         private float actionTimerDuration = 2f;
         private float textScale;
