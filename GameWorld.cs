@@ -114,6 +114,7 @@ namespace MortensKomeback2
             #region GUI
 
             newGameObjects.Add(new HealthBar(0.55f, 1));
+            //newGameObjects.Add(new GUI());
             //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
             //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
@@ -139,7 +140,6 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 4), 0, "Room3"));     //ventre side, rum 3 enemies
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 6), 0, "Room4"));     //ventre side, rum 4 enemies
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
-
 
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));           //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
@@ -183,6 +183,11 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide - 120))); //10.9
 
             #endregion Doors
+            #region NPC
+            newGameObjects.Add(new NPC(0, 0, new Vector2(0,-1080*10))); //monk npc
+            newGameObjects.Add(new NPC(1, 1, new Vector2(0,-1080*2))); //nun npc
+
+            #endregion NPC
 
             base.Initialize();
 
@@ -620,6 +625,12 @@ namespace MortensKomeback2
             commonSprites.Add("characterScreen", characterScreen);
 
             #endregion Menu & Button
+            #region NPC
+            Texture2D nunNPC = Content.Load<Texture2D>("Sprites\\Charactor\\nunNPC");
+            Texture2D monkNPC = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPC");
+            commonSprites.Add("nunNPC", nunNPC);
+            commonSprites.Add("monkNPC", monkNPC);
+            #endregion NPC
         }
 
         /// <summary>

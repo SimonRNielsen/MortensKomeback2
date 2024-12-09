@@ -24,9 +24,21 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        public NPC(int npcClass)
+        public NPC(int npcClass, int spriteNPC, Vector2 placement)
         {
             classSelection = npcClass;
+            position = placement;
+
+            switch (spriteNPC)
+            {
+                case 0:
+                    sprite = GameWorld.commonSprites["monkNPC"];
+                    break;
+                case 1:
+                    sprite = GameWorld.commonSprites["nunNPC"];
+                    break;
+            }
+
 
         }
         #endregion
@@ -44,7 +56,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            
         }
 
         public override void Movement(GameTime gameTime)

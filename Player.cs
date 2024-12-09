@@ -237,10 +237,10 @@ namespace MortensKomeback2
                 Pray(interactRange);
                 praying = true;
             }
-
+            
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
-
+            //The player is interacting 
             if (keyState.IsKeyDown(Keys.E) && !interact)
             {
                 Interact(interactRange);
@@ -250,6 +250,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.E))
                 interact = false;
 
+            //Open inventory 
             if (keyState.IsKeyDown(Keys.I) && !inventory && !GameWorld.DetectInventory())
             {
                 GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
@@ -264,6 +265,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.I))
                 inventory = false;
 
+            //Healing
             if (keyState.IsKeyDown(Keys.H) && !healing)
             {
                 Heal();

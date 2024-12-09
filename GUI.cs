@@ -15,21 +15,27 @@ namespace MortensKomeback2
     internal class GUI : GameObject
     {
         #region Fields
-        private static int healthCount;
-        private Vector2 heartPosition;
-        private Vector2 weaponClassPosition; 
+        string keyBindings;
+        Vector2 helpTextPosition = new Vector2(0,0);
+        private Color textHeaderColor;
+        private Vector2 textOrigin;
+        private float textScale;
+
+        //private static int healthCount;
+        //private Vector2 heartPosition;
+        //private Vector2 weaponClassPosition; 
         #endregion
 
         #region Properties
         /// <summary>
         /// Accessing Players health
         /// </summary>
-      //  public static int HealthCount { get => healthCount; set => healthCount = value; }
+        //  public static int HealthCount { get => healthCount; set => healthCount = value; }
 
         /// <summary>
         /// Shows picked class sprite-weapon
         /// </summary>
-       // public Texture2D WeaponSprite { get => weaponSprite; set => weaponSprite = value; }
+        // public Texture2D WeaponSprite { get => weaponSprite; set => weaponSprite = value; }
 
         /// <summary>
         /// Shows quest items picked up. For example: Keys, rosary..
@@ -39,62 +45,41 @@ namespace MortensKomeback2
         #endregion
 
         #region Constructor                                                   
-        public GUI(Vector2 placement)
+        public GUI()
         {
-            this.layer = 0.9f;
-            this.position = placement;
-            this.sprite = GameWorld.commonSprites["heartSprite"];
+            layer = 1;
+            position = helpTextPosition;
+            keyBindings = "WASD to move \n P to pray for finding items \n E to interact and pick up items \n ENTER to close dialog \n I to open inventory \n You can also use left mousebutton to open and navigate inventory";
+
         }
         #endregion
-        
+
         #region Methods
 
 
         public override void LoadContent(ContentManager content)
         {
-           
+
         }
 
         public override void OnCollision(GameObject gameObject)
         {
-            
+
         }
 
         public override void Update(GameTime gameTime)
         {
 
 
-            //if (mortenAlive)
-            //{
+        }
+      
 
-            //    healthCount = GameWorld.PlayerInstance.Health;
-            //}
 
-            //Update GUI state based on player status
-            //if (GameWorld.PlayerInstance != null)
-            //{
-            //    mortenAlive = GameWorld.PlayerInstance.Health > 0;
-            //    healthCount = GameWorld.PlayerInstance.Health;
-            //}
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, helpTextPosition, textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 1f);
 
         }
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    // Draw the heart icon for health
-        //    spriteBatch.Draw(GameWorld.commonSprites["heartSprite"], heartPosition, Color.White);
-
-        //    // Draw weapon icon (or other relevant GUI elements)
-        //    spriteBatch.Draw(GameWorld.commonSprites["weaponClassSprite"], weaponClassPosition, Color.White);
-
-        //    // Optionally, draw health as text
-        //    //SpriteFont font = GameWorld.commonSprites["mortensKomebackFont"];
-        //    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
-        //}
-
-
-
-
-
         #endregion
     }
 }
