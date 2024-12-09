@@ -105,7 +105,7 @@ namespace MortensKomeback2
         {
             base.Draw(spriteBatch);
             if (dialogue)
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(textPosition.X - (1920/2) + 120, textPosition.Y - (1080/2) + 750), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(GameWorld.Camera.Position.X + textPosition.X - (1920/2) + 120, GameWorld.Camera.Position.Y + textPosition.Y - (1080/2) + 715), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.2f);
         }
 
         #endregion

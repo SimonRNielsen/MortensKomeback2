@@ -41,7 +41,7 @@ namespace MortensKomeback2
         private static Color grayGoose = new Color(209, 208, 206);
         private List<Area> area51 = new List<Area>();
         private static Player playerInstance;
-        public static List<NPC> nPCs;
+        public static List<NPC> nPCs = new List<NPC>();
         private static Random random = new Random();
 
         #endregion Fields
@@ -235,7 +235,7 @@ namespace MortensKomeback2
                     if (gameObject is Area)
                         area51.Add(gameObject as Area);
 
-            if (nPCs == null)
+            if (nPCs.Count == 0)
                 nPCs = FindNPCLocation();
 
             PlayerInRoom();
