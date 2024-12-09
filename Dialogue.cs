@@ -74,6 +74,8 @@ namespace MortensKomeback2
         public void NPCDialogue(Character character)
         {
             GameWorld.Dialogue = true;
+            QuestItem tempItem;
+            string questItem;
             string caseName = string.Empty;
             if (character is NPC)
                 caseName = (character as NPC).NPCClass;
@@ -82,19 +84,41 @@ namespace MortensKomeback2
             switch (caseName)
             {
                 case "Munk":
-                    nPCText = "Hej, jeg hedder Kaj, jeg er munk, folk kalder mig Kaj Munk";
+                    questItem = "Monks bible";
+                    tempItem = FindQuestItem(GameWorld.playerInventory, questItem);
+                    if (tempItem != null)
+                    {
+                        nPCText = "Thank you for finding my bible for me! Here, have this key";
+                        GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
+                        GameWorld.playerInventory.Remove(tempItem);
+                    }
+                    else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
+                        nPCText = "This NPC has no further quests";
+                    else
+                        nPCText = "Hej, jeg hedder Kaj, jeg er munk, folk kalder mig Kaj Munk";
                     break;
                 case "Nun":
-                    nPCText = "Jeg er foede for oekologisk-minded kannibaler";
+                    questItem = "Nuns rosary";
+                    tempItem = FindQuestItem(GameWorld.playerInventory, questItem);
+                    if (tempItem != null)
+                    {
+                        nPCText = "Thank you for finding my rosary for me! Here, have this key";
+                        GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
+                        GameWorld.playerInventory.Remove(tempItem);
+                    }
+                    else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
+                        nPCText = "This NPC has no further quests";
+                    else
+                        nPCText = "Jeg er foede for oekologisk-minded kannibaler";
                     break;
                 case "Boss":
-                    nPCText = "I AM GOOSIFER! *Evil laughter*";
+                    nPCText = "I AM GOOSIFER! *Evil honks*";
                     break;
                 case "Letter":
                     nPCText = "It's a mi, da pope-a";
                     break;
                 default:
-                    nPCText = "This NPC has no further quests";
+                    nPCText = "This NPC has no quests";
                     break;
             }
 
@@ -105,8 +129,15 @@ namespace MortensKomeback2
         {
             base.Draw(spriteBatch);
             if (dialogue)
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(textPosition.X - (1920/2) + 120, textPosition.Y - (1080/2) + 750), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(GameWorld.Camera.Position.X + textPosition.X - (1920 / 2) + 120, GameWorld.Camera.Position.Y + textPosition.Y - (1080 / 2) + 715), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.2f);
         }
+
+
+        private QuestItem FindQuestItem(List<Item> list, string itemName)
+        {
+            return list.FindAll(item => item is QuestItem).ConvertAll(questItem => (QuestItem)questItem).Find(questItem => questItem.ItemName == itemName);
+        }
+
 
         #endregion
     }

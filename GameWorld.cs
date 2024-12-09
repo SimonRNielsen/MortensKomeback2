@@ -42,7 +42,7 @@ namespace MortensKomeback2
         private static Color grayGoose = new Color(209, 208, 206);
         private List<Area> area51 = new List<Area>();
         private static Player playerInstance;
-        public static List<NPC> nPCs;
+        public static List<NPC> nPCs = new List<NPC>();
         private static Random random = new Random();
         public static string currentTrack = null;
 
@@ -105,6 +105,8 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
+            hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -237,7 +239,7 @@ namespace MortensKomeback2
                     if (gameObject is Area)
                         area51.Add(gameObject as Area);
 
-            if (nPCs == null)
+            if (nPCs.Count == 0)
                 nPCs = FindNPCLocation();
 
             PlayerInRoom();
@@ -269,11 +271,10 @@ namespace MortensKomeback2
             foreach (GameObject gameObject in gameObjects)
             {
                 //Pause-logic
-                if (!menuActive && !battleActive)
+                if (!menuActive && !battleActive && !dialogue)
                     gameObject.Update(gameTime);
-                //Måske skrotte nedenstående?
-                /*else if (menuActive && gameObject is Player)
-                    gameObject.Update(gameTime); */
+                else if (dialogue && gameObject is Dialogue)
+                    gameObject.Update(gameTime);
                 else if (battleActive && (gameObject is BattleField || gameObject is HealthBar) && !menuActive)
                     gameObject.Update(gameTime);
 

@@ -19,6 +19,7 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="xPosition">X position</param>
         /// <param name="yPosition">Y position</param>
+        /// <param name="obstacleType">The type of obstacle. Used to set the sprite of the obstacle. </param>
         public Obstacle(int xPosition, int yPosition, string obstacleType)
         {
             this.position = new Vector2(xPosition, yPosition);
