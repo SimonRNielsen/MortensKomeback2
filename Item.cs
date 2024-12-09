@@ -39,7 +39,7 @@ namespace MortensKomeback2
         public bool IsFound { get => isFound; set => isFound = value; }
         public Texture2D StandardSprite { get => standardSprite; }
         public bool IsPickedUp { get => isPickedUp; set => isPickedUp = value; }
-
+        public string ItemName { get => itemName; }
         #endregion
 
         #region Constructor
