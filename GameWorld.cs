@@ -955,7 +955,7 @@ namespace MortensKomeback2
         /// Method for switching between music
         /// </summary>
         /// <param name="typeMusic"></param>
-        public void PlayMusic(int typeMusic)
+        public static void PlayMusic(int typeMusic)
         {
             
             switch (typeMusic)

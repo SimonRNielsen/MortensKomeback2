@@ -164,6 +164,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         public override void Update(GameTime gameTime)
         {
+            
 
             //The enemy should allways be animated. 
             foreach (Enemy e in battlefieldEnemies)
@@ -281,21 +282,25 @@ namespace MortensKomeback2
             {
                 keysAreLifted = true;
             }
-
-            if (keyState.IsKeyDown(Keys.Q))
+            //Quit
+            if (keyState.IsKeyDown(Keys.Q)) 
             {
                 GameWorld.PlayerInstance.Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
                 IsAlive = false;
+                GameWorld.PlayMusic(1); //should play battlemusic
+
             }
-
-            if (battleWon && keyState.IsKeyDown(Keys.Enter))
+            //End battle
+            if (battleWon && keyState.IsKeyDown(Keys.Enter)) 
             {
                 GameWorld.PlayerInstance.Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
                 IsAlive = false;
+                GameWorld.PlayMusic(1); //should play battlemusic
+
             }
             return 0;
 

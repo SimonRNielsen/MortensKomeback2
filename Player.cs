@@ -152,6 +152,7 @@ namespace MortensKomeback2
                 {
                     GameWorld.BattleActive = true;
                     GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
+                    GameWorld.PlayMusic(2); //should play battlemusic
 
                 }
             }
@@ -238,10 +239,11 @@ namespace MortensKomeback2
                 Pray(interactRange);
                 praying = true;
             }
-
+            
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
+            //Interact 
             if (keyState.IsKeyDown(Keys.E) && !interact)
             {
                 Interact(interactRange);
@@ -251,6 +253,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.E))
                 interact = false;
 
+            //Inventory
             if (keyState.IsKeyDown(Keys.I) && !inventory && !GameWorld.DetectInventory())
             {
                 GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
@@ -265,6 +268,8 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.I))
                 inventory = false;
 
+
+            //Heal
             if (keyState.IsKeyDown(Keys.H) && !healing)
             {
                 Heal();
