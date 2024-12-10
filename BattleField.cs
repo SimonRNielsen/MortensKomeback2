@@ -95,6 +95,7 @@ namespace MortensKomeback2
             //Sets chosen action to zero
             chosenAction = 0;
 
+
         }
 
         #endregion
@@ -159,7 +160,6 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         public override void Update(GameTime gameTime)
         {
-            
 
             //The enemy should allways be animated. 
             foreach (Enemy e in battlefieldEnemies)
@@ -197,7 +197,6 @@ namespace MortensKomeback2
             }
             //Removes all dead enemies. 
             battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
-
         }
 
         /// <summary>
@@ -289,6 +288,9 @@ namespace MortensKomeback2
                 IsAlive = false;
             }
             return 0;
+
+          
+
         }
 
         /// <summary>
@@ -690,6 +692,7 @@ namespace MortensKomeback2
             }
         }
 
+       
 
         #endregion
     }

@@ -159,6 +159,8 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+
+
             Movement(gameTime);
             HandleInput();
             Animation(gameTime);

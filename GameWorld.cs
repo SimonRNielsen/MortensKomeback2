@@ -780,18 +780,19 @@ namespace MortensKomeback2
             Song battleMusic = Content.Load<Song>("Sounds\\Music\\battleMusic");
             backgroundMusic.Add("battleMusic", battleMusic);
 
-            //if (battle)
+            //if ()
             //{
             //    MediaPlayer.Play(backgroundMusic["bgMusic"]);
             //    MediaPlayer.IsRepeating = true;
             //    MediaPlayer.Volume = 0.15f;
             //}
-            if(!battleActive)           
-            {
-                MediaPlayer.Play(backgroundMusic["battleMusic"]);
-                MediaPlayer.IsRepeating = true;
-                MediaPlayer.Volume = 0.15f;
-            }
+            //if (battleActive)           
+            //{
+            //    MediaPlayer.Play(backgroundMusic["battleMusic"]);
+            //    MediaPlayer.IsRepeating = true;
+            //    MediaPlayer.Volume = 0.15f;
+            //}
+            PlayMusic(1);
 
             #endregion Organ Music
 
@@ -950,8 +951,30 @@ namespace MortensKomeback2
             }
 
         }
+        /// <summary>
+        /// Method for switching between music
+        /// </summary>
+        /// <param name="typeMusic"></param>
+        public void PlayMusic(int typeMusic)
+        {
+            
+            switch (typeMusic)
+            { 
+                case 1: //backround music
+                    MediaPlayer.Play(backgroundMusic["bgMusic"]);
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Volume = 0.15f;
+                    break;
+                case 2: //battle music
+                    MediaPlayer.Play(backgroundMusic["battleMusic"]);
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Volume = 0.15f;
+                    break;
+            }
 
        
+        }
+
         #endregion Functionality
         #endregion Methods
     }
