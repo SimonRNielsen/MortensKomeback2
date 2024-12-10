@@ -13,6 +13,7 @@ namespace MortensKomeback2
         #region Fields
         private bool battleWon = false;
         private bool blocking = false;
+        private bool drawHealSprite = false;
         private bool enemyActionOngoing = false;
         private bool keysAreLifted;
         private bool playerActionOngoing = false;
@@ -38,6 +39,7 @@ namespace MortensKomeback2
         private string enemyActionText;
         private string healText;
         private string playerActionText;
+        private Texture2D healSprite;
         private Texture2D[] playerDefaultSpriteArray;
         private Vector2 playerOriginPosition;
         private Vector2 textOrigin;
@@ -144,6 +146,8 @@ namespace MortensKomeback2
             this.sprite = GameWorld.animationSprites["areaStart"][0];
             this.layer = 0.0000001f;
 
+            healSprite = GameWorld.commonSprites["magicHeal"];
+
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -223,6 +227,12 @@ namespace MortensKomeback2
             {
                 spriteBatch.DrawString(standardFont, enemyActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
+            if(drawHealSprite)
+            {
+                spriteBatch.Draw(healSprite, GameWorld.PlayerInstance.Position, null, Color.White, Rotation, new Vector2(healSprite.Width / 2, healSprite.Height / 2), 1, SpriteEffects.None, layer+0.2f);
+
+            }
+
             if (battleWon)
             {
                 spriteBatch.DrawString(standardFont, "You have won the battle!", battlefieldDialogue.Position - new Vector2((float)(820), 130), textHeaderColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
@@ -489,24 +499,28 @@ namespace MortensKomeback2
 
             BeginAction("player");
 
-            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 400) && (actionPhase == 1))
+            if ((actionTimer < actionTimerDuration) && (actionPhase == 1))
             {
                 playerActionText = "You are trying to heal yourself...";
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+                actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                //GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
             }
-            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + -400) && (actionPhase == 1))
+            else if (actionTimer> actionTimerDuration && (actionPhase == 1))
             {
                 actionPhase = 2;
+                actionTimer = 0;
                 if (GameWorld.PlayerInstance.Health < GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus)
                 {
                     bool succes = GameWorld.PlayerInstance.Heal();
                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && succes)
                     {
                         playerActionText = "You heal yourself for 50 health!";
+                        drawHealSprite = true;
                     }
                     else if (succes)
                     {
                         playerActionText = "You heal yourself for 25 health!";
+                        drawHealSprite = true;
                     }
                     else if (succes == false)
                     {
@@ -518,13 +532,15 @@ namespace MortensKomeback2
                     playerActionText = "You are already at full health!";
                 }
             }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
+            else if (actionTimer<actionTimerDuration && (actionPhase == 2))
             {
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+                actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             }
             else
             {
+                actionTimer = 0;
+                drawHealSprite = false;
                 EndAction("player");
             }
             //Animate
