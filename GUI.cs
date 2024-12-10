@@ -10,8 +10,7 @@ namespace MortensKomeback2
     {
         #region Fields
         private static int healthCount;
-        private Vector2 heartPosition;
-        private Vector2 weaponClassPosition; 
+        private Vector2 helpTextPosition; 
         #endregion
 
         #region Properties
@@ -37,7 +36,7 @@ namespace MortensKomeback2
         {
             this.layer = 0.9f;
             this.position = placement;
-            this.sprite = GameWorld.commonSprites["heartSprite"];
+            //this.sprite = GameWorld.commonSprites["heartSprite"];
         }
         #endregion
         
@@ -56,8 +55,6 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-
-
             //if (mortenAlive)
             //{
 
@@ -74,15 +71,10 @@ namespace MortensKomeback2
         }
         //public override void Draw(SpriteBatch spriteBatch)
         //{
-        //    // Draw the heart icon for health
-        //    spriteBatch.Draw(GameWorld.commonSprites["heartSprite"], heartPosition, Color.White);
-
-        //    // Draw weapon icon (or other relevant GUI elements)
-        //    spriteBatch.Draw(GameWorld.commonSprites["weaponClassSprite"], weaponClassPosition, Color.White);
 
         //    // Optionally, draw health as text
         //    //SpriteFont font = GameWorld.commonSprites["mortensKomebackFont"];
-        //    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
+        //    //spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Health: {healthCount}", new Vector2(60, 25), Color.Red);
         //}
 
 

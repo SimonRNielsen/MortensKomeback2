@@ -780,13 +780,13 @@ namespace MortensKomeback2
             Song battleMusic = Content.Load<Song>("Sounds\\Music\\battleMusic");
             backgroundMusic.Add("battleMusic", battleMusic);
 
-            if (mortenLives)
-            {
-                MediaPlayer.Play(backgroundMusic["bgMusic"]);
-                MediaPlayer.IsRepeating = true;
-                MediaPlayer.Volume = 0.15f;
-            }
-            else           
+            //if (battle)
+            //{
+            //    MediaPlayer.Play(backgroundMusic["bgMusic"]);
+            //    MediaPlayer.IsRepeating = true;
+            //    MediaPlayer.Volume = 0.15f;
+            //}
+            if(!battleActive)           
             {
                 MediaPlayer.Play(backgroundMusic["battleMusic"]);
                 MediaPlayer.IsRepeating = true;
