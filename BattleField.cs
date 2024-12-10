@@ -88,7 +88,7 @@ namespace MortensKomeback2
                 playerDamageBonus += i.DamageBonus;
                 playerDamageReductionBonus += i.DamageReductionBonus;
             }
-           
+
 
             //Adds healthbar for enemy
             enemyHealthbar = new HealthBar(0.55f, 1, battlefieldEnemies[0]);
@@ -164,7 +164,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         public override void Update(GameTime gameTime)
         {
-            
+
 
             //The enemy should allways be animated. 
             foreach (Enemy e in battlefieldEnemies)
@@ -201,7 +201,12 @@ namespace MortensKomeback2
                 }
             }
             //Removes all dead enemies. 
-            battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
+            if (!enemyActionOngoing)
+                battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
+            if(battlefieldEnemies.Count <1)
+            {
+                battleWon = true;
+            }
         }
 
         /// <summary>
@@ -227,9 +232,9 @@ namespace MortensKomeback2
             {
                 spriteBatch.DrawString(standardFont, enemyActionText, battlefieldDialogue.Position - new Vector2((float)(820), 130), textBodyColor, 0, textOrigin, textScale, SpriteEffects.None, layer + 0.1f);
             }
-            if(drawHealSprite)
+            if (drawHealSprite)
             {
-                spriteBatch.Draw(healSprite, GameWorld.PlayerInstance.Position, null, Color.White, Rotation, new Vector2(healSprite.Width / 2, healSprite.Height / 2), 1, SpriteEffects.None, layer+0.2f);
+                spriteBatch.Draw(healSprite, GameWorld.PlayerInstance.Position, null, Color.White, Rotation, new Vector2(healSprite.Width / 2, healSprite.Height / 2), 1, SpriteEffects.None, layer + 0.2f);
 
             }
 
@@ -283,7 +288,7 @@ namespace MortensKomeback2
                 keysAreLifted = true;
             }
             //Quit
-            if (keyState.IsKeyDown(Keys.Q)) 
+            if (keyState.IsKeyDown(Keys.Q))
             {
                 GameWorld.PlayerInstance.Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
@@ -293,7 +298,7 @@ namespace MortensKomeback2
 
             }
             //End battle
-            if (battleWon && keyState.IsKeyDown(Keys.Enter)) 
+            if (battleWon && keyState.IsKeyDown(Keys.Enter))
             {
                 GameWorld.PlayerInstance.Position = playerOriginPosition;
                 GameWorld.Camera.Position = Vector2.Zero;
@@ -304,7 +309,7 @@ namespace MortensKomeback2
             }
             return 0;
 
-          
+
 
         }
 
@@ -512,7 +517,7 @@ namespace MortensKomeback2
                 actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 //GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
             }
-            else if (actionTimer> actionTimerDuration && (actionPhase == 1))
+            else if (actionTimer > actionTimerDuration && (actionPhase == 1))
             {
                 actionPhase = 2;
                 actionTimer = 0;
@@ -539,7 +544,7 @@ namespace MortensKomeback2
                     playerActionText = "You are already at full health!";
                 }
             }
-            else if (actionTimer<actionTimerDuration && (actionPhase == 2))
+            else if (actionTimer < actionTimerDuration && (actionPhase == 2))
             {
                 actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -585,7 +590,7 @@ namespace MortensKomeback2
                                 {
                                     GameWorld.PlayerInstance.Health -= currentDamage;
                                     enemyActionText = $"The enemy dealt {currentDamage} damage! Your action negated 5 damage!";
-                                    if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
+                                    if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
                                         enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
@@ -681,6 +686,7 @@ namespace MortensKomeback2
             }
             else if (actor.ToLower() == "enemy")
             {
+                enemyActionText = "";
                 enemyActionOngoing = false;
             }
             actionPhase = 0;
@@ -692,28 +698,27 @@ namespace MortensKomeback2
         /// <param name="actor"></param>
         private void BeginAction(String actor)
         {
-            if(actionPhase == 0)
-            { 
-            if (actor.ToLower() == "player")
+            if (actionPhase == 0)
             {
-              if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && chosenAction == 1)
+                if (actor.ToLower() == "player")
                 {
+                    if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && chosenAction == 1)
+                    {
                         GameWorld.newGameObjects.Add(magic);
+                    }
+                    else if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk && chosenAction == 1)
+                    {
+                        GameWorld.newGameObjects.Add(egg);
+                    }
                 }
-              else if(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk && chosenAction == 1)
+                else if (actor.ToLower() == "enemy")
                 {
-                    GameWorld.newGameObjects.Add(egg);
                 }
-            }
-            else if (actor.ToLower() == "enemy")
-            {
-               
-            }
-            actionPhase = 1;
+                actionPhase = 1;
             }
         }
 
-       
+
 
         #endregion
     }
