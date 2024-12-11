@@ -107,6 +107,7 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
             hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
+            hiddenItems.Add(new QuestItem(2, false, Vector2.Zero));
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -237,6 +238,12 @@ namespace MortensKomeback2
                 Restart();
 
             #endregion Exit & Restart
+            #region Win logic
+
+            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null)
+                menu.Add(new Menu(Camera.Position, 1));
+
+            #endregion Win logic
             #region References
 
             if (area51.Count == 0)
