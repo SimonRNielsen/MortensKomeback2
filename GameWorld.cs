@@ -107,7 +107,7 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
             hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
-            hiddenItems.Add(new QuestItem(2, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(2, false, new Vector2(0, 1080 * 9)));
 
             menu.Add(new Menu(Camera.Position, 3));
 
