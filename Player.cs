@@ -31,7 +31,7 @@ namespace MortensKomeback2
         private bool playFirst = false;
 
         private string helpText = "K - Keybindings";
-        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nRight-click on items to equip \nEnter - Close Dialogue \nP - Pray";
+        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip";
         private bool showKeybinding = false;
 
         /// <summary>
@@ -292,6 +292,7 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.K))
             {
                 showKeybinding = false;
+
             }
 
         }
@@ -456,7 +457,12 @@ namespace MortensKomeback2
 
             if (showKeybinding == true)
             {
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, Position, Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100) , Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+
+            }
+            else
+            {
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, "K - Keybindings", new Vector2(GameWorld.Camera.Position.X - 620, GameWorld.Camera.Position.Y - 300), Color.White, 0f, new Vector2(100, 100), 1.2f, SpriteEffects.None, 0.66f);
 
             }
         }

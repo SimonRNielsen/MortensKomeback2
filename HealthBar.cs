@@ -9,8 +9,6 @@ namespace MortensKomeback2
     internal class HealthBar : GameObject
     {
         #region Fields
-        private Texture2D initalSprite;
-
         private Rectangle backgroundRectangle;
         private Rectangle foregroundRectangle;
         private bool enemyHealthbar = false;
@@ -57,10 +55,7 @@ namespace MortensKomeback2
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gives the possibility to read the sprite, but most importantly change it in GameWorld
-        /// </summary>
-        public Texture2D InitalSprite { get => initalSprite; set => initalSprite = value; }
+       
         #endregion
 
         #region Methods
