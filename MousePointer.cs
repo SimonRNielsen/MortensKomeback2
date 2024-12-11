@@ -69,11 +69,10 @@ namespace MortensKomeback2
         public void CheckCollision(Item item)
         {
 
-            if (!(item is QuestItem))
-                if (CollisionBox.Intersects(item.CollisionBox))
-                {
-                    GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
-                }
+            if (CollisionBox.Intersects(item.CollisionBox))
+            {
+                GameWorld.newGameObjects.Add(new Button(GameWorld.MousePosition, ref item));
+            }
 
         }
 
@@ -84,14 +83,12 @@ namespace MortensKomeback2
         {
 
             foreach (Item item in GameWorld.playerInventory)
-                if (!(item is QuestItem))
-                    if (item.CollisionBox.Intersects(CollisionBox))
-                        item.OnCollision();
+                if (item.CollisionBox.Intersects(CollisionBox))
+                    item.OnCollision();
 
             foreach (Item item in GameWorld.equippedPlayerInventory)
-                if (!(item is QuestItem))
-                    if (item.CollisionBox.Intersects(CollisionBox))
-                        item.OnCollision();
+                if (item.CollisionBox.Intersects(CollisionBox))
+                    item.OnCollision();
 
         }
 
