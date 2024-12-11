@@ -137,8 +137,8 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 2), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // Bossfight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // Scepter
 
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 2), 0, "Room2"));          //ventre side, rum 2, nonne
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 4), 0, "Room3"));     //ventre side, rum 3 enemies
@@ -146,7 +146,7 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
 
 
-            newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));      //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
 
             #endregion Areas
@@ -592,6 +592,13 @@ namespace MortensKomeback2
             Texture2D healItem = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
             Texture2D mitre = Content.Load<Texture2D>("Sprites\\Item\\mitre");
+            Texture2D helm = Content.Load<Texture2D>("Sprites\\Item\\helm");
+            Texture2D sword = Content.Load<Texture2D>("Sprites\\Item\\sword");
+            Texture2D key = Content.Load<Texture2D>("Sprites\\Item\\key");
+            Texture2D shield = Content.Load<Texture2D>("Sprites\\Item\\shield");
+            Texture2D rosary = Content.Load<Texture2D>("Sprites\\Item\\rosary");
+            Texture2D staff = Content.Load<Texture2D>("Sprites\\Item\\staff");
+            Texture2D potion = Content.Load<Texture2D>("Sprites\\Item\\potion");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -601,6 +608,14 @@ namespace MortensKomeback2
             commonSprites.Add("healItem", healItem);
             commonSprites.Add("blink", blink);
             commonSprites.Add("mitre", mitre);
+            commonSprites.Add("helm", helm);
+            commonSprites.Add("sword", sword);
+            commonSprites.Add("key", key);
+            commonSprites.Add("shield", shield);
+            commonSprites.Add("rosary", rosary);
+            commonSprites.Add("staff", staff);
+            commonSprites.Add("potion", potion);
+
 
             #endregion Items
             #region GUI
@@ -655,6 +670,9 @@ namespace MortensKomeback2
 
             Texture2D monkNPC = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPC");
             commonSprites.Add("monkNPC", monkNPC);
+
+            Texture2D talkPrompt = Content.Load<Texture2D>("Sprites\\Charactor\\talk");
+            commonSprites.Add("talkPrompt", talkPrompt);
             #endregion NPC
         }
 
