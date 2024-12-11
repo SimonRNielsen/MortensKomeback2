@@ -429,7 +429,7 @@ namespace MortensKomeback2
             Item healingItem = GameWorld.FindHealingItem();
 
             if (!(health == maxHealth + healthBonus))
-                if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
+                if (playerClass == PlayerClass.Bishop && limitedHeals > 0 || playerClass == PlayerClass.Bishop && GameWorld.BattleActive)
                 {
                     Health += healAmount + 25;
                     if (!GameWorld.BattleActive)
