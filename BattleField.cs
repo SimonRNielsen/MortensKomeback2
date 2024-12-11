@@ -203,7 +203,7 @@ namespace MortensKomeback2
             //Removes all dead enemies. 
             if (!enemyActionOngoing)
                 battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
-            if(battlefieldEnemies.Count <1)
+            if(battlefieldEnemies.Count < 1 && !playerActionOngoing)
             {
                 battleWon = true;
             }
