@@ -455,6 +455,7 @@ namespace MortensKomeback2
             if (invulnerability)
                 spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
 
+            //draw text
             if (showKeybinding == true)
             {
                 spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100) , Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
