@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using SharpDX.Direct2D1;
 
 namespace MortensKomeback2
 {
@@ -29,6 +30,9 @@ namespace MortensKomeback2
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
 
+        private string helpText = "K - Keybindings";
+        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nRight-click on items to equip \nEnter - Close Dialogue \nP - Pray";
+        private bool showKeybinding = false;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -51,7 +55,7 @@ namespace MortensKomeback2
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            this.speed = 800; //Not sure what speed should be
+            this.speed = 500; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
             this.fps = 4f;
             this.playerClass = playerClass;
@@ -279,6 +283,17 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.H))
                 healing = false;
 
+            //K for Keybindings
+            if (keyState.IsKeyDown(Keys.K))
+            {
+                showKeybinding = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.K))
+            {
+                showKeybinding = false;
+            }
+
         }
 
         /// <summary>
@@ -427,17 +442,23 @@ namespace MortensKomeback2
 
         }
 
+
         /// <summary>
         /// Overrides to give a damage "effect" on Player
         /// </summary>
         /// <param name="spriteBatch">Drawing tool</param>
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
 
             base.Draw(spriteBatch);
             if (invulnerability)
                 spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
 
+            if (showKeybinding == true)
+            {
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, Position, Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+
+            }
         }
 
         #endregion
