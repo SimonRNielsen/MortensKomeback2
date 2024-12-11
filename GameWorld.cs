@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
+using System.Reflection.Metadata;
 
 namespace MortensKomeback2
 {
@@ -41,8 +42,9 @@ namespace MortensKomeback2
         private static Color grayGoose = new Color(209, 208, 206);
         private List<Area> area51 = new List<Area>();
         private static Player playerInstance;
-        public static List<NPC> nPCs;
+        public static List<NPC> nPCs = new List<NPC>();
         private static Random random = new Random();
+        public static string currentTrack = null;
 
         #endregion Fields
 
@@ -103,6 +105,9 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
+            hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
+            hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
+            hiddenItems.Add(new QuestItem(2, false, new Vector2(0, 1080 * 9)));
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -122,7 +127,7 @@ namespace MortensKomeback2
 
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0, "stone"));
-            newGameObjects.Add(new Obstacle(-400, 00, "stone"));
+            newGameObjects.Add(new Obstacle(-400, 00, "hole"));
 
             #endregion Obstacles
             #region Areas
@@ -132,8 +137,8 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 2), 3, "Room1b"));    //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 3), 4, "Room1c"));  //main room
             newGameObjects.Add(new Area(new Vector2(0, 1080 * 5), 0, "Room8"));  // våbenhus - enemies
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // puzzle
-            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // boss fight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 7), 0, "Room9"));  // Bossfight
+            newGameObjects.Add(new Area(new Vector2(0, 1080 * 9), 0, "Room10"));  // Scepter
 
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 2), 0, "Room2"));          //ventre side, rum 2, nonne
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 4), 0, "Room3"));     //ventre side, rum 3 enemies
@@ -141,7 +146,7 @@ namespace MortensKomeback2
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 8), 0, "Room5"));   //ventre side, rum 5, item
 
 
-            newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));           //højre side, rum 1, munk
+            newGameObjects.Add(new Area(new Vector2(0, -1080 * 10), 0, "Room6"));      //højre side, rum 1, munk
             newGameObjects.Add(new Area(new Vector2(0, -1080 * 12), 0, "Room7"));      //højre side, rum 2, secret + item
 
             #endregion Areas
@@ -183,6 +188,17 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide - 120))); //10.9
 
             #endregion Doors
+            #region environment
+            newGameObjects.Add(new Environment(new Vector2(0, 2000), 0));      //carpet
+
+
+            #endregion environment
+            #region NPC
+
+            newGameObjects.Add(new NPC(0, 0, new Vector2(0, - 1080 * 10))); //monk
+            newGameObjects.Add(new NPC(1, 1, new Vector2(0, -1080 * 2))); //nun
+
+            #endregion NPC
 
             base.Initialize();
 
@@ -222,6 +238,12 @@ namespace MortensKomeback2
                 Restart();
 
             #endregion Exit & Restart
+            #region Win logic
+
+            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null)
+                menu.Add(new Menu(Camera.Position, 1));
+
+            #endregion Win logic
             #region References
 
             if (area51.Count == 0)
@@ -229,7 +251,7 @@ namespace MortensKomeback2
                     if (gameObject is Area)
                         area51.Add(gameObject as Area);
 
-            if (nPCs == null)
+            if (nPCs.Count == 0)
                 nPCs = FindNPCLocation();
 
             PlayerInRoom();
@@ -261,11 +283,10 @@ namespace MortensKomeback2
             foreach (GameObject gameObject in gameObjects)
             {
                 //Pause-logic
-                if (!menuActive && !battleActive)
+                if (!menuActive && !battleActive && !dialogue)
                     gameObject.Update(gameTime);
-                //Måske skrotte nedenstående?
-                /*else if (menuActive && gameObject is Player)
-                    gameObject.Update(gameTime); */
+                else if (dialogue && gameObject is Dialogue)
+                    gameObject.Update(gameTime);
                 else if (battleActive && (gameObject is BattleField || gameObject is HealthBar) && !menuActive)
                     gameObject.Update(gameTime);
 
@@ -549,8 +570,16 @@ namespace MortensKomeback2
             #region Obstacles
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
+            Texture2D hole = Content.Load<Texture2D>("Sprites\\Obstacle\\hole"); //Hole
+            Texture2D magic = Content.Load<Texture2D>("Sprites\\Obstacle\\magic"); //magic missile
+            Texture2D magicHeal = Content.Load<Texture2D>("Sprites\\Obstacle\\magicHeal"); //magic heal
+            Texture2D egg = Content.Load<Texture2D>("Sprites\\Obstacle\\egg"); //magic heal
 
             commonSprites.Add("stone", stone);
+            commonSprites.Add("hole", hole);
+            commonSprites.Add("magic", magic);
+            commonSprites.Add("magicHeal", magicHeal);
+            commonSprites.Add("egg", egg);
 
             #endregion Obstacles
             #region Items
@@ -563,6 +592,13 @@ namespace MortensKomeback2
             Texture2D healItem = Content.Load<Texture2D>("Sprites\\Item\\torsoPlaceholder");
             Texture2D blink = Content.Load<Texture2D>("Sprites\\Item\\blinkPlaceholder");
             Texture2D mitre = Content.Load<Texture2D>("Sprites\\Item\\mitre");
+            Texture2D helm = Content.Load<Texture2D>("Sprites\\Item\\helm");
+            Texture2D sword = Content.Load<Texture2D>("Sprites\\Item\\sword");
+            Texture2D key = Content.Load<Texture2D>("Sprites\\Item\\key");
+            Texture2D shield = Content.Load<Texture2D>("Sprites\\Item\\shield");
+            Texture2D rosary = Content.Load<Texture2D>("Sprites\\Item\\rosary");
+            Texture2D staff = Content.Load<Texture2D>("Sprites\\Item\\staff");
+            Texture2D potion = Content.Load<Texture2D>("Sprites\\Item\\potion");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -572,6 +608,14 @@ namespace MortensKomeback2
             commonSprites.Add("healItem", healItem);
             commonSprites.Add("blink", blink);
             commonSprites.Add("mitre", mitre);
+            commonSprites.Add("helm", helm);
+            commonSprites.Add("sword", sword);
+            commonSprites.Add("key", key);
+            commonSprites.Add("shield", shield);
+            commonSprites.Add("rosary", rosary);
+            commonSprites.Add("staff", staff);
+            commonSprites.Add("potion", potion);
+
 
             #endregion Items
             #region GUI
@@ -620,6 +664,16 @@ namespace MortensKomeback2
             commonSprites.Add("characterScreen", characterScreen);
 
             #endregion Menu & Button
+            #region NPC
+            Texture2D nunNPC = Content.Load<Texture2D>("Sprites\\Charactor\\nunNPC");
+            commonSprites.Add("nunNPC", nunNPC);
+
+            Texture2D monkNPC = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPC");
+            commonSprites.Add("monkNPC", monkNPC);
+
+            Texture2D talkPrompt = Content.Load<Texture2D>("Sprites\\Charactor\\talk");
+            commonSprites.Add("talkPrompt", talkPrompt);
+            #endregion NPC
         }
 
         /// <summary>
@@ -653,10 +707,20 @@ namespace MortensKomeback2
             animationSprites.Add("doorStart", doorArray);
 
             #endregion Doors
+            #region environment
+
+            Texture2D[] environment = new Texture2D[1] //rooms
+            {
+            Content.Load<Texture2D>("Sprites\\area\\carpet"), //Carpet
+           
+            };
+            animationSprites.Add("environment", environment);
+
+            #endregion environment
             #region Morten
 
-            Texture2D[] bishop = new Texture2D[4];
-            for (int i = 0; i < 4; i++)
+            Texture2D[] bishop = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
             {
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
@@ -669,8 +733,8 @@ namespace MortensKomeback2
             }
             animationSprites.Add("monk", monk);
 
-            Texture2D[] crusader = new Texture2D[4];
-            for (int i = 0; i < 4; i++)
+            Texture2D[] crusader = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
             {
                 crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
@@ -739,6 +803,8 @@ namespace MortensKomeback2
             commonSounds.Add("aggroGoose", aggroGoose);
 
             #endregion Enemy
+        
+
 
         }
 
@@ -747,6 +813,28 @@ namespace MortensKomeback2
         /// </summary>
         private void LoadBackgroundSongs()
         {
+            #region Organ music
+            Song bgMusic = Content.Load<Song>("Sounds\\Music\\bgMusic");
+            backgroundMusic.Add("bgMusic", bgMusic);
+
+            Song battleMusic = Content.Load<Song>("Sounds\\Music\\battleMusic");
+            backgroundMusic.Add("battleMusic", battleMusic);
+
+            //if ()
+            //{
+            //    MediaPlayer.Play(backgroundMusic["bgMusic"]);
+            //    MediaPlayer.IsRepeating = true;
+            //    MediaPlayer.Volume = 0.15f;
+            //}
+            //if (battleActive)           
+            //{
+            //    MediaPlayer.Play(backgroundMusic["battleMusic"]);
+            //    MediaPlayer.IsRepeating = true;
+            //    MediaPlayer.Volume = 0.15f;
+            //}
+            PlayMusic(1);
+
+            #endregion Organ Music
 
 
 
@@ -903,6 +991,30 @@ namespace MortensKomeback2
             }
 
         }
+        /// <summary>
+        /// Method for switching between music
+        /// </summary>
+        /// <param name="typeMusic"></param>
+        public static void PlayMusic(int typeMusic)
+        {
+            
+            switch (typeMusic)
+            { 
+                case 1: //backround music
+                    MediaPlayer.Play(backgroundMusic["bgMusic"]);
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Volume = 0.15f;
+                    break;
+                case 2: //battle music
+                    MediaPlayer.Play(backgroundMusic["battleMusic"]);
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Volume = 0.15f;
+                    break;
+            }
+
+       
+        }
+
         #endregion Functionality
         #endregion Methods
     }

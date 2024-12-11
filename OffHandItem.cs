@@ -29,7 +29,7 @@ namespace MortensKomeback2
         public OffHandItem(PlayerClass playerClass, Vector2 spawnPosition, bool enhanced, bool found)
         {
 
-            sprite = GameWorld.commonSprites["offHandItem"];
+            sprite = GameWorld.commonSprites["shield"];
             layer = 0.95f;
             damageReductionBonus = 5;
             position = spawnPosition;

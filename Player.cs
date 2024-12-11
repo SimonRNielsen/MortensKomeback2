@@ -28,7 +28,11 @@ namespace MortensKomeback2
         private float playDuration;
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
+        private float speedBonus;
 
+        private string helpText = "K - Keybindings";
+        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip \nESC to close menu, pause and exit";
+        private bool showKeybinding = false;
 
         /// <summary>
         /// Bool to change the spriteEffectIndex so the player face the direction is walking 
@@ -45,13 +49,21 @@ namespace MortensKomeback2
         public int HealthBonus { get => healthBonus; set => healthBonus = value; }
         public string InRoom { get => inRoom; set => inRoom = value; }
         public Vector2 Velocity { get => velocity; set => velocity = value; }
+        public float SpeedBonus 
+        { 
+            get
+            {
+                return 1 + (speedBonus / 100); 
+            } 
+            set => speedBonus = value; 
+        }
 
         #endregion
 
         #region constructor
         public Player(PlayerClass playerClass, List<NPC> nPCs)
         {
-            this.speed = 800; //Not sure what speed should be
+            this.speed = 500; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
             this.fps = 4f;
             this.playerClass = playerClass;
@@ -152,6 +164,7 @@ namespace MortensKomeback2
                 {
                     GameWorld.BattleActive = true;
                     GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
+                    GameWorld.PlayMusic(2); //should play battlemusic
 
                 }
             }
@@ -159,6 +172,8 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+
+
             Movement(gameTime);
             HandleInput();
             Animation(gameTime);
@@ -233,22 +248,24 @@ namespace MortensKomeback2
             //The player is Pray
             if (keyState.IsKeyDown(Keys.P) && !praying)
             {
-                Pray(interactRange);
+                Pray((byte)(interactRange * SpeedBonus));
                 praying = true;
             }
 
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
+            //Interact 
             if (keyState.IsKeyDown(Keys.E) && !interact)
             {
-                Interact(interactRange);
+                Interact((byte)(interactRange * SpeedBonus));
                 interact = true;
             }
 
             if (keyState.IsKeyUp(Keys.E))
                 interact = false;
 
+            //Inventory
             if (keyState.IsKeyDown(Keys.I) && !inventory && !GameWorld.DetectInventory())
             {
                 GameWorld.newGameObjects.Add(new Menu(GameWorld.Camera.Position, 0));
@@ -263,6 +280,8 @@ namespace MortensKomeback2
             if (keyState.IsKeyUp(Keys.I))
                 inventory = false;
 
+
+            //Heal
             if (keyState.IsKeyDown(Keys.H) && !healing)
             {
                 Heal();
@@ -271,6 +290,18 @@ namespace MortensKomeback2
 
             if (keyState.IsKeyUp(Keys.H))
                 healing = false;
+
+            //K for Keybindings
+            if (keyState.IsKeyDown(Keys.K))
+            {
+                showKeybinding = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.K))
+            {
+                showKeybinding = false;
+
+            }
 
         }
 
@@ -354,6 +385,7 @@ namespace MortensKomeback2
 
             if (!nPCNearby)
             {
+                bool playSound = false;
                 foreach (Item item in GameWorld.hiddenItems)
                 {
                     distance = Vector2.Distance(position, item.Position);
@@ -363,8 +395,11 @@ namespace MortensKomeback2
                         item.IsFound = false;
                         item.Sprite = item.StandardSprite;
                         GameWorld.playerInventory.Add(item);
+                        playSound = true;
                     }
                 }
+                if (playSound == true)
+                    GameWorld.commonSounds["equipItem"].Play();
             }
 
         }
@@ -402,7 +437,7 @@ namespace MortensKomeback2
             Item healingItem = GameWorld.FindHealingItem();
 
             if (!(health == maxHealth + healthBonus))
-                if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
+                if (playerClass == PlayerClass.Bishop && limitedHeals > 0 || playerClass == PlayerClass.Bishop && GameWorld.BattleActive)
                 {
                     Health += healAmount + 25;
                     if (!GameWorld.BattleActive)
@@ -420,6 +455,7 @@ namespace MortensKomeback2
 
         }
 
+
         /// <summary>
         /// Overrides to give a damage "effect" on Player
         /// </summary>
@@ -430,6 +466,18 @@ namespace MortensKomeback2
             base.Draw(spriteBatch);
             if (invulnerability)
                 spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+
+            //draw text
+            if (showKeybinding == true)
+            {
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100), Color.White, 0f, new Vector2(100, 100), 2f, SpriteEffects.None, 1f);
+
+            }
+            else
+            {
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, "K - Keybindings", new Vector2(GameWorld.Camera.Position.X - 620, GameWorld.Camera.Position.Y - 300), Color.White, 0f, new Vector2(100, 100), 1.2f, SpriteEffects.None, 0.66f);
+
+            }
 
         }
 

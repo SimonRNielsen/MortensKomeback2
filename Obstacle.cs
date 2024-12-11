@@ -19,6 +19,7 @@ namespace MortensKomeback2
         /// </summary>
         /// <param name="xPosition">X position</param>
         /// <param name="yPosition">Y position</param>
+        /// <param name="obstacleType">The type of obstacle. Used to set the sprite of the obstacle. </param>
         public Obstacle(int xPosition, int yPosition, string obstacleType)
         {
             this.position = new Vector2(xPosition, yPosition);
@@ -28,13 +29,16 @@ namespace MortensKomeback2
                     this.Sprite = GameWorld.commonSprites["stone"];
                     break;
                 case "egg":
-                    this.Sprite = GameWorld.commonSprites["stone"];
+                    this.Sprite = GameWorld.commonSprites["egg"];
                     break;
                 case "magic":
-                    this.Sprite = GameWorld.commonSprites["blink"];
+                    this.Sprite = GameWorld.commonSprites["magic"];
+                    break;
+                case "magicHeal":
+                    this.Sprite = GameWorld.commonSprites["magicHeal"];
                     break;
                 default:
-                    this.Sprite = GameWorld.commonSprites["stone"];
+                    this.Sprite = GameWorld.commonSprites["hole"];
                     break;
 
 

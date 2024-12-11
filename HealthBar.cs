@@ -9,13 +9,18 @@ namespace MortensKomeback2
     internal class HealthBar : GameObject
     {
         #region Fields
-        private Texture2D initalSprite;
-
         private Rectangle backgroundRectangle;
         private Rectangle foregroundRectangle;
+        private bool enemyHealthbar = false;
+        Enemy enemy;
         #endregion
 
-        
+        /// <summary>
+        /// Constructor is instantiated in GameWorld 
+        /// </summary>
+        /// <param name="layer">Layer of the healtbar</param>
+        /// <param name="type">Type of bar</param>
+        //There it will be given the right sprite
         #region Constructors
         public HealthBar(float layer, int type)
         {
@@ -27,15 +32,30 @@ namespace MortensKomeback2
             }
             this.layer = layer;
         }
+        /// <summary>
+        /// Overload of Healthbar cusntructor for an enemy healtbar
+        /// </summary>
+        /// <param name="layer">Layer of the healtbar</param>
+        /// <param name="type">Type of bar</param>
+        /// <param name="enemy">The instance of an enemy, the healtbar should correspond to</param>
+        public HealthBar(float layer, int type, Enemy enemy)
+        {
+            switch (type)
+            {
+                case 1:
+                    sprite = GameWorld.commonSprites["healthBarRed"];
+                    break;
+            }
+            enemyHealthbar = true;
+            this.layer = layer;
+            this.enemy = enemy;
+        }
 
 
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gives the possibility to read the sprite, but most importantly change it in GameWorld
-        /// </summary>
-        public Texture2D InitalSprite { get => initalSprite; set => initalSprite = value; }
+       
         #endregion
 
         #region Methods
@@ -52,14 +72,23 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            this.position = new Vector2(GameWorld.Camera.Position.X - 750, GameWorld.Camera.Position.Y - 460);
+            if (enemyHealthbar == false)
+                this.position = new Vector2(GameWorld.Camera.Position.X - 750, GameWorld.Camera.Position.Y - 460);
+            if (enemyHealthbar == true)
+                this.position = new Vector2(GameWorld.Camera.Position.X + 450, GameWorld.Camera.Position.Y - 460);
+
+
             UpdateHealth();
         }
 
         public void UpdateHealth()
         {
             // Calculate the width of the foreground based on the health percentage
-            float healthPercentage = (float)(GameWorld.PlayerInstance.Health / (float)(GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus));
+            float healthPercentage = 100;
+            if (enemyHealthbar == false)
+                healthPercentage = (float)(GameWorld.PlayerInstance.Health / (float)(GameWorld.PlayerInstance.MaxHealth + GameWorld.PlayerInstance.HealthBonus));
+            else if (enemyHealthbar == true)
+                healthPercentage = (float)enemy.Health / enemy.MaxHealth;
             foregroundRectangle.Width = (int)(backgroundRectangle.Width * healthPercentage);
         }
 
