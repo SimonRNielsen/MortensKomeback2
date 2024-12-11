@@ -110,6 +110,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Area/bigRoom4.png
 
+#begin Sprites/Area/carpet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Area/carpet.png
+
 #begin Sprites/Area/doorClosed_shadow.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -494,6 +506,30 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/mortenBishop1.png
 
+#begin Sprites/Charactor/mortenBishop1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenBishop1.png
+
+#begin Sprites/Charactor/mortenBishop2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenBishop2.png
+
 #begin Sprites/Charactor/mortenBishop2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -517,6 +553,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/mortenBishop3.png
+
+#begin Sprites/Charactor/mortenBishop3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenBishop3.png
+
+#begin Sprites/Charactor/mortenBishop4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenBishop4.png
+
+#begin Sprites/Charactor/mortenBishop4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenBishop4.png
 
 #begin Sprites/Charactor/mortenCrusader0.png
 /importer:TextureImporter
@@ -566,6 +638,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/mortenCrusader3.png
 
+#begin Sprites/Charactor/mortenCrusader4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenCrusader4.png
+
 #begin Sprites/Charactor/mortenMonk0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -614,6 +698,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/mortenMonk3.png
 
+#begin Sprites/Charactor/mortenMonk4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/mortenMonk4.png
+
 #begin Sprites/Charactor/nunNPC.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -625,6 +721,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Charactor/nunNPC.png
+
+#begin Sprites/Charactor/talk.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Charactor/talk.png
 
 #begin Sprites/DEBUG/96x96.png
 /importer:TextureImporter
@@ -794,6 +902,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Item/blinkPlaceholder.png
 
+#begin Sprites/Item/blinkPlaceholder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/blinkPlaceholder.png
+
 #begin Sprites/Item/feetPlaceholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -805,6 +925,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Item/feetPlaceholder.png
+
+#begin Sprites/Item/helm.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/helm.png
+
+#begin Sprites/Item/key.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/key.png
 
 #begin Sprites/Item/mainHandPlaceholder.png
 /importer:TextureImporter
@@ -842,6 +986,18 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Item/offHandPlaceholder.png
 
+#begin Sprites/Item/potion.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/potion.png
+
 #begin Sprites/Item/questItemPlaceholder.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -865,6 +1021,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Sprites/Item/rosaery.png
+
+#begin Sprites/Item/shield.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Sprites/Item/shield.png
 
 #begin Sprites/Item/torsoPlaceholder.png
 /importer:TextureImporter

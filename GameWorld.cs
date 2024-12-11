@@ -107,6 +107,7 @@ namespace MortensKomeback2
             hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
             hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
             hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
+            hiddenItems.Add(new QuestItem(2, false, Vector2.Zero));
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -187,6 +188,11 @@ namespace MortensKomeback2
             newGameObjects.Add(new Door(0, topSide + 1080 * 9, DoorTypes.Open, DoorRotation.Top, new Vector2(0, 1080 * 7 + bottomSide - 120))); //10.9
 
             #endregion Doors
+            #region environment
+            newGameObjects.Add(new Environment(new Vector2(0, 2000), 0));      //carpet
+
+
+            #endregion environment
             #region NPC
 
             newGameObjects.Add(new NPC(0, 0, new Vector2(0, - 1080 * 10))); //monk
@@ -232,6 +238,12 @@ namespace MortensKomeback2
                 Restart();
 
             #endregion Exit & Restart
+            #region Win logic
+
+            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null)
+                menu.Add(new Menu(Camera.Position, 1));
+
+            #endregion Win logic
             #region References
 
             if (area51.Count == 0)
@@ -677,10 +689,20 @@ namespace MortensKomeback2
             animationSprites.Add("doorStart", doorArray);
 
             #endregion Doors
+            #region environment
+
+            Texture2D[] environment = new Texture2D[1] //rooms
+            {
+            Content.Load<Texture2D>("Sprites\\area\\carpet"), //Carpet
+           
+            };
+            animationSprites.Add("environment", environment);
+
+            #endregion environment
             #region Morten
 
-            Texture2D[] bishop = new Texture2D[4];
-            for (int i = 0; i < 4; i++)
+            Texture2D[] bishop = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
             {
                 bishop[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenBishop" + i);
             }
@@ -693,8 +715,8 @@ namespace MortensKomeback2
             }
             animationSprites.Add("monk", monk);
 
-            Texture2D[] crusader = new Texture2D[4];
-            for (int i = 0; i < 4; i++)
+            Texture2D[] crusader = new Texture2D[5];
+            for (int i = 0; i < 5; i++)
             {
                 crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\mortenCrusader" + i);
             }
