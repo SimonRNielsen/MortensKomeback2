@@ -92,9 +92,9 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["characterScreen"];
                     layer = 0.8f;
                     isInOutro = true;
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 120, Position.Y + 330), 5));
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 395, Position.Y + 330), 6));
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 680, Position.Y + 330), 7));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 150, Position.Y + 330), 5));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 430, Position.Y + 330), 6));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 685, Position.Y + 330), 7));
                     break;
                 default:
                     sprite = GameWorld.commonSprites["pauseScreen"];
