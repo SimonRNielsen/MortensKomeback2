@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using SharpDX.Direct2D1;
 
 namespace MortensKomeback2
 {
@@ -452,7 +451,7 @@ namespace MortensKomeback2
         /// Overrides to give a damage "effect" on Player
         /// </summary>
         /// <param name="spriteBatch">Drawing tool</param>
-        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
             base.Draw(spriteBatch);
