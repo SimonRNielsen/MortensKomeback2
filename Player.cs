@@ -456,7 +456,7 @@ namespace MortensKomeback2
 
             if (showKeybinding == true)
             {
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, Position, GameWorld.GrayGoose, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100), GameWorld.GrayGoose, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
             }
             else
             {
