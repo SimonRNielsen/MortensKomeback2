@@ -31,7 +31,7 @@ namespace MortensKomeback2
         private bool playFirst = false;
 
         private string helpText = "K - Keybindings";
-        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip";
+        private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip \nESC to close menu, pause and exit";
         private bool showKeybinding = false;
 
         /// <summary>
