@@ -243,7 +243,7 @@ namespace MortensKomeback2
                 Pray(interactRange);
                 praying = true;
             }
-            
+
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
@@ -377,6 +377,7 @@ namespace MortensKomeback2
 
             if (!nPCNearby)
             {
+                bool playSound = false;
                 foreach (Item item in GameWorld.hiddenItems)
                 {
                     distance = Vector2.Distance(position, item.Position);
@@ -386,8 +387,11 @@ namespace MortensKomeback2
                         item.IsFound = false;
                         item.Sprite = item.StandardSprite;
                         GameWorld.playerInventory.Add(item);
+                        playSound = true;
                     }
                 }
+                if (playSound == true)
+                    GameWorld.commonSounds["equipItem"].Play();
             }
 
         }
@@ -458,7 +462,7 @@ namespace MortensKomeback2
             //draw text
             if (showKeybinding == true)
             {
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100) , Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100), Color.White, 0f, new Vector2(100, 100), 2f, SpriteEffects.None, 1f);
 
             }
             else
