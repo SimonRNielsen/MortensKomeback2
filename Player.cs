@@ -458,7 +458,11 @@ namespace MortensKomeback2
             {
                 spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, Position, Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
             }
+            else
+            {
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, "K - Keybindings", new Vector2(GameWorld.Camera.Position.X - 620, GameWorld.Camera.Position.Y - 300), Color.White, 0f, new Vector2(100, 100), 1.2f, SpriteEffects.None, 0.66f);
 
+            }
 
         }
 
