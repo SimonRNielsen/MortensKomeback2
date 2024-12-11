@@ -311,6 +311,7 @@ namespace MortensKomeback2
             } while (mainHandItem > 1 || offHandItem > 1 || torsoItem > 1 || feetItem > 1);
 
             GameWorld.PlayerInstance.HealthBonus = healthBonus;
+            GameWorld.PlayerInstance.SpeedBonus = spdBonus;
 
         }
 

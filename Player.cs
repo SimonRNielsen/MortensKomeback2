@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using SharpDX.Direct2D1;
 
 namespace MortensKomeback2
 {
@@ -29,6 +28,7 @@ namespace MortensKomeback2
         private float playDuration;
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
+        private float speedBonus;
 
         private string helpText = "K - Keybindings";
         private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip \nESC to close menu, pause and exit";
@@ -49,6 +49,14 @@ namespace MortensKomeback2
         public int HealthBonus { get => healthBonus; set => healthBonus = value; }
         public string InRoom { get => inRoom; set => inRoom = value; }
         public Vector2 Velocity { get => velocity; set => velocity = value; }
+        public float SpeedBonus 
+        { 
+            get
+            {
+                return 1 + (speedBonus / 100); 
+            } 
+            set => speedBonus = value; 
+        }
 
         #endregion
 
@@ -240,17 +248,17 @@ namespace MortensKomeback2
             //The player is Pray
             if (keyState.IsKeyDown(Keys.P) && !praying)
             {
-                Pray(interactRange);
+                Pray((byte)(interactRange * SpeedBonus));
                 praying = true;
             }
-            
+
             if (keyState.IsKeyUp(Keys.P))
                 praying = false;
 
             //Interact 
             if (keyState.IsKeyDown(Keys.E) && !interact)
             {
-                Interact(interactRange);
+                Interact((byte)(interactRange * SpeedBonus));
                 interact = true;
             }
 
@@ -377,6 +385,7 @@ namespace MortensKomeback2
 
             if (!nPCNearby)
             {
+                bool playSound = false;
                 foreach (Item item in GameWorld.hiddenItems)
                 {
                     distance = Vector2.Distance(position, item.Position);
@@ -386,8 +395,11 @@ namespace MortensKomeback2
                         item.IsFound = false;
                         item.Sprite = item.StandardSprite;
                         GameWorld.playerInventory.Add(item);
+                        playSound = true;
                     }
                 }
+                if (playSound == true)
+                    GameWorld.commonSounds["equipItem"].Play();
             }
 
         }
@@ -425,7 +437,7 @@ namespace MortensKomeback2
             Item healingItem = GameWorld.FindHealingItem();
 
             if (!(health == maxHealth + healthBonus))
-                if (playerClass == PlayerClass.Bishop && limitedHeals > 0)
+                if (playerClass == PlayerClass.Bishop && limitedHeals > 0 || playerClass == PlayerClass.Bishop && GameWorld.BattleActive)
                 {
                     Health += healAmount + 25;
                     if (!GameWorld.BattleActive)
@@ -448,7 +460,7 @@ namespace MortensKomeback2
         /// Overrides to give a damage "effect" on Player
         /// </summary>
         /// <param name="spriteBatch">Drawing tool</param>
-        public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
 
             base.Draw(spriteBatch);
@@ -458,7 +470,7 @@ namespace MortensKomeback2
             //draw text
             if (showKeybinding == true)
             {
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100) , Color.White, 0f, new Vector2(100,100), 2f, SpriteEffects.None, 1f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, keyBindings, new Vector2(Position.X, Position.Y - 100), Color.White, 0f, new Vector2(100, 100), 2f, SpriteEffects.None, 1f);
 
             }
             else
