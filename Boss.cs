@@ -21,7 +21,7 @@ namespace MortensKomeback2
 
         public Boss(Vector2 placement) : base (placement)
         {
-            sprites = GameWorld.animationSprites["WalkingGoose"];
+            sprites = GameWorld.animationSprites["goosifer"];
             sprite = sprites[0];
             position = placement;
             health = 200;
