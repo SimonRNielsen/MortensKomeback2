@@ -92,7 +92,7 @@ namespace MortensKomeback2
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
                         GameWorld.commonSounds["equipItem"].Play();
-                        //character.Sprite = GameWorld.commonSprites[""];
+                        character.Sprite = GameWorld.commonSprites["monkNPCbible"];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
@@ -108,7 +108,7 @@ namespace MortensKomeback2
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
                         GameWorld.commonSounds["equipItem"].Play();
-                        //character.Sprite = GameWorld.commonSprites[""];
+                        character.Sprite = GameWorld.commonSprites["nunNPCrosary"];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
