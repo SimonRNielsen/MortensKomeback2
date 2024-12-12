@@ -23,8 +23,7 @@ namespace MortensKomeback2
         #endregion
 
         #region constructor
-        protected Character()
-        { }
+
 
         #endregion
 

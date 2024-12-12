@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System;
 
 namespace MortensKomeback2
 {
@@ -71,12 +72,12 @@ namespace MortensKomeback2
             layer = 0.25f;
             if (GameWorld.PlayerInstance != null)
             {
-                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), false, false));
-                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(0, 0), true, false));
-                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), false, false));
-                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(0, 0), true, false));
-                GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(0, 0)));
-                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(0, 0)));
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 8) + GameWorld.Random.Next(-401, 400)), false, false));
+                GameWorld.hiddenItems.Add(new MainHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 12) + GameWorld.Random.Next(-401, 400)), true, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 8) + GameWorld.Random.Next(-401, 400)), false, false));
+                GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 12) + GameWorld.Random.Next(-401, 400)), true, false));
+                GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 6) + GameWorld.Random.Next(-401, 400))));
+                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(GameWorld.Random.Next(-601, 600), 1080 + GameWorld.Random.Next(-401, 400))));
             }
             Damage = 10;
         }
@@ -158,7 +159,7 @@ namespace MortensKomeback2
                 }
 
             }
-            if (gameObject is Enemy)
+            if (gameObject is Enemy && !(gameObject is Boss))
             {
                 if (GameWorld.BattleActive == false)
                 {
@@ -167,6 +168,10 @@ namespace MortensKomeback2
                     GameWorld.PlayMusic(2); //should play battlemusic
 
                 }
+            }
+            if (gameObject is Boss)
+            {
+                (gameObject as Boss).StartDialogue = true;
             }
         }
 

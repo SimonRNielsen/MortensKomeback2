@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
 using System;
-using System.Reflection.Metadata;
 
 namespace MortensKomeback2
 {
@@ -56,7 +55,7 @@ namespace MortensKomeback2
         public static bool RightMouseButtonClick { get => rightMouseButtonClick; }
         public static bool CloseMenu { get => closeMenu; set => closeMenu = value; }
         public static bool MenuActive { get => menuActive; }
-        public static bool Dialogue { set => dialogue = value; }
+        public static bool Dialogue { get => dialogue; set => dialogue = value; }
         internal static Player PlayerInstance { get => playerInstance; set => playerInstance = value; }
         public static bool BattleActive { get => battleActive; set => battleActive = value; }
         public static Color GrayGoose { get => grayGoose; }
@@ -101,19 +100,17 @@ namespace MortensKomeback2
             #endregion Assets
             #region Items & Player
 
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(0, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(1, false, Vector2.Zero));
-            hiddenItems.Add(new QuestItem(3, false, new Vector2(600, -1080 * 10))); //Monks bible
-            hiddenItems.Add(new QuestItem(4, false, new Vector2(-600, -1080 * 2))); //Nuns rosary
-            hiddenItems.Add(new QuestItem(2, false, new Vector2(0, 1080 * 9)));
+            hiddenItems.Add(new QuestItem(1, false, new Vector2(-205, -1080 * 10)));
+            hiddenItems.Add(new QuestItem(0, false, new Vector2(random.Next(-601, 600), (-1080 * 12) + random.Next(-401, 400))));
+            playerInventory.Add(new QuestItem(1, true, new Vector2(-10000, -10000)));
+            playerInventory.Add(new QuestItem(1, true, new Vector2(-10000, -10000)));
+            hiddenItems.Add(new QuestItem(3, false, new Vector2(random.Next(-601, 600), (1080 * 2) + random.Next(-401, 400)))); //Monks bible
+            hiddenItems.Add(new QuestItem(4, false, new Vector2(random.Next(-601, 600), (-1080 * 6) + random.Next(-401, 400)))); //Nuns rosary
 
             menu.Add(new Menu(Camera.Position, 3));
 
             PlayerInstance = new Player(PlayerClass.Crusader, FindNPCLocation()); //Using it as a reference to get the players position
             newGameObjects.Add(PlayerInstance);
-            newGameObjects.Add(new Enemy(_graphics));
 
             #endregion Items & Player
             #region GUI
@@ -193,12 +190,21 @@ namespace MortensKomeback2
 
 
             #endregion environment
-            #region NPC
+            #region NPCs & Enemies
 
+            gameObjects.Add(new Boss(new Vector2(0, 1080 * 7)));
             newGameObjects.Add(new NPC(0, 0, new Vector2(0, - 1080 * 10))); //monk
             newGameObjects.Add(new NPC(1, 1, new Vector2(0, -1080 * 2))); //nun
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * 1)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * 3)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * -4)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * -8)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * -8)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * 5)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * 5)));
+            newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1080 * 5)));
 
-            #endregion NPC
+            #endregion NPCs & Enemies
 
             base.Initialize();
 
@@ -240,7 +246,7 @@ namespace MortensKomeback2
             #endregion Exit & Restart
             #region Win logic
 
-            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null)
+            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null && playerInstance.InRoom == "Room10")
                 menu.Add(new Menu(Camera.Position, 1));
 
             #endregion Win logic
@@ -280,6 +286,7 @@ namespace MortensKomeback2
             #region Main game-loop
 
             //Updates gameObjects and collision
+            bool bossExists = false;
             foreach (GameObject gameObject in gameObjects)
             {
                 //Pause-logic
@@ -304,6 +311,8 @@ namespace MortensKomeback2
 
                     if (gameObject is Enemy)
                     {
+                        if (gameObject is Boss)
+                            bossExists = true;
                         if (other is Obstacle)
                         {
                             gameObject.CheckCollision(other);
@@ -318,6 +327,14 @@ namespace MortensKomeback2
                                 (gameObject as Area).CheckCollision(other);
                 }
             }
+            //Gives player the main quest item after defeating the boss
+            if (!bossExists && playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") == null)
+            {
+                playerInventory.Add(new QuestItem(2, true, new Vector2(-10000, -10000)));
+                commonSounds["equipItem"].Play();
+                newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2, 0, new Vector2(-10000, -10000))));
+            }
+
             //Removes objects
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
 

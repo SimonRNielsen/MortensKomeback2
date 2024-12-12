@@ -113,13 +113,13 @@ namespace MortensKomeback2
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now i can't pray, could you defeat them and get it back for me?\nYou might have to look for it afterwards";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now i can't pray, could you defeat them and get it back for me?\nI think it might have left it in the furthest room so you have to look for it afterwards";
                     break;
                 case "Boss":
                     nPCText = "I AM GOOSIFER! *Evil honks*\nNOW YOU DIE!!!";
                     break;
                 case "Letter":
-                    nPCText = "It's a mi, da pope-a";
+                    nPCText = "I GOT IT! Goosifer was the culprit who stole the popes sceptre, now i can send it back to him with divine magic from the next room!\n*To win get into the next room down (needs key)*";
                     break;
                 default:
                     nPCText = "This NPC has no quests";

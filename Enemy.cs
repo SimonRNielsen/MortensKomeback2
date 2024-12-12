@@ -6,16 +6,15 @@ namespace MortensKomeback2
     internal class Enemy : Character
     {
         #region field
-        private GraphicsDeviceManager graphics;
         private float deltaTime;
         private float timeElapsed;
         private int currentIndex;
         private bool direction = true; //Bool to change the spriteEffectIndex so the player face the direction is walking
         private float playDuration;
         private float playDurationTimer = 1f;
-        private int maxHealth = 15;
+        protected int maxHealth = 15;
 
-        public float MaxHealth { get => maxHealth;}
+        public float MaxHealth { get => maxHealth; }
 
 
 
@@ -30,17 +29,18 @@ namespace MortensKomeback2
         /// The construction of a enemy
         /// </summary>
         /// <param name="_graphics">A GraphicsDeviceManager</param>
-        public Enemy(GraphicsDeviceManager _graphics)
+        public Enemy(Vector2 placement)
         {
             this.speed = 300;
-            this.graphics = _graphics;
             this.health = maxHealth;
             this.fps = 7f;
             this.scale = 0.5f;
+            layer = 0.25f;
             sprite = GameWorld.animationSprites["WalkingGoose"][0];
-            this.Position = new Vector2(0, -300);
+            this.Position = placement;
             this.Damage = 10;
         }
+
 
         #endregion
 
@@ -73,25 +73,28 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-            playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (playDuration > playDurationTimer && sprite.Name.Contains("aggro"))
+            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) < 2203)
             {
-                playDuration = 0f;
-                GameWorld.commonSounds["aggroGoose"].Play();
-            }
-            if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
-            {
-                Sprites = GameWorld.animationSprites["AggroGoose"];
-            }
-            else
-            {
-                Sprites = GameWorld.animationSprites["WalkingGoose"];
-            }
+                playDuration += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (playDuration > playDurationTimer && sprite.Name.Contains("aggro"))
+                {
+                    playDuration = 0f;
+                    GameWorld.commonSounds["aggroGoose"].Play();
+                }
+                if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
+                {
+                    Sprites = GameWorld.animationSprites["AggroGoose"];
+                }
+                else
+                {
+                    Sprites = GameWorld.animationSprites["WalkingGoose"];
+                }
 
-            Movement(gameTime);
-            Animation(gameTime);
-            if (this.Health <= 0)
-            { IsAlive = false; }
+                Movement(gameTime);
+                Animation(gameTime);
+                if (this.Health <= 0)
+                { IsAlive = false; }
+            }
         }
 
         public override void Movement(GameTime gameTime)

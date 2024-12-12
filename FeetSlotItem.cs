@@ -30,11 +30,11 @@ namespace MortensKomeback2
 
             if (found)
             {
-                sprite = GameWorld.commonSprites["feetItem"];
+                sprite = GameWorld.commonSprites["boots"];
             }
             else
             {
-                standardSprite = GameWorld.commonSprites["feetItem"];
+                standardSprite = GameWorld.commonSprites["boots"];
                 sprite = GameWorld.commonSprites["blink"];
             }
             position = spawnPosition;
