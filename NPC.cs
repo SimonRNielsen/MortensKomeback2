@@ -10,15 +10,14 @@ namespace MortensKomeback2
         #region field
         private string[] npcClass = new string[3] {"Munk", "Nun", "Letter"};
         private int classSelection;
-        private string spriteNPC;
         private bool textBubble = false;
 
         #endregion
 
         #region properti
-
-        public string NPCClass { get => npcClass[classSelection]; set => NPCClass = value; }
-        public bool TextBubble { get => textBubble; set => textBubble = value; }
+        
+        public string NPCClass { get => npcClass[classSelection]; } 
+        public bool TextBubble { set => textBubble = value; }
      
     #endregion
 
