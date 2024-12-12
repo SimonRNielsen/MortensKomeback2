@@ -114,7 +114,7 @@ namespace MortensKomeback2
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, i have lost my bible and i can't find it again, i think i left it in the main area of the cathedral, would you go look for me?";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, the geese in the nave of the cathedral chased me down whilst I was reading my bible. I had to flee in here - but I forgot my bible! \nWill you please fetch it for me? I'm too scared to go in there again \n\nOh and if you are having trouble finding things, just ask the Lord for help and PRAY by pressing 'p'";
                     break;
                 case "Nun":
                     questItem = "Nuns rosary";
@@ -130,13 +130,13 @@ namespace MortensKomeback2
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now i can't pray, could you defeat them and get it back for me?\nI think it might have left it in the furthest room so you have to look for it afterwards";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now I can't pray, could you defeat them and get it back for me?\nI think it might have left it in the furthest room so you have to look for it afterwards.\nOh and I've heard someone left a key in there too.";
                     break;
                 case "Boss":
                     nPCText = "I AM GOOSIFER! *Evil honks*\nNOW YOU DIE!!!";
                     break;
                 case "Letter":
-                    nPCText = "I GOT IT! Goosifer was the culprit who stole the popes sceptre, now i can send it back to him with divine magic from the next room!\n*To win get into the next room down (needs key)*";
+                    nPCText = "I GOT IT! Goosifer was the culprit who stole the popes sceptre, now I can send it back to him with divine magic from the next room!\n*To win proceed into the next room down (needs key)*";
                     break;
                 default:
                     nPCText = "This NPC has no quests";
