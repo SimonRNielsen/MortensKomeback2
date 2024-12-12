@@ -797,7 +797,7 @@ namespace MortensKomeback2
             {
                 goosifer[i] = Content.Load<Texture2D>("Sprites\\Charactor\\goosifer" + i);
             }
-            animationSprites.Add("AggroGoose", aggroGooseSprites);
+            animationSprites.Add("goosifer", goosifer);
 
             #endregion Goosifer
             #endregion Goose
