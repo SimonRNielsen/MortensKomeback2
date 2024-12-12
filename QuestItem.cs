@@ -47,7 +47,7 @@ namespace MortensKomeback2
                     healItem = true;
                     break;
                 case 2:
-                    sprite = GameWorld.commonSprites["mitre"];
+                    sprite = GameWorld.commonSprites["scepter"];
                     itemName = "Popes sceptre";
                     break;
                 case 3:

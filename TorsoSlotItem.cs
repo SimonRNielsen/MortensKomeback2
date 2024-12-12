@@ -49,11 +49,11 @@ namespace MortensKomeback2
                     break;
             }
             if (found)
-                sprite = GameWorld.commonSprites["torsoItem"];
+                sprite = GameWorld.commonSprites["robe"];
             else
             {
                 sprite = GameWorld.commonSprites["blink"];
-                standardSprite = GameWorld.commonSprites["torsoItem"];
+                standardSprite = GameWorld.commonSprites["robe"];
             }
 
         }

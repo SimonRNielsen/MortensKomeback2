@@ -47,7 +47,7 @@ namespace MortensKomeback2
                     itemName += "Sword";
                     break;
                 case 2:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Ranger
+                    sprite = GameWorld.commonSprites["sling"]; //Ranger
                     implement = implementTwohanded;
                     isTwoHanded = true;
                     damageBonus = implement.StatBoost(damageBonus);
