@@ -599,6 +599,10 @@ namespace MortensKomeback2
             Texture2D rosary = Content.Load<Texture2D>("Sprites\\Item\\rosary");
             Texture2D staff = Content.Load<Texture2D>("Sprites\\Item\\staff");
             Texture2D potion = Content.Load<Texture2D>("Sprites\\Item\\potion");
+            Texture2D scepter = Content.Load<Texture2D>("Sprites\\Item\\scepter");
+            Texture2D boots = Content.Load<Texture2D>("Sprites\\Item\\boots");
+            Texture2D robe = Content.Load<Texture2D>("Sprites\\Item\\robe");
+            Texture2D sling = Content.Load<Texture2D>("Sprites\\Item\\sling");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -615,6 +619,10 @@ namespace MortensKomeback2
             commonSprites.Add("rosary", rosary);
             commonSprites.Add("staff", staff);
             commonSprites.Add("potion", potion);
+            commonSprites.Add("scepter", scepter);
+            commonSprites.Add("boots", boots);
+            commonSprites.Add("robe", robe);
+            commonSprites.Add("sling", sling);
 
 
             #endregion Items
@@ -666,10 +674,14 @@ namespace MortensKomeback2
             #endregion Menu & Button
             #region NPC
             Texture2D nunNPC = Content.Load<Texture2D>("Sprites\\Charactor\\nunNPC");
+            Texture2D nunNPCrosary = Content.Load<Texture2D>("Sprites\\Charactor\\nunNPCrosary");
             commonSprites.Add("nunNPC", nunNPC);
+            commonSprites.Add("nunNPCrosary", nunNPCrosary);
 
             Texture2D monkNPC = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPC");
+            Texture2D monkNPCbible = Content.Load<Texture2D>("Sprites\\Charactor\\monkNPCbible");
             commonSprites.Add("monkNPC", monkNPC);
+            commonSprites.Add("monkNPCbible", monkNPCbible);
 
             Texture2D talkPrompt = Content.Load<Texture2D>("Sprites\\Charactor\\talk");
             commonSprites.Add("talkPrompt", talkPrompt);
