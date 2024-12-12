@@ -603,6 +603,7 @@ namespace MortensKomeback2
             Texture2D boots = Content.Load<Texture2D>("Sprites\\Item\\boots");
             Texture2D robe = Content.Load<Texture2D>("Sprites\\Item\\robe");
             Texture2D sling = Content.Load<Texture2D>("Sprites\\Item\\sling");
+            Texture2D bible = Content.Load<Texture2D>("Sprites\\Item\\bible");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -623,6 +624,7 @@ namespace MortensKomeback2
             commonSprites.Add("boots", boots);
             commonSprites.Add("robe", robe);
             commonSprites.Add("sling", sling);
+            commonSprites.Add("bible", bible);
 
 
             #endregion Items
