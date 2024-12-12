@@ -114,7 +114,7 @@ namespace MortensKomeback2
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, the geese in the nave of the cathedral chased me down whilst I was reading my bible. I had to flee in here - but I forgot my bible! \nWill you please fetch it for me? I'm too scared to go in there again \n\nOh and if you are having trouble finding things, just ask the Lord for help and PRAY by pressing 'p'";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, the geese in the nave of the cathedral chased me down whilst I was reading my bible. \nI had to flee in here - but I forgot my bible! \nWill you please fetch it for me? I'm too scared to go in there again \n\nOh and if you are having trouble finding things, just ask the Lord for help and PRAY by pressing 'p'\n\n\n\nPress 'ENTER' to close";
                     break;
                 case "Nun":
                     questItem = "Nuns rosary";
@@ -130,7 +130,7 @@ namespace MortensKomeback2
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now I can't pray, could you defeat them and get it back for me?\nI think it might have left it in the furthest room so you have to look for it afterwards.\nOh and I've heard someone left a key in there too.";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now I can't pray, \ncould you defeat them and get it back for me?\n\nI think it might have left it in the furthest room so you have to look for it afterwards.\nOh and I've heard someone left a key in there too.\n\n\n\nPress 'ENTER' to close";
                     break;
                 case "Boss":
                     nPCText = "I AM GOOSIFER! *Evil honks*\nNOW YOU DIE!!!";
@@ -150,7 +150,7 @@ namespace MortensKomeback2
         {
             base.Draw(spriteBatch);
             if (dialogue)
-                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(GameWorld.Camera.Position.X + textPosition.X - (1920 / 2) + 120, GameWorld.Camera.Position.Y + textPosition.Y - (1080 / 2) + 715), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.5f, SpriteEffects.None, layer + 0.2f);
+                spriteBatch.DrawString(GameWorld.mortensKomebackFont, nPCText, new Vector2(GameWorld.Camera.Position.X + textPosition.X - (1920 / 2) + 120, GameWorld.Camera.Position.Y + textPosition.Y - (1080 / 2) + 715), GameWorld.GrayGoose, 0f, Vector2.Zero, 1.9f, SpriteEffects.None, layer + 0.2f);
         }
 
 
