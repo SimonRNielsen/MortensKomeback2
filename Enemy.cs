@@ -79,15 +79,18 @@ namespace MortensKomeback2
                 if (playDuration > playDurationTimer && sprite.Name.Contains("aggro"))
                 {
                     playDuration = 0f;
-                    GameWorld.commonSounds["aggroGoose"].Play();
+                    if (!(this is Boss))
+                        GameWorld.commonSounds["aggroGoose"].Play();
                 }
                 if (DistanceToPlayer(GameWorld.PlayerInstance.Position) <= 300f) //If the player is with in 300 pixel the enemy will swift animation
                 {
-                    Sprites = GameWorld.animationSprites["AggroGoose"];
+                    if (!(this is Boss))
+                        Sprites = GameWorld.animationSprites["AggroGoose"];
                 }
                 else
                 {
-                    Sprites = GameWorld.animationSprites["WalkingGoose"];
+                    if (!(this is Boss))
+                        Sprites = GameWorld.animationSprites["WalkingGoose"];
                 }
 
                 Movement(gameTime);

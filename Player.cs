@@ -30,6 +30,8 @@ namespace MortensKomeback2
         private float playDurationTimer = 0.5f;
         private bool playFirst = false;
         private float speedBonus;
+        private bool closeDialog = false;
+        private bool enter = false;
 
         private string helpText = "K - Keybindings";
         private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip \nESC to close menu, pause and exit";
@@ -50,6 +52,7 @@ namespace MortensKomeback2
         public int HealthBonus { get => healthBonus; set => healthBonus = value; }
         public string InRoom { get => inRoom; set => inRoom = value; }
         public Vector2 Velocity { get => velocity; set => velocity = value; }
+        public bool CloseDialog { get => closeDialog; }
         public float SpeedBonus 
         { 
             get
@@ -177,6 +180,7 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            closeDialog = false;
             float npcInRange = interactRange * SpeedBonus;
             foreach (NPC nPC in nPCList)
                 if (Vector2.Distance(nPC.Position, position) < npcInRange)
@@ -310,6 +314,15 @@ namespace MortensKomeback2
                 showKeybinding = false;
 
             }
+
+            if (keyState.IsKeyDown(Keys.Enter) && !enter)
+            {
+                enter = true;
+                closeDialog = true;
+            }
+
+            if (keyState.IsKeyUp(Keys.Enter))
+                enter = false;
 
         }
 

@@ -246,7 +246,7 @@ namespace MortensKomeback2
             #endregion Exit & Restart
             #region Win logic
 
-            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null && playerInstance.InRoom == "Room10")
+            if (playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") != null && playerInstance.InRoom == "Room10" && !battleActive)
                 menu.Add(new Menu(Camera.Position, 1));
 
             #endregion Win logic
@@ -296,6 +296,8 @@ namespace MortensKomeback2
                     gameObject.Update(gameTime);
                 else if (battleActive && (gameObject is BattleField || gameObject is HealthBar) && !menuActive)
                     gameObject.Update(gameTime);
+                if (!menuActive && !battleActive && dialogue && gameObject is Player && Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    gameObject.Update(gameTime);
 
 
                 foreach (GameObject other in gameObjects)
@@ -328,12 +330,14 @@ namespace MortensKomeback2
                 }
             }
             //Gives player the main quest item after defeating the boss
-            if (!bossExists && playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") == null)
+            if (!bossExists && playerInventory.Find(popeSceptre => popeSceptre.ItemName == "Popes sceptre") == null && !battleActive && playerInstance.InRoom == "Room9")
             {
                 playerInventory.Add(new QuestItem(2, true, new Vector2(-10000, -10000)));
                 commonSounds["equipItem"].Play();
                 newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2, 0, new Vector2(-10000, -10000))));
             }
+            //if (playerInstance.InRoom == "Room9" && !bossExists)
+              //  battleActive = false;
 
             //Removes objects
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
