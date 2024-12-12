@@ -35,13 +35,13 @@ namespace MortensKomeback2
             switch (itemType)
             {
                 case 0:
-                    sprite = GameWorld.commonSprites["questItem"];
+                    sprite = GameWorld.commonSprites["key"];
                     itemName = "Key";
                     isUseable = true;
                     isKey = true;
                     break;
                 case 1:
-                    sprite = GameWorld.commonSprites["torsoItem"];
+                    sprite = GameWorld.commonSprites["potion"];
                     itemName = "Blood of Geesus";
                     isUseable = true;
                     healItem = true;
@@ -51,11 +51,11 @@ namespace MortensKomeback2
                     itemName = "Popes sceptre";
                     break;
                 case 3:
-                    sprite = GameWorld.commonSprites["feetItem"];
+                    sprite = GameWorld.commonSprites["bible"];
                     itemName = "Monks bible";
                     break;
                 case 4:
-                    sprite = GameWorld.commonSprites["mitre"];
+                    sprite = GameWorld.commonSprites["rosary"];
                     itemName = "Nuns rosary";
                     break;
             }

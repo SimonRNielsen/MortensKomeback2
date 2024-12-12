@@ -43,7 +43,7 @@ namespace MortensKomeback2
             switch ((int)playerClass)
             {
                 case 1:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Fighter
+                    sprite = GameWorld.commonSprites["sword"]; //Fighter
                     itemName += "Sword";
                     break;
                 case 2:
@@ -54,7 +54,7 @@ namespace MortensKomeback2
                     itemName += "Sling";
                     break;
                 case 3:
-                    sprite = GameWorld.commonSprites["mainHandItem"]; //Mage
+                    sprite = GameWorld.commonSprites["staff"]; //Mage
                     implement = implementTwohanded;
                     isTwoHanded = true;
                     damageBonus = implement.StatBoost(damageBonus);

@@ -92,9 +92,9 @@ namespace MortensKomeback2
                     sprite = GameWorld.commonSprites["characterScreen"];
                     layer = 0.8f;
                     isInOutro = true;
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 120, Position.Y + 330), 5));
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 395, Position.Y + 330), 6));
-                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 680, Position.Y + 330), 7));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 150, Position.Y + 330), 5));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 430, Position.Y + 330), 6));
+                    GameWorld.newGameObjects.Add(new Button(new Vector2(Position.X + 685, Position.Y + 330), 7));
                     break;
                 default:
                     sprite = GameWorld.commonSprites["pauseScreen"];
@@ -156,9 +156,9 @@ namespace MortensKomeback2
                         spriteBatch.Draw(twoHandedSprite, new Vector2(position.X + 700 - (twoHandedSprite.Width / 2), position.Y - 200 - (twoHandedSprite.Height / 2)), null, whiteOpaque, Rotation, Vector2.Zero, scale, objectSpriteEffects[1], layer + 0.1f);
                     spriteBatch.Draw(GameWorld.PlayerInstance.Sprite, new Vector2(position.X - 400, position.Y - 400), null, drawColor, Rotation, Vector2.Zero, scale * 3, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Backpack", new Vector2(position.X - 735, position.Y - 450), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
-                    spriteBatch.Draw(GameWorld.commonSprites["healItem"], new Vector2(position.X + 300 - (GameWorld.commonSprites["healItem"].Width / 2), position.Y + 300 - (GameWorld.commonSprites["healItem"].Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[SpriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.commonSprites["potion"], new Vector2(position.X + 300 - (GameWorld.commonSprites["healItem"].Width / 2), position.Y + 300 - (GameWorld.commonSprites["healItem"].Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[SpriteEffectIndex], layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Blood of Geesus:{healItem}", new Vector2(position.X + 400, position.Y + 300), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
-                    spriteBatch.Draw(GameWorld.commonSprites["questItem"], new Vector2(position.X + 300 - (GameWorld.commonSprites["questItem"].Width / 2), position.Y + 425 - (GameWorld.commonSprites["questItem"].Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[SpriteEffectIndex], layer + 0.1f);
+                    spriteBatch.Draw(GameWorld.commonSprites["key"], new Vector2(position.X + 300 - (GameWorld.commonSprites["questItem"].Width / 2), position.Y + 425 - (GameWorld.commonSprites["questItem"].Height / 2)), null, drawColor, Rotation, Vector2.Zero, scale, objectSpriteEffects[SpriteEffectIndex], layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"Keys:{keyCount}", new Vector2(position.X + 400, position.Y + 425), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Mainhand", new Vector2(position.X + 270, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
                     spriteBatch.DrawString(GameWorld.mortensKomebackFont, "Torso", new Vector2(position.X + 495, position.Y - 125), textColor[textColorIndex], 0f, new Vector2(18, 8), 2f, SpriteEffects.None, layer + 0.1f);
