@@ -619,7 +619,7 @@ namespace MortensKomeback2
                         else if ((battlefieldEnemies[0].Position.X <= this.Position.X + 300) && (actionPhase == 1))
                         {
                             actionPhase = 2;
-                            if (battlefieldEnemies[0].Health < 100)//TODO: use maxhealth here!
+                            if (battlefieldEnemies[0].Health <= battlefieldEnemies[0].MaxHealth)
                             {
                                 battlefieldEnemies[0].Health += 5;
                                 enemyActionText = "It heals itself for 5 health!";
