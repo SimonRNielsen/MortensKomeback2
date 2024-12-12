@@ -23,7 +23,7 @@ namespace MortensKomeback2
         public Obstacle(int xPosition, int yPosition, string obstacleType)
         {
             this.position = new Vector2(xPosition, yPosition);
-            switch (obstacleType.ToLower())
+            switch (obstacleType)
             {
                 case "stone":
                     this.Sprite = GameWorld.commonSprites["stone"];
@@ -37,9 +37,16 @@ namespace MortensKomeback2
                 case "magicHeal":
                     this.Sprite = GameWorld.commonSprites["magicHeal"];
                     break;
+                case "leftPew":
+                    this.Sprite = GameWorld.commonSprites["leftPew"];
+                    break;
+                case "pew":
+                    this.Sprite = GameWorld.commonSprites["pew"];
+                    break;
                 default:
                     this.Sprite = GameWorld.commonSprites["hole"];
                     break;
+
 
 
             }
