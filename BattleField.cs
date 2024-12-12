@@ -172,6 +172,11 @@ namespace MortensKomeback2
                 e.Animation(gameTime);
             }
 
+            //The player should animate when moving. Therefore Player's Animation method is used. It anmated when velocity is > Vector.Zero.
+            //Therefore Velocity is also used in MeleeAttack and Block methods, where player is moving. 
+            GameWorld.PlayerInstance.Animation(gameTime);
+
+
             //Action logic: if there is no acton going on, player should be able to choose actions   
             //The enemies action is also chosen here at random
             if (!playerActionOngoing && !enemyActionOngoing)
@@ -365,7 +370,8 @@ namespace MortensKomeback2
             //Move
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (actionPhase == 1))
             {
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Position += GameWorld.PlayerInstance.Velocity;
                 playerActionText = "You are attacking the enemy!";
             }
             else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (actionPhase == 1))
@@ -378,7 +384,7 @@ namespace MortensKomeback2
             }
             else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
             {
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Position -= GameWorld.PlayerInstance.Velocity;
             }
             else
             {
@@ -452,7 +458,8 @@ namespace MortensKomeback2
                 else
                     playerActionText = "You are trying to evade the enemy's attack!";
 
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Position -= GameWorld.PlayerInstance.Velocity;
             }
             else if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 900) && (actionPhase == 1))
             {
@@ -460,7 +467,8 @@ namespace MortensKomeback2
             }
             else if ((GameWorld.PlayerInstance.Position.X < this.Position.X - 600) && (actionPhase == 2))
             {
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Position += GameWorld.PlayerInstance.Velocity;
             }
             else
             {
@@ -471,35 +479,6 @@ namespace MortensKomeback2
             //Calculate defense
         }
 
-        private void Evade()
-        {
-            blocking = true;
-
-            BeginAction("player");
-
-            if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 200) && (actionPhase == 1))
-            {
-                playerActionText = "You are trying to evade the enemy's attack!";
-                GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
-            }
-            else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + -200) && (actionPhase == 1))
-            {
-                actionPhase = 2;
-            }
-            else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
-            {
-                GameWorld.PlayerInstance.Position -= new Vector2(5f, 0);
-            }
-            else
-            {
-                EndAction("player");
-            }
-            //Move
-            //Animate
-            //Sound
-            //Calculate defense
-
-        }
         /// <summary>
         /// The Heal action. Users the players Heal() method from player class.
         /// Differentiates text depending on class, and thereby how much the player heals/ if healing items is neccessary.
@@ -640,7 +619,7 @@ namespace MortensKomeback2
                         else if ((battlefieldEnemies[0].Position.X <= this.Position.X + 300) && (actionPhase == 1))
                         {
                             actionPhase = 2;
-                            if (battlefieldEnemies[0].Health < 100)//TODO: use maxhealth here!
+                            if (battlefieldEnemies[0].Health <= battlefieldEnemies[0].MaxHealth)
                             {
                                 battlefieldEnemies[0].Health += 5;
                                 enemyActionText = "It heals itself for 5 health!";
@@ -675,6 +654,7 @@ namespace MortensKomeback2
             if (actor.ToLower() == "player")
             {
                 playerActionOngoing = false;
+                GameWorld.PlayerInstance.Velocity = Vector2.Zero;
                 if (battlefieldEnemies.Count > 0)
                 {
                     enemyActionOngoing = true;

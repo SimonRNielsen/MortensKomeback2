@@ -18,6 +18,9 @@ namespace MortensKomeback2
         private Vector2 textPosition;      // Where the text is drawn
         private Vector2 boxPosition;        // Where the dialogue box is drawn
         private bool dialogue;
+        private bool bossFight = false;
+        private float gracePeriod = 1f;
+        private float grace;
 
 
         #endregion
@@ -43,7 +46,10 @@ namespace MortensKomeback2
             Vector2 textPosition = new Vector2(position.X, position.Y);
             NPCDialogue(character);
             dialogue = true;
-            layer = layer + 0.1f;
+            layer = 0.8f;
+            if (character is NPC)
+                if ((character as NPC).NPCClass == "Letter")
+                    bossFight = true;
         }
 
         #endregion
@@ -62,8 +68,19 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
+            grace += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (GameWorld.PlayerInstance.CloseDialog)
+            {
+                GameWorld.Dialogue = false;
+                isAlive = false;
+            }
+            else if (dialogue == false && Keyboard.GetState().IsKeyDown(Keys.Enter) == true)
+            {
+                GameWorld.Dialogue = false;
+                isAlive = false;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Enter) == true && bossFight && grace >= gracePeriod)
             {
                 GameWorld.Dialogue = false;
                 isAlive = false;
@@ -92,7 +109,7 @@ namespace MortensKomeback2
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
                         GameWorld.commonSounds["equipItem"].Play();
-                        //character.Sprite = GameWorld.commonSprites[""];
+                        character.Sprite = GameWorld.commonSprites["monkNPCbible"];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
@@ -108,7 +125,7 @@ namespace MortensKomeback2
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
                         GameWorld.commonSounds["equipItem"].Play();
-                        //character.Sprite = GameWorld.commonSprites[""];
+                        character.Sprite = GameWorld.commonSprites["nunNPCrosary"];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
                         nPCText = "*This NPC has no further quests*\nPress enter to continue";
