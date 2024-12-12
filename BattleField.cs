@@ -144,7 +144,7 @@ namespace MortensKomeback2
             GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[1];
 
             //Adds background sprite
-            this.sprite = GameWorld.animationSprites["areaStart"][0];
+            this.sprite = GameWorld.animationSprites["areaStart"][5];
             this.layer = 0.0000001f;
 
             healSprite = GameWorld.commonSprites["magicHeal"];

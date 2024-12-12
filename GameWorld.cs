@@ -603,6 +603,7 @@ namespace MortensKomeback2
             Texture2D boots = Content.Load<Texture2D>("Sprites\\Item\\boots");
             Texture2D robe = Content.Load<Texture2D>("Sprites\\Item\\robe");
             Texture2D sling = Content.Load<Texture2D>("Sprites\\Item\\sling");
+            Texture2D bible = Content.Load<Texture2D>("Sprites\\Item\\bible");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -623,6 +624,7 @@ namespace MortensKomeback2
             commonSprites.Add("boots", boots);
             commonSprites.Add("robe", robe);
             commonSprites.Add("sling", sling);
+            commonSprites.Add("bible", bible);
 
 
             #endregion Items
@@ -696,13 +698,14 @@ namespace MortensKomeback2
 
             #region Areas
 
-            Texture2D[] areaArray = new Texture2D[5]
+            Texture2D[] areaArray = new Texture2D[6]
             {
             Content.Load<Texture2D>("Sprites\\area\\room_single"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom4")
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"), 
+            Content.Load<Texture2D>("Sprites\\area\\bossRoom")
             };
             animationSprites.Add("areaStart", areaArray);
 
@@ -770,7 +773,18 @@ namespace MortensKomeback2
             }
             animationSprites.Add("AggroGoose", aggroGooseSprites);
             #endregion Aggro Goose
+            #region Goosifer
+
+            Texture2D[] goosifer = new Texture2D[3];
+            for (int i = 0; i < 3; i++)
+            {
+                goosifer[i] = Content.Load<Texture2D>("Sprites\\Charactor\\goosifer" + i);
+            }
+            animationSprites.Add("AggroGoose", aggroGooseSprites);
+
+            #endregion Goosifer
             #endregion Goose
+
             #region Obstacles
 
             Texture2D[] firepit = new Texture2D[4];
