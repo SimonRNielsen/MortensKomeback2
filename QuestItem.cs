@@ -51,7 +51,7 @@ namespace MortensKomeback2
                     itemName = "Popes sceptre";
                     break;
                 case 3:
-                    sprite = GameWorld.commonSprites["questBibleSprite"];
+                    sprite = GameWorld.commonSprites["bible"];
                     itemName = "Monks bible";
                     break;
                 case 4:

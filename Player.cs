@@ -172,7 +172,10 @@ namespace MortensKomeback2
 
         public override void Update(GameTime gameTime)
         {
-
+            float npcInRange = interactRange * SpeedBonus;
+            foreach (NPC nPC in nPCList)
+                if (Vector2.Distance(nPC.Position, position) < npcInRange)
+                    nPC.TextBubble = true;
 
             Movement(gameTime);
             HandleInput();
@@ -478,6 +481,7 @@ namespace MortensKomeback2
                 spriteBatch.DrawString(GameWorld.mortensKomebackFont, "K - Keybindings", new Vector2(GameWorld.Camera.Position.X - 620, GameWorld.Camera.Position.Y - 300), Color.White, 0f, new Vector2(100, 100), 1.2f, SpriteEffects.None, 0.66f);
 
             }
+            
 
         }
 

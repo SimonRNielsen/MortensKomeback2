@@ -599,6 +599,7 @@ namespace MortensKomeback2
             Texture2D rosary = Content.Load<Texture2D>("Sprites\\Item\\rosary");
             Texture2D staff = Content.Load<Texture2D>("Sprites\\Item\\staff");
             Texture2D potion = Content.Load<Texture2D>("Sprites\\Item\\potion");
+            Texture2D bible = Content.Load<Texture2D>("Sprites\\Item\\bible");
 
             commonSprites.Add("questItem", quest);
             commonSprites.Add("mainHandItem", mainHand);
@@ -615,6 +616,7 @@ namespace MortensKomeback2
             commonSprites.Add("rosary", rosary);
             commonSprites.Add("staff", staff);
             commonSprites.Add("potion", potion);
+            commonSprites.Add("bible", bible);
 
 
             #endregion Items

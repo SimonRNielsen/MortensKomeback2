@@ -91,11 +91,13 @@ namespace MortensKomeback2
                         nPCText = "Thank you for finding my bible for me! Here, have this key";
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
+                        GameWorld.commonSounds["equipItem"].Play();
+                        //character.Sprite = GameWorld.commonSprites[""];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
-                        nPCText = "This NPC has no further quests";
+                        nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = "Hej, jeg hedder Kaj, jeg er munk, folk kalder mig Kaj Munk";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, i have lost my bible and i can't find it again, i think i left it in the main area of the cathedral, would you go look for me?";
                     break;
                 case "Nun":
                     questItem = "Nuns rosary";
@@ -105,14 +107,16 @@ namespace MortensKomeback2
                         nPCText = "Thank you for finding my rosary for me! Here, have this key";
                         GameWorld.playerInventory.Add(new QuestItem(0, true, Vector2.Zero));
                         GameWorld.playerInventory.Remove(tempItem);
+                        GameWorld.commonSounds["equipItem"].Play();
+                        //character.Sprite = GameWorld.commonSprites[""];
                     }
                     else if (FindQuestItem(GameWorld.playerInventory, questItem) == null && FindQuestItem(GameWorld.hiddenItems, questItem) == null)
-                        nPCText = "This NPC has no further quests";
+                        nPCText = "*This NPC has no further quests*\nPress enter to continue";
                     else
-                        nPCText = "Jeg er foede for oekologisk-minded kannibaler";
+                        nPCText = $"Hi {GameWorld.PlayerInstance.PlayerClass}, those evil geese have stolen my rosary so now i can't pray, could you defeat them and get it back for me?\nYou might have to look for it afterwards";
                     break;
                 case "Boss":
-                    nPCText = "I AM GOOSIFER! *Evil honks*";
+                    nPCText = "I AM GOOSIFER! *Evil honks*\nNOW YOU DIE!!!";
                     break;
                 case "Letter":
                     nPCText = "It's a mi, da pope-a";

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 
 namespace MortensKomeback2
@@ -10,12 +11,14 @@ namespace MortensKomeback2
         private string[] npcClass = new string[3] {"Munk", "Nun", "Letter"};
         private int classSelection;
         private string spriteNPC;
+        private bool textBubble = false;
 
         #endregion
 
         #region properti
 
         public string NPCClass { get => npcClass[classSelection]; set => NPCClass = value; }
+        public bool TextBubble { get => textBubble; set => textBubble = value; }
      
     #endregion
 
@@ -62,7 +65,13 @@ namespace MortensKomeback2
             //No animation needed
         }
 
-
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (textBubble)
+                spriteBatch.Draw(GameWorld.commonSprites["talkPrompt"], new Vector2(position.X - GameWorld.commonSprites["talkPrompt"].Width, position.Y - sprite.Height / 2 - GameWorld.commonSprites["talkPrompt"].Height * 2), null, Color.White, rotation, Vector2.Zero, scale * 2, objectSpriteEffects[0], layer + 0.1f);
+            textBubble = false;
+        }
 
 
         #endregion
