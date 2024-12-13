@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System;
 
 namespace MortensKomeback2
 {
@@ -53,13 +52,13 @@ namespace MortensKomeback2
         public string InRoom { get => inRoom; set => inRoom = value; }
         public Vector2 Velocity { get => velocity; set => velocity = value; }
         public bool CloseDialog { get => closeDialog; }
-        public float SpeedBonus 
-        { 
+        public float SpeedBonus
+        {
             get
             {
-                return 1 + (speedBonus / 100); 
-            } 
-            set => speedBonus = value; 
+                return 1 + (speedBonus / 100);
+            }
+            set => speedBonus = value;
         }
 
         #endregion
@@ -379,6 +378,7 @@ namespace MortensKomeback2
                 if (distance < (range * 3) && distance > (-range * 3))
                     item.IsFound = true;
             }
+            GameWorld.commonSounds["playerHeal"].Play();
 
         }
 
@@ -463,12 +463,16 @@ namespace MortensKomeback2
                     Health += healAmount + 25;
                     if (!GameWorld.BattleActive)
                         limitedHeals--;
+                    if (!GameWorld.BattleActive)
+                        GameWorld.commonSounds["playerHeal"].Play();
                     return true;
                 }
                 else if (healingItem != null)
                 {
                     Health += healAmount;
                     healingItem.IsUsed = true;
+                    if (!GameWorld.BattleActive)
+                        GameWorld.commonSounds["playerHeal"].Play();
                     return true;
                 }
 
@@ -499,7 +503,7 @@ namespace MortensKomeback2
                 spriteBatch.DrawString(GameWorld.mortensKomebackFont, "K - Keybindings", new Vector2(GameWorld.Camera.Position.X - 620, GameWorld.Camera.Position.Y - 300), Color.White, 0f, new Vector2(100, 100), 1.2f, SpriteEffects.None, 0.66f);
 
             }
-            
+
 
         }
 
