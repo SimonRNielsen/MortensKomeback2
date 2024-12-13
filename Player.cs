@@ -17,7 +17,7 @@ namespace MortensKomeback2
         private bool interact;
         private bool inventory;
         private bool healing;
-        private byte interactRange = 100;
+        private byte interactRange = 133;
         private List<NPC> nPCList;
         private int limitedHeals = 5;
         private int maxHealth = 100;
