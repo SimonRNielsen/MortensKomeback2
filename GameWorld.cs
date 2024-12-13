@@ -123,12 +123,12 @@ namespace MortensKomeback2
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0, "stone"));
             newGameObjects.Add(new Obstacle(-400, 00, "hole"));
-            
+
             //Firepits in Bossroom
-            //newGameObjects.Add(new Obstacle(650, (1080 * 7)-150, "firepit"));
-            //newGameObjects.Add(new Obstacle(650, (1080 * 7)+150, "firepit"));
-            //newGameObjects.Add(new Obstacle(-650, (1080 * 7)-150, "firepit"));
-            //newGameObjects.Add(new Obstacle(-650, (1080 * 7)+150, "firepit"));
+            newGameObjects.Add(new AvSurface(650, (1080 * 7) - 160));
+            newGameObjects.Add(new AvSurface(650, (1080 * 7) + 160));
+            newGameObjects.Add(new AvSurface(-650, (1080 * 7) - 160));
+            newGameObjects.Add(new AvSurface(-650, (1080 * 7) + 160));
 
 
             //pews on right side in main room
