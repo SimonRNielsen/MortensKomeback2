@@ -466,16 +466,20 @@ namespace MortensKomeback2
                 foreach (Item item in playerInventory)
                 {
                     item.Draw(_spriteBatch);
+#if DEBUG
                     if (disableCollisionDrawing)
                         DrawCollisionBox(item);
+#endif
                     item.Update(gameTime);
                 }
 
                 foreach (Item item in equippedPlayerInventory)
                 {
                     item.Draw(_spriteBatch);
+#if DEBUG
                     if (disableCollisionDrawing)
                         DrawCollisionBox(item);
+#endif
                     item.Update(gameTime);
                 }
             }
@@ -491,7 +495,7 @@ namespace MortensKomeback2
                 menuItem.Draw(_spriteBatch);
             }
 
-            #endregion Draw items
+#endregion Draw items
 #if DEBUG
             _spriteBatch.Draw(commonSprites["collisionTexture"], mousePointer.CollisionBox, null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 1f);
 #endif
@@ -602,7 +606,7 @@ namespace MortensKomeback2
         }
         #endregion DrawCollisionBoxes
 #endif
-        #region Sprites & sound
+#region Sprites & sound
         /// <summary>
         /// Loads sprites into the "commonSprites" Dictionary
         /// </summary>
@@ -613,7 +617,7 @@ namespace MortensKomeback2
             Texture2D collisionTexture = Content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
             commonSprites.Add("collisionTexture", collisionTexture);
 #endif
-            #region Obstacles
+#region Obstacles
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
             Texture2D hole = Content.Load<Texture2D>("Sprites\\Obstacle\\hole"); //Hole
@@ -1099,6 +1103,6 @@ namespace MortensKomeback2
         }
 
         #endregion Functionality
-        #endregion Methods
+#endregion Methods
     }
 }
