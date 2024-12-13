@@ -44,11 +44,53 @@
 /processorParam:Quality=Best
 /build:Sounds/SoundEffects/Menu/powerUp_Sound.wav
 
+#begin Sounds/SoundEffects/Player/eggSmashSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/eggSmashSound.wav
+
+#begin Sounds/SoundEffects/Player/magicShoot.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/magicShoot.mp3
+
 #begin Sounds/SoundEffects/Player/morten_Av.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/SoundEffects/Player/morten_Av.wav
+
+#begin Sounds/SoundEffects/Player/playerBlock.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/playerBlock.mp3
+
+#begin Sounds/SoundEffects/Player/playerEvade.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/playerEvade.mp3
+
+#begin Sounds/SoundEffects/Player/playerHeal.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/playerHeal.mp3
+
+#begin Sounds/SoundEffects/Player/playerSwordAttack.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/playerSwordAttack.mp3
+
+#begin Sounds/SoundEffects/Player/shootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoundEffects/Player/shootSound.wav
 
 #begin Sounds/SoundEffects/Player/walkSound.wav
 /importer:WavImporter

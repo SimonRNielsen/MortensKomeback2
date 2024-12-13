@@ -863,10 +863,24 @@ namespace MortensKomeback2
             SoundEffect playerAv = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\morten_Av");
             SoundEffect playerWalk1 = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\walkSound");
             SoundEffect playerWalk2 = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\walkSound2");
+            SoundEffect shootSound = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\shootSound");
+            SoundEffect eggSmashSound = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\eggSmashSound");
+            SoundEffect playerHeal = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\playerHeal");
+            SoundEffect magicShoot = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\magicShoot");
+            SoundEffect playerEvade = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\playerEvade");
+            SoundEffect playerBlock = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\playerBlock");
+            SoundEffect playerSwordAttack = Content.Load<SoundEffect>("Sounds\\SoundEffects\\Player\\playerSwordAttack");
 
             commonSounds.Add("playerAv", playerAv);
             commonSounds.Add("playerWalk1", playerWalk1);
             commonSounds.Add("playerWalk2", playerWalk2);
+            commonSounds.Add("shootSound", shootSound);
+            commonSounds.Add("eggSmashSound", eggSmashSound);
+            commonSounds.Add("playerHeal", playerHeal);
+            commonSounds.Add("magicShoot", magicShoot); 
+            commonSounds.Add("playerEvade", playerEvade);
+            commonSounds.Add("playerBlock", playerBlock);
+            commonSounds.Add("playerSwordAttack", playerSwordAttack);
 
             #endregion Player
             #region Menu

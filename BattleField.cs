@@ -208,7 +208,7 @@ namespace MortensKomeback2
             //Removes all dead enemies. 
             if (!enemyActionOngoing)
                 battlefieldEnemies.RemoveAll(enemy => enemy.IsAlive == false);
-            if(battlefieldEnemies.Count < 1 && !playerActionOngoing)
+            if (battlefieldEnemies.Count < 1 && !playerActionOngoing)
             {
                 battleWon = true;
             }
@@ -292,6 +292,7 @@ namespace MortensKomeback2
             {
                 keysAreLifted = true;
             }
+#if DEBUG 
             //Quit
             if (keyState.IsKeyDown(Keys.Q))
             {
@@ -302,6 +303,8 @@ namespace MortensKomeback2
                 GameWorld.PlayMusic(1); //Plays battlemusic
 
             }
+#endif
+
             //End battle
             if (battleWon && keyState.IsKeyDown(Keys.Enter))
             {
@@ -362,8 +365,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         private void MeleeAttack(GameTime gameTime)
         {
-            //Animate
-            //GameWorld.PlayerInstance.Animation(gameTime);
+
 
             BeginAction("player");
 
@@ -380,7 +382,8 @@ namespace MortensKomeback2
                 int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
                 battlefieldEnemies[0].Health -= currentDamage;
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
-
+                GameWorld.commonSounds["aggroGoose"].Play();
+                GameWorld.commonSounds["playerSwordAttack"].Play();
             }
             else if ((GameWorld.PlayerInstance.Position.X > this.Position.X - 600) && (actionPhase == 2))
             {
@@ -402,8 +405,7 @@ namespace MortensKomeback2
         /// <param name="projectile">The pojectile (egg or magic) that the player is shooting</param>
         private void RangedAttack(GameTime gameTime, Obstacle projectile)
         {
-            //Animate
-            //GameWorld.PlayerInstance.Animation(gameTime);
+
 
             BeginAction("player");
 
@@ -420,6 +422,8 @@ namespace MortensKomeback2
                 int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
                 battlefieldEnemies[0].Health -= currentDamage;
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
+                GameWorld.commonSounds["aggroGoose"].Play();
+                GameWorld.commonSounds["eggSmashSound"].Play();
 
             }
             else if (actionTimer < actionTimerDuration && actionPhase == 2)
@@ -464,6 +468,7 @@ namespace MortensKomeback2
             else if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 900) && (actionPhase == 1))
             {
                 actionPhase = 2;
+                { GameWorld.commonSounds["playerEvade"].Play(); }
             }
             else if ((GameWorld.PlayerInstance.Position.X < this.Position.X - 600) && (actionPhase == 2))
             {
@@ -474,9 +479,7 @@ namespace MortensKomeback2
             {
                 EndAction("player");
             }
-            //Animate
-            //Sound
-            //Calculate defense
+
         }
 
         /// <summary>
@@ -486,7 +489,7 @@ namespace MortensKomeback2
         /// <param name="gameTime">GameTime</param>
         private void Heal(GameTime gameTime)
         {
-            //GameWorld.PlayerInstance.Animation(gameTime);
+
 
             BeginAction("player");
 
@@ -494,7 +497,6 @@ namespace MortensKomeback2
             {
                 playerActionText = "You are trying to heal yourself...";
                 actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                //GameWorld.PlayerInstance.Position += new Vector2(5f, 0);
             }
             else if (actionTimer > actionTimerDuration && (actionPhase == 1))
             {
@@ -507,11 +509,13 @@ namespace MortensKomeback2
                     {
                         playerActionText = "You heal yourself for 50 health!";
                         drawHealSprite = true;
+                        GameWorld.commonSounds["playerHeal"].Play();
                     }
                     else if (succes)
                     {
                         playerActionText = "You heal yourself for 25 health!";
                         drawHealSprite = true;
+                        GameWorld.commonSounds["playerHeal"].Play();
                     }
                     else if (succes == false)
                     {
@@ -526,7 +530,6 @@ namespace MortensKomeback2
             else if (actionTimer < actionTimerDuration && (actionPhase == 2))
             {
                 actionTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             }
             else
             {
@@ -534,10 +537,6 @@ namespace MortensKomeback2
                 drawHealSprite = false;
                 EndAction("player");
             }
-            //Animate
-            //Sound
-            //Calculate heal
-            //Heal
         }
 
         /// <summary>
@@ -562,6 +561,7 @@ namespace MortensKomeback2
                         else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 300) && (actionPhase == 1))
                         {
                             actionPhase = 2;
+                            GameWorld.commonSounds["aggroGoose"].Play();
                             if (blocking)
                             {
                                 int currentDamage = battlefieldEnemies[0].Damage - playerDamageReductionBonus - 5;
@@ -569,10 +569,14 @@ namespace MortensKomeback2
                                 {
                                     GameWorld.PlayerInstance.Health -= currentDamage;
                                     enemyActionText = $"The enemy dealt {currentDamage} damage! Your action negated 5 damage!";
+                                    GameWorld.commonSounds["playerAv"].Play();
+                                    if (!(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader))
+                                    { GameWorld.commonSounds["playerEvade"].Play(); }
                                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
                                         enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
+                                        GameWorld.commonSounds["playerBlock"].Play();
                                     }
                                 }
                                 else
@@ -582,6 +586,7 @@ namespace MortensKomeback2
                                     {
                                         battlefieldEnemies[0].Health -= 5;
                                         enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
+                                        GameWorld.commonSounds["playerBlock"].Play();
                                     }
 
                                 }
@@ -594,6 +599,7 @@ namespace MortensKomeback2
                                 {
                                     GameWorld.PlayerInstance.Health -= currentDamage;
                                     enemyActionText = $"The enemy dealt {currentDamage} damage to your health!";
+                                    GameWorld.commonSounds["playerAv"].Play();
                                 }
                                 else
                                     enemyActionText = $"The enemy dealt no damage!";
@@ -623,6 +629,7 @@ namespace MortensKomeback2
                             {
                                 battlefieldEnemies[0].Health += 5;
                                 enemyActionText = "It heals itself for 5 health!";
+                                GameWorld.commonSounds["aggroGoose"].Play();
                             }
                             else
                             {
@@ -685,10 +692,12 @@ namespace MortensKomeback2
                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Bishop && chosenAction == 1)
                     {
                         GameWorld.newGameObjects.Add(magic);
+                        GameWorld.commonSounds["magicShoot"].Play();
                     }
                     else if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Monk && chosenAction == 1)
                     {
                         GameWorld.newGameObjects.Add(egg);
+                        GameWorld.commonSounds["shootSound"].Play();
                     }
                 }
                 else if (actor.ToLower() == "enemy")
