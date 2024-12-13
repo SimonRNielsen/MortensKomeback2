@@ -292,6 +292,7 @@ namespace MortensKomeback2
             {
                 keysAreLifted = true;
             }
+#if DEBUG 
             //Quit
             if (keyState.IsKeyDown(Keys.Q))
             {
@@ -300,8 +301,9 @@ namespace MortensKomeback2
                 GameWorld.BattleActive = false;
                 IsAlive = false;
                 GameWorld.PlayMusic(1); //should play battlemusic
-
             }
+#endif
+
             //End battle
             if (battleWon && keyState.IsKeyDown(Keys.Enter))
             {
