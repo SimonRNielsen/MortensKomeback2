@@ -299,7 +299,7 @@ namespace MortensKomeback2
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
                 IsAlive = false;
-                GameWorld.PlayMusic(1); //should play battlemusic
+                GameWorld.PlayMusic(1); //Plays battlemusic
 
             }
             //End battle
@@ -309,7 +309,7 @@ namespace MortensKomeback2
                 GameWorld.Camera.Position = Vector2.Zero;
                 GameWorld.BattleActive = false;
                 IsAlive = false;
-                GameWorld.PlayMusic(1); //should play battlemusic
+                GameWorld.PlayMusic(1); //Plays battlemusic
 
             }
             return 0;

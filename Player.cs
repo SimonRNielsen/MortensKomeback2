@@ -168,7 +168,7 @@ namespace MortensKomeback2
                 {
                     GameWorld.BattleActive = true;
                     GameWorld.newGameObjects.Add(new BattleField(gameObject as Enemy));
-                    GameWorld.PlayMusic(2); //should play battlemusic
+                    GameWorld.PlayMusic(2); //Plays battlemusic
 
                 }
             }

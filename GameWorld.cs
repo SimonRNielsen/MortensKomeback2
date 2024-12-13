@@ -116,8 +116,6 @@ namespace MortensKomeback2
             #region GUI
 
             newGameObjects.Add(new HealthBar(0.55f, 1));
-            //newGameObjects.Add(new GUI(new Vector2(-855, -400)));       //GUI, pauset ud pt
-            //newGameObjects.Add(new Dialogue(new Vector2(0, 320)));      //Dialogue box visual
 
             #endregion GUI
             #region Obstacles
@@ -125,6 +123,13 @@ namespace MortensKomeback2
             newGameObjects.Add(new AvSurface(200, 0)); //Sæt til igen
             newGameObjects.Add(new Obstacle(500, 0, "stone"));
             newGameObjects.Add(new Obstacle(-400, 00, "hole"));
+            
+            //Firepits in Bossroom
+            //newGameObjects.Add(new Obstacle(650, (1080 * 7)-150, "firepit"));
+            //newGameObjects.Add(new Obstacle(650, (1080 * 7)+150, "firepit"));
+            //newGameObjects.Add(new Obstacle(-650, (1080 * 7)-150, "firepit"));
+            //newGameObjects.Add(new Obstacle(-650, (1080 * 7)+150, "firepit"));
+
 
             //pews on right side in main room
             newGameObjects.Add(new Obstacle(535, 800, "pew"));
@@ -838,7 +843,10 @@ namespace MortensKomeback2
             firepit[1] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit0");
             firepit[2] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit0");
             firepit[3] = Content.Load<Texture2D>("Sprites\\Obstacle\\firepit");
+
             animationSprites.Add("firepit", firepit);
+
+
 
             #endregion Obstacles
 

@@ -24,7 +24,7 @@ namespace MortensKomeback2
             sprites = GameWorld.animationSprites["goosifer"];
             sprite = sprites[0];
             position = placement;
-            health = 200;
+            health = 150;
             maxHealth = health;
             Damage = 20;
         }

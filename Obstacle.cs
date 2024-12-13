@@ -43,6 +43,9 @@ namespace MortensKomeback2
                 case "pew":
                     this.Sprite = GameWorld.commonSprites["pew"];
                     break;
+                //case "firepit":
+                //    this.Sprite = GameWorld.animationSprites["firepit"][firepit];
+                //    break;
                 default:
                     this.Sprite = GameWorld.commonSprites["hole"];
                     break;
