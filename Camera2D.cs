@@ -64,10 +64,10 @@ namespace MortensKomeback2
         public Matrix GetTransformation()
         {
             var screenCenter = new Vector3(_graphicsDevice.Viewport.Width / 2f, _graphicsDevice.Viewport.Height / 2f, 0);
-
+            float scale = MathHelper.Min((ScreenSize.X/_graphicsDevice.Viewport.Width),(ScreenSize.Y/_graphicsDevice.Viewport.Height));
             return Matrix.CreateTranslation(-Position.X, -Position.Y, 0) *
                    Matrix.CreateRotationZ(Rotation) *
-                   Matrix.CreateScale(Zoom, Zoom, 1) *
+                   Matrix.CreateScale(Zoom * scale, Zoom * scale, 1) *
                    Matrix.CreateTranslation(screenCenter);
         }
 
