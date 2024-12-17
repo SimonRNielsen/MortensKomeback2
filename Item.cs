@@ -56,7 +56,7 @@ namespace MortensKomeback2
         {
 
             collision = false;
-            if (GameWorld.hiddenItems.Contains(this))
+            if (GameWorld.hiddenItems.Contains(this) && !itemName.Contains("rosary") && !(this is FeetSlotItem))
             {
                 if (isFound)
                 {
@@ -74,6 +74,16 @@ namespace MortensKomeback2
                     timer = 0f;
                 }
             }
+            if (itemName.Contains("rosary") || this is FeetSlotItem)
+            {
+                isFound = true;
+                if (GameWorld.playerInventory.Contains(this))
+                {
+                    layer = 0.95f;
+                    scale = 1f;
+                }
+            }
+                
         }
 
         /// <summary>

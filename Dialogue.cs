@@ -136,7 +136,7 @@ namespace MortensKomeback2
                     nPCText = "I AM GOOSIFER! *Evil honks*\nNOW YOU DIE!!!";
                     break;
                 case "Letter":
-                    nPCText = "I GOT IT! Goosifer was the culprit who stole the popes sceptre, now I can send it back to him with divine magic from the next room!\n*To win proceed into the next room down (needs key)*";
+                    nPCText = "I GOT IT! Goosifer was the culprit who stole the popes sceptre!\nNow I can send it back to him with divine magic from the next room...\n*To win proceed into the next room down (needs key)*";
                     break;
                 default:
                     nPCText = "This NPC has no quests";

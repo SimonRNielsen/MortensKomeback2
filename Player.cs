@@ -80,7 +80,7 @@ namespace MortensKomeback2
                 GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 8) + GameWorld.Random.Next(-401, 400)), false, false));
                 GameWorld.hiddenItems.Add(new OffHandItem(playerClass, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 12) + GameWorld.Random.Next(-401, 400)), true, false));
                 GameWorld.hiddenItems.Add(new TorsoSlotItem(playerClass, false, new Vector2(GameWorld.Random.Next(-601, 600), (-1080 * 6) + GameWorld.Random.Next(-401, 400))));
-                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, false, new Vector2(GameWorld.Random.Next(-601, 600), 1080 + GameWorld.Random.Next(-401, 400))));
+                GameWorld.hiddenItems.Add(new FeetSlotItem(playerClass, true, new Vector2(-400, -100)));
             }
             Damage = 10;
         }
@@ -418,7 +418,8 @@ namespace MortensKomeback2
                     {
                         item.IsPickedUp = true;
                         item.IsFound = false;
-                        item.Sprite = item.StandardSprite;
+                        if (item.Sprite.Name.Contains("blink"))
+                            item.Sprite = item.StandardSprite;
                         GameWorld.playerInventory.Add(item);
                         playSound = true;
                     }

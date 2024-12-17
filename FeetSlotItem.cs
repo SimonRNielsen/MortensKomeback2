@@ -39,8 +39,9 @@ namespace MortensKomeback2
             }
             position = spawnPosition;
             itemName = "Boots of speed";
-            layer = 0.95f;
+            layer = 0.2f;
             speedBonus = 50f;
+            scale = 0.5f;
 
         }
 

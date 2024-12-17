@@ -82,7 +82,7 @@ namespace MortensKomeback2
 
             // TODO: Add your initialization logic here
 
-            _graphics.IsFullScreen = true;
+            //_graphics.IsFullScreen = true;
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             
@@ -106,7 +106,7 @@ namespace MortensKomeback2
             playerInventory.Add(new QuestItem(1, true, new Vector2(-10000, -10000)));
             playerInventory.Add(new QuestItem(1, true, new Vector2(-10000, -10000)));
             hiddenItems.Add(new QuestItem(3, false, new Vector2(random.Next(-601, 600), (1080 * 2) + random.Next(-401, 400)))); //Monks bible
-            hiddenItems.Add(new QuestItem(4, false, new Vector2(random.Next(-601, 600), (-1080 * 6) + random.Next(-401, 400)))); //Nuns rosary
+            hiddenItems.Add(new QuestItem(4, true, new Vector2(random.Next(-601, 600), (-1080 * 6) + random.Next(-401, 400)))); //Nuns rosary
 
             menu.Add(new Menu(Camera.Position, 3));
 
@@ -410,6 +410,7 @@ namespace MortensKomeback2
                 mousePointer.MouseOver();
             menu.RemoveAll(menuItem => menuItem.ButtonObsolete == true);
             playerInventory.RemoveAll(useable => useable.IsUsed == true);
+            hiddenItems.RemoveAll(useable => useable.IsUsed == true);
 
             #endregion Menu & inventory loop
             #region Spawning

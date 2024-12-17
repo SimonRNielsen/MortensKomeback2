@@ -57,6 +57,8 @@ namespace MortensKomeback2
                 case 4:
                     sprite = GameWorld.commonSprites["rosary"];
                     itemName = "Nuns rosary";
+                    layer = 0.2f;
+                    scale = 0.5f;
                     break;
             }
             if (!found)
