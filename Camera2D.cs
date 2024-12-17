@@ -33,6 +33,8 @@ namespace MortensKomeback2
         /// </summary>
         public float Rotation { get; set; }
 
+        public Vector2 ScreenSize;
+
         #endregion
 
         #region Constructor
@@ -48,6 +50,7 @@ namespace MortensKomeback2
             Position = position;
             Zoom = 1f;
             Rotation = 0.0f;
+            ScreenSize = new Vector2(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
         }
 
         #endregion
@@ -61,10 +64,10 @@ namespace MortensKomeback2
         public Matrix GetTransformation()
         {
             var screenCenter = new Vector3(_graphicsDevice.Viewport.Width / 2f, _graphicsDevice.Viewport.Height / 2f, 0);
-
+            float scale = MathHelper.Min((_graphicsDevice.Viewport.Width / ScreenSize.X),(_graphicsDevice.Viewport.Height / ScreenSize.Y));
             return Matrix.CreateTranslation(-Position.X, -Position.Y, 0) *
                    Matrix.CreateRotationZ(Rotation) *
-                   Matrix.CreateScale(Zoom, Zoom, 1) *
+                   Matrix.CreateScale(Zoom * scale, Zoom * scale, 1) *
                    Matrix.CreateTranslation(screenCenter);
         }
 
