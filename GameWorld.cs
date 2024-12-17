@@ -26,7 +26,7 @@ namespace MortensKomeback2
         private static bool battleActive = false;
         private static bool dialogue = false;
         private bool mortenLives = true;
-        private static MousePointer mousePointer = new MousePointer();
+        private static MousePointer mousePointer;
         private static List<Menu> menu = new List<Menu>();
         private List<GameObject> gameObjects = new List<GameObject>();
         public static List<GameObject> newGameObjects = new List<GameObject>();
@@ -69,7 +69,7 @@ namespace MortensKomeback2
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         #endregion
@@ -82,9 +82,10 @@ namespace MortensKomeback2
 
             // TODO: Add your initialization logic here
 
-            //_graphics.IsFullScreen = true;
+            _graphics.IsFullScreen = true;
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
+            
             _graphics.ApplyChanges();
             Camera = new Camera2D(GraphicsDevice, Vector2.Zero);
 
@@ -115,6 +116,7 @@ namespace MortensKomeback2
             #endregion Items & Player
             #region GUI
 
+            mousePointer = new MousePointer();
             newGameObjects.Add(new HealthBar(0.55f, 1));
 
             #endregion GUI
@@ -134,12 +136,12 @@ namespace MortensKomeback2
             //pews on right side in main room
             newGameObjects.Add(new Obstacle(535, 800, "pew"));
             newGameObjects.Add(new Obstacle(535, 800 + 350, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*2, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*3, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*4, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*5, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*6, "pew"));
-            newGameObjects.Add(new Obstacle(535, 800 + 350*7, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 2, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 3, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 4, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 5, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 6, "pew"));
+            newGameObjects.Add(new Obstacle(535, 800 + 350 * 7, "pew"));
 
             //pews on left side in main room
             newGameObjects.Add(new Obstacle(-535, 800, "leftPew"));
@@ -218,7 +220,7 @@ namespace MortensKomeback2
             #region NPCs & Enemies
 
             gameObjects.Add(new Boss(new Vector2(0, 1080 * 7)));
-            newGameObjects.Add(new NPC(0, 0, new Vector2(0, - 1080 * 10))); //monk
+            newGameObjects.Add(new NPC(0, 0, new Vector2(0, -1080 * 10))); //monk
             newGameObjects.Add(new NPC(1, 1, new Vector2(0, -1080 * 2))); //nun
             newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1030 * 1)));
             newGameObjects.Add(new Enemy(new Vector2(random.Next(-601, 600), 1030 * 3)));
@@ -294,7 +296,9 @@ namespace MortensKomeback2
             #region Mouse logic
 
             var mouseState = Mouse.GetState();
-            mousePosition = new Vector2((int)(mouseState.X / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferWidth / 2 / Camera.Zoom) + (int)Camera.Position.X, (int)(mouseState.Y / Camera.Zoom) - (int)((float)_graphics.PreferredBackBufferHeight / 2 / Camera.Zoom) + (int)Camera.Position.Y);
+            Vector2 mouseScreenPosition = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mouseWorldPosition = Vector2.Transform(mouseScreenPosition, Camera.InverseTransformation());
+            mousePosition = mouseWorldPosition;
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 
@@ -362,7 +366,7 @@ namespace MortensKomeback2
                 newGameObjects.Add(new Dialogue(new Vector2(Camera.Position.X, Camera.Position.Y + 320), new NPC(2, 0, new Vector2(-10000, -10000))));
             }
             //if (playerInstance.InRoom == "Room9" && !bossExists)
-              //  battleActive = false;
+            //  battleActive = false;
 
             //Removes objects
             gameObjects.RemoveAll(obj => obj.IsAlive == false);
@@ -438,6 +442,7 @@ namespace MortensKomeback2
             // TODO: Add your drawing code here
             _spriteBatch.Begin(transformMatrix: Camera.GetTransformation(), samplerState: SamplerState.PointClamp, sortMode: SpriteSortMode.FrontToBack);
 
+            mousePointer.Draw(_spriteBatch);
             foreach (GameObject gameObject in gameObjects)
             {
 
@@ -495,7 +500,7 @@ namespace MortensKomeback2
                 menuItem.Draw(_spriteBatch);
             }
 
-#endregion Draw items
+            #endregion Draw items
 #if DEBUG
             _spriteBatch.Draw(commonSprites["collisionTexture"], mousePointer.CollisionBox, null, Color.Red, 0, Vector2.Zero, SpriteEffects.None, 1f);
 #endif
@@ -606,7 +611,7 @@ namespace MortensKomeback2
         }
         #endregion DrawCollisionBoxes
 #endif
-#region Sprites & sound
+        #region Sprites & sound
         /// <summary>
         /// Loads sprites into the "commonSprites" Dictionary
         /// </summary>
@@ -617,7 +622,7 @@ namespace MortensKomeback2
             Texture2D collisionTexture = Content.Load<Texture2D>("Sprites\\DEBUG\\pixel");
             commonSprites.Add("collisionTexture", collisionTexture);
 #endif
-#region Obstacles
+            #region Obstacles
 
             Texture2D stone = Content.Load<Texture2D>("Sprites\\Obstacle\\stone"); //Stone
             Texture2D hole = Content.Load<Texture2D>("Sprites\\Obstacle\\hole"); //Hole
@@ -760,7 +765,7 @@ namespace MortensKomeback2
             Content.Load<Texture2D>("Sprites\\area\\bigRoom1"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom2"),
             Content.Load<Texture2D>("Sprites\\area\\bigRoom3"),
-            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"), 
+            Content.Load<Texture2D>("Sprites\\area\\bigRoom4"),
             Content.Load<Texture2D>("Sprites\\area\\bossRoom")
             };
             animationSprites.Add("areaStart", areaArray);
@@ -881,7 +886,7 @@ namespace MortensKomeback2
             commonSounds.Add("shootSound", shootSound);
             commonSounds.Add("eggSmashSound", eggSmashSound);
             commonSounds.Add("playerHeal", playerHeal);
-            commonSounds.Add("magicShoot", magicShoot); 
+            commonSounds.Add("magicShoot", magicShoot);
             commonSounds.Add("playerEvade", playerEvade);
             commonSounds.Add("playerBlock", playerBlock);
             commonSounds.Add("playerSwordAttack", playerSwordAttack);
@@ -901,7 +906,7 @@ namespace MortensKomeback2
             commonSounds.Add("aggroGoose", aggroGoose);
 
             #endregion Enemy
-        
+
 
 
         }
@@ -918,7 +923,7 @@ namespace MortensKomeback2
             Song battleMusic = Content.Load<Song>("Sounds\\Music\\battleMusic");
             backgroundMusic.Add("battleMusic", battleMusic);
 
-         
+
             PlayMusic(1);
 
             #endregion Organ Music
@@ -1084,9 +1089,9 @@ namespace MortensKomeback2
         /// <param name="typeMusic"></param>
         public static void PlayMusic(int typeMusic)
         {
-            
+
             switch (typeMusic)
-            { 
+            {
                 case 1: //backround music
                     MediaPlayer.Play(backgroundMusic["bgMusic"]);
                     MediaPlayer.IsRepeating = true;
@@ -1099,10 +1104,10 @@ namespace MortensKomeback2
                     break;
             }
 
-       
+
         }
 
         #endregion Functionality
-#endregion Methods
+        #endregion Methods
     }
 }

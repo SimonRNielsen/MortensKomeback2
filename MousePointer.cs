@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MortensKomeback2
 {
@@ -6,7 +7,7 @@ namespace MortensKomeback2
     {
         #region Fields
 
-
+        Texture2D sprite;
 
         #endregion
 
@@ -29,7 +30,7 @@ namespace MortensKomeback2
         /// </summary>
         public MousePointer()
         {
-
+            sprite = GameWorld.commonSprites["sword"];
         }
 
         #endregion
@@ -89,7 +90,11 @@ namespace MortensKomeback2
             foreach (Item item in GameWorld.equippedPlayerInventory)
                 if (item.CollisionBox.Intersects(CollisionBox))
                     item.OnCollision();
+        }
 
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(sprite, GameWorld.MousePosition, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.FlipHorizontally, 1f);
         }
 
         #endregion

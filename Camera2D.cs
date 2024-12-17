@@ -68,6 +68,11 @@ namespace MortensKomeback2
                    Matrix.CreateTranslation(screenCenter);
         }
 
+        public Matrix InverseTransformation()
+        {
+            return Matrix.Invert(GetTransformation());
+        }
+
         #endregion
     }
 }
