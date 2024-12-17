@@ -371,7 +371,7 @@ namespace MortensKomeback2
             //Move
             if ((GameWorld.PlayerInstance.Position.X <= this.Position.X + 300) && (actionPhase == 1))
             {
-                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(10f, 0);
                 GameWorld.PlayerInstance.Position += GameWorld.PlayerInstance.Velocity;
                 playerActionText = "You are attacking the enemy!";
             }
@@ -411,7 +411,7 @@ namespace MortensKomeback2
             //Move
             if ((projectile.Position.X <= this.Position.X + 300) && (actionPhase == 1))
             {
-                projectile.Position += new Vector2(5f, 0);
+                projectile.Position += new Vector2(10f, 0);
                 projectile.Rotation += 0.05f;
                 playerActionText = "You are attacking the enemy from range!";
             }
@@ -461,7 +461,7 @@ namespace MortensKomeback2
                 else
                     playerActionText = "You are trying to evade the enemy's attack!";
 
-                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(10f, 0);
                 GameWorld.PlayerInstance.Position -= GameWorld.PlayerInstance.Velocity;
             }
             else if ((GameWorld.PlayerInstance.Position.X <= this.Position.X - 900) && (actionPhase == 1))
@@ -471,7 +471,7 @@ namespace MortensKomeback2
             }
             else if ((GameWorld.PlayerInstance.Position.X < this.Position.X - 600) && (actionPhase == 2))
             {
-                GameWorld.PlayerInstance.Velocity = new Vector2(5f, 0);
+                GameWorld.PlayerInstance.Velocity = new Vector2(10f, 0);
                 GameWorld.PlayerInstance.Position += GameWorld.PlayerInstance.Velocity;
             }
             else
