@@ -298,7 +298,7 @@ namespace MortensKomeback2
             var mouseState = Mouse.GetState();
             Vector2 mouseScreenPosition = new Vector2(mouseState.X, mouseState.Y);
             Vector2 mouseWorldPosition = Vector2.Transform(mouseScreenPosition, Camera.InverseTransformation());
-            mousePosition = mouseWorldPosition;
+            mousePosition = new Vector2(mouseWorldPosition.X * (_graphics.PreferredBackBufferWidth / Camera.ScreenSize.X), mouseWorldPosition.Y * (_graphics.PreferredBackBufferHeight / Camera.ScreenSize.Y));
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 

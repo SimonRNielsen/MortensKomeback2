@@ -33,6 +33,8 @@ namespace MortensKomeback2
         /// </summary>
         public float Rotation { get; set; }
 
+        public Vector2 ScreenSize;
+
         #endregion
 
         #region Constructor
@@ -48,6 +50,7 @@ namespace MortensKomeback2
             Position = position;
             Zoom = 1f;
             Rotation = 0.0f;
+            ScreenSize = new Vector2(graphicsDevice.Viewport.Width, graphicsDevice.Viewport.Height);
         }
 
         #endregion
