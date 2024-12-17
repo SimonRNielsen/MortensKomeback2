@@ -67,7 +67,7 @@ namespace MortensKomeback2
         {
             base.Draw(spriteBatch);
             if (textBubble)
-                spriteBatch.Draw(GameWorld.commonSprites["talkPrompt"], new Vector2(position.X - GameWorld.commonSprites["talkPrompt"].Width, position.Y - sprite.Height / 2 - GameWorld.commonSprites["talkPrompt"].Height * 2), null, Color.White, rotation, Vector2.Zero, scale * 2, objectSpriteEffects[0], layer + 0.1f);
+                spriteBatch.Draw(GameWorld.commonSprites["talkPrompt"], new Vector2(position.X - GameWorld.commonSprites["talkPrompt"].Width+60, position.Y - sprite.Height / 2 - GameWorld.commonSprites["talkPrompt"].Height * 1), null, Color.White, rotation, Vector2.Zero, scale * 1, objectSpriteEffects[0], layer + 0.1f);
             textBubble = false;
         }
 
