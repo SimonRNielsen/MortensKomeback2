@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MortensKomeback2
 {
@@ -13,6 +14,7 @@ namespace MortensKomeback2
         private float playDuration;
         private float playDurationTimer = 1f;
         protected int maxHealth = 15;
+        private bool battlefieldDamage = false;
 
         public float MaxHealth { get => maxHealth; }
 
@@ -154,6 +156,18 @@ namespace MortensKomeback2
         public float DistanceToPlayer(Vector2 playerPosition)
         {
             return Vector2.Distance(this.position, playerPosition);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            if (battlefieldDamage)
+                spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
+        }
+
+        public void DamageAnimation(bool animation)
+        {
+            battlefieldDamage = animation;
         }
 
         #endregion

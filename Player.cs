@@ -31,6 +31,7 @@ namespace MortensKomeback2
         private float speedBonus;
         private bool closeDialog = false;
         private bool enter = false;
+        private bool battlefieldDamage = false;
 
         private string helpText = "K - Keybindings";
         private string keyBindings = "E - Interact with items or NPCs \nI - Inventory \nP - Pray \nEnter - Close Dialogue \nRight-click on items to equip \nESC to close menu, pause and exit";
@@ -184,7 +185,10 @@ namespace MortensKomeback2
             foreach (NPC nPC in nPCList)
                 if (Vector2.Distance(nPC.Position, position) < npcInRange)
                     nPC.TextBubble = true;
-
+            if (GameWorld.equippedPlayerInventory.Find(boots => boots is FeetSlotItem) != null)
+                speed = 550f * (SpeedBonus);
+            else
+                speed = 550f;
             Movement(gameTime);
             HandleInput();
             Animation(gameTime);
@@ -489,7 +493,7 @@ namespace MortensKomeback2
         {
 
             base.Draw(spriteBatch);
-            if (invulnerability)
+            if (invulnerability || battlefieldDamage)
                 spriteBatch.Draw(Sprite, Position, null, new Color(255, 0, 0) * 0.4f, rotation, new Vector2(Sprite.Width / 2, Sprite.Height / 2), scale, objectSpriteEffects[spriteEffectIndex], layer + 0.1f);
 
             //draw text
@@ -505,6 +509,11 @@ namespace MortensKomeback2
             }
 
 
+        }
+
+        public void DamageAnimation(bool animation)
+        {
+            battlefieldDamage = animation;
         }
 
         #endregion

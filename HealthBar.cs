@@ -55,7 +55,7 @@ namespace MortensKomeback2
         #endregion
 
         #region Properties
-       
+
         #endregion
 
         #region Methods
@@ -100,7 +100,13 @@ namespace MortensKomeback2
                 spriteBatch.Draw(GameWorld.commonSprites["healthBarBlack"], position, backgroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, layer);
 
                 // Draw the foreground (current health)
-                spriteBatch.Draw(sprite, position, foregroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, layer + 0.1f);
+                spriteBatch.Draw(sprite, position, foregroundRectangle, Color.White, rotation, Vector2.Zero, scale, SpriteEffects.None, layer + 0.05f);
+
+                if (enemyHealthbar)
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{enemy.Health}HP", new Vector2(position.X + (sprite.Width / 2) - 25, position.Y + (sprite.Height / 2) - 10), Color.White, 0f, Vector2.Zero, 1.2f, SpriteEffects.None, layer + 0.1f);
+                else
+                    spriteBatch.DrawString(GameWorld.mortensKomebackFont, $"{GameWorld.PlayerInstance.Health}HP", new Vector2(position.X + (sprite.Width / 2) - 25, position.Y + (sprite.Height / 2) - 10), Color.White, 0f, Vector2.Zero, 1.2f, SpriteEffects.None, layer + 0.1f);
+
             }
         }
         #endregion

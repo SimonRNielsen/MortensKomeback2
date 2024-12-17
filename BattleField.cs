@@ -180,6 +180,7 @@ namespace MortensKomeback2
             //The enemies action is also chosen here at random
             if (!playerActionOngoing && !enemyActionOngoing)
             {
+                GameWorld.PlayerInstance.DamageAnimation(false);
                 HandleInput();
                 chosenAction = HandleInput();
                 if (chosenAction > 0 && !(battleWon))
@@ -380,6 +381,7 @@ namespace MortensKomeback2
                 actionPhase = 2;
                 int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
                 battlefieldEnemies[0].Health -= currentDamage;
+                battlefieldEnemies[0].DamageAnimation(true);
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
                 GameWorld.commonSounds["aggroGoose"].Play();
                 GameWorld.commonSounds["playerSwordAttack"].Play();
@@ -423,6 +425,7 @@ namespace MortensKomeback2
                 playerActionText = $"You dealt {currentDamage} to the enemy's health!";
                 GameWorld.commonSounds["aggroGoose"].Play();
                 GameWorld.commonSounds["eggSmashSound"].Play();
+                battlefieldEnemies[0].DamageAnimation(true);
 
             }
             else if (actionTimer < actionTimerDuration && actionPhase == 2)
@@ -546,6 +549,7 @@ namespace MortensKomeback2
         {
 
             BeginAction("enemy");
+
             switch (enemyAction)
             {
                 case 1:
@@ -567,6 +571,7 @@ namespace MortensKomeback2
                                 if (currentDamage >= 0)
                                 {
                                     GameWorld.PlayerInstance.Health -= currentDamage;
+                                    GameWorld.PlayerInstance.DamageAnimation(true);
                                     enemyActionText = $"The enemy dealt {currentDamage} damage! Your action negated 5 damage!";
                                     GameWorld.commonSounds["playerAv"].Play();
                                     if (!(GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader))
@@ -574,6 +579,7 @@ namespace MortensKomeback2
                                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
+                                        battlefieldEnemies[0].DamageAnimation(true);
                                         enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
                                         GameWorld.commonSounds["playerBlock"].Play();
                                     }
@@ -597,6 +603,7 @@ namespace MortensKomeback2
                                 if (currentDamage >= 0)
                                 {
                                     GameWorld.PlayerInstance.Health -= currentDamage;
+                                    GameWorld.PlayerInstance.DamageAnimation(true);
                                     enemyActionText = $"The enemy dealt {currentDamage} damage to your health!";
                                     GameWorld.commonSounds["playerAv"].Play();
                                 }
@@ -611,6 +618,7 @@ namespace MortensKomeback2
                         else
                         {
                             EndAction("enemy");
+                            battlefieldEnemies[0].DamageAnimation(false);
                         }
                         break;
                     }
@@ -664,6 +672,7 @@ namespace MortensKomeback2
                 if (battlefieldEnemies.Count > 0)
                 {
                     enemyActionOngoing = true;
+                    battlefieldEnemies[0].DamageAnimation(false);
                 }
                 else
                 {
