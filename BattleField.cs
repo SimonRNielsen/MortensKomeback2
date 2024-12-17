@@ -555,7 +555,7 @@ namespace MortensKomeback2
                         if ((battlefieldEnemies[0].Position.X >= this.Position.X - 300) && (actionPhase == 1))
                         {
                             enemyActionText = "The enemy is attacking you!";
-                            battlefieldEnemies[0].Position -= new Vector2(5f, 0);
+                            battlefieldEnemies[0].Position -= new Vector2(10f, 0);
                         }
                         else if ((battlefieldEnemies[0].Position.X <= this.Position.X - 300) && (actionPhase == 1))
                         {
@@ -606,7 +606,7 @@ namespace MortensKomeback2
                         }
                         else if ((battlefieldEnemies[0].Position.X < this.Position.X + 600) && (actionPhase == 2))
                         {
-                            battlefieldEnemies[0].Position += new Vector2(5f, 0);
+                            battlefieldEnemies[0].Position += new Vector2(10f, 0);
                         }
                         else
                         {
@@ -618,7 +618,7 @@ namespace MortensKomeback2
                     {
                         if ((battlefieldEnemies[0].Position.X >= this.Position.X + 300) && (actionPhase == 1))
                         {
-                            battlefieldEnemies[0].Position -= new Vector2(5f, 0);
+                            battlefieldEnemies[0].Position -= new Vector2(10f, 0);
                             enemyActionText = "The enemy is healing itself... ";
                         }
                         else if ((battlefieldEnemies[0].Position.X <= this.Position.X + 300) && (actionPhase == 1))
@@ -638,7 +638,7 @@ namespace MortensKomeback2
                         }
                         else if ((battlefieldEnemies[0].Position.X < this.Position.X + 600) && (actionPhase == 2))
                         {
-                            battlefieldEnemies[0].Position += new Vector2(5f, 0);
+                            battlefieldEnemies[0].Position += new Vector2(10f, 0);
 
                         }
                         else
