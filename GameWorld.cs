@@ -816,6 +816,13 @@ namespace MortensKomeback2
             }
             animationSprites.Add("crusader", crusader);
 
+            Texture2D[] crusaderAttack = new Texture2D[10];
+            for (int i = 0; i < 10; i++)
+            {
+                crusader[i] = Content.Load<Texture2D>("Sprites\\Charactor\\crusaderAttack" + i);
+            }
+            animationSprites.Add("crusaderAttack", crusaderAttack);
+
             #endregion Morten
             #region Goose
 
