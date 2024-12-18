@@ -69,7 +69,7 @@ namespace MortensKomeback2
         {
             this.speed = 550; //Not sure what speed should be
             this.health = 100; //Not sure what health should be
-            this.fps = 4f;
+            this.Fps = 10f;
             this.playerClass = playerClass;
             nPCList = nPCs;
             layer = 0.25f;
@@ -348,6 +348,12 @@ namespace MortensKomeback2
         /// <param name="gameTime">A GameTime</param>
         public override void Animation(GameTime gameTime)
         {
+            //Restart the animation
+            if (currentIndex >= Sprites.Length - 1)
+            {
+                timeElapsed = 0;
+                currentIndex = 0;
+            }
             //If the velocity is equal to Vect2.Zero there will not be any animation
             if (velocity == Vector2.Zero)
             {
@@ -357,16 +363,10 @@ namespace MortensKomeback2
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            currentIndex = (int)(timeElapsed * fps);
+            currentIndex = (int)(timeElapsed * Fps);
 
             sprite = Sprites[currentIndex];
 
-            //Restart the animation
-            if (currentIndex >= Sprites.Length - 1)
-            {
-                timeElapsed = 0;
-                currentIndex = 0;
-            }
         }
 
         /// <summary>

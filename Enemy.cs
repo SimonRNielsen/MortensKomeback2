@@ -35,7 +35,7 @@ namespace MortensKomeback2
         {
             this.speed = 300;
             this.health = maxHealth;
-            this.fps = 7f;
+            this.Fps = 7f;
             this.scale = 0.5f;
             layer = 0.25f;
             sprite = GameWorld.animationSprites["WalkingGoose"][0];
@@ -141,7 +141,7 @@ namespace MortensKomeback2
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            currentIndex = (int)(timeElapsed * fps);
+            currentIndex = (int)(timeElapsed * Fps);
 
             sprite = Sprites[currentIndex];
 

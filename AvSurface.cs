@@ -23,7 +23,7 @@ namespace MortensKomeback2
         /// <param name="yPosition">Y position</param>
         public AvSurface(int xPosition, int yPosition) 
         {
-            this.fps = 15;
+            this.Fps = 15;
             this.position = new Vector2(xPosition, yPosition);
         }
         #endregion
@@ -49,7 +49,7 @@ namespace MortensKomeback2
             //Adding the time which has passed since the last update
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            currentIndex = (int)(timeElapsed * fps);
+            currentIndex = (int)(timeElapsed * Fps);
 
             sprite = Sprites[currentIndex];
 

@@ -148,6 +148,7 @@ namespace MortensKomeback2
 
             healSprite = GameWorld.commonSprites["magicHeal"];
 
+
         }
 
         public override void OnCollision(GameObject gameObject)
@@ -375,9 +376,17 @@ namespace MortensKomeback2
                 GameWorld.PlayerInstance.Velocity = new Vector2(10f, 0);
                 GameWorld.PlayerInstance.Position += GameWorld.PlayerInstance.Velocity;
                 playerActionText = "You are attacking the enemy!";
+                if (GameWorld.PlayerInstance.Position.X > (this.Position.X+100))
+                {
+                    GameWorld.PlayerInstance.Sprites = GameWorld.animationSprites["crusaderAttack"];
+                    GameWorld.PlayerInstance.Fps = 15;
+                }
             }
             else if ((GameWorld.PlayerInstance.Position.X >= this.Position.X + 300) && (actionPhase == 1))
             {
+                GameWorld.PlayerInstance.Sprites = playerDefaultSpriteArray;
+                GameWorld.PlayerInstance.Sprite = GameWorld.PlayerInstance.Sprites[0];
+                GameWorld.PlayerInstance.Fps = 10;
                 actionPhase = 2;
                 int currentDamage = GameWorld.PlayerInstance.Damage + playerDamageBonus;
                 battlefieldEnemies[0].Health -= currentDamage;

@@ -11,7 +11,7 @@ namespace MortensKomeback2
         protected Vector2 position;
         protected Vector2 origin;
         protected Vector2 velocity;
-        protected float fps;
+        private float fps;
         protected float scale = 1f;
         protected float layer = 0.000001f;
         protected float speed;
@@ -53,6 +53,7 @@ namespace MortensKomeback2
         public int SpriteEffectIndex { get => spriteEffectIndex; set => spriteEffectIndex = value; }
         public Texture2D[] Sprites { get => sprites; set => sprites = value; }
         public float Rotation { get => rotation; set => rotation = value; }
+        public float Fps { get => fps; set => fps = value; }
 
         public abstract void OnCollision(GameObject gameObject);
 
