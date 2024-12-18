@@ -294,11 +294,11 @@ namespace MortensKomeback2
             // TODO: Add your update logic here
 
             #region Mouse logic
-
+            Camera.ScreenSize = new Vector2(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width, GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height);
             var mouseState = Mouse.GetState();
             Vector2 mouseScreenPosition = new Vector2(mouseState.X, mouseState.Y);
             Vector2 mouseWorldPosition = Vector2.Transform(mouseScreenPosition, Camera.InverseTransformation());
-            mousePosition = mouseWorldPosition;
+            mousePosition = new Vector2(mouseWorldPosition.X * (Camera.ScreenSize.X / _graphics.PreferredBackBufferWidth), mouseWorldPosition.Y * (Camera.ScreenSize.Y / _graphics.PreferredBackBufferHeight));
             leftMouseButtonClick = mouseState.LeftButton == ButtonState.Pressed;
             rightMouseButtonClick = mouseState.RightButton == ButtonState.Pressed;
 

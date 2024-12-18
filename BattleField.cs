@@ -590,6 +590,7 @@ namespace MortensKomeback2
                                     if (GameWorld.PlayerInstance.PlayerClass == PlayerClass.Crusader)
                                     {
                                         battlefieldEnemies[0].Health -= 5;
+                                        battlefieldEnemies[0].DamageAnimation(true);
                                         enemyActionText += "\n You also dealt 5 damage to the enemy's health by blocking!";
                                         GameWorld.commonSounds["playerBlock"].Play();
                                     }
