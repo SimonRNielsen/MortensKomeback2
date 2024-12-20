@@ -82,7 +82,7 @@ namespace MortensKomeback2
 
             // TODO: Add your initialization logic here
 
-            _graphics.IsFullScreen = true;
+            //_graphics.IsFullScreen = true;
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
             
